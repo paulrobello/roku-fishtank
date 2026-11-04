@@ -37,6 +37,29 @@ Run 1 ramped fish and layers together and agrees with this. 20 fish with 2 layer
 
 **Budget:** keep the scene's own textures at or under **100 MB**. That leaves the 45 MB UI share and headroom for one stale instance. P0.7 turns this into per-asset numbers.
 
+## Texture budget (P0.7)
+
+The ceiling for our own resident textures is **100 MB**. Keeping 25% margin leaves **75 MB** to allocate. Sizes below are padded bytes (each dimension rounded up to 32, 4 bytes per pixel), so an allowance of 2560x1088 means up to 2546x1080 of art. The worst case counts every asset resident at once: day and night art together, both fish facings, and the launch splash.
+
+| Asset group | Allowance (pixels) | MB | Now (2026-11-04) |
+|---|---|---|---|
+| Back reef: water, back rockwork | 1 x 2560x1088 | 11.1 | `reef_backdrop.png` 11.1 |
+| Mid and front coral strips (P1.7 split) | 2560x608 + 2560x512 | 11.5 | `coral_acropora.png` 0.7 |
+| Foreground sand lip and plants | 2560x320 | 3.3 | none |
+| Seaweed, anemone, soft coral, invertebrates | 6 MB total, each sprite at most 512x512 | 6.0 | none |
+| Fish rigs: 8 species plus chromis, right and left facing | 6 MB total, each layer at most 512x320 | 6.0 | 1.3 (right only) |
+| Day light shafts | 2 x 512x1088 | 4.5 | none |
+| Night: moon shafts, coral glow masks | 2 x 512x1088 + 6 MB of masks at half resolution | 10.5 | glow mask 0.7 |
+| Caustic and ripple tiles | 2 x 512x512 + 1920x128 | 3.1 | none |
+| Bubbles, sparkles | 0.5 MB total, each at most 64x64 | 0.5 | none |
+| Settings screen panel | 1 x 1280x704 (backdrop shared) | 3.6 | none |
+| Launch splash (resident at start) | 1920x1088 | 8.4 | `splash_fhd.png` 8.4 |
+| **Total** | | **68.5** | **22.2** |
+
+68.5 MB leaves 6.5 MB of the 75 MB unallocated. An art card that needs more takes it from that reserve or from another row, and records the move in this table.
+
+The fill-rate limit is separate from the texture limit and is usually the one that binds. No point on screen may have more than two full-screen-sized translucent layers over the background (see Result). The shaft, caustic and ripple allowances are sized so they can each cover part of the screen. Caustics stay in the sand band, shafts are narrow, the ripple is a 128 px strip, and day and night shafts crossfade, so they never stack.
+
 ## How to measure
 
 1. Put `ROKU_PASSWORD=<rokudev password>` in the repo `.env`. `ROKU_HOST` defaults to 192.168.1.10.
