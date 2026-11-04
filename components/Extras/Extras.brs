@@ -145,7 +145,19 @@ end sub
 
 sub extrasBuildCritters(holder as object, cr as object)
     if cr = invalid then return
-    if cr.shrimp <> invalid then extrasBuildShrimp(holder, cr.shrimp)
+    if cr.shrimp <> invalid then
+        ' A shrimp with its own layer walks there, behind that layer's front cover.
+        shrimpHolder = holder
+        if cr.shrimp.layer <> invalid then
+            lane = m.scene.findNode(cr.shrimp.layer)
+            if lane <> invalid then
+                shrimpHolder = CreateObject("roSGNode", "Group")
+                shrimpHolder.id = extrasId("shrimpLane")
+                lane.insertChild(shrimpHolder, 0)
+            end if
+        end if
+        extrasBuildShrimp(shrimpHolder, cr.shrimp)
+    end if
     if cr.crab <> invalid then extrasBuildCrab(holder, cr.crab)
     if cr.starfish <> invalid then
         sf = cr.starfish
@@ -224,28 +236,56 @@ function extrasWalker(holder as object, walk as object, salt as integer) as obje
     return root
 end function
 
+' The shrimp walks on two leg sets rocking in opposite phase (keyed on the walk, still
+' while it pauses), paddles its swimmerets, wiggles its antennae, and turns like a fish:
+' a turn Group narrows about its centre while the right and left art swap.
 sub extrasBuildShrimp(holder as object, sh as object)
     root = extrasWalker(holder, sh.walk, 0)
     path = m.lastPath
     walkAnim = m.lastAnim
+    turn = root.createChild("Group")
+    turn.id = extrasId("shrimpTurn")
+    turn.scaleRotateCenter = [sh.width / 2, sh.height / 2]
+    track = extrasTurnTrack(path, sh.turnNarrow)
+    extrasInterp(walkAnim, "Vector2DFieldInterpolator", turn, "scale", track.keys, track.scale)
     wiggle = extrasLoop(root, "antennae", sh.antennaSec)
+    paddle = extrasLoop(root, "swimmerets", sh.swimSec)
     wkeys = extrasLoopKeys(9)
     wvalues = extrasSwayValues(sh.antennaDeg * 0.0174533, 0, 9)
-    for each side in [{ art: sh.right, facing: 1 }, { art: sh.left, facing: -1 }]
-        g = root.createChild("Group")
+    toRad = 0.0174533
+    for each side in [{ art: sh.right, facing: 1, opacity: track.right }, { art: sh.left, facing: -1, opacity: track.left }]
+        g = turn.createChild("Group")
         g.id = extrasId("shrimpFace")
-        extrasSprite(g, side.art.body, sh.width, sh.height)
-        ant = extrasSprite(g, side.art.antennae, sh.width, sh.height)
+        a = side.art
+        mirror = side.facing * 1.0
+        for each leg in [{ uri: a.legsRear, pivot: a.legsRearPivot, phase: 1.0 }, { uri: a.legsFront, pivot: a.legsFrontPivot, phase: -1.0 }]
+            p = extrasSprite(g, leg.uri, sh.width, sh.height)
+            p.id = extrasId("shrimpLegs")
+            p.scaleRotateCenter = leg.pivot
+            gait = extrasGait(path, sh.stridePx, sh.legDeg * toRad, leg.phase * mirror)
+            extrasInterp(walkAnim, "FloatFieldInterpolator", p, "rotation", gait.keys, gait.values)
+        end for
+        swim = extrasSprite(g, a.swim, sh.width, sh.height)
+        swim.id = extrasId("shrimpSwim")
+        swim.scaleRotateCenter = a.swimPivot
+        svalues = []
+        for each v in extrasSwayValues(sh.swimDeg * toRad, 0, 9)
+            svalues.push(mirror * v)
+        end for
+        swim.rotation = svalues[0]
+        extrasInterp(paddle, "FloatFieldInterpolator", swim, "rotation", wkeys, svalues)
+        extrasSprite(g, a.body, sh.width, sh.height)
+        ant = extrasSprite(g, a.antennae, sh.width, sh.height)
         ant.id = extrasId("antennae")
-        ant.scaleRotateCenter = side.art.pivot
+        ant.scaleRotateCenter = a.pivot
         ant.rotation = wvalues[0]
         extrasInterp(wiggle, "FloatFieldInterpolator", ant, "rotation", wkeys, wvalues)
         ' The facing interpolator lives on the walk Animation, so turns stay in step with the path.
-        opacity = extrasFacingOpacity(path.facings, side.facing)
-        g.opacity = opacity[0]
-        extrasInterp(walkAnim, "FloatFieldInterpolator", g, "opacity", path.keys, opacity)
+        g.opacity = side.opacity[0]
+        extrasInterp(walkAnim, "FloatFieldInterpolator", g, "opacity", track.keys, side.opacity)
     end for
     wiggle.control = "start"
+    paddle.control = "start"
 end sub
 
 ' ---- Ripple (P4.4) and caustics (P4.5) ----

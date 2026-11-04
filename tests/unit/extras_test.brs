@@ -14,7 +14,8 @@ function extrasTestSuite() as object
             { name: "walkPathClosesItsLoop", fn: extrasTest_walkPathClosesItsLoop }
             { name: "walkPathTurnsOnlyWhilePaused", fn: extrasTest_walkPathTurnsOnlyWhilePaused }
             { name: "gaitSwingsOnlyWhileWalking", fn: extrasTest_gaitSwingsOnlyWhileWalking }
-            { name: "facingOpacityMatches", fn: extrasTest_facingOpacityMatches }
+            { name: "shuttleTurnsOnlyInCoverAllSeeds", fn: extrasStrict_shuttleTurnsOnlyInCoverAllSeeds }
+            { name: "turnTrackSwapsAtMiddle", fn: extrasTest_turnTrackSwapsAtMiddle }
             { name: "tileGridCoversClipWhileScrolling", fn: extrasTest_tileGridCoversClipWhileScrolling }
             { name: "nightOpacityFadesAndHides", fn: extrasTest_nightOpacityFadesAndHides }
             { name: "lerpColorEndpointsAndMidpoint", fn: extrasTest_lerpColorEndpointsAndMidpoint }
@@ -191,18 +192,21 @@ sub extrasTest_walkPathTurnsOnlyWhilePaused(t as object)
     assertTrue(t, true, "")
 end sub
 
-sub extrasTest_facingOpacityMatches(t as object)
-    facings = [1, 1, -1, -1, 1]
-    right = extrasFacingOpacity(facings, 1)
-    left = extrasFacingOpacity(facings, -1)
-    if not assertEqual(t, right.count(), 5, "right opacity count") then return
-    if not assertEqual(t, left.count(), 5, "left opacity count") then return
-    for i = 0 to 4
-        wantR = 1.0
-        if facings[i] <> 1 then wantR = 0.0
-        if not assertEqual(t, right[i], wantR, "right opacity at " + i.toStr()) then return
-        if not assertEqual(t, left[i], 1.0 - wantR, "left opacity at " + i.toStr()) then return
+sub extrasTest_turnTrackSwapsAtMiddle(t as object)
+    path = { keys: [0.0, 0.2, 0.4, 0.5, 0.8], facings: [1, 1, -1, -1, 1] }
+    tr = extrasTurnTrack(path, 0.25)
+    if not assertEqual(t, tr.keys.count(), 10, "two turns of four keys plus the ends") then return
+    for i = 1 to tr.keys.count() - 1
+        if not assertTrue(t, tr.keys[i] > tr.keys[i - 1], "keys rise at " + i.toStr()) then return
     end for
+    ' First turn spans 0.2..0.4: narrow at 0.29 and 0.31, swapping between them.
+    if not assertNear(t, tr.keys[2], 0.29, 0.000001, "narrow starts at 45%") then return
+    if not assertEqual(t, tr.scale[2][0], 0.25, "narrow width") then return
+    if not assertEqual(t, tr.right[2], 1.0, "old art before the swap") then return
+    if not assertEqual(t, tr.left[3], 1.0, "new art after the swap") then return
+    if not assertEqual(t, tr.right[3], 0.0, "old art hidden after the swap") then return
+    if not assertEqual(t, tr.scale[4][0], 1.0, "full width after the turn") then return
+    if not assertEqual(t, tr.right[tr.keys.count() - 1], 1.0, "ends on the last facing") then return
 end sub
 
 ' True when rect r covers point p.
@@ -433,5 +437,40 @@ sub extrasTest_gaitSwingsOnlyWhileWalking(t as object)
                 end if
             end for
         end for
+    end for
+end sub
+
+function extrasTest_shuttleWalk() as object
+    return { x: 395, y: 860, left: 380, right: 1290, speed: 24, legPx: [40, 150], pauseSec: [1.5, 5.0], trips: 2, turnZones: [[380, 410], [1220, 1290]], turnSec: 0.7 }
+end function
+
+' The shrimp shuttle over 40 seeds: every facing change happens at rest inside a turn
+' zone, it never walks backwards, both zones are visited, and the loop closes facing right.
+sub extrasStrict_shuttleTurnsOnlyInCoverAllSeeds(t as object)
+    w = extrasTest_shuttleWalk()
+    for seed = 1 to 40
+        p = extrasWalkPath(w, seed)
+        last = p.points.count() - 1
+        tag = " seed " + seed.toStr()
+        if not assertEqual(t, p.points[last][0], w.x, "loop closes" + tag) then return
+        if not assertEqual(t, p.facings[last], 1, "ends facing right" + tag) then return
+        turns = 0
+        for i = 1 to last
+            x = p.points[i][0]
+            if not assertTrue(t, x >= w.left - 0.001 and x <= w.right + 0.001, "x in bounds" + tag) then return
+            dx = x - p.points[i - 1][0]
+            if p.facings[i] <> p.facings[i - 1] then
+                turns = turns + 1
+                if not assertEqual(t, dx, 0.0, "turns at rest" + tag) then return
+                inZone = false
+                for each z in w.turnZones
+                    if x >= z[0] - 0.001 and x <= z[1] + 0.001 then inZone = true
+                end for
+                if not assertTrue(t, inZone, "turn at x " + Str(x) + " is in cover" + tag) then return
+            else if dx <> 0 then
+                if not assertTrue(t, dx * p.facings[i] > 0, "walks forwards" + tag) then return
+            end if
+        end for
+        if not assertEqual(t, turns, 4, "two round trips" + tag) then return
     end for
 end sub

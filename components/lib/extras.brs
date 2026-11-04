@@ -36,6 +36,7 @@ end function
 ' a pause (a step of turnSec), never while moving. Returns { duration, keys,
 ' points ([x, y] per key), facings (1 right, -1 left, per key) }.
 function extrasWalkPath(cfg as object, seed as integer) as object
+    if cfg.turnZones <> invalid then return extrasShuttlePath(cfg, seed)
     rng = prngNew(seed)
     turn = 0.02
     if cfg.turnSec <> invalid then turn = cfg.turnSec
@@ -112,6 +113,87 @@ function extrasGait(path as object, stridePx as float, amp as float, side as flo
     return { keys: keys, values: values }
 end function
 
+' A walk that turns only inside cfg.turnZones ([[x0, x1], [x0, x1]], left zone first),
+' where cover hides the turn: from cfg.x (in the left zone, facing right) it crosses to a
+' seeded point in the other zone in legs of cfg.legPx with pauses, turns there, and
+' repeats for cfg.trips round trips, ending back at cfg.x facing right. Returns the
+' extrasWalkPath shape.
+function extrasShuttlePath(cfg as object, seed as integer) as object
+    rng = prngNew(seed)
+    x = cfg.x
+    times = [0.0]
+    xs = [x]
+    faces = [1]
+    path = { times: times, xs: xs, faces: faces, t: 0.0, facing: 1, turn: cfg.turnSec }
+    halves = cfg.trips * 2
+    for h = 0 to halves - 1
+        dir = 1
+        z = cfg.turnZones[1]
+        if h mod 2 = 1 then
+            dir = -1
+            z = cfg.turnZones[0]
+        end if
+        goal = cfg.x
+        if h < halves - 1 then goal = prngRange(rng, z[0], z[1])
+        while Abs(goal - x) > 0.5
+            target = x + dir * prngRange(rng, cfg.legPx[0], cfg.legPx[1])
+            if dir * (goal - target) < cfg.legPx[0] then target = goal
+            extrasWalkPause(path, x, prngRange(rng, cfg.pauseSec[0], cfg.pauseSec[1]), dir)
+            path.t = path.t + Abs(target - x) / cfg.speed
+            times.push(path.t)
+            xs.push(target)
+            faces.push(dir)
+            x = target
+        end while
+        extrasWalkPause(path, x, prngRange(rng, cfg.pauseSec[0], cfg.pauseSec[1]), -dir)
+    end for
+    keys = []
+    points = []
+    for i = 0 to times.count() - 1
+        keys.push(times[i] / path.t)
+        points.push([xs[i], cfg.y])
+    end for
+    return { duration: path.t, keys: keys, points: points, facings: faces }
+end function
+
+' A fish-like turn for a walker with right and left art: over each facing step of the
+' path the turn Group narrows to narrow, the art swaps across the middle tenth, and it
+' widens again. Returns { keys, scale ([x, y] per key), right, left (opacity per key) }
+' for interpolators on the walk's own Animation.
+function extrasTurnTrack(path as object, narrow as float) as object
+    f0 = path.facings[0]
+    keys = [0.0]
+    scale = [[1.0, 1.0]]
+    right = [extrasBool(f0 = 1)]
+    left = [extrasBool(f0 = -1)]
+    last = f0
+    for i = 1 to path.keys.count() - 1
+        a = path.facings[i - 1]
+        b = path.facings[i]
+        if a <> b then
+            k0 = path.keys[i - 1]
+            d = path.keys[i] - k0
+            for each phase in [[0.0, 1.0, a], [0.45, narrow, a], [0.55, narrow, b], [1.0, 1.0, b]]
+                keys.push(k0 + d * phase[0])
+                scale.push([phase[1], 1.0])
+                right.push(extrasBool(phase[2] = 1))
+                left.push(extrasBool(phase[2] = -1))
+            end for
+            last = b
+        end if
+    end for
+    keys.push(1.0)
+    scale.push([1.0, 1.0])
+    right.push(extrasBool(last = 1))
+    left.push(extrasBool(last = -1))
+    return { keys: keys, scale: scale, right: right, left: left }
+end function
+
+function extrasBool(v as boolean) as float
+    if v then return 1.0
+    return 0.0
+end function
+
 ' Holds at x for pause seconds; when newFacing differs, the facing steps over
 ' path.turn seconds at the middle of the pause.
 sub extrasWalkPause(path as object, x as float, pause as float, newFacing as integer)
@@ -130,19 +212,6 @@ sub extrasWalkPause(path as object, x as float, pause as float, newFacing as int
     path.xs.push(x)
     path.faces.push(path.facing)
 end sub
-
-' Opacity keyframes for the facing Poster (want = 1 right-facing art, -1 left).
-function extrasFacingOpacity(facings as object, want as integer) as object
-    out = []
-    for each f in facings
-        if f = want then
-            out.push(1.0)
-        else
-            out.push(0.0)
-        end if
-    end for
-    return out
-end function
 
 ' Tile origins covering clip ({ x, y, width, height }) while the grid scrolls
 ' by up to one tile along dir ([dx, dy], each -1, 0 or 1). A positive axis

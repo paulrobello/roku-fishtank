@@ -67,11 +67,27 @@
   },
   "critters": {
     "shrimp": {
-      "right": { "body": "pkg:/images/extras/shrimp_body_r.png", "antennae": "pkg:/images/extras/shrimp_antennae_r.png", "pivot": [169, 72] },
-      "left": { "body": "pkg:/images/extras/shrimp_body_l.png", "antennae": "pkg:/images/extras/shrimp_antennae_l.png", "pivot": [32, 72] },
+      "layer": "midLane",
+      "right": {
+        "body": "pkg:/images/extras/shrimp_body_r.png", "antennae": "pkg:/images/extras/shrimp_antennae_r.png", "pivot": [169, 72],
+        "legsRear": "pkg:/images/extras/shrimp_legs_rear_r.png", "legsRearPivot": [107, 89],
+        "legsFront": "pkg:/images/extras/shrimp_legs_front_r.png", "legsFrontPivot": [127, 86],
+        "swim": "pkg:/images/extras/shrimp_swim_r.png", "swimPivot": [56, 85]
+      },
+      "left": {
+        "body": "pkg:/images/extras/shrimp_body_l.png", "antennae": "pkg:/images/extras/shrimp_antennae_l.png", "pivot": [32, 72],
+        "legsRear": "pkg:/images/extras/shrimp_legs_rear_l.png", "legsRearPivot": [94, 89],
+        "legsFront": "pkg:/images/extras/shrimp_legs_front_l.png", "legsFrontPivot": [74, 86],
+        "swim": "pkg:/images/extras/shrimp_swim_l.png", "swimPivot": [145, 85]
+      },
       "width": 201,
       "height": 130,
-      "walk": { "x": 600, "y": 862, "left": 470, "right": 860, "speed": 24, "legPx": [40, 150], "pauseSec": [1.5, 5.0], "legs": 6, "turnSec": 0.02 },
+      "walk": { "x": 395, "y": 860, "left": 380, "right": 1290, "speed": 24, "legPx": [40, 150], "pauseSec": [1.5, 5.0], "trips": 2, "turnZones": [[380, 410], [1220, 1290]], "turnSec": 0.7 },
+      "turnNarrow": 0.25,
+      "legDeg": 6,
+      "stridePx": 12,
+      "swimDeg": 10,
+      "swimSec": 0.8,
       "antennaDeg": 6,
       "antennaSec": 0.9
     },

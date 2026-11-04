@@ -1126,31 +1126,55 @@
     "card": "P4.6"
   },
   "shrimp_r": {
-    "body": "images/extras/shrimp_body_r.png",
     "antennae": "images/extras/shrimp_antennae_r.png",
-    "width": 201,
-    "height": 130,
-    "antenna_pivot": [
+    "legs_rear": "images/extras/shrimp_legs_rear_r.png",
+    "legs_front": "images/extras/shrimp_legs_front_r.png",
+    "swim": "images/extras/shrimp_swim_r.png",
+    "body": "images/extras/shrimp_body_r.png",
+    "antennae_pivot": [
       169,
       72
     ],
-    "layer": "frontLane",
-    "x": 600,
-    "y": 862,
+    "legs_rear_pivot": [
+      107,
+      89
+    ],
+    "legs_front_pivot": [
+      127,
+      86
+    ],
+    "swim_pivot": [
+      56,
+      85
+    ],
+    "width": 201,
+    "height": 130,
     "card": "P4.6"
   },
   "shrimp_l": {
-    "body": "images/extras/shrimp_body_l.png",
     "antennae": "images/extras/shrimp_antennae_l.png",
-    "width": 201,
-    "height": 130,
-    "antenna_pivot": [
+    "legs_rear": "images/extras/shrimp_legs_rear_l.png",
+    "legs_front": "images/extras/shrimp_legs_front_l.png",
+    "swim": "images/extras/shrimp_swim_l.png",
+    "body": "images/extras/shrimp_body_l.png",
+    "antennae_pivot": [
       32,
       72
     ],
-    "layer": "frontLane",
-    "x": 600,
-    "y": 862,
+    "legs_rear_pivot": [
+      94,
+      89
+    ],
+    "legs_front_pivot": [
+      74,
+      86
+    ],
+    "swim_pivot": [
+      145,
+      85
+    ],
+    "width": 201,
+    "height": 130,
     "card": "P4.6"
   },
   "crab": {

@@ -384,33 +384,47 @@ def build_extras() -> None:
     chain("sea_fan", "extras/sea_fan.png", 340, 3, 8, 0.22, "midCoral", 640)
     chain("soft_coral", "extras/soft_coral.png", 280, 3, 8, 0.25, "frontCoral", 1700)
 
-    # Shrimp: body and antennae layers registered on one canvas, then mirrored.
+    # Shrimp: body, antennae, walking legs (rear and front sets) and swimmerets registered
+    # on one canvas, then mirrored. Leg and swimmeret pivots sit at their hips.
     shrimp = load("extras/shrimp.png")
     hh, ww = shrimp.shape[:2]
     ys, xs = np.mgrid[0:hh, 0:ww]
     ant = (ys < 640) | ((xs > 1700) & (ys < 745)) | (xs > 1760)
+    # Limbs start below the belly line (source px), so no body pixels move with them.
+    below = ys > np.interp(xs, [420, 700, 900, 1050, 1150, 1300, 1500, 1700],
+                           [895, 925, 940, 940, 920, 895, 870, 820])
+    # The lower antenna whip crosses the front legs; it stays with the body.
+    whip = (xs > 1480) & (ys < 900)
+    parts = {
+        "antennae": ant,
+        "legs_rear": (xs >= 650) & (xs < 1120) & below & ~ant,
+        "legs_front": (xs >= 1120) & (xs < 1760) & below & ~ant & ~whip,
+        "swim": (xs >= 420) & (xs < 770) & below & (ys < 1030),
+    }
+    pivots_src = {"antennae": (1720, 745), "legs_rear": (1110, 910), "legs_front": (1300, 880), "swim": (600, 870)}
     s = 200 / 1975
     full = scale_by(shrimp, s)
-    antm = scale(np.dstack([np.ones((hh, ww, 3), np.float32), ant.astype(np.float32)]), full.shape[1::-1])[..., 3]
     x0, y0, x1, y1 = bbox(full[..., 3], ALPHA_DUST / 255.0)
     full = full[y0:y1, x0:x1]
-    antm = antm[y0:y1, x0:x1]
-    body_l = full.copy()
-    body_l[..., 3] *= 1 - antm
-    ant_l = full.copy()
-    ant_l[..., 3] *= antm
-    pivot = [round(1720 * s) - x0, round(745 * s) - y0]
+    soft = {}
+    for name, mask in parts.items():
+        m = scale(np.dstack([np.ones((hh, ww, 3), np.float32), mask.astype(np.float32)]), (round(ww * s), round(hh * s)))[..., 3]
+        soft[name] = m[y0:y1, x0:x1]
+    soft["body"] = np.clip(1.0 - sum(soft.values()), 0.0, 1.0)
+    pivots = {k: [round(px * s) - x0, round(py * s) - y0] for k, (px, py) in pivots_src.items()}
     for facing, flip in (("r", False), ("l", True)):
-        for part, arr in (("body", body_l), ("antennae", ant_l)):
+        info: dict[str, Any] = {}
+        for part, m in soft.items():
+            arr = full.copy()
+            arr[..., 3] *= m
             a2 = arr[:, ::-1] if flip else arr
             rel = f"extras/shrimp_{part}_{facing}.png"
             size = emit(bleed(a2), rel)
-        px = (full.shape[1] - pivot[0]) if flip else pivot[0]
-        placements[f"shrimp_{facing}"] = {
-            "body": f"images/extras/shrimp_body_{facing}.png", "antennae": f"images/extras/shrimp_antennae_{facing}.png",
-            "width": size[0], "height": size[1], "antenna_pivot": [px, pivot[1]], "layer": "frontLane",
-            "x": 600, "y": SAND_TOP_Y + 40 - size[1], "card": "P4.6",
-        }
+            info[part] = f"images/{rel}"
+        for k, (px, py) in pivots.items():
+            info[f"{k}_pivot"] = [(full.shape[1] - px) if flip else px, py]
+        info.update({"width": size[0], "height": size[1], "card": "P4.6"})
+        placements[f"shrimp_{facing}"] = info
 
     crab, _ = finish(scale_by(trim(load("extras/crab.png")), 150 / 1971))
     size = emit(crab, "extras/crab.png")
