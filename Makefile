@@ -50,7 +50,7 @@ typecheck: node_modules
 # BrightScript unit tests under brs-cli. The runner throws when any test fails,
 # which makes brs-cli exit 1.
 test: node_modules
-	$(BIN)/brs-cli tests/run_tests.brs tests/lib/*.brs tests/unit/*.brs components/lib/*.brs
+	$(BIN)/brs-cli tests/run_tests.brs tests/lib/*.brs tests/unit/*.brs components/lib/*.brs source/preview_color.brs
 
 # Fast gate, ordered cheapest first. No CI exists, so checkall-ci is the same gate.
 checkall: api-guard fmt-check lint typecheck test build zip-check fidelity-build test-visual

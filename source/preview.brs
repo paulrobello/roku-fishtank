@@ -146,13 +146,7 @@ sub previewApplyInterpolator(interp as object, f as float, scene as object)
     if kind = "Vector2DFieldInterpolator" then
         node.setField(parts[1], [a[0] + (b[0] - a[0]) * u, a[1] + (b[1] - a[1]) * u])
     else if kind = "ColorFieldInterpolator" then
-        c = 0
-        for shift = 24 to 0 step -8
-            ca = (a >> shift) and 255
-            cb = (b >> shift) and 255
-            c = c or (int(ca + (cb - ca) * u) << shift)
-        end for
-        node.setField(parts[1], c)
+        node.setField(parts[1], previewLerpColorHsv(a, b, u))
     else
         node.setField(parts[1], a + (b - a) * u)
     end if

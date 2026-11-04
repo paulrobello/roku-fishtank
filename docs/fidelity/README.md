@@ -38,7 +38,7 @@ The scene runs real Animations and pauses them all on a Timer at **4 s**. Durati
 
 To remove the jitter from the verdict, the scene reads back each interpolator's `fraction` after the pause. It judges every position against the keyValue lerp at that fraction, and every inOutCubic lane against `inOutCubic(fraction of its linear partner)`. It prints `FIDELITY ...` lines on the console every 3 s (telnet 8087 on the device) and shows a summary in the on-screen report Label, so a TV photo documents itself.
 
-Do not capture this scene with `?freeze`. The freeze shim in `source/preview.brs` interpolates colors in RGB, while both the Roku docs and brs-scenegraph use HSV.
+Capture the verdict run without `?freeze`. The scene pauses its own Animations at 4 s, and the freeze shim only snaps Animations that are still running, so `?freeze` at 4 s or later snaps nothing. A `?freeze` below 4 s snaps every cell to that time; the color swatches then match brs-scenegraph's HSV interpolation exactly (the shim's color math is in `source/preview_color.brs`), but the strips under them and the `FIDELITY` lines still judge the 4 s pause, so they no longer line up. At `?freeze=2` the swatches read 0xFF0040 / 0xFF0080 / 0xFF00BF (f = 0.125 / 0.25 / 0.375), see `freeze-hsv-swatches.png`.
 
 ## Expected values
 
@@ -79,7 +79,7 @@ Positions are measured centroids at nominal t = 4 s from `simulator-measure.md`.
 ## Findings
 
 - **F1: brs-scenegraph 0.6.2 rotates scaled Posters about the wrong point.** `getTranslation` shifts the translation by `scaleRotateCenter * (scale - 1)`, then `doDrawRotatedBitmap` rotates the scaled bitmap about the *unscaled* center. With rotation and scale combined, the Poster drifts by `R(c * (s - 1)) - c * (s - 1)`: 34.5 px here (c = 64, s = 1.5, 45 deg). Rotation alone, scale alone and mirroring are exact. The error grows with the center offset and the scale, so large scaled and rotated Posters can exceed the 2% rule in the preview. If the device matches the analytic value, add a `simPatches` entry in `preview/vite.config.ts`.
-- **F2: the `?freeze` shim interpolates colors in RGB** (`previewApplyInterpolator` in `source/preview.brs`), but the Roku `ColorFieldInterpolator` doc and brs-scenegraph both use HSV. A frozen color animation therefore shows a different color than the live one.
+- **F2 (fixed 2026-11-04): the `?freeze` shim interpolated colors in RGB** (`previewApplyInterpolator` in `source/preview.brs`), but the Roku `ColorFieldInterpolator` doc and brs-scenegraph both use HSV. The shim now calls `previewLerpColorHsv` (`source/preview_color.brs`), a line-for-line port of brs-scenegraph's `interpolateColor`, unit-tested against values from brs-scenegraph's own code. `freeze-hsv-swatches.png` shows `?freeze=2` before (RGB: 0xDF001F / 0xBF003F / 0x9F005F) and after (HSV: 0xFF0040 / 0xFF0080 / 0xFF00BF).
 - **F3: direct `fraction` writes are a no-op in brs-scenegraph.** Whether they drive the target on OS 15.3.4 is unknown until the device run. The Roku doc lists `fraction` as writable but only describes the Animation setting it.
 
 ## Device run

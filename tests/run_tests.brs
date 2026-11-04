@@ -1,5 +1,5 @@
 ' Unit-test runner for brs-cli. `make test` runs:
-'   brs-cli tests/run_tests.brs tests/lib/*.brs tests/unit/*.brs components/lib/*.brs
+'   brs-cli tests/run_tests.brs tests/lib/*.brs tests/unit/*.brs components/lib/*.brs source/preview_color.brs
 ' brs-cli has no exit API: an uncaught `throw` ends the run with
 ' EXIT_BRIGHTSCRIPT_CRASH and process exit code 1, so the runner throws after
 ' the summary when any test failed (or when no tests ran).
@@ -17,6 +17,7 @@ function testSuites() as object
         daynightTestSuite()
         brainTestSuite()
         scenecfgTestSuite()
+        previewColorTestSuite()
     ]
 end function
 

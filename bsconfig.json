@@ -8,6 +8,7 @@
     "images/**/*",
     "config/**/*",
     "!source/preview.brs",
+    "!source/preview_color.brs",
     "!components/Fidelity/**/*",
     "!images/fidelity/**/*"
   ],
