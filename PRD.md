@@ -167,7 +167,7 @@ Acceptance:
 ## Open Questions
 
 - Q1: The exact texture-memory ceiling and fps instrumentation on OS 15.3.4. Answered by P0.
-- Q2: Whether brs-engine can pass launch params to the preview `Main` (needed for `?seed`/`?time`). Answered by P0. The fallback is a query-string → `pkg:/config/preview.json` injection.
+- Q2: Whether brs-engine can pass launch params to the preview `Main` (needed for `?seed`/`?time`). **Answered by P0.3 (2026-11-04): yes.** `brs.execute(path, zip, options, deepLink)` merges the deep-link Map into the `args` AA handed to `Main`, so no `pkg:/config/preview.json` injection is needed.
 - Q3: Whether Rooibos is needed later for on-device tests. Default is no: pure logic is tested under `brs-cli`.
 
 ## Decisions log (from planning interview, 2026-11-04)

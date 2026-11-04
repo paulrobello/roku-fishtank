@@ -19,7 +19,44 @@ source/main.brs          RunScreenSaver() entry point
 components/FishtankTest* Scene: water rect + pebbles + N fish, animation built in init()
 images/                  generated placeholder art (python3 tools/make_art.py)
 bsconfig.json            RokuCommunity BrightScript VS Code extension config
+source/preview.brs       Main(args) shim for the browser preview (excluded from the device zip)
+preview/                 Vite page that runs the channel in brs-engine + brs-scenegraph
+tests/visual/            Playwright screenshot gate and its baseline
 ```
+
+## Browser preview
+
+`make dev` serves the preview at <http://localhost:8138/> (foreground; `make dev-stop`
+frees the port, `make dev-restart` does both). The page runs the real channel code in
+brs-engine with the SceneGraph extension on a 1920x1080 canvas scaled to the window.
+
+- **Dev loop:** edit `source/`, `components/` or `images/`, then reload the page. Every
+  load rebuilds `channel.zip` from the files on disk, so there is no build step and no
+  stale package. Edits to `preview/` itself hot-reload through Vite.
+- **Entry point:** brs-engine has no screensaver entry point, so `source/preview.brs`
+  defines `Main(args)`, which builds the same scene as `RunScreenSaver` and runs the same
+  message loop. `bsconfig.json` excludes it from the device build.
+- **URL params** reach `Main(args)` as engine deep-link values and are exposed to the
+  scene as `m.global` fields:
+
+  | Param | Example | Global field | Status |
+  |---|---|---|---|
+  | `seed` | `?seed=42` | `previewSeed` (integer) | plumbed and printed |
+  | `time` | `?time=18:30` | `previewTime` (string) | plumbed and printed |
+  | `speed` | `?speed=4x` | `previewSpeed` (float) | plumbed and printed |
+  | `freeze` | `?freeze=10` | `previewFreeze` (seconds) | pauses all Animations at T and snaps them to their value at T, so reloads give the same frame |
+
+- **Console:** BrightScript `print` output goes to the browser console, and the page
+  exposes `window.__preview` (`status`: loading, running, frozen or error, plus the log).
+- **Simulator patches:** `preview/vite.config.ts` patches two brs-scenegraph 0.6.2 gaps
+  so the channel runs unmodified. `fieldToInterp` accepts an roArray, as on the device,
+  and the preview manifest lists `fhd` first, because brs-scenegraph takes the first
+  `ui_resolutions` entry as the design resolution.
+
+`make test-visual` (part of `make checkall`) starts an isolated server on 8139, opens
+`?freeze=3` and compares the canvas to `tests/visual/__screenshots__/frozen-t3.png`.
+After an intended visual change, refresh the baseline with
+`bunx playwright test --update-snapshots` and review the new PNG before committing.
 
 ## Deploy
 

@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Reef Tank preview</title>
+    <link rel="icon" href="data:," />
+    <style>
+      html,
+      body {
+        margin: 0;
+        height: 100%;
+        background: #000;
+        overflow: hidden;
+      }
+      /* The canvas renders at a fixed 1920x1080 backing size; the stage scales it to fit. */
+      #stage {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 1920px;
+        height: 1080px;
+        transform-origin: 0 0;
+      }
+      #display {
+        position: absolute;
+        left: 0;
+        top: 0;
+      }
+      #player {
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="stage">
+      <canvas id="display" width="1920" height="1080"></canvas>
+      <video id="player"></video>
+    </div>
+    <!-- Classic script on purpose: the engine finds its worker from this tag's src. -->
+    <script src="/brs/brs.api.js"></script>
+    <script type="module" src="/main.ts"></script>
+  </body>
+</html>

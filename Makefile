@@ -4,6 +4,7 @@ BRS_GLOBS := "source/**/*.brs" "components/**/*.brs"
 SHELL := /bin/bash
 
 .PHONY: install build fmt fmt-check lint typecheck test checkall checkall-ci deploy art clean
+.PHONY: dev dev-start dev-stop dev-restart test-visual
 
 install: node_modules
 
@@ -48,7 +49,7 @@ test: node_modules
 	$(BIN)/brs-cli tests/run_tests.brs tests/lib/*.brs tests/unit/*.brs components/lib/*.brs
 
 # Fast gate, ordered cheapest first. No CI exists, so checkall-ci is the same gate.
-checkall: api-guard fmt-check lint typecheck test build zip-check
+checkall: api-guard fmt-check lint typecheck test build zip-check test-visual
 	@echo "checkall OK"
 
 checkall-ci: checkall
@@ -78,6 +79,28 @@ art:
 .PHONY: art-placeholder
 art-placeholder:
 	python3 tools/make_art.py
+
+# Browser preview (brs-engine) on 8138. The channel zip is rebuilt from source on every page load.
+PREVIEW_PORT := 8138
+
+dev: node_modules
+	bunx --bun vite --config preview/vite.config.ts --port $(PREVIEW_PORT) --strictPort
+
+dev-start: dev
+
+dev-stop:
+	@pids=$$(lsof -ti tcp:$(PREVIEW_PORT) -sTCP:LISTEN); [ -z "$$pids" ] || kill $$pids; \
+	  for i in $$(seq 1 40); do lsof -ti tcp:$(PREVIEW_PORT) -sTCP:LISTEN >/dev/null || exit 0; sleep 0.25; done; \
+	  echo "port $(PREVIEW_PORT) still busy"; exit 1
+
+dev-restart: dev-stop dev
+
+# Screenshot gate: Playwright serves its own preview on 8139, freezes the scene and
+# compares the canvas to tests/visual/__screenshots__/.
+test-visual: node_modules
+	@mkdir -p dist
+	@bunx playwright install chromium > dist/playwright-install.log 2>&1 || { cat dist/playwright-install.log; exit 1; }
+	bunx playwright test
 
 clean:
 	rm -rf dist
