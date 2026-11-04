@@ -45,6 +45,8 @@ interface SimPatch {
   why: string;
   anchor: string;
   insert: string;
+  /** When set, replaces the anchor instead of inserting after it. */
+  replace?: string;
 }
 const simPatches: Record<string, SimPatch[]> = {
   "/brs/brs-sg.js": [
@@ -55,6 +57,16 @@ const simPatches: Record<string, SimPatch[]> = {
       insert:
         'setValue(t,i,s,n){return"string"==typeof t&&"fieldtointerp"===t.toLowerCase()&&i instanceof e.RoArray&&i.elements.length>0&&(i=i.elements[0]),super.setValue(t,i,s,n)}',
     },
+    {
+      // brs-sg already offsets the Group origin for scale about scaleRotateCenter but then
+      // draws children unscaled. Scaling the canvas about that origin maps child point p to
+      // origin + scale * p, as on the device, including negative scale (mirror).
+      why: "Roku scales a Group's children by the Group's scale (the fish rig turn and 2x demo); brs-sg ignores it",
+      anchor: "s=this.isVisible()?s*this.getOpacity():0,this.renderChildren(e,a,o,s,n),",
+      insert: "",
+      replace:
+        's=this.isVisible()?s*this.getOpacity():0,this.withScale(n,a[0],a[1],this.getValueJS("scale"),()=>this.renderChildren(e,a,o,s,n)),',
+    },
   ],
 };
 
@@ -64,7 +76,7 @@ function readPatched(path: string, file: string): Uint8Array {
   let text = readFileSync(file, "utf8");
   for (const p of patches) {
     if (!text.includes(p.anchor)) throw new Error(`sim patch anchor missing in ${path}: ${p.why}`);
-    text = text.replace(p.anchor, p.anchor + p.insert);
+    text = text.replace(p.anchor, p.replace ?? p.anchor + p.insert);
   }
   return new TextEncoder().encode(text);
 }

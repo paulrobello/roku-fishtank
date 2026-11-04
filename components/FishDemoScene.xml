@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+    Preview demo for the Fish rig (P2.2): the royal blue tang at display scale and at
+    2x, swimming in place and turning every 3 s. Open with ?scene=FishDemoScene.
+    Not created by RunScreenSaver.
+-->
+<component name="FishDemoScene" extends="Scene">
+    <script type="text/brightscript" uri="FishDemoScene.brs" />
+    <children>
+        <Rectangle id="water" color="0x062B45" />
+        <Fish id="tang1x" translation="[200, 300]" />
+        <Fish id="tang2x" translation="[800, 440]" scale="[2.0, 2.0]" />
+        <Timer id="turnTimer" duration="3" repeat="true" />
+    </children>
+</component>

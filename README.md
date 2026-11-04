@@ -49,10 +49,15 @@ brs-engine with the SceneGraph extension on a 1920x1080 canvas scaled to the win
 
 - **Console:** BrightScript `print` output goes to the browser console, and the page
   exposes `window.__preview` (`status`: loading, running, frozen or error, plus the log).
-- **Simulator patches:** `preview/vite.config.ts` patches two brs-scenegraph 0.6.2 gaps
-  so the channel runs unmodified. `fieldToInterp` accepts an roArray, as on the device,
-  and the preview manifest lists `fhd` first, because brs-scenegraph takes the first
-  `ui_resolutions` entry as the design resolution.
+- **Simulator patches:** `preview/vite.config.ts` patches three brs-scenegraph 0.6.2 gaps
+  so the channel runs unmodified. `fieldToInterp` accepts an roArray, as on the device.
+  A Group's `scale` (including negative, mirroring) applies to its children, which
+  brs-scenegraph otherwise ignores. The preview manifest lists `fhd` first, because
+  brs-scenegraph takes the first `ui_resolutions` entry as the design resolution.
+- **Fish rig demo:** `?scene=FishDemoScene` shows the royal blue tang rig
+  (`components/Fish/`) at display scale and 2x, turning every 3 s. Its first turn starts
+  with the scene, so `?freeze=0.15` and `0.35` land mid-turn, and `1.25` and `1.75` land
+  on the tail extremes.
 
 `make test-visual` (part of `make checkall`) starts an isolated server on 8139, opens
 `?freeze=3` and compares the canvas to `tests/visual/__screenshots__/frozen-t3.png`.
