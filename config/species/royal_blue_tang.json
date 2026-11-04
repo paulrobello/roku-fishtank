@@ -1,0 +1,24 @@
+{
+  "species": "royal_blue_tang",
+  "source": "assets/source/style-board/higgsfield/tang_g25.png",
+  "facing": "right",
+  "display_length_px": 240,
+  "tail": {
+    "cut_x_px": 482,
+    "feather_px": 24,
+    "overlap_px": 56,
+    "swing_deg": 20
+  },
+  "fin": {
+    "polygon": [
+      [1395, 612], [1420, 600], [1452, 604], [1492, 638], [1532, 678],
+      [1572, 718], [1608, 752], [1630, 774], [1626, 802], [1598, 826],
+      [1556, 838], [1500, 842], [1448, 840], [1412, 814], [1381, 778],
+      [1361, 737], [1359, 695], [1368, 652]
+    ],
+    "pivot": [1602, 792],
+    "feather_px": 6,
+    "swing_deg": 15
+  },
+  "_notes": "All coordinates are untrimmed source pixels of tang_g25.png (2048x1360). Peduncle alpha column profile (alpha>128): 159 px at x=440, narrowing to 131 px at x=488 (y 586-716); at x=492 the anal fin starts and the profile widens. The cut sits 6 px on the tail side of that minimum. Tail pivot y is auto: the centre of the opaque run at cut_x. The fin polygon traces the pectoral fin rays; pivot is the fleshy fin root at its lower right."
+}

@@ -1,0 +1,7 @@
+{
+  "name": "reef_backdrop",
+  "kind": "backdrop",
+  "source": "assets/source/style-board/higgsfield/back_nbp3.png",
+  "target_height": 1080,
+  "_notes": "Single full-height backdrop layer. Width follows the 2.36:1 source so the camera can pan across it."
+}

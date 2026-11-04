@@ -1,0 +1,62 @@
+{
+  "_generated": "by tools/art/rig.py from config/species/royal_blue_tang.json; do not edit",
+  "bounds": {
+    "height": 113,
+    "width": 240,
+    "x": -45,
+    "y": 0
+  },
+  "coordinate_space": "body Poster local pixels at display size; offset = Poster translation, pivot = scaleRotateCenter",
+  "display_length_px": 240,
+  "layers": {
+    "body": {
+      "height": 113,
+      "offset": [
+        0,
+        0
+      ],
+      "uri": "pkg:/images/fish/royal_blue_tang_body.png",
+      "width": 195
+    },
+    "fin": {
+      "height": 31,
+      "offset": [
+        115,
+        52
+      ],
+      "pivot": [
+        30.35,
+        24.26
+      ],
+      "swing_deg": 15,
+      "uri": "pkg:/images/fish/royal_blue_tang_fin.png",
+      "width": 35
+    },
+    "tail": {
+      "height": 70,
+      "offset": [
+        -45,
+        24
+      ],
+      "pivot": [
+        52.36,
+        34.95
+      ],
+      "swing_deg": 20,
+      "uri": "pkg:/images/fish/royal_blue_tang_tail.png",
+      "width": 54
+    }
+  },
+  "mirror_center": [
+    75.0,
+    56.5
+  ],
+  "scale": 0.123203,
+  "species": "royal_blue_tang",
+  "texture_bytes": 107600,
+  "z_order": [
+    "body",
+    "tail",
+    "fin"
+  ]
+}

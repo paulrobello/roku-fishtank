@@ -69,7 +69,14 @@ zip-check: build
 deploy: build
 	curl -sS -f --digest --user rokudev:$(ROKU_PASSWORD) -F "mysubmit=1" -F "archive=@$(ZIP)" "http://$(ROKU_HOST)/plugin_install"
 
+# Rig pipeline: approved cutouts in assets/source/ -> images/fish, images/decor,
+# config/species/*.rig.json and docs/art/rig-check-*.png (byte-reproducible).
 art:
+	uv run tools/art/rig.py
+
+# Old programmatic placeholder art used by the test channel.
+.PHONY: art-placeholder
+art-placeholder:
 	python3 tools/make_art.py
 
 clean:
