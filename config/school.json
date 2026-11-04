@@ -31,7 +31,7 @@
   "facingDeadband": 6,
   "speedBucket": 15,
   "boundRadius": 260,
-  "maxCatchUpTicks": 240,
+  "maxCatchUpTicks": 16,
   "lane": { "left": 160, "top": 200, "right": 1760, "bottom": 900 },
   "ellipses": [
     { "cx": 470, "cy": 640, "rx": 150, "ry": 110 },
