@@ -13,6 +13,8 @@ function testSuites() as object
     return [
         prngTestSuite()
         steerTestSuite()
+        solarTestSuite()
+        daynightTestSuite()
     ]
 end function
 
