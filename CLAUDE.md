@@ -4,7 +4,7 @@ A Roku screensaver channel written in BrightScript/SceneGraph. Scope and phases 
 
 ## Gate
 
-- `make checkall` (== `checkall-ci`; there is no CI). Legs run cheapest first: `fmt-check` (bsfmt), `lint` (bslint), `typecheck` (bsc validate), `test`, `build` (bsc package to `dist/channel.zip`). Any bsc or bslint **warning** fails the gate.
+- `make checkall` (== `checkall-ci`; there is no CI). Legs run cheapest first: `api-guard` (`tools/api_guard.sh`: OS 16.0-only APIs, `Main`/`RunUserInterface`, manifest `title=`), `fmt-check` (bsfmt), `lint` (bslint), `typecheck` (bsc validate), `test`, `build` (bsc package to `dist/channel.zip`), `zip-check` (`tools/zip_check.sh`: zip holds only manifest, `source/`, `components/`, `images/`, `config/`). Any bsc or bslint **warning** fails the gate.
 - Toolchain is pinned in `package.json`. Install with `bun install`. Never run `node` on project scripts; use bun.
 - `make fmt` rewrites BrightScript formatting in place.
 

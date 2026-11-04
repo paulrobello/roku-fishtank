@@ -47,10 +47,20 @@ test:
 	@echo "test: no unit tests yet (runner lands in P0.4)"
 
 # Fast gate, ordered cheapest first. No CI exists, so checkall-ci is the same gate.
-checkall: fmt-check lint typecheck test build
+checkall: api-guard fmt-check lint typecheck test build zip-check
 	@echo "checkall OK"
 
 checkall-ci: checkall
+
+.PHONY: api-guard zip-check
+
+# OS 16.0-only APIs, Main/RunUserInterface and manifest title= in device sources.
+api-guard:
+	@bash tools/api_guard.sh
+
+# Device zip holds only manifest, source/, components/, images/, config/.
+zip-check: build
+	@bash tools/zip_check.sh $(ZIP)
 
 # Exit the screensaver on the TV before deploying: deploying under a running
 # instance wedges it until a device reboot.
