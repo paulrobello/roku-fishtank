@@ -51,6 +51,48 @@
     36.0,
     33.5
   ],
+  "mirrored": {
+    "layers": {
+      "body": {
+        "height": 67,
+        "offset": [
+          -29,
+          0
+        ],
+        "uri": "pkg:/images/fish/ocellaris_clownfish_body_mirrored.png",
+        "width": 101
+      },
+      "fin": {
+        "height": 26,
+        "offset": [
+          1,
+          29
+        ],
+        "pivot": [
+          3.86,
+          15.24
+        ],
+        "swing_deg": -15,
+        "uri": "pkg:/images/fish/ocellaris_clownfish_fin_mirrored.png",
+        "width": 25
+      },
+      "tail": {
+        "height": 42,
+        "offset": [
+          65,
+          15
+        ],
+        "pivot": [
+          1.09,
+          20.28
+        ],
+        "swing_deg": -20,
+        "uri": "pkg:/images/fish/ocellaris_clownfish_tail_mirrored.png",
+        "width": 36
+      }
+    },
+    "texture_bytes": 35716
+  },
   "scale": 0.066124,
   "species": "ocellaris_clownfish",
   "texture_bytes": 35716,

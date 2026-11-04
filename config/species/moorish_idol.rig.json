@@ -51,6 +51,48 @@
     115.0,
     84.0
   ],
+  "mirrored": {
+    "layers": {
+      "body": {
+        "height": 168,
+        "offset": [
+          0,
+          0
+        ],
+        "uri": "pkg:/images/fish/moorish_idol_body_mirrored.png",
+        "width": 230
+      },
+      "fin": {
+        "height": 34,
+        "offset": [
+          54,
+          84
+        ],
+        "pivot": [
+          3.88,
+          20.66
+        ],
+        "swing_deg": -15,
+        "uri": "pkg:/images/fish/moorish_idol_fin_mirrored.png",
+        "width": 29
+      },
+      "tail": {
+        "height": 78,
+        "offset": [
+          164,
+          58
+        ],
+        "pivot": [
+          1.29,
+          38.5
+        ],
+        "swing_deg": -20,
+        "uri": "pkg:/images/fish/moorish_idol_tail_mirrored.png",
+        "width": 60
+      }
+    },
+    "texture_bytes": 177224
+  },
   "scale": 0.101905,
   "species": "moorish_idol",
   "texture_bytes": 177224,

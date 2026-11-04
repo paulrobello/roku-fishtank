@@ -51,6 +51,48 @@
     23.0,
     20.5
   ],
+  "mirrored": {
+    "layers": {
+      "body": {
+        "height": 41,
+        "offset": [
+          -17,
+          0
+        ],
+        "uri": "pkg:/images/fish/green_chromis_body_mirrored.png",
+        "width": 63
+      },
+      "fin": {
+        "height": 14,
+        "offset": [
+          -2,
+          16
+        ],
+        "pivot": [
+          2.91,
+          9.34
+        ],
+        "swing_deg": -15,
+        "uri": "pkg:/images/fish/green_chromis_fin_mirrored.png",
+        "width": 16
+      },
+      "tail": {
+        "height": 30,
+        "offset": [
+          39,
+          5
+        ],
+        "pivot": [
+          2.6,
+          15.08
+        ],
+        "swing_deg": -22,
+        "uri": "pkg:/images/fish/green_chromis_tail_mirrored.png",
+        "width": 24
+      }
+    },
+    "texture_bytes": 14108
+  },
   "scale": 0.040609,
   "species": "green_chromis",
   "texture_bytes": 14108,

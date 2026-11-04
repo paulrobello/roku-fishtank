@@ -51,6 +51,48 @@
     60.0,
     69.0
   ],
+  "mirrored": {
+    "layers": {
+      "body": {
+        "height": 138,
+        "offset": [
+          -40,
+          0
+        ],
+        "uri": "pkg:/images/fish/yellow_tang_body_mirrored.png",
+        "width": 160
+      },
+      "fin": {
+        "height": 38,
+        "offset": [
+          3,
+          62
+        ],
+        "pivot": [
+          2.47,
+          25.25
+        ],
+        "swing_deg": -15,
+        "uri": "pkg:/images/fish/yellow_tang_fin_mirrored.png",
+        "width": 35
+      },
+      "tail": {
+        "height": 70,
+        "offset": [
+          114,
+          34
+        ],
+        "pivot": [
+          1.15,
+          34.73
+        ],
+        "swing_deg": -20,
+        "uri": "pkg:/images/fish/yellow_tang_tail_mirrored.png",
+        "width": 46
+      }
+    },
+    "texture_bytes": 106520
+  },
   "scale": 0.087951,
   "species": "yellow_tang",
   "texture_bytes": 106520,

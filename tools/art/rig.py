@@ -50,6 +50,19 @@ never change meaning. Species with ``extra_fins`` additionally get
 and ``draw_order`` (the full back-to-front list including extras). A consumer
 that ignores both still draws a correct rest pose minus the extra layers.
 
+Mirrored set (the fish facing the other way; Roku OS 15 has no horizontal mirror
+through a negative ``scale``, see docs/fidelity F4): every layer above is also
+written flopped as ``images/fish/<species>_<layer>_mirrored.png``, and the rig
+JSON gets ``mirrored: {layers: {body, tail, fin}, extra_layers?: [...],
+texture_bytes}`` with the same per-layer fields in the same coordinate space:
+``offset.x`` is reflected about ``mirror_center.x`` (``bounds``, ``mirror_center``
+and ``draw_order`` are shared), ``pivot.x`` is ``width - pivot.x``, and
+``swing_deg`` is negated, so rotating a mirrored layer by +swing looks like the
+base layer's +swing seen in a mirror. ``mirrored`` is relative to the source art's
+facing, not a screen direction. The run fails unless the mirrored rest pose is the
+base rest pose flopped pixel for pixel. Top-level ``texture_bytes`` stays the
+base set's total.
+
 Decor (``config/decor/*.json``): ``backdrop`` layers are scaled to target_height;
 ``sprite`` layers are trimmed, scaled, and get an optional glow-mask stub.
 
@@ -333,6 +346,7 @@ def rig_species(cfg_path: Path) -> None:
     for ename, arr in extra_d.items():
         layers[ename] = finish_sprite(arr)
     body_origin = layers["body"][1]
+    mirrored_imgs = {key: img.transpose(Image.Transpose.FLIP_LEFT_RIGHT) for key, (img, _) in layers.items()}
 
     pivots_disp = {
         "tail": (cut * scale, pivot_y * scale),
@@ -380,6 +394,32 @@ def rig_species(cfg_path: Path) -> None:
     min_y = min(e["offset"][1] for e in every)
     max_x = max(e["offset"][0] + e["width"] for e in every)
     max_y = max(e["offset"][1] + e["height"] for e in every)
+
+    # Mirrored set: each layer flopped about the vertical line through mirror_center.
+    mirrored_layers: dict[str, Any] = {}
+    mirrored_extras: list[dict[str, Any]] = []
+    mirrored_total = 0
+    for key, img in mirrored_imgs.items():
+        out = FISH_OUT / f"{name}_{key}_mirrored.png"
+        save_png(img, out)
+        record_cost(out, img)
+        mirrored_total += img.width * img.height * 4
+        base = rig_layers[key] if key in rig_layers else next(e for e in extra_entries if e["name"] == key)
+        m_entry: dict[str, Any] = {
+            "uri": f"pkg:/images/fish/{name}_{key}_mirrored.png",
+            "width": img.width,
+            "height": img.height,
+            "offset": [min_x + max_x - base["offset"][0] - img.width, base["offset"][1]],
+        }
+        if "pivot" in base:
+            m_entry["pivot"] = [round(img.width - base["pivot"][0], 2), base["pivot"][1]]
+            m_entry["swing_deg"] = -base["swing_deg"]
+        if key in extra_d:
+            m_entry["name"] = key
+            m_entry["z_after"] = base["z_after"]
+            mirrored_extras.append(m_entry)
+        else:
+            mirrored_layers[key] = m_entry
     rig: dict[str, Any] = {
         "_generated": "by tools/art/rig.py from " + str(cfg_path.relative_to(ROOT)) + "; do not edit",
         "species": name,
@@ -395,10 +435,50 @@ def rig_species(cfg_path: Path) -> None:
     if extra_entries:
         rig["extra_layers"] = extra_entries
         rig["draw_order"] = draw_order
+    rig["mirrored"] = {"layers": mirrored_layers, "texture_bytes": mirrored_total}
+    if mirrored_extras:
+        rig["mirrored"]["extra_layers"] = mirrored_extras
     write_json(SPECIES_DIR / f"{name}.rig.json", rig)
 
     reference = resize_premultiplied(to_image(trim), disp_size)
     render_rig_check(name, rig, layers, reference, draw_order)
+    check_mirrored(name, rig, layers, mirrored_imgs, body_origin, draw_order)
+
+
+def check_mirrored(
+    name: str,
+    rig: dict[str, Any],
+    layers: dict[str, tuple[Image.Image, tuple[int, int]]],
+    mirrored_imgs: dict[str, Image.Image],
+    body_origin: tuple[int, int],
+    order: list[str],
+) -> None:
+    """Fail unless the mirrored set at rest is the base rest pose flopped, pixel for pixel.
+
+    Also prints the largest difference at the swing extremes (rotations negated), which
+    differs only by resampling.
+    """
+    b = rig["bounds"]
+    x0, y0 = body_origin[0] + b["x"], body_origin[1] + b["y"]
+    size = (b["width"], b["height"])
+    base = {k: (img, (ox - x0, oy - y0)) for k, (img, (ox, oy)) in layers.items()}
+    entries = {**rig["mirrored"]["layers"], **{e["name"]: e for e in rig["mirrored"].get("extra_layers", [])}}
+    mirr = {
+        k: (img, (entries[k]["offset"][0] - b["x"], entries[k]["offset"][1] - b["y"])) for k, img in mirrored_imgs.items()
+    }
+    base_entries = {**rig["layers"], **{e["name"]: e for e in rig.get("extra_layers", [])}}
+    base_piv = {k: (float(v["pivot"][0]), float(v["pivot"][1])) for k, v in base_entries.items() if "pivot" in v}
+    mirr_piv = {k: (float(v["pivot"][0]), float(v["pivot"][1])) for k, v in entries.items() if "pivot" in v}
+    worst = 0.0
+    for sign in (0.0, -1.0, 1.0):
+        angles = {k: sign * float(v["swing_deg"]) for k, v in base_entries.items() if "swing_deg" in v}
+        flopped = compose(base, base_piv, angles, size, 0, order).transpose(Image.Transpose.FLIP_LEFT_RIGHT)
+        m_angles = {k: sign * float(v["swing_deg"]) for k, v in entries.items() if "swing_deg" in v}
+        diff = float(np.abs(to_float(compose(mirr, mirr_piv, m_angles, size, 0, order)) - to_float(flopped)).max())
+        if sign == 0.0 and diff > 0.0:
+            raise ValueError(f"{name}: mirrored rest pose differs from the flopped base by {diff * 255:.1f}/255")
+        worst = max(worst, diff)
+    print(f"  {name}: mirrored set == flopped base at rest; max|d| at swing extremes {worst * 255:.1f}/255")
 
 
 def compose(

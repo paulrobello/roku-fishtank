@@ -51,6 +51,48 @@
     31.0,
     24.0
   ],
+  "mirrored": {
+    "layers": {
+      "body": {
+        "height": 48,
+        "offset": [
+          -24,
+          0
+        ],
+        "uri": "pkg:/images/fish/mandarin_dragonet_body_mirrored.png",
+        "width": 86
+      },
+      "fin": {
+        "height": 24,
+        "offset": [
+          5,
+          20
+        ],
+        "pivot": [
+          2.63,
+          12.39
+        ],
+        "swing_deg": -15,
+        "uri": "pkg:/images/fish/mandarin_dragonet_fin_mirrored.png",
+        "width": 20
+      },
+      "tail": {
+        "height": 40,
+        "offset": [
+          57,
+          8
+        ],
+        "pivot": [
+          1.07,
+          18.39
+        ],
+        "swing_deg": -18,
+        "uri": "pkg:/images/fish/mandarin_dragonet_tail_mirrored.png",
+        "width": 29
+      }
+    },
+    "texture_bytes": 23072
+  },
   "scale": 0.054348,
   "species": "mandarin_dragonet",
   "texture_bytes": 23072,

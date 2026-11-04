@@ -51,6 +51,48 @@
     75.0,
     56.5
   ],
+  "mirrored": {
+    "layers": {
+      "body": {
+        "height": 113,
+        "offset": [
+          -45,
+          0
+        ],
+        "uri": "pkg:/images/fish/royal_blue_tang_body_mirrored.png",
+        "width": 195
+      },
+      "fin": {
+        "height": 31,
+        "offset": [
+          0,
+          52
+        ],
+        "pivot": [
+          4.65,
+          24.26
+        ],
+        "swing_deg": -15,
+        "uri": "pkg:/images/fish/royal_blue_tang_fin_mirrored.png",
+        "width": 35
+      },
+      "tail": {
+        "height": 70,
+        "offset": [
+          141,
+          24
+        ],
+        "pivot": [
+          1.64,
+          34.95
+        ],
+        "swing_deg": -20,
+        "uri": "pkg:/images/fish/royal_blue_tang_tail_mirrored.png",
+        "width": 54
+      }
+    },
+    "texture_bytes": 107600
+  },
   "scale": 0.123203,
   "species": "royal_blue_tang",
   "texture_bytes": 107600,

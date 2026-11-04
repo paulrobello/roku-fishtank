@@ -51,6 +51,48 @@
     33.0,
     25.0
   ],
+  "mirrored": {
+    "layers": {
+      "body": {
+        "height": 50,
+        "offset": [
+          -22,
+          0
+        ],
+        "uri": "pkg:/images/fish/royal_gramma_body_mirrored.png",
+        "width": 88
+      },
+      "fin": {
+        "height": 18,
+        "offset": [
+          2,
+          19
+        ],
+        "pivot": [
+          2.83,
+          10.07
+        ],
+        "swing_deg": -15,
+        "uri": "pkg:/images/fish/royal_gramma_fin_mirrored.png",
+        "width": 19
+      },
+      "tail": {
+        "height": 35,
+        "offset": [
+          60,
+          8
+        ],
+        "pivot": [
+          0.72,
+          17.18
+        ],
+        "swing_deg": -20,
+        "uri": "pkg:/images/fish/royal_gramma_tail_mirrored.png",
+        "width": 28
+      }
+    },
+    "texture_bytes": 22888
+  },
   "scale": 0.055894,
   "species": "royal_gramma",
   "texture_bytes": 22888,

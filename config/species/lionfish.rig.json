@@ -75,6 +75,66 @@
     80.0,
     102.5
   ],
+  "mirrored": {
+    "extra_layers": [
+      {
+        "height": 86,
+        "name": "spines",
+        "offset": [
+          -30,
+          -2
+        ],
+        "pivot": [
+          77.21,
+          73.51
+        ],
+        "swing_deg": -3,
+        "uri": "pkg:/images/fish/lionfish_spines_mirrored.png",
+        "width": 174,
+        "z_after": "body"
+      }
+    ],
+    "layers": {
+      "body": {
+        "height": 207,
+        "offset": [
+          -60,
+          0
+        ],
+        "uri": "pkg:/images/fish/lionfish_body_mirrored.png",
+        "width": 220
+      },
+      "fin": {
+        "height": 108,
+        "offset": [
+          -26,
+          99
+        ],
+        "pivot": [
+          32.92,
+          21.97
+        ],
+        "swing_deg": -4,
+        "uri": "pkg:/images/fish/lionfish_fin_mirrored.png",
+        "width": 149
+      },
+      "tail": {
+        "height": 84,
+        "offset": [
+          151,
+          74
+        ],
+        "pivot": [
+          2.21,
+          41.65
+        ],
+        "swing_deg": -12,
+        "uri": "pkg:/images/fish/lionfish_tail_mirrored.png",
+        "width": 69
+      }
+    },
+    "texture_bytes": 329568
+  },
   "scale": 0.122111,
   "species": "lionfish",
   "texture_bytes": 329568,

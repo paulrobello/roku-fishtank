@@ -51,6 +51,48 @@
     93.0,
     77.0
   ],
+  "mirrored": {
+    "layers": {
+      "body": {
+        "height": 154,
+        "offset": [
+          -47,
+          0
+        ],
+        "uri": "pkg:/images/fish/emperor_angelfish_body_mirrored.png",
+        "width": 233
+      },
+      "fin": {
+        "height": 42,
+        "offset": [
+          27,
+          76
+        ],
+        "pivot": [
+          3.32,
+          25.62
+        ],
+        "swing_deg": -10,
+        "uri": "pkg:/images/fish/emperor_angelfish_fin_mirrored.png",
+        "width": 45
+      },
+      "tail": {
+        "height": 86,
+        "offset": [
+          182,
+          35
+        ],
+        "pivot": [
+          0.97,
+          42.18
+        ],
+        "swing_deg": -15,
+        "uri": "pkg:/images/fish/emperor_angelfish_tail_mirrored.png",
+        "width": 51
+      }
+    },
+    "texture_bytes": 168632
+  },
   "scale": 0.142132,
   "species": "emperor_angelfish",
   "texture_bytes": 168632,
