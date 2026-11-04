@@ -83,6 +83,35 @@ function extrasWalkPath(cfg as object, seed as integer) as object
     return { duration: path.t, keys: keys, points: points, facings: faces }
 end function
 
+' Leg swing keyed on a walk path: while the walker moves, side x amp x sin(stride phase)
+' with one full swing per stridePx of travel (a whole number per leg, at least one),
+' sampled at its quarter points; while it pauses, 0. side is 1 or -1 (the opposite
+' legs). Returns { keys, values } for an interpolator on the walk's own Animation, so
+' the legs stay in step with the translation and still under ?freeze.
+function extrasGait(path as object, stridePx as float, amp as float, side as float) as object
+    quarter = [0.0, 1.0, 0.0, -1.0]
+    keys = [path.keys[0]]
+    values = [0.0]
+    for i = 1 to path.keys.count() - 1
+        k0 = path.keys[i - 1]
+        k1 = path.keys[i]
+        dx = Abs(path.points[i][0] - path.points[i - 1][0])
+        if dx > 0.5 and k1 > k0 then
+            n = Int(dx / stridePx + 0.5)
+            if n < 1 then n = 1
+            steps = n * 4
+            for j = 1 to steps
+                keys.push(k0 + (k1 - k0) * j / steps)
+                values.push(side * amp * quarter[j mod 4])
+            end for
+        else
+            keys.push(k1)
+            values.push(0.0)
+        end if
+    end for
+    return { keys: keys, values: values }
+end function
+
 ' Holds at x for pause seconds; when newFacing differs, the facing steps over
 ' path.turn seconds at the middle of the pause.
 sub extrasWalkPause(path as object, x as float, pause as float, newFacing as integer)

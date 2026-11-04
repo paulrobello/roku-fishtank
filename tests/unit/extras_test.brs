@@ -13,6 +13,7 @@ function extrasTestSuite() as object
             { name: "walkPathStaysOnItsSurface", fn: extrasTest_walkPathStaysOnItsSurface }
             { name: "walkPathClosesItsLoop", fn: extrasTest_walkPathClosesItsLoop }
             { name: "walkPathTurnsOnlyWhilePaused", fn: extrasTest_walkPathTurnsOnlyWhilePaused }
+            { name: "gaitSwingsOnlyWhileWalking", fn: extrasTest_gaitSwingsOnlyWhileWalking }
             { name: "facingOpacityMatches", fn: extrasTest_facingOpacityMatches }
             { name: "tileGridCoversClipWhileScrolling", fn: extrasTest_tileGridCoversClipWhileScrolling }
             { name: "nightOpacityFadesAndHides", fn: extrasTest_nightOpacityFadesAndHides }
@@ -409,4 +410,28 @@ sub extrasStrict_hostNestlesLeavesAndReturns(t as object)
     assertTrue(t, r.visits >= 10, "nestle visits " + r.visits.toStr())
     assertTrue(t, r.roams >= 10, "roams " + r.roams.toStr())
     assertTrue(t, r.nestleMax <= h.radius * 2.5, "nestle spread " + Str(r.nestleMax))
+end sub
+
+' Gait keys rise monotonically over [0, 1], the legs rest at every path key (so pauses and
+' the loop point are still), and each moving leg swings a whole number of strides.
+sub extrasTest_gaitSwingsOnlyWhileWalking(t as object)
+    for each seed in [1, 7, 42]
+        path = extrasWalkPath(extrasTest_shrimpWalk(), seed)
+        g = extrasGait(path, 20.0, 0.1, 1.0)
+        if not assertNear(t, g.keys[0], 0.0, 0.000001, "starts at 0 seed " + seed.toStr()) then return
+        if not assertNear(t, g.keys[g.keys.count() - 1], 1.0, 0.000001, "ends at 1 seed " + seed.toStr()) then return
+        peak = 0.0
+        for i = 1 to g.keys.count() - 1
+            if not assertTrue(t, g.keys[i] >= g.keys[i - 1], "keys rise at " + i.toStr() + " seed " + seed.toStr()) then return
+            if Abs(g.values[i]) > peak then peak = Abs(g.values[i])
+        end for
+        if not assertNear(t, peak, 0.1, 0.000001, "swings to amp seed " + seed.toStr()) then return
+        for each k in path.keys
+            for i = 0 to g.keys.count() - 1
+                if Abs(g.keys[i] - k) < 0.0000001 then
+                    if not assertNear(t, g.values[i], 0.0, 0.000001, "rests at path key seed " + seed.toStr()) then return
+                end if
+            end for
+        end for
+    end for
 end sub

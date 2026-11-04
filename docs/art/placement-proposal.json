@@ -1162,6 +1162,26 @@
     "y": 934,
     "card": "P4.6"
   },
+  "crab_layers": {
+    "width": 150,
+    "height": 82,
+    "leg_pivot_l": [
+      37,
+      27
+    ],
+    "leg_pivot_r": [
+      113,
+      27
+    ],
+    "claw_pivot_l": [
+      43,
+      24
+    ],
+    "claw_pivot_r": [
+      107,
+      24
+    ]
+  },
   "starfish": {
     "file": "images/extras/starfish.png",
     "width": 112,

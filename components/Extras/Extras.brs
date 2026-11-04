@@ -146,10 +146,7 @@ end sub
 sub extrasBuildCritters(holder as object, cr as object)
     if cr = invalid then return
     if cr.shrimp <> invalid then extrasBuildShrimp(holder, cr.shrimp)
-    if cr.crab <> invalid then
-        root = extrasWalker(holder, cr.crab.walk, 1)
-        extrasSprite(root, cr.crab.uri, cr.crab.width, cr.crab.height)
-    end if
+    if cr.crab <> invalid then extrasBuildCrab(holder, cr.crab)
     if cr.starfish <> invalid then
         sf = cr.starfish
         root = extrasWalker(holder, sf.walk, 2)
@@ -162,6 +159,47 @@ sub extrasBuildCritters(holder as object, cr as object)
         extrasInterp(anim, "FloatFieldInterpolator", star, "rotation", extrasLoopKeys(9), values)
         anim.control = "start"
     end if
+end sub
+
+' The crab walks sideways on its legs: each side's legs rock about their hip with the
+' same rotation, which on the mirrored sides lifts one side while the other plants, one swing per stridePx of travel and still while it pauses, with a
+' small bob, all keyed on the walk Animation. The claws sway on their own slow loop.
+sub extrasBuildCrab(holder as object, cb as object)
+    root = extrasWalker(holder, cb.walk, 1)
+    path = m.lastPath
+    walkAnim = m.lastAnim
+    bob = root.createChild("Group")
+    bob.id = extrasId("crabBob")
+    L = cb.layers
+    toRad = 0.0174533
+    for each leg in [{ uri: L.legsL, pivot: cb.legPivotL, side: 1.0 }, { uri: L.legsR, pivot: cb.legPivotR, side: 1.0 }]
+        p = extrasSprite(bob, leg.uri, cb.width, cb.height)
+        p.id = extrasId("crabLegs")
+        p.scaleRotateCenter = leg.pivot
+        g = extrasGait(path, cb.stridePx, cb.legDeg * toRad, leg.side)
+        extrasInterp(walkAnim, "FloatFieldInterpolator", p, "rotation", g.keys, g.values)
+    end for
+    extrasSprite(bob, L.body, cb.width, cb.height)
+    g = extrasGait(path, cb.stridePx / 2, cb.bobPx, 1.0)
+    lift = []
+    for each v in g.values
+        lift.push([0, -Abs(v)])
+    end for
+    extrasInterp(walkAnim, "Vector2DFieldInterpolator", bob, "translation", g.keys, lift)
+    sway = extrasLoop(root, "crabClaws", cb.clawSec)
+    keys = extrasLoopKeys(9)
+    for each claw in [{ uri: L.clawL, pivot: cb.clawPivotL, side: 1.0, phase: 0.0 }, { uri: L.clawR, pivot: cb.clawPivotR, side: -1.0, phase: 1.3 }]
+        p = extrasSprite(bob, claw.uri, cb.width, cb.height)
+        p.id = extrasId("crabClaw")
+        p.scaleRotateCenter = claw.pivot
+        values = []
+        for each v in extrasSwayValues(cb.clawDeg * toRad, claw.phase, 9)
+            values.push(claw.side * v)
+        end for
+        p.rotation = values[0]
+        extrasInterp(sway, "FloatFieldInterpolator", p, "rotation", keys, values)
+    end for
+    sway.control = "start"
 end sub
 
 function extrasSprite(parent as object, uri as string, w as integer, h as integer) as object

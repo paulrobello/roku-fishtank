@@ -76,7 +76,22 @@
       "antennaSec": 0.9
     },
     "crab": {
-      "uri": "pkg:/images/extras/crab.png",
+      "layers": {
+        "legsL": "pkg:/images/extras/crab_legs_l.png",
+        "legsR": "pkg:/images/extras/crab_legs_r.png",
+        "body": "pkg:/images/extras/crab_body.png",
+        "clawL": "pkg:/images/extras/crab_claw_l.png",
+        "clawR": "pkg:/images/extras/crab_claw_r.png"
+      },
+      "legPivotL": [37, 27],
+      "legPivotR": [113, 27],
+      "clawPivotL": [43, 24],
+      "clawPivotR": [107, 24],
+      "legDeg": 7,
+      "stridePx": 14,
+      "bobPx": 1,
+      "clawDeg": 5,
+      "clawSec": 2.8,
       "width": 150,
       "height": 82,
       "walk": { "x": 900, "y": 934, "left": 820, "right": 1120, "speed": 60, "legPx": [20, 90], "pauseSec": [1.0, 4.0], "legs": 8 }

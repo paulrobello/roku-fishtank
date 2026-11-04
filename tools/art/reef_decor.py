@@ -415,9 +415,69 @@ def build_extras() -> None:
     crab, _ = finish(scale_by(trim(load("extras/crab.png")), 150 / 1971))
     size = emit(crab, "extras/crab.png")
     place("crab", "extras/crab.png", size, layer="frontLane", x=900, y=SAND_TOP_Y + 64 - size[1], card="P4.6")
+    crab_layers()
     star, _ = finish(scale_by(trim(load("extras/starfish.png")), 112 / 1971))
     size = emit(star, "extras/starfish.png")
     place("starfish", "extras/starfish.png", size, layer="frontLane", x=1300, y=SAND_TOP_Y + 24 - size[1], card="P4.6")
+
+
+# Crab limbs, in source pixels of assets/source/extras/crab.png. The right side mirrors
+# the left about CRAB_MID. Claws take precedence over legs; the body keeps the rest.
+CRAB_MID = 2040
+CRAB_CLAW = [(400, 420), (470, 372), (545, 395), (600, 460), (640, 540), (700, 590), (800, 640),
+             (965, 720), (975, 925), (760, 930), (620, 890), (520, 830), (460, 770), (425, 700),
+             (415, 620), (405, 540)]
+CRAB_LEG_PIVOT = (520, 520)
+CRAB_CLAW_PIVOT = (600, 470)
+
+
+def crab_layers() -> None:
+    """Body, legs and claws of the crab on one shared canvas (the crab.png crop)."""
+    from PIL import ImageDraw
+
+    src = load("extras/crab.png")
+    hh, ww = src.shape[:2]
+    tx0, ty0, tx1, ty1 = bbox(src[..., 3])
+
+    def poly(points: list[tuple[int, int]]) -> NDArray[Any]:
+        img = Image.new("L", (ww, hh), 0)
+        ImageDraw.Draw(img).polygon(points, fill=255)
+        return np.asarray(img) > 0
+
+    ys, xs = np.mgrid[0:hh, 0:ww]
+    claw_l = poly(CRAB_CLAW)
+    claw_r = poly([(CRAB_MID - x, y) for x, y in CRAB_CLAW])
+    legs_l = ((xs < 530) | (ys > 950)) & (xs < CRAB_MID / 2) & ~claw_l
+    legs_r = ((xs > CRAB_MID - 530) | (ys > 950)) & (xs >= CRAB_MID / 2) & ~claw_r
+    s = 150 / 1971
+    full = scale_by(src[ty0:ty1, tx0:tx1], s)
+    x0, y0, x1, y1 = bbox(full[..., 3], ALPHA_DUST / 255.0)
+    full = full[y0:y1, x0:x1]
+
+    def soft(mask: NDArray[Any]) -> Float:
+        m = mask[ty0:ty1, tx0:tx1].astype(np.float32)
+        h2, w2 = m.shape
+        a = scale(np.dstack([np.ones((h2, w2, 3), np.float32), m]), (round(w2 * s), round(h2 * s)))[..., 3]
+        return a[y0:y1, x0:x1]
+
+    masks = {"legs_l": soft(legs_l), "legs_r": soft(legs_r), "claw_l": soft(claw_l), "claw_r": soft(claw_r)}
+    masks["body"] = np.clip(1.0 - sum(masks.values()), 0.0, 1.0)
+
+    def at(pt: tuple[int, int]) -> list[int]:
+        return [round((pt[0] - tx0) * s) - x0, round((pt[1] - ty0) * s) - y0]
+
+    for name, m in masks.items():
+        part = full.copy()
+        part[..., 3] *= m
+        size = emit(bleed(part), f"extras/crab_{name}.png")
+    mirror = (CRAB_MID - CRAB_LEG_PIVOT[0], CRAB_LEG_PIVOT[1])
+    claw_mirror = (CRAB_MID - CRAB_CLAW_PIVOT[0], CRAB_CLAW_PIVOT[1])
+    placements["crab_layers"] = {
+        "width": size[0], "height": size[1],
+        "leg_pivot_l": at(CRAB_LEG_PIVOT), "leg_pivot_r": at(mirror),
+        "claw_pivot_l": at(CRAB_CLAW_PIVOT), "claw_pivot_r": at(claw_mirror),
+    }
+    print("crab layers", placements["crab_layers"])
 
 
 OWNED = [
