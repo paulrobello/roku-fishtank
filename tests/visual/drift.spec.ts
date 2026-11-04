@@ -58,6 +58,39 @@ async function edgeStats(page: import("@playwright/test").Page, png: Buffer): Pr
   );
 }
 
+// Bubbles, seaweed and fish run on their own clocks, so drift is compared only in the surface
+// water band (above every fish lane), skipping columns within 120 px of a bubble source.
+const BAND = { top: 0, bottom: 120 };
+const BUBBLE_SOURCES_X: readonly number[] = [1176, 1590];
+
+async function bandMaxDiff(page: import("@playwright/test").Page, a: Buffer, b: Buffer): Promise<number> {
+  return page.evaluate(
+    async ({ a64, b64, band, sources }) => {
+      const load = async (s: string): Promise<Uint8ClampedArray> => {
+        const img = new Image();
+        img.src = `data:image/png;base64,${s}`;
+        await img.decode();
+        const c = document.createElement("canvas");
+        c.width = img.width;
+        c.height = img.height;
+        const ctx = c.getContext("2d") as CanvasRenderingContext2D;
+        ctx.drawImage(img, 0, 0);
+        return ctx.getImageData(0, band.top, img.width, band.bottom - band.top).data;
+      };
+      const [da, db] = [await load(a64), await load(b64)];
+      const width = da.length / 4 / (band.bottom - band.top);
+      let max = 0;
+      for (let i = 0; i < da.length; i += 4) {
+        const x = (i / 4) % width;
+        if (sources.some((s) => Math.abs(x - s) < 120)) continue;
+        for (let ch = 0; ch < 3; ch++) max = Math.max(max, Math.abs(da[i + ch] - db[i + ch]));
+      }
+      return max;
+    },
+    { a64: a.toString("base64"), b64: b.toString("base64"), band: BAND, sources: [...BUBBLE_SOURCES_X] },
+  );
+}
+
 test("camera drift never reveals the backdrop edge at four loop phases", async ({ page }) => {
   const frames: Buffer[] = [];
   for (const [k, freeze] of PHASES.entries()) {
@@ -73,7 +106,7 @@ test("camera drift never reveals the backdrop edge at four loop phases", async (
   }
   // The drift really moves, and the loop closes: the wrap (phase 0) and the centre (phase 2)
   // are both zero offset.
-  expect(frames[1].equals(frames[3]), "+x and -x extremes should differ").toBe(false);
-  expect(frames[2].equals(frames[1]), "centre and +x extreme should differ").toBe(false);
-  expect(frames[0].equals(frames[2]), "phase 0 (wrap) and the centre should both be zero offset").toBe(true);
+  expect(await bandMaxDiff(page, frames[1], frames[3]), "+x and -x extremes should differ").toBeGreaterThan(8);
+  expect(await bandMaxDiff(page, frames[2], frames[1]), "centre and +x extreme should differ").toBeGreaterThan(8);
+  expect(await bandMaxDiff(page, frames[0], frames[2]), "phase 0 (wrap) and the centre should both be zero offset").toBeLessThanOrEqual(2);
 });
