@@ -2,8 +2,8 @@ import { expect, test } from "@playwright/test";
 
 type PreviewWindow = Window & { __preview?: { status: string; log: string[] } };
 
-// ReefTank has no running Animations yet, so ?freeze=3 still reports PREVIEW_FROZEN at T=3
-// and the frame is the static layered tank (backdrop + decor from config/scene.json).
+// ?freeze=3 snaps the camera drift loop to T=3 s (a few px off centre at speed 1), so the frame
+// is the layered tank (backdrop + decor from config/scene.json) at that drift offset.
 test("frozen Reef Tank frame matches the baseline", async ({ page }) => {
   const renderer = await page.evaluate(() => {
     const gl = document.createElement("canvas").getContext("webgl");

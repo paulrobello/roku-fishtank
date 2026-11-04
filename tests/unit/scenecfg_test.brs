@@ -13,6 +13,11 @@ function scenecfgTestSuite() as object
             { name: "layerQueries", fn: scenecfgTest_layerQueries }
             { name: "lanesBackToFront", fn: scenecfgTest_lanesBackToFront }
             { name: "designScale", fn: scenecfgTest_designScale }
+            { name: "driftMaxAmplitude", fn: scenecfgTest_driftMaxAmplitude }
+            { name: "driftValidates", fn: scenecfgTest_driftValidates }
+            { name: "driftRejectsEdgeReveal", fn: scenecfgTest_driftRejectsEdgeReveal }
+            { name: "driftRejectsBadFields", fn: scenecfgTest_driftRejectsBadFields }
+            { name: "driftLoopIsClosedAndInPhase", fn: scenecfgTest_driftLoopIsClosedAndInPhase }
         ]
     }
 end function
@@ -96,4 +101,72 @@ sub scenecfgTest_designScale(t as object)
     cfg = scenecfgTest_sample()
     assertNear(t, sceneCfgDesignScale(cfg, 1920), 1.0, 0.0001)
     assertNear(t, sceneCfgDesignScale(cfg, 1280), 0.6667, 0.0001, "hd")
+end sub
+
+function scenecfgTest_driftSample() as object
+    cfg = scenecfgTest_sample()
+    cfg.decor.push({ id: "bd", layer: "water", uri: "pkg:/images/b.png", x: -300, y: 0, width: 2520, height: 1080 })
+    cfg.decor.push({ id: "fg", layer: "coral", uri: "pkg:/images/f.png", x: -30, y: -6, width: 1980, height: 1100 })
+    cfg.drift = { enabled: true, periodSeconds: 90, amplitude: { x: 40, y: 0 }, keyCount: 16 }
+    return cfg
+end function
+
+sub scenecfgTest_driftMaxAmplitude(t as object)
+    max = sceneCfgDriftMaxAmplitude(scenecfgTest_driftSample())
+    assertNear(t, max.x, 50.0, 0.001, "coral 30 px margin / parallax 0.6 beats water 300 / 0.2")
+    assertNear(t, max.y, 0.0, 0.001, "backdrop has no vertical margin")
+    assertTrue(t, sceneCfgDriftMaxAmplitude(scenecfgTest_sample()).x > 1.0e8, "no spanning decor means unbounded")
+end sub
+
+sub scenecfgTest_driftValidates(t as object)
+    cfg = scenecfgTest_driftSample()
+    assertEqual(t, sceneCfgValidate(cfg).count(), 0, sceneCfgValidate(cfg).join("; "))
+    cfg.drift.amplitude.x = 50
+    assertEqual(t, sceneCfgValidate(cfg).count(), 0, "exactly at the limit is allowed")
+    assertTrue(t, sceneCfgDriftEnabled(cfg))
+    cfg.drift.enabled = false
+    assertTrue(t, not sceneCfgDriftEnabled(cfg))
+end sub
+
+sub scenecfgTest_driftRejectsEdgeReveal(t as object)
+    cfg = scenecfgTest_driftSample()
+    cfg.drift.amplitude.x = 51
+    errors = sceneCfgValidate(cfg)
+    assertEqual(t, errors.count(), 1, errors.join("|"))
+    assertTrue(t, Instr(1, errors[0], "amplitude x") > 0, errors[0])
+    cfg.drift.amplitude.x = 10
+    cfg.drift.amplitude.y = 1
+    errors = sceneCfgValidate(cfg)
+    assertEqual(t, errors.count(), 1, errors.join("|"))
+    assertTrue(t, Instr(1, errors[0], "amplitude y") > 0, errors[0])
+end sub
+
+sub scenecfgTest_driftRejectsBadFields(t as object)
+    cfg = scenecfgTest_driftSample()
+    cfg.drift.periodSeconds = 0
+    cfg.drift.keyCount = 3
+    cfg.drift.enabled = "yes"
+    assertEqual(t, sceneCfgValidate(cfg).count(), 3, sceneCfgValidate(cfg).join("|"))
+    cfg.drift = { periodSeconds: 90 }
+    assertEqual(t, sceneCfgValidate(cfg).count(), 1, "missing amplitude")
+    cfg.drift = "slow"
+    assertEqual(t, sceneCfgValidate(cfg).count(), 1, "not an object")
+    cfg.drift = invalid
+    assertEqual(t, sceneCfgValidate(cfg).count(), 0, "drift is optional")
+end sub
+
+sub scenecfgTest_driftLoopIsClosedAndInPhase(t as object)
+    drift = scenecfgTest_driftSample().drift
+    keys = sceneCfgDriftKeys(drift)
+    values = sceneCfgDriftValues(drift, 0.5)
+    assertEqual(t, keys.count(), 17)
+    assertEqual(t, values.count(), 17)
+    assertNear(t, keys[0], 0.0, 0.0001)
+    assertNear(t, keys[16], 1.0, 0.0001)
+    assertNear(t, values[0][0], values[16][0], 0.0001, "loop closes in x")
+    assertNear(t, values[0][1], values[16][1], 0.0001, "loop closes in y")
+    assertNear(t, values[4][0], 20.0, 0.001, "quarter phase is the extreme, parallax 0.5 x amplitude 40")
+    assertNear(t, values[12][0], -20.0, 0.001, "three quarters is the opposite extreme")
+    full = sceneCfgDriftValues(drift, 1.0)
+    assertNear(t, full[4][0], 40.0, 0.001, "a layer at parallax 1 moves the full amplitude")
 end sub

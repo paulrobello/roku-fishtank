@@ -1,8 +1,14 @@
 {
-  "_notes": "ReefTank layout (P1.1). Coordinates are design pixels at 1920x1080 inside the camera Group; ReefTank scales the camera by screen width / design.width. layers run back to front, each built as a Group whose id is the layer id; name is the PRD scene-stack label. parallax is the per-layer drift factor P1.2 applies to the camera offset (0 = fixed, 1 = moves with the camera); the values here are placeholders. A layer with a lane block is a fish lane: rect bounds the fish anchor, scale and tint (0xRRGGBBAA multiply) set the lane's depth. Until P1.7 splits the art, the single painted backdrop (water, back rock and coral in one image) sits in waterGradient, centered with 313 px of drift margin on each side; coral_acropora stands in midCoral so back-lane fish pass behind it. Colors are hex strings because JSON integers cannot hold the 32-bit RGBA values.",
+  "_notes": "ReefTank layout (P1.1). Coordinates are design pixels at 1920x1080 inside the camera Group; ReefTank scales the camera by screen width / design.width. layers run back to front, each built as a Group whose id is the layer id; name is the PRD scene-stack label. parallax is the per-layer drift factor P1.2 applies to the camera offset (0 = fixed, 1 = moves with the camera); the values here are placeholders. drift (P1.2) is the camera loop: amplitude is in design px and the validator rejects an amplitude where parallax * amplitude exceeds the art margin of a decor that spans the view (the reef backdrop has 313 px of margin left and right and none above or below, so y stays 0). A layer with a lane block is a fish lane: rect bounds the fish anchor, scale and tint (0xRRGGBBAA multiply) set the lane's depth. Until P1.7 splits the art, the single painted backdrop (water, back rock and coral in one image) sits in waterGradient, centered with 313 px of drift margin on each side; coral_acropora stands in midCoral so back-lane fish pass behind it. Colors are hex strings because JSON integers cannot hold the 32-bit RGBA values.",
   "location": { "name": "Woodland, CA", "latitude": 38.68, "longitude": -121.77 },
   "design": { "width": 1920, "height": 1080 },
   "backgroundColor": "0x0B2F55FF",
+  "drift": {
+    "enabled": true,
+    "periodSeconds": 90,
+    "amplitude": { "x": 80, "y": 0 },
+    "keyCount": 48
+  },
   "layers": [
     { "id": "waterGradient", "name": "Water gradient", "parallax": 0.2 },
     { "id": "lightShafts", "name": "Light shafts", "parallax": 0.25 },

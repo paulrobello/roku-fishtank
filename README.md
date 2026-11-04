@@ -46,7 +46,7 @@ brs-engine with the SceneGraph extension on a 1920x1080 canvas scaled to the win
   | `scene` | `?scene=FidelityScene` | scene component to create (default `ReefTank`) | used by `Main` only |
   | `seed` | `?seed=42` | `previewSeed` (integer) | plumbed and printed |
   | `time` | `?time=18:30` | `previewTime` (string) | plumbed and printed |
-  | `speed` | `?speed=4x` | `previewSpeed` (float) | scales the FishBrain clock and its mover durations; Fish tail/turn animations run at 1x |
+  | `speed` | `?speed=4x` | `previewSpeed` (float) | scales the FishBrain clock and its mover durations and the camera drift loop; Fish tail/turn animations run at 1x |
   | `freeze` | `?freeze=10` | `previewFreeze` (seconds) | pauses all Animations at T and snaps them to their value at T, so reloads give the same frame |
   | `species` | `?species=lionfish` | `previewSpecies` (string) | species shown by `FishDemoScene` (default `royal_blue_tang`) |
 
@@ -90,7 +90,7 @@ brs-engine with the SceneGraph extension on a 1920x1080 canvas scaled to the win
   `docs/preview/behavior-*.png`.
 
 `make test-visual` (part of `make checkall`) starts an isolated server on 8139, opens
-`?freeze=3` (the Reef Tank) and `?scene=BrainDemoScene&seed=7&freeze=5`, and compares the
+`?freeze=3` (the Reef Tank), the camera drift at four loop phases (`tests/visual/drift.spec.ts`, `?speed=30&freeze=0.75..3`, asserts the frame edges never show the background) and `?scene=BrainDemoScene&seed=7&freeze=5`, and compares the
 canvas to `tests/visual/__screenshots__/reeftank-t3.png` and `brain-seed7-t5.png`.
 After an intended visual change, refresh the baseline with
 `bunx playwright test --update-snapshots` and review the new PNG before committing.
