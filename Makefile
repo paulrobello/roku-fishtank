@@ -11,8 +11,7 @@ $(ZIP): manifest source/main.brs components/FishtankTest.xml components/Fishtank
 
 # ROKU_HOST=<ip> ROKU_PASSWORD=<dev password> make deploy
 deploy: build
-	npx --yes roku-deploy press --host $$(echo $(ROKU_HOST)) --password $$(echo $(ROKU_PASSWORD)) --outDir dist || \
-	  curl -sS --user rokudev:$(ROKU_PASSWORD) -F "mysubmit=1" -F "archive=@$(ZIP)" "http://$(ROKU_HOST)/plugin_install"
+	curl -sS -f --digest --user rokudev:$(ROKU_PASSWORD) -F "mysubmit=1" -F "archive=@$(ZIP)" "http://$(ROKU_HOST)/plugin_install"
 
 checkall: build
 	unzip -l $(ZIP) | grep -E "manifest|main\.brs|FishtankTest\.xml|FishtankTest\.brs|fish_|pebbles|icon_|splash_" | sort
