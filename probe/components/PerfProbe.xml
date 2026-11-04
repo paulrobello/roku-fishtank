@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<component name="PerfProbe" extends="Scene">
+    <script type="text/brightscript" uri="PerfProbe.brs" />
+    <children>
+        <Rectangle id="water" color="0x062B45" />
+        <Group id="layers" />
+        <Group id="fish" />
+        <Rectangle id="ticker" color="0xFFFFFF" width="4" height="4" translation="[0, 0]" />
+    </children>
+</component>

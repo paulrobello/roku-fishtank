@@ -1,0 +1,154 @@
+PROBE start design= 1920 x 1080 
+PROBE stage_begin= 0 fish= 0 layers= 0
+PROBE stage= 0 fish= 0 layers= 0 fps= 63
+PROBE stage= 0 fish= 0 layers= 0 fps= 60
+PROBE stage= 0 fish= 0 layers= 0 fps= 60
+PROBE stage= 0 fish= 0 layers= 0 fps= 59
+PROBE stage= 0 fish= 0 layers= 0 fps= 60
+PROBE stage= 0 fish= 0 layers= 0 fps= 60
+PROBE stage= 0 fish= 0 layers= 0 fps= 60
+PROBE stage= 0 fish= 0 layers= 0 fps= 60
+PROBE stage= 0 fish= 0 layers= 0 fps= 60
+PROBE stage= 0 fish= 0 layers= 0 fps= 60
+PROBE stage= 0 fish= 0 layers= 0 fps= 60
+PROBE stage= 0 fish= 0 layers= 0 fps= 60
+PROBE stage_begin= 1 fish= 10 layers= 2
+11-04 19:53:27.991 app  [sg.scene.bitmap.big] Warning! Loaded texture (2400 x 1080) larger than the UI resolution (1920 x 1080) - PerfProbe/Poster:layer2 pkg:/images/layer_2.png
+11-04 19:53:28.087 app  [sg.scene.bitmap.big] Warning! Loaded texture (2400 x 1080) larger than the UI resolution (1920 x 1080) - PerfProbe/Poster:layer1 pkg:/images/layer_1.png
+PROBE stage= 1 fish= 10 layers= 2 fps= 60
+PROBE stage= 1 fish= 10 layers= 2 fps= 60
+PROBE stage= 1 fish= 10 layers= 2 fps= 60
+PROBE stage= 1 fish= 10 layers= 2 fps= 60
+PROBE stage= 1 fish= 10 layers= 2 fps= 60
+PROBE stage= 1 fish= 10 layers= 2 fps= 59
+PROBE stage= 1 fish= 10 layers= 2 fps= 60
+PROBE stage= 1 fish= 10 layers= 2 fps= 60
+PROBE stage= 1 fish= 10 layers= 2 fps= 60
+PROBE stage= 1 fish= 10 layers= 2 fps= 60
+PROBE stage= 1 fish= 10 layers= 2 fps= 60
+PROBE stage= 1 fish= 10 layers= 2 fps= 60
+PROBE stage_begin= 2 fish= 20 layers= 2
+PROBE stage= 2 fish= 20 layers= 2 fps= 60
+PROBE stage= 2 fish= 20 layers= 2 fps= 60
+PROBE stage= 2 fish= 20 layers= 2 fps= 60
+PROBE stage= 2 fish= 20 layers= 2 fps= 60
+PROBE stage= 2 fish= 20 layers= 2 fps= 60
+PROBE stage= 2 fish= 20 layers= 2 fps= 60
+PROBE stage= 2 fish= 20 layers= 2 fps= 60
+PROBE stage= 2 fish= 20 layers= 2 fps= 60
+PROBE stage= 2 fish= 20 layers= 2 fps= 60
+PROBE stage= 2 fish= 20 layers= 2 fps= 60
+PROBE stage= 2 fish= 20 layers= 2 fps= 59
+PROBE stage= 2 fish= 20 layers= 2 fps= 60
+PROBE stage_begin= 3 fish= 30 layers= 4
+11-04 19:53:51.981 app  [sg.scene.bitmap.big] Warning! Loaded texture (2400 x 1080) larger than the UI resolution (1920 x 1080) - PerfProbe/Poster:layer4 pkg:/images/layer_4.png
+11-04 19:53:52.094 app  [sg.scene.bitmap.big] Warning! Loaded texture (2400 x 1080) larger than the UI resolution (1920 x 1080) - PerfProbe/Poster:layer3 pkg:/images/layer_3.png
+PROBE stage= 3 fish= 30 layers= 4 fps= 41
+PROBE stage= 3 fish= 30 layers= 4 fps= 30
+PROBE stage= 3 fish= 30 layers= 4 fps= 30
+PROBE stage= 3 fish= 30 layers= 4 fps= 31
+PROBE stage= 3 fish= 30 layers= 4 fps= 31
+PROBE stage= 3 fish= 30 layers= 4 fps= 32
+PROBE stage= 3 fish= 30 layers= 4 fps= 30
+PROBE stage= 3 fish= 30 layers= 4 fps= 33
+PROBE stage= 3 fish= 30 layers= 4 fps= 31
+PROBE stage= 3 fish= 30 layers= 4 fps= 30
+PROBE stage= 3 fish= 30 layers= 4 fps= 32
+PROBE stage= 3 fish= 30 layers= 4 fps= 30
+PROBE stage_begin= 4 fish= 45 layers= 4
+PROBE stage= 4 fish= 45 layers= 4 fps= 31
+PROBE stage= 4 fish= 45 layers= 4 fps= 30
+PROBE stage= 4 fish= 45 layers= 4 fps= 30
+PROBE stage= 4 fish= 45 layers= 4 fps= 30
+PROBE stage= 4 fish= 45 layers= 4 fps= 30
+PROBE stage= 4 fish= 45 layers= 4 fps= 30
+PROBE stage= 4 fish= 45 layers= 4 fps= 30
+PROBE stage= 4 fish= 45 layers= 4 fps= 30
+PROBE stage= 4 fish= 45 layers= 4 fps= 30
+PROBE stage= 4 fish= 45 layers= 4 fps= 30
+PROBE stage= 4 fish= 45 layers= 4 fps= 30
+PROBE stage= 4 fish= 45 layers= 4 fps= 30
+PROBE stage_begin= 5 fish= 60 layers= 6
+11-04 19:54:15.994 app  [sg.scene.bitmap.big] Warning! Loaded texture (2400 x 1080) larger than the UI resolution (1920 x 1080) - PerfProbe/Poster:layer6 pkg:/images/layer_6.png
+11-04 19:54:16.090 app  [sg.scene.bitmap.big] Warning! Loaded texture (2400 x 1080) larger than the UI resolution (1920 x 1080) - PerfProbe/Poster:layer5 pkg:/images/layer_5.png
+PROBE stage= 5 fish= 60 layers= 6 fps= 30
+PROBE stage= 5 fish= 60 layers= 6 fps= 30
+PROBE stage= 5 fish= 60 layers= 6 fps= 30
+PROBE stage= 5 fish= 60 layers= 6 fps= 30
+PROBE stage= 5 fish= 60 layers= 6 fps= 30
+PROBE stage= 5 fish= 60 layers= 6 fps= 30
+PROBE stage= 5 fish= 60 layers= 6 fps= 30
+PROBE stage= 5 fish= 60 layers= 6 fps= 30
+PROBE stage= 5 fish= 60 layers= 6 fps= 30
+PROBE stage= 5 fish= 60 layers= 6 fps= 30
+PROBE stage= 5 fish= 60 layers= 6 fps= 30
+PROBE stage= 5 fish= 60 layers= 6 fps= 30
+PROBE stage_begin= 6 fish= 80 layers= 6
+PROBE stage= 6 fish= 80 layers= 6 fps= 30
+PROBE stage= 6 fish= 80 layers= 6 fps= 30
+PROBE stage= 6 fish= 80 layers= 6 fps= 30
+PROBE stage= 6 fish= 80 layers= 6 fps= 30
+PROBE stage= 6 fish= 80 layers= 6 fps= 30
+PROBE stage= 6 fish= 80 layers= 6 fps= 30
+PROBE stage= 6 fish= 80 layers= 6 fps= 30
+PROBE stage= 6 fish= 80 layers= 6 fps= 29
+PROBE stage= 6 fish= 80 layers= 6 fps= 30
+PROBE stage= 6 fish= 80 layers= 6 fps= 30
+PROBE stage= 6 fish= 80 layers= 6 fps= 30
+PROBE stage= 6 fish= 80 layers= 6 fps= 30
+PROBE stage_begin= 7 fish= 100 layers= 8
+11-04 19:54:39.993 app  [sg.scene.bitmap.big] Warning! Loaded texture (2400 x 1080) larger than the UI resolution (1920 x 1080) - PerfProbe/Poster:layer8 pkg:/images/layer_8.png
+11-04 19:54:40.096 app  [sg.scene.bitmap.big] Warning! Loaded texture (2400 x 1080) larger than the UI resolution (1920 x 1080) - PerfProbe/Poster:layer7 pkg:/images/layer_7.png
+PROBE stage= 7 fish= 100 layers= 8 fps= 24
+PROBE stage= 7 fish= 100 layers= 8 fps= 20
+PROBE stage= 7 fish= 100 layers= 8 fps= 20
+PROBE stage= 7 fish= 100 layers= 8 fps= 21
+PROBE stage= 7 fish= 100 layers= 8 fps= 20
+PROBE stage= 7 fish= 100 layers= 8 fps= 20
+PROBE stage= 7 fish= 100 layers= 8 fps= 20
+PROBE stage= 7 fish= 100 layers= 8 fps= 20
+PROBE stage= 7 fish= 100 layers= 8 fps= 21
+PROBE stage= 7 fish= 100 layers= 8 fps= 20
+PROBE stage= 7 fish= 100 layers= 8 fps= 20
+PROBE stage= 7 fish= 100 layers= 8 fps= 20
+PROBE stage_begin= 8 fish= 140 layers= 8
+PROBE stage= 8 fish= 140 layers= 8 fps= 20
+PROBE stage= 8 fish= 140 layers= 8 fps= 29
+PROBE stage= 8 fish= 140 layers= 8 fps= 30
+PROBE stage= 8 fish= 140 layers= 8 fps= 30
+PROBE stage= 8 fish= 140 layers= 8 fps= 30
+PROBE stage= 8 fish= 140 layers= 8 fps= 30
+PROBE stage= 8 fish= 140 layers= 8 fps= 30
+PROBE stage= 8 fish= 140 layers= 8 fps= 30
+PROBE stage= 8 fish= 140 layers= 8 fps= 30
+PROBE stage= 8 fish= 140 layers= 8 fps= 30
+PROBE stage= 8 fish= 140 layers= 8 fps= 30
+PROBE stage= 8 fish= 140 layers= 8 fps= 30
+PROBE done
+PROBE stage= 8 fish= 140 layers= 8 fps= 30
+PROBE stage= 8 fish= 140 layers= 8 fps= 30
+PROBE stage= 8 fish= 140 layers= 8 fps= 30
+PROBE stage= 8 fish= 140 layers= 8 fps= 30
+PROBE stage= 8 fish= 140 layers= 8 fps= 30
+PROBE stage= 8 fish= 140 layers= 8 fps= 30
+PROBE stage= 8 fish= 140 layers= 8 fps= 30
+PROBE stage= 8 fish= 140 layers= 8 fps= 30
+PROBE stage= 8 fish= 140 layers= 8 fps= 30
+PROBE stage= 8 fish= 140 layers= 8 fps= 30
+PROBE stage= 8 fish= 140 layers= 8 fps= 30
+PROBE stage= 8 fish= 140 layers= 8 fps= 30
+PROBE stage= 8 fish= 140 layers= 8 fps= 30
+PROBE stage= 8 fish= 140 layers= 8 fps= 30
+PROBE stage= 8 fish= 140 layers= 8 fps= 30
+PROBE stage= 8 fish= 140 layers= 8 fps= 30
+PROBE stage= 8 fish= 140 layers= 8 fps= 29
+PROBE stage= 8 fish= 140 layers= 8 fps= 30
+PROBE stage= 8 fish= 140 layers= 8 fps= 30
+PROBE stage= 8 fish= 140 layers= 8 fps= 30
+PROBE stage= 8 fish= 140 layers= 8 fps= 30
+PROBE stage= 8 fish= 140 layers= 8 fps= 30
+PROBE stage= 8 fish= 140 layers= 8 fps= 30
+PROBE stage= 8 fish= 140 layers= 8 fps= 30
+PROBE stage= 8 fish= 140 layers= 8 fps= 30
+PROBE stage= 8 fish= 140 layers= 8 fps= 30
+PROBE stage= 8 fish= 140 layers= 8 fps= 30

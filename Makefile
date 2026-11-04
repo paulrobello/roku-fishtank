@@ -6,9 +6,12 @@ SHELL := /bin/bash
 
 # Gitignored ROKU_HOST / ROKU_PASSWORD for the device targets.
 -include .env
+ROKU_HOST ?= 192.168.1.10
+export ROKU_HOST ROKU_PASSWORD
 
 .PHONY: install build fmt fmt-check lint typecheck test checkall checkall-ci deploy art clean
 .PHONY: dev dev-start dev-stop dev-restart test-visual
+.PHONY: probe probe-build
 
 install: node_modules
 
@@ -73,6 +76,15 @@ zip-check: build
 # ROKU_HOST=<ip> ROKU_PASSWORD=<dev password> make deploy
 deploy: build
 	curl -sS -f --digest --user rokudev:$(ROKU_PASSWORD) -F "mysubmit=1" -F "archive=@$(ZIP)" "http://$(ROKU_HOST)/plugin_install"
+
+# Device perf probe (P0.6): ramps fish/layer counts, logs fps + texture use.
+probe-build: node_modules
+	@mkdir -p dist
+	@rm -f dist/probe.zip
+	$(BIN)/bsc --project bsconfig.probe.json --create-package --out-file dist/probe.zip > dist/bsc-probe.log 2>&1 || { cat dist/bsc-probe.log; exit 1; }
+
+probe: probe-build
+	tools/perf/run_probe.sh docs/perf/raw
 
 # Rig pipeline: approved cutouts in assets/source/ -> images/fish, images/decor,
 # config/species/*.rig.json and docs/art/rig-check-*.png (byte-reproducible).

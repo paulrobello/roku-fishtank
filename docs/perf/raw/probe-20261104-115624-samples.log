@@ -1,0 +1,531 @@
+== 12:02:22
+0x7948d6c1     1      1   4     4096        0  186    0 /tmp/plugin/KAAAAA7sHjeg/pkg:/images/focus_footprint_pixel.png
+0x791e7e41    36     36   4    16384        0  187    0 /tmp/plugin/KAAAAA7sHjeg/pkg:/images/fhd/icon_options.png
+0x790e5399     1    100   4    16384        0  188    0 /tmp/plugin/KAAAAA7sHjeg/pkg:/images/leftnav_bottom_fade_mask.png
+0x794e1439     8    722   4    94208        0  189    0 /tmp/plugin/KAAAAA7sHjeg/pkg:/images/black_overlay_gradient.9.png
+0x7948f7d1    36     36   4    16384        0  198    0 /tmp/plugin/KAAAAA7sHjeg/pkg:/images/nav/hs2/roku.settings.png
+0x7917fcd9    36     36   4    16384        0  197    0 /tmp/plugin/KAAAAA7sHjeg/pkg:/images/nav/hs2/roku.explore.png
+0x79313fd1    36     36   4    16384        0  193    0 /tmp/plugin/KAAAAA7sHjeg/pkg:/images/nav/hs2/roku.inputs.png
+0x79fcbf31    36     36   4    16384        0  196    0 /tmp/plugin/KAAAAA7sHjeg/pkg:/images/nav/hs2/roku.search.png
+0x790bdcf1    36     36   4    16384        0  192    0 /tmp/plugin/KAAAAA7sHjeg/pkg:/images/nav/hs2/roku.dhs.png
+0x79fa3581    36     36   4    16384        0  194    0 /tmp/plugin/KAAAAA7sHjeg/pkg:/images/nav/hs2/roku.z-zones-livetv-zone.png
+0x79372b89   621      1   4    81920        0  195    0 /tmp/plugin/KAAAAA7sHjeg/pkg:/images/loading_shimmer.png
+0x79132081   621      1   4    81920        0  191    0 /tmp/plugin/KAAAAA7sHjeg/pkg:/images/loading_shimmer.png
+0x793da351   240    140   4   163840        0  341    0 /tmp/plugin/FEBAAAR63SX4/pkg:/images/fish_orange.png
+0x793df159   240    140   4   163840        0  350    0 /tmp/plugin/FEBAAAR63SX4/pkg:/images/fish_blue.png
+0x790b78c9  2400   1080   4 10444800        0  345    0 /tmp/plugin/FEBAAAR63SX4/pkg:/images/layer_2.png
+0x79160c99  2400   1080   4 10444800        0    3    0 /tmp/plugin/FEBAAAR63SX4/pkg:/images/layer_1.png
+0x793729a9  2400   1080   4 10444800        0  282    0 /tmp/plugin/FEBAAAR63SX4/pkg:/images/layer_4.png
+0x792ecd91  2400   1080   4 10444800        0  289    0 /tmp/plugin/FEBAAAR63SX4/pkg:/images/layer_3.png
+0x790fdd01  2400   1080   4 10444800        0  315    0 /tmp/plugin/FEBAAAR63SX4/pkg:/images/layer_6.png
+0x79149de9  2400   1080   4 10444800        0  290    0 /tmp/plugin/FEBAAAR63SX4/pkg:/images/layer_5.png
+0x791d9099    75     75   4    36864        0  112    0 /tmp/plugin/NAAAAAyB5PW1/pkg:/images/Base/FHD/minihud-icons/search_mic.webp
+0x7927e661   105    101   4    65536        0  118    0 /tmp/plugin/NAAAAAyB5PW1/pkg:/images/Base/FHD/Container_MH.9.png
+0x791d72c9   120    120   4    65536        0  122    0 /tmp/plugin/NAAAAAyB5PW1/pkg:/images/Base/FHD/Circle_MH.webp
+0x79188641   290    218   3   286720        0  135    0 /tmp/plugin/FEBAAAR63SX4/pkg:/images/icon_hd.png
+0x790ea219  2400   1080   4 10444800        0  210    0 /tmp/plugin/FEBAAAR63SX4/pkg:/images/layer_8.png
+0x791c7af1  2400   1080   4 10444800        0   36    0 /tmp/plugin/FEBAAAR63SX4/pkg:/images/layer_7.png
+0x790b6d41   290    218   3   286720        0   40    0 /tmp/plugin/DFBAAAwqigwC/pkg:/images/icon_hd.png
+0x795e7589   240    140   4   163840        0   17    0 /tmp/plugin/MFBAAAMEbyQv/pkg:/images/fish_orange.png
+0x790b8719   240    140   4   163840        0   18    0 /tmp/plugin/MFBAAAMEbyQv/pkg:/images/fish_blue.png
+0x7953ed71  2400   1080   4 10444800        0   50    0 /tmp/plugin/MFBAAAMEbyQv/pkg:/images/layer_2.png
+0x792e4e71  2400   1080   4 10444800        0   51    0 /tmp/plugin/MFBAAAMEbyQv/pkg:/images/layer_1.png
+0x791ed3b1  2400   1080   4 10444800        0   58    0 /tmp/plugin/MFBAAAMEbyQv/pkg:/images/layer_4.png
+0x79579ad1  2400   1080   4 10444800        0   52    0 /tmp/plugin/MFBAAAMEbyQv/pkg:/images/layer_3.png
+0x7951f2e1  2400   1080   4 10444800        0   59    0 /tmp/plugin/MFBAAAMEbyQv/pkg:/images/layer_6.png
+0x796132a1  2400   1080   4 10444800        0   65    0 /tmp/plugin/MFBAAAMEbyQv/pkg:/images/layer_5.png
+0x7961eb09  2400   1080   4 10444800        0   45    0 /tmp/plugin/MFBAAAMEbyQv/pkg:/images/layer_8.png
+0x790b6629  2400   1080   4 10444800        0   37    0 /tmp/plugin/MFBAAAMEbyQv/pkg:/images/layer_7.png
+Available texture memory 10480640 used 229519360 max 240000000
+Available texture memory 240000000 used 0 max 240000000
+Available texture memory 240000000 used 0 max 240000000
+Available texture memory 10480640 used 229519360 max 240000000
+Available texture memory 240000000 used 0 max 240000000
+Available texture memory 10480640 used 229519360 max 240000000
+>channel: mem and cpu data not available
+== 12:02:34
+0x7948d6c1     1      1   4     4096        0  186    0 /tmp/plugin/KAAAAA7sHjeg/pkg:/images/focus_footprint_pixel.png
+0x791e7e41    36     36   4    16384        0  187    0 /tmp/plugin/KAAAAA7sHjeg/pkg:/images/fhd/icon_options.png
+0x790e5399     1    100   4    16384        0  188    0 /tmp/plugin/KAAAAA7sHjeg/pkg:/images/leftnav_bottom_fade_mask.png
+0x794e1439     8    722   4    94208        0  189    0 /tmp/plugin/KAAAAA7sHjeg/pkg:/images/black_overlay_gradient.9.png
+0x7948f7d1    36     36   4    16384        0  198    0 /tmp/plugin/KAAAAA7sHjeg/pkg:/images/nav/hs2/roku.settings.png
+0x7917fcd9    36     36   4    16384        0  197    0 /tmp/plugin/KAAAAA7sHjeg/pkg:/images/nav/hs2/roku.explore.png
+0x79313fd1    36     36   4    16384        0  193    0 /tmp/plugin/KAAAAA7sHjeg/pkg:/images/nav/hs2/roku.inputs.png
+0x79fcbf31    36     36   4    16384        0  196    0 /tmp/plugin/KAAAAA7sHjeg/pkg:/images/nav/hs2/roku.search.png
+0x790bdcf1    36     36   4    16384        0  192    0 /tmp/plugin/KAAAAA7sHjeg/pkg:/images/nav/hs2/roku.dhs.png
+0x79fa3581    36     36   4    16384        0  194    0 /tmp/plugin/KAAAAA7sHjeg/pkg:/images/nav/hs2/roku.z-zones-livetv-zone.png
+0x79372b89   621      1   4    81920        0  195    0 /tmp/plugin/KAAAAA7sHjeg/pkg:/images/loading_shimmer.png
+0x79132081   621      1   4    81920        0  191    0 /tmp/plugin/KAAAAA7sHjeg/pkg:/images/loading_shimmer.png
+0x793da351   240    140   4   163840        0  341    0 /tmp/plugin/FEBAAAR63SX4/pkg:/images/fish_orange.png
+0x793df159   240    140   4   163840        0  350    0 /tmp/plugin/FEBAAAR63SX4/pkg:/images/fish_blue.png
+0x790b78c9  2400   1080   4 10444800        0  345    0 /tmp/plugin/FEBAAAR63SX4/pkg:/images/layer_2.png
+0x79160c99  2400   1080   4 10444800        0    3    0 /tmp/plugin/FEBAAAR63SX4/pkg:/images/layer_1.png
+0x793729a9  2400   1080   4 10444800        0  282    0 /tmp/plugin/FEBAAAR63SX4/pkg:/images/layer_4.png
+0x792ecd91  2400   1080   4 10444800        0  289    0 /tmp/plugin/FEBAAAR63SX4/pkg:/images/layer_3.png
+0x790fdd01  2400   1080   4 10444800        0  315    0 /tmp/plugin/FEBAAAR63SX4/pkg:/images/layer_6.png
+0x79149de9  2400   1080   4 10444800        0  290    0 /tmp/plugin/FEBAAAR63SX4/pkg:/images/layer_5.png
+0x791d9099    75     75   4    36864        0  112    0 /tmp/plugin/NAAAAAyB5PW1/pkg:/images/Base/FHD/minihud-icons/search_mic.webp
+0x7927e661   105    101   4    65536        0  118    0 /tmp/plugin/NAAAAAyB5PW1/pkg:/images/Base/FHD/Container_MH.9.png
+0x791d72c9   120    120   4    65536        0  122    0 /tmp/plugin/NAAAAAyB5PW1/pkg:/images/Base/FHD/Circle_MH.webp
+0x79188641   290    218   3   286720        0  135    0 /tmp/plugin/FEBAAAR63SX4/pkg:/images/icon_hd.png
+0x790ea219  2400   1080   4 10444800        0  210    0 /tmp/plugin/FEBAAAR63SX4/pkg:/images/layer_8.png
+0x791c7af1  2400   1080   4 10444800        0   36    0 /tmp/plugin/FEBAAAR63SX4/pkg:/images/layer_7.png
+0x790b6d41   290    218   3   286720        0   40    0 /tmp/plugin/DFBAAAwqigwC/pkg:/images/icon_hd.png
+0x795e7589   240    140   4   163840        0   17    0 /tmp/plugin/MFBAAAMEbyQv/pkg:/images/fish_orange.png
+0x790b8719   240    140   4   163840        0   18    0 /tmp/plugin/MFBAAAMEbyQv/pkg:/images/fish_blue.png
+0x7953ed71  2400   1080   4 10444800        0   50    0 /tmp/plugin/MFBAAAMEbyQv/pkg:/images/layer_2.png
+0x792e4e71  2400   1080   4 10444800        0   51    0 /tmp/plugin/MFBAAAMEbyQv/pkg:/images/layer_1.png
+0x791ed3b1  2400   1080   4 10444800        0   58    0 /tmp/plugin/MFBAAAMEbyQv/pkg:/images/layer_4.png
+0x79579ad1  2400   1080   4 10444800        0   52    0 /tmp/plugin/MFBAAAMEbyQv/pkg:/images/layer_3.png
+0x7951f2e1  2400   1080   4 10444800        0   59    0 /tmp/plugin/MFBAAAMEbyQv/pkg:/images/layer_6.png
+0x796132a1  2400   1080   4 10444800        0   65    0 /tmp/plugin/MFBAAAMEbyQv/pkg:/images/layer_5.png
+0x7961eb09  2400   1080   4 10444800        0   45    0 /tmp/plugin/MFBAAAMEbyQv/pkg:/images/layer_8.png
+0x790b6629  2400   1080   4 10444800        0   37    0 /tmp/plugin/MFBAAAMEbyQv/pkg:/images/layer_7.png
+0x790c1c41  2400   1080   4 10444800        0  108    0 /tmp/plugin/FGBAAAQyhO3k/pkg:/images/layer_1.png
+Available texture memory 10202112 used 229797888 max 240000000
+Available texture memory 240000000 used 0 max 240000000
+Available texture memory 240000000 used 0 max 240000000
+Available texture memory 10202112 used 229797888 max 240000000
+Available texture memory 240000000 used 0 max 240000000
+Available texture memory 10202112 used 229797888 max 240000000
+>channel: mem and cpu data not available
+== 12:02:46
+0x7948d6c1     1      1   4     4096        0  186    0 /tmp/plugin/KAAAAA7sHjeg/pkg:/images/focus_footprint_pixel.png
+0x791e7e41    36     36   4    16384        0  187    0 /tmp/plugin/KAAAAA7sHjeg/pkg:/images/fhd/icon_options.png
+0x790e5399     1    100   4    16384        0  188    0 /tmp/plugin/KAAAAA7sHjeg/pkg:/images/leftnav_bottom_fade_mask.png
+0x794e1439     8    722   4    94208        0  189    0 /tmp/plugin/KAAAAA7sHjeg/pkg:/images/black_overlay_gradient.9.png
+0x7948f7d1    36     36   4    16384        0  198    0 /tmp/plugin/KAAAAA7sHjeg/pkg:/images/nav/hs2/roku.settings.png
+0x7917fcd9    36     36   4    16384        0  197    0 /tmp/plugin/KAAAAA7sHjeg/pkg:/images/nav/hs2/roku.explore.png
+0x79313fd1    36     36   4    16384        0  193    0 /tmp/plugin/KAAAAA7sHjeg/pkg:/images/nav/hs2/roku.inputs.png
+0x79fcbf31    36     36   4    16384        0  196    0 /tmp/plugin/KAAAAA7sHjeg/pkg:/images/nav/hs2/roku.search.png
+0x790bdcf1    36     36   4    16384        0  192    0 /tmp/plugin/KAAAAA7sHjeg/pkg:/images/nav/hs2/roku.dhs.png
+0x79fa3581    36     36   4    16384        0  194    0 /tmp/plugin/KAAAAA7sHjeg/pkg:/images/nav/hs2/roku.z-zones-livetv-zone.png
+0x79372b89   621      1   4    81920        0  195    0 /tmp/plugin/KAAAAA7sHjeg/pkg:/images/loading_shimmer.png
+0x79132081   621      1   4    81920        0  191    0 /tmp/plugin/KAAAAA7sHjeg/pkg:/images/loading_shimmer.png
+0x793da351   240    140   4   163840        0  341    0 /tmp/plugin/FEBAAAR63SX4/pkg:/images/fish_orange.png
+0x793df159   240    140   4   163840        0  350    0 /tmp/plugin/FEBAAAR63SX4/pkg:/images/fish_blue.png
+0x790b78c9  2400   1080   4 10444800        0  345    0 /tmp/plugin/FEBAAAR63SX4/pkg:/images/layer_2.png
+0x793729a9  2400   1080   4 10444800        0  282    0 /tmp/plugin/FEBAAAR63SX4/pkg:/images/layer_4.png
+0x792ecd91  2400   1080   4 10444800        0  289    0 /tmp/plugin/FEBAAAR63SX4/pkg:/images/layer_3.png
+0x790fdd01  2400   1080   4 10444800        0  315    0 /tmp/plugin/FEBAAAR63SX4/pkg:/images/layer_6.png
+0x79149de9  2400   1080   4 10444800        0  290    0 /tmp/plugin/FEBAAAR63SX4/pkg:/images/layer_5.png
+0x79188641   290    218   3   286720        0  135    0 /tmp/plugin/FEBAAAR63SX4/pkg:/images/icon_hd.png
+0x790ea219  2400   1080   4 10444800        0  210    0 /tmp/plugin/FEBAAAR63SX4/pkg:/images/layer_8.png
+0x791c7af1  2400   1080   4 10444800        0   36    0 /tmp/plugin/FEBAAAR63SX4/pkg:/images/layer_7.png
+0x790b6d41   290    218   3   286720        0   40    0 /tmp/plugin/DFBAAAwqigwC/pkg:/images/icon_hd.png
+0x795e7589   240    140   4   163840        0   17    0 /tmp/plugin/MFBAAAMEbyQv/pkg:/images/fish_orange.png
+0x790b8719   240    140   4   163840        0   18    0 /tmp/plugin/MFBAAAMEbyQv/pkg:/images/fish_blue.png
+0x7953ed71  2400   1080   4 10444800        0   50    0 /tmp/plugin/MFBAAAMEbyQv/pkg:/images/layer_2.png
+0x792e4e71  2400   1080   4 10444800        0   51    0 /tmp/plugin/MFBAAAMEbyQv/pkg:/images/layer_1.png
+0x791ed3b1  2400   1080   4 10444800        0   58    0 /tmp/plugin/MFBAAAMEbyQv/pkg:/images/layer_4.png
+0x79579ad1  2400   1080   4 10444800        0   52    0 /tmp/plugin/MFBAAAMEbyQv/pkg:/images/layer_3.png
+0x7951f2e1  2400   1080   4 10444800        0   59    0 /tmp/plugin/MFBAAAMEbyQv/pkg:/images/layer_6.png
+0x796132a1  2400   1080   4 10444800        0   65    0 /tmp/plugin/MFBAAAMEbyQv/pkg:/images/layer_5.png
+0x7961eb09  2400   1080   4 10444800        0   45    0 /tmp/plugin/MFBAAAMEbyQv/pkg:/images/layer_8.png
+0x790b6629  2400   1080   4 10444800        0   37    0 /tmp/plugin/MFBAAAMEbyQv/pkg:/images/layer_7.png
+0x790c1c41  2400   1080   4 10444800        0  108    0 /tmp/plugin/FGBAAAQyhO3k/pkg:/images/layer_1.png
+0x792d31b1  2400   1080   4 10444800        0  270    0 /tmp/plugin/FGBAAAQyhO3k/pkg:/images/layer_2.png
+Available texture memory 16817152 used 223182848 max 240000000
+Available texture memory 240000000 used 0 max 240000000
+Available texture memory 240000000 used 0 max 240000000
+Available texture memory 16817152 used 223182848 max 240000000
+Available texture memory 240000000 used 0 max 240000000
+Available texture memory 16817152 used 223182848 max 240000000
+>channel: mem and cpu data not available
+== 12:02:58
+0x7948d6c1     1      1   4     4096        0  186    0 /tmp/plugin/KAAAAA7sHjeg/pkg:/images/focus_footprint_pixel.png
+0x791e7e41    36     36   4    16384        0  187    0 /tmp/plugin/KAAAAA7sHjeg/pkg:/images/fhd/icon_options.png
+0x790e5399     1    100   4    16384        0  188    0 /tmp/plugin/KAAAAA7sHjeg/pkg:/images/leftnav_bottom_fade_mask.png
+0x794e1439     8    722   4    94208        0  189    0 /tmp/plugin/KAAAAA7sHjeg/pkg:/images/black_overlay_gradient.9.png
+0x7948f7d1    36     36   4    16384        0  198    0 /tmp/plugin/KAAAAA7sHjeg/pkg:/images/nav/hs2/roku.settings.png
+0x7917fcd9    36     36   4    16384        0  197    0 /tmp/plugin/KAAAAA7sHjeg/pkg:/images/nav/hs2/roku.explore.png
+0x79313fd1    36     36   4    16384        0  193    0 /tmp/plugin/KAAAAA7sHjeg/pkg:/images/nav/hs2/roku.inputs.png
+0x79fcbf31    36     36   4    16384        0  196    0 /tmp/plugin/KAAAAA7sHjeg/pkg:/images/nav/hs2/roku.search.png
+0x790bdcf1    36     36   4    16384        0  192    0 /tmp/plugin/KAAAAA7sHjeg/pkg:/images/nav/hs2/roku.dhs.png
+0x79fa3581    36     36   4    16384        0  194    0 /tmp/plugin/KAAAAA7sHjeg/pkg:/images/nav/hs2/roku.z-zones-livetv-zone.png
+0x79372b89   621      1   4    81920        0  195    0 /tmp/plugin/KAAAAA7sHjeg/pkg:/images/loading_shimmer.png
+0x79132081   621      1   4    81920        0  191    0 /tmp/plugin/KAAAAA7sHjeg/pkg:/images/loading_shimmer.png
+0x793da351   240    140   4   163840        0  341    0 /tmp/plugin/FEBAAAR63SX4/pkg:/images/fish_orange.png
+0x793df159   240    140   4   163840        0  350    0 /tmp/plugin/FEBAAAR63SX4/pkg:/images/fish_blue.png
+0x793729a9  2400   1080   4 10444800        0  282    0 /tmp/plugin/FEBAAAR63SX4/pkg:/images/layer_4.png
+0x792ecd91  2400   1080   4 10444800        0  289    0 /tmp/plugin/FEBAAAR63SX4/pkg:/images/layer_3.png
+0x790fdd01  2400   1080   4 10444800        0  315    0 /tmp/plugin/FEBAAAR63SX4/pkg:/images/layer_6.png
+0x79149de9  2400   1080   4 10444800        0  290    0 /tmp/plugin/FEBAAAR63SX4/pkg:/images/layer_5.png
+0x79188641   290    218   3   286720        0  135    0 /tmp/plugin/FEBAAAR63SX4/pkg:/images/icon_hd.png
+0x790ea219  2400   1080   4 10444800        0  210    0 /tmp/plugin/FEBAAAR63SX4/pkg:/images/layer_8.png
+0x791c7af1  2400   1080   4 10444800        0   36    0 /tmp/plugin/FEBAAAR63SX4/pkg:/images/layer_7.png
+0x790b6d41   290    218   3   286720        0   40    0 /tmp/plugin/DFBAAAwqigwC/pkg:/images/icon_hd.png
+0x795e7589   240    140   4   163840        0   17    0 /tmp/plugin/MFBAAAMEbyQv/pkg:/images/fish_orange.png
+0x790b8719   240    140   4   163840        0   18    0 /tmp/plugin/MFBAAAMEbyQv/pkg:/images/fish_blue.png
+0x7953ed71  2400   1080   4 10444800        0   50    0 /tmp/plugin/MFBAAAMEbyQv/pkg:/images/layer_2.png
+0x792e4e71  2400   1080   4 10444800        0   51    0 /tmp/plugin/MFBAAAMEbyQv/pkg:/images/layer_1.png
+0x791ed3b1  2400   1080   4 10444800        0   58    0 /tmp/plugin/MFBAAAMEbyQv/pkg:/images/layer_4.png
+0x79579ad1  2400   1080   4 10444800        0   52    0 /tmp/plugin/MFBAAAMEbyQv/pkg:/images/layer_3.png
+0x7951f2e1  2400   1080   4 10444800        0   59    0 /tmp/plugin/MFBAAAMEbyQv/pkg:/images/layer_6.png
+0x796132a1  2400   1080   4 10444800        0   65    0 /tmp/plugin/MFBAAAMEbyQv/pkg:/images/layer_5.png
+0x7961eb09  2400   1080   4 10444800        0   45    0 /tmp/plugin/MFBAAAMEbyQv/pkg:/images/layer_8.png
+0x790b6629  2400   1080   4 10444800        0   37    0 /tmp/plugin/MFBAAAMEbyQv/pkg:/images/layer_7.png
+0x790c1c41  2400   1080   4 10444800        0  108    0 /tmp/plugin/FGBAAAQyhO3k/pkg:/images/layer_1.png
+0x792d31b1  2400   1080   4 10444800        0  270    0 /tmp/plugin/FGBAAAQyhO3k/pkg:/images/layer_2.png
+0x790b3309  2400   1080   4 10444800        0  271    0 /tmp/plugin/FGBAAAQyhO3k/pkg:/images/layer_3.png
+Available texture memory 16817152 used 223182848 max 240000000
+Available texture memory 240000000 used 0 max 240000000
+Available texture memory 240000000 used 0 max 240000000
+Available texture memory 16817152 used 223182848 max 240000000
+Available texture memory 240000000 used 0 max 240000000
+Available texture memory 16817152 used 223182848 max 240000000
+>channel: mem and cpu data not available
+== 12:03:11
+0x7948d6c1     1      1   4     4096        0  186    0 /tmp/plugin/KAAAAA7sHjeg/pkg:/images/focus_footprint_pixel.png
+0x791e7e41    36     36   4    16384        0  187    0 /tmp/plugin/KAAAAA7sHjeg/pkg:/images/fhd/icon_options.png
+0x790e5399     1    100   4    16384        0  188    0 /tmp/plugin/KAAAAA7sHjeg/pkg:/images/leftnav_bottom_fade_mask.png
+0x794e1439     8    722   4    94208        0  189    0 /tmp/plugin/KAAAAA7sHjeg/pkg:/images/black_overlay_gradient.9.png
+0x7948f7d1    36     36   4    16384        0  198    0 /tmp/plugin/KAAAAA7sHjeg/pkg:/images/nav/hs2/roku.settings.png
+0x7917fcd9    36     36   4    16384        0  197    0 /tmp/plugin/KAAAAA7sHjeg/pkg:/images/nav/hs2/roku.explore.png
+0x79313fd1    36     36   4    16384        0  193    0 /tmp/plugin/KAAAAA7sHjeg/pkg:/images/nav/hs2/roku.inputs.png
+0x79fcbf31    36     36   4    16384        0  196    0 /tmp/plugin/KAAAAA7sHjeg/pkg:/images/nav/hs2/roku.search.png
+0x790bdcf1    36     36   4    16384        0  192    0 /tmp/plugin/KAAAAA7sHjeg/pkg:/images/nav/hs2/roku.dhs.png
+0x79fa3581    36     36   4    16384        0  194    0 /tmp/plugin/KAAAAA7sHjeg/pkg:/images/nav/hs2/roku.z-zones-livetv-zone.png
+0x79372b89   621      1   4    81920        0  195    0 /tmp/plugin/KAAAAA7sHjeg/pkg:/images/loading_shimmer.png
+0x79132081   621      1   4    81920        0  191    0 /tmp/plugin/KAAAAA7sHjeg/pkg:/images/loading_shimmer.png
+0x793da351   240    140   4   163840        0  341    0 /tmp/plugin/FEBAAAR63SX4/pkg:/images/fish_orange.png
+0x793df159   240    140   4   163840        0  350    0 /tmp/plugin/FEBAAAR63SX4/pkg:/images/fish_blue.png
+0x793729a9  2400   1080   4 10444800        0  282    0 /tmp/plugin/FEBAAAR63SX4/pkg:/images/layer_4.png
+0x790fdd01  2400   1080   4 10444800        0  315    0 /tmp/plugin/FEBAAAR63SX4/pkg:/images/layer_6.png
+0x79149de9  2400   1080   4 10444800        0  290    0 /tmp/plugin/FEBAAAR63SX4/pkg:/images/layer_5.png
+0x79188641   290    218   3   286720        0  135    0 /tmp/plugin/FEBAAAR63SX4/pkg:/images/icon_hd.png
+0x790ea219  2400   1080   4 10444800        0  210    0 /tmp/plugin/FEBAAAR63SX4/pkg:/images/layer_8.png
+0x791c7af1  2400   1080   4 10444800        0   36    0 /tmp/plugin/FEBAAAR63SX4/pkg:/images/layer_7.png
+0x790b6d41   290    218   3   286720        0   40    0 /tmp/plugin/DFBAAAwqigwC/pkg:/images/icon_hd.png
+0x795e7589   240    140   4   163840        0   17    0 /tmp/plugin/MFBAAAMEbyQv/pkg:/images/fish_orange.png
+0x790b8719   240    140   4   163840        0   18    0 /tmp/plugin/MFBAAAMEbyQv/pkg:/images/fish_blue.png
+0x7953ed71  2400   1080   4 10444800        0   50    0 /tmp/plugin/MFBAAAMEbyQv/pkg:/images/layer_2.png
+0x792e4e71  2400   1080   4 10444800        0   51    0 /tmp/plugin/MFBAAAMEbyQv/pkg:/images/layer_1.png
+0x791ed3b1  2400   1080   4 10444800        0   58    0 /tmp/plugin/MFBAAAMEbyQv/pkg:/images/layer_4.png
+0x79579ad1  2400   1080   4 10444800        0   52    0 /tmp/plugin/MFBAAAMEbyQv/pkg:/images/layer_3.png
+0x7951f2e1  2400   1080   4 10444800        0   59    0 /tmp/plugin/MFBAAAMEbyQv/pkg:/images/layer_6.png
+0x796132a1  2400   1080   4 10444800        0   65    0 /tmp/plugin/MFBAAAMEbyQv/pkg:/images/layer_5.png
+0x7961eb09  2400   1080   4 10444800        0   45    0 /tmp/plugin/MFBAAAMEbyQv/pkg:/images/layer_8.png
+0x790b6629  2400   1080   4 10444800        0   37    0 /tmp/plugin/MFBAAAMEbyQv/pkg:/images/layer_7.png
+0x790c1c41  2400   1080   4 10444800        0  108    0 /tmp/plugin/FGBAAAQyhO3k/pkg:/images/layer_1.png
+0x792d31b1  2400   1080   4 10444800        0  270    0 /tmp/plugin/FGBAAAQyhO3k/pkg:/images/layer_2.png
+0x790b3309  2400   1080   4 10444800        0  271    0 /tmp/plugin/FGBAAAQyhO3k/pkg:/images/layer_3.png
+0x790e45c9  2400   1080   4 10444800        0  335    0 /tmp/plugin/FGBAAAQyhO3k/pkg:/images/layer_4.png
+Available texture memory 16817152 used 223182848 max 240000000
+Available texture memory 240000000 used 0 max 240000000
+Available texture memory 240000000 used 0 max 240000000
+Available texture memory 16817152 used 223182848 max 240000000
+Available texture memory 240000000 used 0 max 240000000
+Available texture memory 16817152 used 223182848 max 240000000
+>channel: mem and cpu data not available
+== 12:03:23
+0x7948d6c1     1      1   4     4096        0  186    0 /tmp/plugin/KAAAAA7sHjeg/pkg:/images/focus_footprint_pixel.png
+0x791e7e41    36     36   4    16384        0  187    0 /tmp/plugin/KAAAAA7sHjeg/pkg:/images/fhd/icon_options.png
+0x790e5399     1    100   4    16384        0  188    0 /tmp/plugin/KAAAAA7sHjeg/pkg:/images/leftnav_bottom_fade_mask.png
+0x794e1439     8    722   4    94208        0  189    0 /tmp/plugin/KAAAAA7sHjeg/pkg:/images/black_overlay_gradient.9.png
+0x7948f7d1    36     36   4    16384        0  198    0 /tmp/plugin/KAAAAA7sHjeg/pkg:/images/nav/hs2/roku.settings.png
+0x7917fcd9    36     36   4    16384        0  197    0 /tmp/plugin/KAAAAA7sHjeg/pkg:/images/nav/hs2/roku.explore.png
+0x79313fd1    36     36   4    16384        0  193    0 /tmp/plugin/KAAAAA7sHjeg/pkg:/images/nav/hs2/roku.inputs.png
+0x79fcbf31    36     36   4    16384        0  196    0 /tmp/plugin/KAAAAA7sHjeg/pkg:/images/nav/hs2/roku.search.png
+0x790bdcf1    36     36   4    16384        0  192    0 /tmp/plugin/KAAAAA7sHjeg/pkg:/images/nav/hs2/roku.dhs.png
+0x79fa3581    36     36   4    16384        0  194    0 /tmp/plugin/KAAAAA7sHjeg/pkg:/images/nav/hs2/roku.z-zones-livetv-zone.png
+0x79372b89   621      1   4    81920        0  195    0 /tmp/plugin/KAAAAA7sHjeg/pkg:/images/loading_shimmer.png
+0x79132081   621      1   4    81920        0  191    0 /tmp/plugin/KAAAAA7sHjeg/pkg:/images/loading_shimmer.png
+0x793da351   240    140   4   163840        0  341    0 /tmp/plugin/FEBAAAR63SX4/pkg:/images/fish_orange.png
+0x793df159   240    140   4   163840        0  350    0 /tmp/plugin/FEBAAAR63SX4/pkg:/images/fish_blue.png
+0x79188641   290    218   3   286720        0  135    0 /tmp/plugin/FEBAAAR63SX4/pkg:/images/icon_hd.png
+0x790ea219  2400   1080   4 10444800        0  210    0 /tmp/plugin/FEBAAAR63SX4/pkg:/images/layer_8.png
+0x790b6d41   290    218   3   286720        0   40    0 /tmp/plugin/DFBAAAwqigwC/pkg:/images/icon_hd.png
+0x795e7589   240    140   4   163840        0   17    0 /tmp/plugin/MFBAAAMEbyQv/pkg:/images/fish_orange.png
+0x790b8719   240    140   4   163840        0   18    0 /tmp/plugin/MFBAAAMEbyQv/pkg:/images/fish_blue.png
+0x7953ed71  2400   1080   4 10444800        0   50    0 /tmp/plugin/MFBAAAMEbyQv/pkg:/images/layer_2.png
+0x792e4e71  2400   1080   4 10444800        0   51    0 /tmp/plugin/MFBAAAMEbyQv/pkg:/images/layer_1.png
+0x791ed3b1  2400   1080   4 10444800        0   58    0 /tmp/plugin/MFBAAAMEbyQv/pkg:/images/layer_4.png
+0x79579ad1  2400   1080   4 10444800        0   52    0 /tmp/plugin/MFBAAAMEbyQv/pkg:/images/layer_3.png
+0x7951f2e1  2400   1080   4 10444800        0   59    0 /tmp/plugin/MFBAAAMEbyQv/pkg:/images/layer_6.png
+0x796132a1  2400   1080   4 10444800        0   65    0 /tmp/plugin/MFBAAAMEbyQv/pkg:/images/layer_5.png
+0x7961eb09  2400   1080   4 10444800        0   45    0 /tmp/plugin/MFBAAAMEbyQv/pkg:/images/layer_8.png
+0x790b6629  2400   1080   4 10444800        0   37    0 /tmp/plugin/MFBAAAMEbyQv/pkg:/images/layer_7.png
+0x790c1c41  2400   1080   4 10444800        0  108    0 /tmp/plugin/FGBAAAQyhO3k/pkg:/images/layer_1.png
+0x792d31b1  2400   1080   4 10444800        0  270    0 /tmp/plugin/FGBAAAQyhO3k/pkg:/images/layer_2.png
+0x790b3309  2400   1080   4 10444800        0  271    0 /tmp/plugin/FGBAAAQyhO3k/pkg:/images/layer_3.png
+0x790e45c9  2400   1080   4 10444800        0  335    0 /tmp/plugin/FGBAAAQyhO3k/pkg:/images/layer_4.png
+0x79305731  2400   1080   4 10444800        0   80    0 /tmp/plugin/FGBAAAQyhO3k/pkg:/images/layer_6.png
+0x790c3049  2400   1080   4 10444800        0   79    0 /tmp/plugin/FGBAAAQyhO3k/pkg:/images/layer_5.png
+0x7931e259  2400   1080   4 10444800        0   78    0 /tmp/plugin/FGBAAAQyhO3k/pkg:/images/layer_8.png
+0x791c4071  2400   1080   4 10444800        0   15    0 /tmp/plugin/FGBAAAQyhO3k/pkg:/images/layer_7.png
+Available texture memory 16817152 used 223182848 max 240000000
+Available texture memory 240000000 used 0 max 240000000
+Available texture memory 240000000 used 0 max 240000000
+Available texture memory 16817152 used 223182848 max 240000000
+Available texture memory 240000000 used 0 max 240000000
+Available texture memory 16817152 used 223182848 max 240000000
+>channel: mem and cpu data not available
+== 12:03:35
+0x7948d6c1     1      1   4     4096        0  186    0 /tmp/plugin/KAAAAA7sHjeg/pkg:/images/focus_footprint_pixel.png
+0x791e7e41    36     36   4    16384        0  187    0 /tmp/plugin/KAAAAA7sHjeg/pkg:/images/fhd/icon_options.png
+0x790e5399     1    100   4    16384        0  188    0 /tmp/plugin/KAAAAA7sHjeg/pkg:/images/leftnav_bottom_fade_mask.png
+0x794e1439     8    722   4    94208        0  189    0 /tmp/plugin/KAAAAA7sHjeg/pkg:/images/black_overlay_gradient.9.png
+0x7948f7d1    36     36   4    16384        0  198    0 /tmp/plugin/KAAAAA7sHjeg/pkg:/images/nav/hs2/roku.settings.png
+0x7917fcd9    36     36   4    16384        0  197    0 /tmp/plugin/KAAAAA7sHjeg/pkg:/images/nav/hs2/roku.explore.png
+0x79313fd1    36     36   4    16384        0  193    0 /tmp/plugin/KAAAAA7sHjeg/pkg:/images/nav/hs2/roku.inputs.png
+0x79fcbf31    36     36   4    16384        0  196    0 /tmp/plugin/KAAAAA7sHjeg/pkg:/images/nav/hs2/roku.search.png
+0x790bdcf1    36     36   4    16384        0  192    0 /tmp/plugin/KAAAAA7sHjeg/pkg:/images/nav/hs2/roku.dhs.png
+0x79fa3581    36     36   4    16384        0  194    0 /tmp/plugin/KAAAAA7sHjeg/pkg:/images/nav/hs2/roku.z-zones-livetv-zone.png
+0x79372b89   621      1   4    81920        0  195    0 /tmp/plugin/KAAAAA7sHjeg/pkg:/images/loading_shimmer.png
+0x79132081   621      1   4    81920        0  191    0 /tmp/plugin/KAAAAA7sHjeg/pkg:/images/loading_shimmer.png
+0x793da351   240    140   4   163840        0  341    0 /tmp/plugin/FEBAAAR63SX4/pkg:/images/fish_orange.png
+0x793df159   240    140   4   163840        0  350    0 /tmp/plugin/FEBAAAR63SX4/pkg:/images/fish_blue.png
+0x79188641   290    218   3   286720        0  135    0 /tmp/plugin/FEBAAAR63SX4/pkg:/images/icon_hd.png
+0x790ea219  2400   1080   4 10444800        0  210    0 /tmp/plugin/FEBAAAR63SX4/pkg:/images/layer_8.png
+0x790b6d41   290    218   3   286720        0   40    0 /tmp/plugin/DFBAAAwqigwC/pkg:/images/icon_hd.png
+0x795e7589   240    140   4   163840        0   17    0 /tmp/plugin/MFBAAAMEbyQv/pkg:/images/fish_orange.png
+0x790b8719   240    140   4   163840        0   18    0 /tmp/plugin/MFBAAAMEbyQv/pkg:/images/fish_blue.png
+0x7953ed71  2400   1080   4 10444800        0   50    0 /tmp/plugin/MFBAAAMEbyQv/pkg:/images/layer_2.png
+0x792e4e71  2400   1080   4 10444800        0   51    0 /tmp/plugin/MFBAAAMEbyQv/pkg:/images/layer_1.png
+0x791ed3b1  2400   1080   4 10444800        0   58    0 /tmp/plugin/MFBAAAMEbyQv/pkg:/images/layer_4.png
+0x79579ad1  2400   1080   4 10444800        0   52    0 /tmp/plugin/MFBAAAMEbyQv/pkg:/images/layer_3.png
+0x7951f2e1  2400   1080   4 10444800        0   59    0 /tmp/plugin/MFBAAAMEbyQv/pkg:/images/layer_6.png
+0x796132a1  2400   1080   4 10444800        0   65    0 /tmp/plugin/MFBAAAMEbyQv/pkg:/images/layer_5.png
+0x7961eb09  2400   1080   4 10444800        0   45    0 /tmp/plugin/MFBAAAMEbyQv/pkg:/images/layer_8.png
+0x790b6629  2400   1080   4 10444800        0   37    0 /tmp/plugin/MFBAAAMEbyQv/pkg:/images/layer_7.png
+0x790c1c41  2400   1080   4 10444800        0  108    0 /tmp/plugin/FGBAAAQyhO3k/pkg:/images/layer_1.png
+0x792d31b1  2400   1080   4 10444800        0  270    0 /tmp/plugin/FGBAAAQyhO3k/pkg:/images/layer_2.png
+0x790b3309  2400   1080   4 10444800        0  271    0 /tmp/plugin/FGBAAAQyhO3k/pkg:/images/layer_3.png
+0x790e45c9  2400   1080   4 10444800        0  335    0 /tmp/plugin/FGBAAAQyhO3k/pkg:/images/layer_4.png
+0x79305731  2400   1080   4 10444800        0   80    0 /tmp/plugin/FGBAAAQyhO3k/pkg:/images/layer_6.png
+0x790c3049  2400   1080   4 10444800        0   79    0 /tmp/plugin/FGBAAAQyhO3k/pkg:/images/layer_5.png
+0x7931e259  2400   1080   4 10444800        0   78    0 /tmp/plugin/FGBAAAQyhO3k/pkg:/images/layer_8.png
+0x791c4071  2400   1080   4 10444800        0   15    0 /tmp/plugin/FGBAAAQyhO3k/pkg:/images/layer_7.png
+Available texture memory 16817152 used 223182848 max 240000000
+Available texture memory 240000000 used 0 max 240000000
+Available texture memory 240000000 used 0 max 240000000
+Available texture memory 16817152 used 223182848 max 240000000
+Available texture memory 240000000 used 0 max 240000000
+Available texture memory 16817152 used 223182848 max 240000000
+>channel: mem and cpu data not available
+== 12:03:47
+0x7948d6c1     1      1   4     4096        0  186    0 /tmp/plugin/KAAAAA7sHjeg/pkg:/images/focus_footprint_pixel.png
+0x791e7e41    36     36   4    16384        0  187    0 /tmp/plugin/KAAAAA7sHjeg/pkg:/images/fhd/icon_options.png
+0x790e5399     1    100   4    16384        0  188    0 /tmp/plugin/KAAAAA7sHjeg/pkg:/images/leftnav_bottom_fade_mask.png
+0x794e1439     8    722   4    94208        0  189    0 /tmp/plugin/KAAAAA7sHjeg/pkg:/images/black_overlay_gradient.9.png
+0x7948f7d1    36     36   4    16384        0  198    0 /tmp/plugin/KAAAAA7sHjeg/pkg:/images/nav/hs2/roku.settings.png
+0x7917fcd9    36     36   4    16384        0  197    0 /tmp/plugin/KAAAAA7sHjeg/pkg:/images/nav/hs2/roku.explore.png
+0x79313fd1    36     36   4    16384        0  193    0 /tmp/plugin/KAAAAA7sHjeg/pkg:/images/nav/hs2/roku.inputs.png
+0x79fcbf31    36     36   4    16384        0  196    0 /tmp/plugin/KAAAAA7sHjeg/pkg:/images/nav/hs2/roku.search.png
+0x790bdcf1    36     36   4    16384        0  192    0 /tmp/plugin/KAAAAA7sHjeg/pkg:/images/nav/hs2/roku.dhs.png
+0x79fa3581    36     36   4    16384        0  194    0 /tmp/plugin/KAAAAA7sHjeg/pkg:/images/nav/hs2/roku.z-zones-livetv-zone.png
+0x79372b89   621      1   4    81920        0  195    0 /tmp/plugin/KAAAAA7sHjeg/pkg:/images/loading_shimmer.png
+0x79132081   621      1   4    81920        0  191    0 /tmp/plugin/KAAAAA7sHjeg/pkg:/images/loading_shimmer.png
+0x793da351   240    140   4   163840        0  341    0 /tmp/plugin/FEBAAAR63SX4/pkg:/images/fish_orange.png
+0x793df159   240    140   4   163840        0  350    0 /tmp/plugin/FEBAAAR63SX4/pkg:/images/fish_blue.png
+0x79188641   290    218   3   286720        0  135    0 /tmp/plugin/FEBAAAR63SX4/pkg:/images/icon_hd.png
+0x790ea219  2400   1080   4 10444800        0  210    0 /tmp/plugin/FEBAAAR63SX4/pkg:/images/layer_8.png
+0x790b6d41   290    218   3   286720        0   40    0 /tmp/plugin/DFBAAAwqigwC/pkg:/images/icon_hd.png
+0x795e7589   240    140   4   163840        0   17    0 /tmp/plugin/MFBAAAMEbyQv/pkg:/images/fish_orange.png
+0x790b8719   240    140   4   163840        0   18    0 /tmp/plugin/MFBAAAMEbyQv/pkg:/images/fish_blue.png
+0x7953ed71  2400   1080   4 10444800        0   50    0 /tmp/plugin/MFBAAAMEbyQv/pkg:/images/layer_2.png
+0x792e4e71  2400   1080   4 10444800        0   51    0 /tmp/plugin/MFBAAAMEbyQv/pkg:/images/layer_1.png
+0x791ed3b1  2400   1080   4 10444800        0   58    0 /tmp/plugin/MFBAAAMEbyQv/pkg:/images/layer_4.png
+0x79579ad1  2400   1080   4 10444800        0   52    0 /tmp/plugin/MFBAAAMEbyQv/pkg:/images/layer_3.png
+0x7951f2e1  2400   1080   4 10444800        0   59    0 /tmp/plugin/MFBAAAMEbyQv/pkg:/images/layer_6.png
+0x796132a1  2400   1080   4 10444800        0   65    0 /tmp/plugin/MFBAAAMEbyQv/pkg:/images/layer_5.png
+0x7961eb09  2400   1080   4 10444800        0   45    0 /tmp/plugin/MFBAAAMEbyQv/pkg:/images/layer_8.png
+0x790b6629  2400   1080   4 10444800        0   37    0 /tmp/plugin/MFBAAAMEbyQv/pkg:/images/layer_7.png
+0x790c1c41  2400   1080   4 10444800        0  108    0 /tmp/plugin/FGBAAAQyhO3k/pkg:/images/layer_1.png
+0x792d31b1  2400   1080   4 10444800        0  270    0 /tmp/plugin/FGBAAAQyhO3k/pkg:/images/layer_2.png
+0x790b3309  2400   1080   4 10444800        0  271    0 /tmp/plugin/FGBAAAQyhO3k/pkg:/images/layer_3.png
+0x790e45c9  2400   1080   4 10444800        0  335    0 /tmp/plugin/FGBAAAQyhO3k/pkg:/images/layer_4.png
+0x79305731  2400   1080   4 10444800        0   80    0 /tmp/plugin/FGBAAAQyhO3k/pkg:/images/layer_6.png
+0x790c3049  2400   1080   4 10444800        0   79    0 /tmp/plugin/FGBAAAQyhO3k/pkg:/images/layer_5.png
+0x7931e259  2400   1080   4 10444800        0   78    0 /tmp/plugin/FGBAAAQyhO3k/pkg:/images/layer_8.png
+0x791c4071  2400   1080   4 10444800        0   15    0 /tmp/plugin/FGBAAAQyhO3k/pkg:/images/layer_7.png
+0x7929c171   240    140   4   163840        0   20    0 /tmp/plugin/FGBAAAQyhO3k/pkg:/images/fish_orange.png
+0x79356be9   240    140   4   163840        0   21    0 /tmp/plugin/FGBAAAQyhO3k/pkg:/images/fish_blue.png
+Available texture memory 16489472 used 223510528 max 240000000
+Available texture memory 240000000 used 0 max 240000000
+Available texture memory 240000000 used 0 max 240000000
+Available texture memory 16489472 used 223510528 max 240000000
+Available texture memory 240000000 used 0 max 240000000
+Available texture memory 16489472 used 223510528 max 240000000
+>channel: mem and cpu data not available
+== 12:03:59
+0x7948d6c1     1      1   4     4096        0  186    0 /tmp/plugin/KAAAAA7sHjeg/pkg:/images/focus_footprint_pixel.png
+0x791e7e41    36     36   4    16384        0  187    0 /tmp/plugin/KAAAAA7sHjeg/pkg:/images/fhd/icon_options.png
+0x790e5399     1    100   4    16384        0  188    0 /tmp/plugin/KAAAAA7sHjeg/pkg:/images/leftnav_bottom_fade_mask.png
+0x794e1439     8    722   4    94208        0  189    0 /tmp/plugin/KAAAAA7sHjeg/pkg:/images/black_overlay_gradient.9.png
+0x7948f7d1    36     36   4    16384        0  198    0 /tmp/plugin/KAAAAA7sHjeg/pkg:/images/nav/hs2/roku.settings.png
+0x7917fcd9    36     36   4    16384        0  197    0 /tmp/plugin/KAAAAA7sHjeg/pkg:/images/nav/hs2/roku.explore.png
+0x79313fd1    36     36   4    16384        0  193    0 /tmp/plugin/KAAAAA7sHjeg/pkg:/images/nav/hs2/roku.inputs.png
+0x79fcbf31    36     36   4    16384        0  196    0 /tmp/plugin/KAAAAA7sHjeg/pkg:/images/nav/hs2/roku.search.png
+0x790bdcf1    36     36   4    16384        0  192    0 /tmp/plugin/KAAAAA7sHjeg/pkg:/images/nav/hs2/roku.dhs.png
+0x79fa3581    36     36   4    16384        0  194    0 /tmp/plugin/KAAAAA7sHjeg/pkg:/images/nav/hs2/roku.z-zones-livetv-zone.png
+0x79372b89   621      1   4    81920        0  195    0 /tmp/plugin/KAAAAA7sHjeg/pkg:/images/loading_shimmer.png
+0x79132081   621      1   4    81920        0  191    0 /tmp/plugin/KAAAAA7sHjeg/pkg:/images/loading_shimmer.png
+0x793da351   240    140   4   163840        0  341    0 /tmp/plugin/FEBAAAR63SX4/pkg:/images/fish_orange.png
+0x793df159   240    140   4   163840        0  350    0 /tmp/plugin/FEBAAAR63SX4/pkg:/images/fish_blue.png
+0x79188641   290    218   3   286720        0  135    0 /tmp/plugin/FEBAAAR63SX4/pkg:/images/icon_hd.png
+0x790ea219  2400   1080   4 10444800        0  210    0 /tmp/plugin/FEBAAAR63SX4/pkg:/images/layer_8.png
+0x790b6d41   290    218   3   286720        0   40    0 /tmp/plugin/DFBAAAwqigwC/pkg:/images/icon_hd.png
+0x795e7589   240    140   4   163840        0   17    0 /tmp/plugin/MFBAAAMEbyQv/pkg:/images/fish_orange.png
+0x790b8719   240    140   4   163840        0   18    0 /tmp/plugin/MFBAAAMEbyQv/pkg:/images/fish_blue.png
+0x7953ed71  2400   1080   4 10444800        0   50    0 /tmp/plugin/MFBAAAMEbyQv/pkg:/images/layer_2.png
+0x792e4e71  2400   1080   4 10444800        0   51    0 /tmp/plugin/MFBAAAMEbyQv/pkg:/images/layer_1.png
+0x791ed3b1  2400   1080   4 10444800        0   58    0 /tmp/plugin/MFBAAAMEbyQv/pkg:/images/layer_4.png
+0x79579ad1  2400   1080   4 10444800        0   52    0 /tmp/plugin/MFBAAAMEbyQv/pkg:/images/layer_3.png
+0x7951f2e1  2400   1080   4 10444800        0   59    0 /tmp/plugin/MFBAAAMEbyQv/pkg:/images/layer_6.png
+0x796132a1  2400   1080   4 10444800        0   65    0 /tmp/plugin/MFBAAAMEbyQv/pkg:/images/layer_5.png
+0x7961eb09  2400   1080   4 10444800        0   45    0 /tmp/plugin/MFBAAAMEbyQv/pkg:/images/layer_8.png
+0x790b6629  2400   1080   4 10444800        0   37    0 /tmp/plugin/MFBAAAMEbyQv/pkg:/images/layer_7.png
+0x790c1c41  2400   1080   4 10444800        0  108    0 /tmp/plugin/FGBAAAQyhO3k/pkg:/images/layer_1.png
+0x792d31b1  2400   1080   4 10444800        0  270    0 /tmp/plugin/FGBAAAQyhO3k/pkg:/images/layer_2.png
+0x790b3309  2400   1080   4 10444800        0  271    0 /tmp/plugin/FGBAAAQyhO3k/pkg:/images/layer_3.png
+0x790e45c9  2400   1080   4 10444800        0  335    0 /tmp/plugin/FGBAAAQyhO3k/pkg:/images/layer_4.png
+0x79305731  2400   1080   4 10444800        0   80    0 /tmp/plugin/FGBAAAQyhO3k/pkg:/images/layer_6.png
+0x790c3049  2400   1080   4 10444800        0   79    0 /tmp/plugin/FGBAAAQyhO3k/pkg:/images/layer_5.png
+0x7931e259  2400   1080   4 10444800        0   78    0 /tmp/plugin/FGBAAAQyhO3k/pkg:/images/layer_8.png
+0x791c4071  2400   1080   4 10444800        0   15    0 /tmp/plugin/FGBAAAQyhO3k/pkg:/images/layer_7.png
+0x7929c171   240    140   4   163840        0   20    0 /tmp/plugin/FGBAAAQyhO3k/pkg:/images/fish_orange.png
+0x79356be9   240    140   4   163840        0   21    0 /tmp/plugin/FGBAAAQyhO3k/pkg:/images/fish_blue.png
+Available texture memory 16489472 used 223510528 max 240000000
+Available texture memory 240000000 used 0 max 240000000
+Available texture memory 240000000 used 0 max 240000000
+Available texture memory 16489472 used 223510528 max 240000000
+Available texture memory 240000000 used 0 max 240000000
+Available texture memory 16489472 used 223510528 max 240000000
+>channel: mem and cpu data not available
+== 12:04:11
+0x7948d6c1     1      1   4     4096        0  186    0 /tmp/plugin/KAAAAA7sHjeg/pkg:/images/focus_footprint_pixel.png
+0x791e7e41    36     36   4    16384        0  187    0 /tmp/plugin/KAAAAA7sHjeg/pkg:/images/fhd/icon_options.png
+0x790e5399     1    100   4    16384        0  188    0 /tmp/plugin/KAAAAA7sHjeg/pkg:/images/leftnav_bottom_fade_mask.png
+0x794e1439     8    722   4    94208        0  189    0 /tmp/plugin/KAAAAA7sHjeg/pkg:/images/black_overlay_gradient.9.png
+0x7948f7d1    36     36   4    16384        0  198    0 /tmp/plugin/KAAAAA7sHjeg/pkg:/images/nav/hs2/roku.settings.png
+0x7917fcd9    36     36   4    16384        0  197    0 /tmp/plugin/KAAAAA7sHjeg/pkg:/images/nav/hs2/roku.explore.png
+0x79313fd1    36     36   4    16384        0  193    0 /tmp/plugin/KAAAAA7sHjeg/pkg:/images/nav/hs2/roku.inputs.png
+0x79fcbf31    36     36   4    16384        0  196    0 /tmp/plugin/KAAAAA7sHjeg/pkg:/images/nav/hs2/roku.search.png
+0x790bdcf1    36     36   4    16384        0  192    0 /tmp/plugin/KAAAAA7sHjeg/pkg:/images/nav/hs2/roku.dhs.png
+0x79fa3581    36     36   4    16384        0  194    0 /tmp/plugin/KAAAAA7sHjeg/pkg:/images/nav/hs2/roku.z-zones-livetv-zone.png
+0x79372b89   621      1   4    81920        0  195    0 /tmp/plugin/KAAAAA7sHjeg/pkg:/images/loading_shimmer.png
+0x79132081   621      1   4    81920        0  191    0 /tmp/plugin/KAAAAA7sHjeg/pkg:/images/loading_shimmer.png
+0x793da351   240    140   4   163840        0  341    0 /tmp/plugin/FEBAAAR63SX4/pkg:/images/fish_orange.png
+0x793df159   240    140   4   163840        0  350    0 /tmp/plugin/FEBAAAR63SX4/pkg:/images/fish_blue.png
+0x79188641   290    218   3   286720        0  135    0 /tmp/plugin/FEBAAAR63SX4/pkg:/images/icon_hd.png
+0x790ea219  2400   1080   4 10444800        0  210    0 /tmp/plugin/FEBAAAR63SX4/pkg:/images/layer_8.png
+0x790b6d41   290    218   3   286720        0   40    0 /tmp/plugin/DFBAAAwqigwC/pkg:/images/icon_hd.png
+0x795e7589   240    140   4   163840        0   17    0 /tmp/plugin/MFBAAAMEbyQv/pkg:/images/fish_orange.png
+0x790b8719   240    140   4   163840        0   18    0 /tmp/plugin/MFBAAAMEbyQv/pkg:/images/fish_blue.png
+0x7953ed71  2400   1080   4 10444800        0   50    0 /tmp/plugin/MFBAAAMEbyQv/pkg:/images/layer_2.png
+0x792e4e71  2400   1080   4 10444800        0   51    0 /tmp/plugin/MFBAAAMEbyQv/pkg:/images/layer_1.png
+0x791ed3b1  2400   1080   4 10444800        0   58    0 /tmp/plugin/MFBAAAMEbyQv/pkg:/images/layer_4.png
+0x79579ad1  2400   1080   4 10444800        0   52    0 /tmp/plugin/MFBAAAMEbyQv/pkg:/images/layer_3.png
+0x7951f2e1  2400   1080   4 10444800        0   59    0 /tmp/plugin/MFBAAAMEbyQv/pkg:/images/layer_6.png
+0x796132a1  2400   1080   4 10444800        0   65    0 /tmp/plugin/MFBAAAMEbyQv/pkg:/images/layer_5.png
+0x7961eb09  2400   1080   4 10444800        0   45    0 /tmp/plugin/MFBAAAMEbyQv/pkg:/images/layer_8.png
+0x790b6629  2400   1080   4 10444800        0   37    0 /tmp/plugin/MFBAAAMEbyQv/pkg:/images/layer_7.png
+0x790c1c41  2400   1080   4 10444800        0  108    0 /tmp/plugin/FGBAAAQyhO3k/pkg:/images/layer_1.png
+0x792d31b1  2400   1080   4 10444800        0  270    0 /tmp/plugin/FGBAAAQyhO3k/pkg:/images/layer_2.png
+0x790b3309  2400   1080   4 10444800        0  271    0 /tmp/plugin/FGBAAAQyhO3k/pkg:/images/layer_3.png
+0x790e45c9  2400   1080   4 10444800        0  335    0 /tmp/plugin/FGBAAAQyhO3k/pkg:/images/layer_4.png
+0x79305731  2400   1080   4 10444800        0   80    0 /tmp/plugin/FGBAAAQyhO3k/pkg:/images/layer_6.png
+0x790c3049  2400   1080   4 10444800        0   79    0 /tmp/plugin/FGBAAAQyhO3k/pkg:/images/layer_5.png
+0x7931e259  2400   1080   4 10444800        0   78    0 /tmp/plugin/FGBAAAQyhO3k/pkg:/images/layer_8.png
+0x791c4071  2400   1080   4 10444800        0   15    0 /tmp/plugin/FGBAAAQyhO3k/pkg:/images/layer_7.png
+0x7929c171   240    140   4   163840        0   20    0 /tmp/plugin/FGBAAAQyhO3k/pkg:/images/fish_orange.png
+0x79356be9   240    140   4   163840        0   21    0 /tmp/plugin/FGBAAAQyhO3k/pkg:/images/fish_blue.png
+Available texture memory 16489472 used 223510528 max 240000000
+Available texture memory 240000000 used 0 max 240000000
+Available texture memory 240000000 used 0 max 240000000
+Available texture memory 16489472 used 223510528 max 240000000
+Available texture memory 240000000 used 0 max 240000000
+Available texture memory 16489472 used 223510528 max 240000000
+>channel: mem and cpu data not available
+== 12:04:24
+0x7948d6c1     1      1   4     4096        0  186    0 /tmp/plugin/KAAAAA7sHjeg/pkg:/images/focus_footprint_pixel.png
+0x791e7e41    36     36   4    16384        0  187    0 /tmp/plugin/KAAAAA7sHjeg/pkg:/images/fhd/icon_options.png
+0x790e5399     1    100   4    16384        0  188    0 /tmp/plugin/KAAAAA7sHjeg/pkg:/images/leftnav_bottom_fade_mask.png
+0x794e1439     8    722   4    94208        0  189    0 /tmp/plugin/KAAAAA7sHjeg/pkg:/images/black_overlay_gradient.9.png
+0x7948f7d1    36     36   4    16384        0  198    0 /tmp/plugin/KAAAAA7sHjeg/pkg:/images/nav/hs2/roku.settings.png
+0x7917fcd9    36     36   4    16384        0  197    0 /tmp/plugin/KAAAAA7sHjeg/pkg:/images/nav/hs2/roku.explore.png
+0x79313fd1    36     36   4    16384        0  193    0 /tmp/plugin/KAAAAA7sHjeg/pkg:/images/nav/hs2/roku.inputs.png
+0x79fcbf31    36     36   4    16384        0  196    0 /tmp/plugin/KAAAAA7sHjeg/pkg:/images/nav/hs2/roku.search.png
+0x790bdcf1    36     36   4    16384        0  192    0 /tmp/plugin/KAAAAA7sHjeg/pkg:/images/nav/hs2/roku.dhs.png
+0x79fa3581    36     36   4    16384        0  194    0 /tmp/plugin/KAAAAA7sHjeg/pkg:/images/nav/hs2/roku.z-zones-livetv-zone.png
+0x79372b89   621      1   4    81920        0  195    0 /tmp/plugin/KAAAAA7sHjeg/pkg:/images/loading_shimmer.png
+0x79132081   621      1   4    81920        0  191    0 /tmp/plugin/KAAAAA7sHjeg/pkg:/images/loading_shimmer.png
+0x793da351   240    140   4   163840        0  341    0 /tmp/plugin/FEBAAAR63SX4/pkg:/images/fish_orange.png
+0x793df159   240    140   4   163840        0  350    0 /tmp/plugin/FEBAAAR63SX4/pkg:/images/fish_blue.png
+0x79188641   290    218   3   286720        0  135    0 /tmp/plugin/FEBAAAR63SX4/pkg:/images/icon_hd.png
+0x790ea219  2400   1080   4 10444800        0  210    0 /tmp/plugin/FEBAAAR63SX4/pkg:/images/layer_8.png
+0x790b6d41   290    218   3   286720        0   40    0 /tmp/plugin/DFBAAAwqigwC/pkg:/images/icon_hd.png
+0x795e7589   240    140   4   163840        0   17    0 /tmp/plugin/MFBAAAMEbyQv/pkg:/images/fish_orange.png
+0x790b8719   240    140   4   163840        0   18    0 /tmp/plugin/MFBAAAMEbyQv/pkg:/images/fish_blue.png
+0x7953ed71  2400   1080   4 10444800        0   50    0 /tmp/plugin/MFBAAAMEbyQv/pkg:/images/layer_2.png
+0x792e4e71  2400   1080   4 10444800        0   51    0 /tmp/plugin/MFBAAAMEbyQv/pkg:/images/layer_1.png
+0x791ed3b1  2400   1080   4 10444800        0   58    0 /tmp/plugin/MFBAAAMEbyQv/pkg:/images/layer_4.png
+0x79579ad1  2400   1080   4 10444800        0   52    0 /tmp/plugin/MFBAAAMEbyQv/pkg:/images/layer_3.png
+0x7951f2e1  2400   1080   4 10444800        0   59    0 /tmp/plugin/MFBAAAMEbyQv/pkg:/images/layer_6.png
+0x796132a1  2400   1080   4 10444800        0   65    0 /tmp/plugin/MFBAAAMEbyQv/pkg:/images/layer_5.png
+0x7961eb09  2400   1080   4 10444800        0   45    0 /tmp/plugin/MFBAAAMEbyQv/pkg:/images/layer_8.png
+0x790b6629  2400   1080   4 10444800        0   37    0 /tmp/plugin/MFBAAAMEbyQv/pkg:/images/layer_7.png
+0x790c1c41  2400   1080   4 10444800        0  108    0 /tmp/plugin/FGBAAAQyhO3k/pkg:/images/layer_1.png
+0x792d31b1  2400   1080   4 10444800        0  270    0 /tmp/plugin/FGBAAAQyhO3k/pkg:/images/layer_2.png
+0x790b3309  2400   1080   4 10444800        0  271    0 /tmp/plugin/FGBAAAQyhO3k/pkg:/images/layer_3.png
+0x790e45c9  2400   1080   4 10444800        0  335    0 /tmp/plugin/FGBAAAQyhO3k/pkg:/images/layer_4.png
+0x79305731  2400   1080   4 10444800        0   80    0 /tmp/plugin/FGBAAAQyhO3k/pkg:/images/layer_6.png
+0x790c3049  2400   1080   4 10444800        0   79    0 /tmp/plugin/FGBAAAQyhO3k/pkg:/images/layer_5.png
+0x7931e259  2400   1080   4 10444800        0   78    0 /tmp/plugin/FGBAAAQyhO3k/pkg:/images/layer_8.png
+0x791c4071  2400   1080   4 10444800        0   15    0 /tmp/plugin/FGBAAAQyhO3k/pkg:/images/layer_7.png
+0x7929c171   240    140   4   163840        0   20    0 /tmp/plugin/FGBAAAQyhO3k/pkg:/images/fish_orange.png
+0x79356be9   240    140   4   163840        0   21    0 /tmp/plugin/FGBAAAQyhO3k/pkg:/images/fish_blue.png
+Available texture memory 16489472 used 223510528 max 240000000
+Available texture memory 240000000 used 0 max 240000000
+Available texture memory 240000000 used 0 max 240000000
+Available texture memory 16489472 used 223510528 max 240000000
+Available texture memory 240000000 used 0 max 240000000
+Available texture memory 16489472 used 223510528 max 240000000
+>channel: mem and cpu data not available
+== 12:04:36
+0x7948d6c1     1      1   4     4096        0  186    0 /tmp/plugin/KAAAAA7sHjeg/pkg:/images/focus_footprint_pixel.png
+0x791e7e41    36     36   4    16384        0  187    0 /tmp/plugin/KAAAAA7sHjeg/pkg:/images/fhd/icon_options.png
+0x790e5399     1    100   4    16384        0  188    0 /tmp/plugin/KAAAAA7sHjeg/pkg:/images/leftnav_bottom_fade_mask.png
+0x794e1439     8    722   4    94208        0  189    0 /tmp/plugin/KAAAAA7sHjeg/pkg:/images/black_overlay_gradient.9.png
+0x7948f7d1    36     36   4    16384        0  198    0 /tmp/plugin/KAAAAA7sHjeg/pkg:/images/nav/hs2/roku.settings.png
+0x7917fcd9    36     36   4    16384        0  197    0 /tmp/plugin/KAAAAA7sHjeg/pkg:/images/nav/hs2/roku.explore.png
+0x79313fd1    36     36   4    16384        0  193    0 /tmp/plugin/KAAAAA7sHjeg/pkg:/images/nav/hs2/roku.inputs.png
+0x79fcbf31    36     36   4    16384        0  196    0 /tmp/plugin/KAAAAA7sHjeg/pkg:/images/nav/hs2/roku.search.png
+0x790bdcf1    36     36   4    16384        0  192    0 /tmp/plugin/KAAAAA7sHjeg/pkg:/images/nav/hs2/roku.dhs.png
+0x79fa3581    36     36   4    16384        0  194    0 /tmp/plugin/KAAAAA7sHjeg/pkg:/images/nav/hs2/roku.z-zones-livetv-zone.png
+0x79372b89   621      1   4    81920        0  195    0 /tmp/plugin/KAAAAA7sHjeg/pkg:/images/loading_shimmer.png
+0x79132081   621      1   4    81920        0  191    0 /tmp/plugin/KAAAAA7sHjeg/pkg:/images/loading_shimmer.png
+0x793da351   240    140   4   163840        0  341    0 /tmp/plugin/FEBAAAR63SX4/pkg:/images/fish_orange.png
+0x793df159   240    140   4   163840        0  350    0 /tmp/plugin/FEBAAAR63SX4/pkg:/images/fish_blue.png
+0x79188641   290    218   3   286720        0  135    0 /tmp/plugin/FEBAAAR63SX4/pkg:/images/icon_hd.png
+0x790ea219  2400   1080   4 10444800        0  210    0 /tmp/plugin/FEBAAAR63SX4/pkg:/images/layer_8.png
+0x790b6d41   290    218   3   286720        0   40    0 /tmp/plugin/DFBAAAwqigwC/pkg:/images/icon_hd.png
+0x795e7589   240    140   4   163840        0   17    0 /tmp/plugin/MFBAAAMEbyQv/pkg:/images/fish_orange.png
+0x790b8719   240    140   4   163840        0   18    0 /tmp/plugin/MFBAAAMEbyQv/pkg:/images/fish_blue.png
+0x7953ed71  2400   1080   4 10444800        0   50    0 /tmp/plugin/MFBAAAMEbyQv/pkg:/images/layer_2.png
+0x792e4e71  2400   1080   4 10444800        0   51    0 /tmp/plugin/MFBAAAMEbyQv/pkg:/images/layer_1.png
+0x791ed3b1  2400   1080   4 10444800        0   58    0 /tmp/plugin/MFBAAAMEbyQv/pkg:/images/layer_4.png
+0x79579ad1  2400   1080   4 10444800        0   52    0 /tmp/plugin/MFBAAAMEbyQv/pkg:/images/layer_3.png
+0x7951f2e1  2400   1080   4 10444800        0   59    0 /tmp/plugin/MFBAAAMEbyQv/pkg:/images/layer_6.png
+0x796132a1  2400   1080   4 10444800        0   65    0 /tmp/plugin/MFBAAAMEbyQv/pkg:/images/layer_5.png
+0x7961eb09  2400   1080   4 10444800        0   45    0 /tmp/plugin/MFBAAAMEbyQv/pkg:/images/layer_8.png
+0x790b6629  2400   1080   4 10444800        0   37    0 /tmp/plugin/MFBAAAMEbyQv/pkg:/images/layer_7.png
+0x790c1c41  2400   1080   4 10444800        0  108    0 /tmp/plugin/FGBAAAQyhO3k/pkg:/images/layer_1.png
+0x792d31b1  2400   1080   4 10444800        0  270    0 /tmp/plugin/FGBAAAQyhO3k/pkg:/images/layer_2.png
+0x790b3309  2400   1080   4 10444800        0  271    0 /tmp/plugin/FGBAAAQyhO3k/pkg:/images/layer_3.png
+0x790e45c9  2400   1080   4 10444800        0  335    0 /tmp/plugin/FGBAAAQyhO3k/pkg:/images/layer_4.png
+0x79305731  2400   1080   4 10444800        0   80    0 /tmp/plugin/FGBAAAQyhO3k/pkg:/images/layer_6.png
+0x790c3049  2400   1080   4 10444800        0   79    0 /tmp/plugin/FGBAAAQyhO3k/pkg:/images/layer_5.png
+0x7931e259  2400   1080   4 10444800        0   78    0 /tmp/plugin/FGBAAAQyhO3k/pkg:/images/layer_8.png
+0x791c4071  2400   1080   4 10444800        0   15    0 /tmp/plugin/FGBAAAQyhO3k/pkg:/images/layer_7.png
+0x7929c171   240    140   4   163840        0   20    0 /tmp/plugin/FGBAAAQyhO3k/pkg:/images/fish_orange.png
+0x79356be9   240    140   4   163840        0   21    0 /tmp/plugin/FGBAAAQyhO3k/pkg:/images/fish_blue.png
+Available texture memory 16489472 used 223510528 max 240000000
+Available texture memory 240000000 used 0 max 240000000
+Available texture memory 240000000 used 0 max 240000000
+Available texture memory 16489472 used 223510528 max 240000000
+Available texture memory 240000000 used 0 max 240000000
+Available texture memory 16489472 used 223510528 max 240000000
+>channel: mem and cpu data not available

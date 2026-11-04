@@ -1,0 +1,15 @@
+{
+  "rootDir": ".",
+  "stagingDir": "dist/probe-staging",
+  "files": [
+    "manifest",
+    "images/**/*",
+    { "src": "probe/source/main.brs", "dest": "source/main.brs" },
+    { "src": "probe/components/**/*", "dest": "components" },
+    { "src": "probe/images/**/*", "dest": "images" }
+  ],
+  "createPackage": false,
+  "retainStagingDir": false,
+  "plugins": ["@rokucommunity/bslint"],
+  "lintConfig": "bslint.json"
+}

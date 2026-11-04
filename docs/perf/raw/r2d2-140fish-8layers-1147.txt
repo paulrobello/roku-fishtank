@@ -1,0 +1,241 @@
+X000000000000 (Primary - 15.3.4.2402)
+>RoGraphics instance 0xdfb77921
+address    width height bpp     size   buf sz  tex  fbo name
+0x790e1849   100    100   4    65536        0   41    0 /RokuOS/Artwork/SceneGraph/GenevaTheme/Base/FHD/focus_list.9.png
+0x790e94f9   100    100   4    65536        0   90    0 /RokuOS/Artwork/SceneGraph/GenevaTheme/Base/FHD/focus_footprint.9.png
+0x792f1409   100      6   4    16384        0   63    0 /RokuOS/Artwork/SceneGraph/GenevaTheme/Base/FHD/dividerHorizontal.9.png
+0x79380401   118    118   4    65536        0   61    0 /RokuOS/Artwork/SceneGraph/GenevaTheme/Base/FHD/focus_grid.9.png
+0x790cf909   375    375   4   589824        0   35    0 /RokuOS/Artwork/SceneGraph/GenevaTheme/Base/FHD/image_placeholder.9.png
+0x791609b1   375    375   4   589824        0   76    0 /RokuOS/Artwork/SceneGraph/GenevaTheme/Base/FHD/missingImageSolid.9.png
+0x792e42c1   150    150   4   102400        0   89    0 /RokuOS/Artwork/SceneGraph/GenevaTheme/Base/FHD/imageFootprint.9.png
+0x794e25b1    68     68   4    36864        0   64    0 /RokuOS/Artwork/SceneGraph/GenevaTheme/Base/FHD/panelSet_arrowLeft.webp
+0x7916dad9   135     44   4    40960        0   74    0 /RokuOS/Artwork/SceneGraph/BrandTheme/Base/FHD/logo_roku.webp
+0x79fa16f9    68     68   4    36864        0   77    0 /RokuOS/Artwork/SceneGraph/GenevaTheme/Base/FHD/panelSet_arrowRight.webp
+0x790ba6a9  1920   1080   3  8355840        0   30    0 /RokuOS/Artwork/SceneGraph/GenevaTheme/Base/FHD/background.png
+0x79382ca9   200    200   4   200704        0  172    0 /RokuOS/Artwork/SceneGraph/FixedTheme/StandardDialog/FHD/dialog_background.9.png
+0x79391dc9   120    120   4    65536        0   94    0 /RokuOS/Artwork/SceneGraph/FixedTheme/Base/FHD/Spinner_MH.webp
+0x7917ea11    50      4   4     8192        0  178    0 /RokuOS/Artwork/SceneGraph/FixedTheme/StandardDialog/FHD/dialog_divider.9.png
+0xfaaa3589  4096     51   1   229376        0  177    0 Font: Roku UI:Regular 0x15b23f2490c1aa69  SDF 40
+0x7948d6c1     1      1   4     4096        0  186    0 /tmp/plugin/KAAAAA7sHjeg/pkg:/images/focus_footprint_pixel.png
+0x791e7e41    36     36   4    16384        0  187    0 /tmp/plugin/KAAAAA7sHjeg/pkg:/images/fhd/icon_options.png
+0x790e5399     1    100   4    16384        0  188    0 /tmp/plugin/KAAAAA7sHjeg/pkg:/images/leftnav_bottom_fade_mask.png
+0x794e1439     8    722   4    94208        0  189    0 /tmp/plugin/KAAAAA7sHjeg/pkg:/images/black_overlay_gradient.9.png
+0x7948f7d1    36     36   4    16384        0  198    0 /tmp/plugin/KAAAAA7sHjeg/pkg:/images/nav/hs2/roku.settings.png
+0x7917fcd9    36     36   4    16384        0  197    0 /tmp/plugin/KAAAAA7sHjeg/pkg:/images/nav/hs2/roku.explore.png
+0x79313fd1    36     36   4    16384        0  193    0 /tmp/plugin/KAAAAA7sHjeg/pkg:/images/nav/hs2/roku.inputs.png
+0x79fcbf31    36     36   4    16384        0  196    0 /tmp/plugin/KAAAAA7sHjeg/pkg:/images/nav/hs2/roku.search.png
+0x790bdcf1    36     36   4    16384        0  192    0 /tmp/plugin/KAAAAA7sHjeg/pkg:/images/nav/hs2/roku.dhs.png
+0x79fa3581    36     36   4    16384        0  194    0 /tmp/plugin/KAAAAA7sHjeg/pkg:/images/nav/hs2/roku.z-zones-livetv-zone.png
+0x79372b89   621      1   4    81920        0  195    0 /tmp/plugin/KAAAAA7sHjeg/pkg:/images/loading_shimmer.png
+0x790a7a91   150    150   4   102400        0  190    0 /RokuOS/Artwork/SceneGraph/GenevaTheme/Base/FHD/imageFootprint.9.png
+0x79132081   621      1   4    81920        0  191    0 /tmp/plugin/KAAAAA7sHjeg/pkg:/images/loading_shimmer.png
+0x7948f0e9   118    118   4    65536        0  206    0 /RokuOS/Artwork/SceneGraph/GenevaTheme/Base/FHD/focus_grid.9.png
+0x790ce0c9   216    162   4   172032        0  211    0 /nvram/plugins/683311.unloaded/sg_poster_hd.jpg
+0x7912f679   216    162   3   172032        0  212    0 /nvram/plugins/12.unloaded/sg_poster_hd.jpg
+0x793dd6a9   216    162   4   172032        0  213    0 /nvram/plugins/31440.unloaded/sg_poster_hd.jpg
+0x7921f639   216    162   4   172032        0  215    0 /nvram/plugins/2285.unloaded/sg_poster_hd.jpg
+0x790ec451   216    162   4   172032        0  216    0 /nvram/plugins/551012.unloaded/sg_poster_hd.jpg
+0x791ddd89   216    162   3   172032        0  217    0 /nvram/plugins/13.unloaded/sg_poster_hd.jpg
+0x7930c0a1   216    162   4   172032        0   66    0 /nvram/plugins/593099.unloaded/sg_poster_hd.jpg
+0x792b40e9   216    162   4   172032        0  175    0 /nvram/plugins/837.unloaded/sg_poster_hd.jpg
+0x7921d119   216    162   4   172032        0  248    0 /nvram/plugins/291097.unloaded/sg_poster_hd.jpg
+0x79427521    35     35   4    16384        0  223    0 /RokuOS/Artwork/SceneGraph/GenevaTheme/Base/FHD/input_overlay_container.9.png
+0x793e6c91   100      6   4    16384        0  224    0 /RokuOS/Artwork/SceneGraph/GenevaTheme/Base/FHD/dividerHorizontal.9.png
+0x7949ea11     7      7   4     4096        0  264    0 /tmp/plugin/KAAAAA7sHjeg/pkg:/images/hd/durationBarChannel.9.png
+0x7925fe91     7      7   4     4096        0  249    0 /tmp/plugin/KAAAAA7sHjeg/pkg:/images/hd/durationBar.9.png
+0x793af789     6    908   4   118784        0  265    0 /RokuOS/Artwork/SceneGraph/GenevaTheme/Base/FHD/listgrid_mask.webp
+0x79502c21   201    170   4   172032        0  115    0 /RokuOS/Artwork/SceneGraph/GenevaTheme/Base/FHD/infoPanel.9.png
+0x793de1c1   128    128   4    65536        0  277    0 /RokuOS/Artwork/SceneGraph/GenevaTheme/Settings/FHD/unifiedtheme_dropshadow.9.png
+0x7938aa71  1920   1080   3  8355840        0  274    0 /nvram/themes/visual/BAAAAAaR3K5X/FHD/BackgroundBitmap.webp
+0x79100809   553    757   4  1769472        0   67    0 /nvram/themes/visual/BAAAAAaR3K5X/FHD/AdPanelBackgroundBitmap.png
+0x7952a6c9    72     72   4    36864        0  121    0 https://images.sr.roku.com/screenbuilder/home-screen-menu/arches-hsm-subscription2x-1774365643343.png
+0x7925fb09    36     36   4    16384        0  119    0 https://images.sr.roku.com/screenbuilder/home-screen-menu/ff-1792516787060.png
+0x79153341    36     36   4    16384        0   13    0 https://images.sr.roku.com/screenbuilder/home-screen-menu/hsm-sports-us-fhd-white-1786043789335.png
+0x7938d9a1   316    178   3   245760        0  124    0 cache+dhs_purge+https://images.sr.roku.com/idType/roku/context/global/id/38dd97b67e9b5c3f83e120e503fd1a7b/rokuFeed/assets/2a98b6db8aff5d49a0100457d8dd497f/magic/fit-in/316x178/filters:format(webp):quality(80)
+0x791646e9   256    384   3   393216        0  137    0 cache+dhs_purge+https://images.sr.roku.com/images/v1/artwork/teaser/generate/aHR0cHM6Ly9pbWFnZXMuc3Iucm9rdS5jb20vaWRUeXBlL3Jva3UvY29udGV4dC9nbG9iYWwvaWQvZTk1NmI5ZGZiYmRmNTU1ZGFjMDMxN2E2M2JmYmI3OGQvaW1hZ2VzL2dyYWNlbm90ZS9hc3NldHMvcDIwMDE2MjIzX2lfdjEyX2FmLmpwZztTdWJzO2VuLVVT/magic/fit-in/256x384/filters:format(webp):quality(80)
+0x792b0031   316    178   3   245760        0  138    0 cache+dhs_purge+https://images.sr.roku.com/idType/roku/context/global/id/7622d381707f6b703ff3ee27f94a8c02/rokuFeed/assets/6b29366262a557efb535a64ff696f079.jpg/magic/fit-in/316x178/filters:format(webp):quality(80)
+0x791d91c1   316    178   3   245760        0   27    0 cache+dhs_purge+https://images.sr.roku.com/idType/roku/context/global/id/183afd2c69a928d24c47973213921a52/images/gracenote/assets/p34111360_b_h8_ab.jpg/magic/fit-in/316x178/filters:format(webp):quality(80)
+0x7919bde1    72     72   4    36864        0  164    0 https://images.sr.roku.com/screenbuilder/home-screen-menu/arches-hsm-subscription2x-1774365643343.png
+0x79392209    72     72   4    36864        0  180    0 https://images.sr.roku.com/screenbuilder/home-screen-menu/arches-hsm-subscription2x-1774365634781.png
+0x79254279    36     36   4    16384        0  183    0 https://images.sr.roku.com/screenbuilder/home-screen-menu/hsm-sports-us-fhd-white-1786043778211.png
+0x794ea2a9    36     36   4    16384        0  184    0 https://images.sr.roku.com/screenbuilder/home-screen-menu/hsm-sports-us-fhd-white-1786043789335.png
+0x791987f1    36     36   4    16384        0  185    0 https://images.sr.roku.com/screenbuilder/home-screen-menu/ff-1792516787060.png
+0x791c25b9    36     36   4    16384        0  278    0 https://images.sr.roku.com/screenbuilder/home-screen-menu/on-1792516781603.png
+0x793dc741   316    178   3   245760        0  284    0 cache+dhs_purge+https://images.sr.roku.com/idType/roku/context/global/id/38dd97b67e9b5c3f83e120e503fd1a7b/rokuFeed/assets/2a98b6db8aff5d49a0100457d8dd497f/magic/fit-in/316x178/filters:format(webp):quality(80)
+0x794146d1   316    178   3   245760        0  285    0 cache+dhs_purge+https://images.sr.roku.com/idType/roku/context/global/id/aa7d58fa60563c4531e78777313eac56/images/gracenote/assets/p27609542_b_h8_ad.jpg/magic/fit-in/316x178/filters:format(webp):quality(80)
+0x793c8a71   256    384   3   393216        0  283    0 cache+dhs_purge+https://images.sr.roku.com/images/v1/artwork/teaser/generate/aHR0cHM6Ly9pbWFnZXMuc3Iucm9rdS5jb20vaWRUeXBlL3Jva3UvY29udGV4dC9nbG9iYWwvaWQvZTk1NmI5ZGZiYmRmNTU1ZGFjMDMxN2E2M2JmYmI3OGQvaW1hZ2VzL2dyYWNlbm90ZS9hc3NldHMvcDIwMDE2MjIzX2lfdjEyX2FmLmpwZztTdWJzO2VuLVVT/magic/fit-in/256x384/filters:format(webp):quality(80)
+0x79414a51   316    178   3   245760        0  229    0 cache+dhs_purge+https://images.sr.roku.com/idType/roku/context/global/id/7622d381707f6b703ff3ee27f94a8c02/rokuFeed/assets/6b29366262a557efb535a64ff696f079.jpg/magic/fit-in/316x178/filters:format(webp):quality(80)
+0x790a7f21   316    178   3   245760        0  296    0 cache+dhs_purge+https://images.sr.roku.com/idType/roku/context/global/id/183afd2c69a928d24c47973213921a52/images/gracenote/assets/p34111360_b_h8_ab.jpg/magic/fit-in/316x178/filters:format(webp):quality(80)
+0x79521ea9    26     26   4     4096        0  286    0 https://image.roku.com/bh-uploads/badges/defaults/backgrounds/ContentBadges-purple-671DC5-top-right.9.png
+0x790b9a29    80     60   3    24576    14400    0    0 https://images.sr.roku.com/idType/roku/context/global/id/61322/https%3A%2F%2Fimage.roku.com%2Fdeveloper_channels%2Fprod%2F46d3fb433767525d0c25d3499db6d9c55a0eb7a71318005c0395b8385f87bd14.png/magic/80x60/filters:format(webp):quality(80)
+0x795261e1    80     60   3    24576    14400    0    0 https://images.sr.roku.com/idType/roku/context/global/id/31440/https%3A%2F%2Fimage.roku.com%2Fdeveloper_channels%2Fprod%2F61e92cc2e43b46edf8216d98e2d7a845bbbbd23973b1ca8235adcb89d4714c82.png/magic/80x60/filters:format(webp):quality(80)
+0x793917b1   216    162   4   172032        0  179    0 cache+dhs_purge+https://images.sr.roku.com/sr/uploads/images/81a2c900-0fed-4b8e-b4d0-b600a39f7b9f_image/magic/216x0/filters:format(webp):quality(80)
+0x794e77f1   216    121   4   114688        0  222    0 https://images.sr.roku.com/sr/uploads/images/81a2c900-0fed-4b8e-b4d0-b600a39f7b9f_image/magic/216x121/filters:format(webp):quality(80):brightness(-30):stretch():blur(65)
+0x794b5919   525    735   4  1601536        0  209    0 https://images.sr.roku.com/https%3A%2F%2Fads.w55c.net%2Ft%2Fcs%2Fassets%2FPacc3CYGGrj1%2F2026-10-23_18-47-17.379_0fb2a96b-946b-435f-b6c6-292f9405d84f_26Q4_FoxONE_Midterms-Elections_Solid_Transparent_2.png/magic/525x0/filters:format(webp):quality(80)
+0x791f2ec1   240    140   4   163840        0  199    0 /tmp/plugin/MDBAAA0ASHts/pkg:/images/fish_orange.png
+0x792638b9   240    140   4   163840        0  230    0 /tmp/plugin/MDBAAA0ASHts/pkg:/images/fish_blue.png
+0x7953ed71  2400   1080   4 10444800        0  329    0 /tmp/plugin/MDBAAA0ASHts/pkg:/images/layer_2.png
+0x793c2b51  2400   1080   4 10444800        0  181    0 /tmp/plugin/MDBAAA0ASHts/pkg:/images/layer_1.png
+0x79337a49  2400   1080   4 10444800        0   69    0 /tmp/plugin/MDBAAA0ASHts/pkg:/images/layer_4.png
+0x79344009  2400   1080   4 10444800        0    1    0 /tmp/plugin/MDBAAA0ASHts/pkg:/images/layer_3.png
+0x79530db1  2400   1080   4 10444800        0  323    0 /tmp/plugin/MDBAAA0ASHts/pkg:/images/layer_6.png
+0x79579ad1  2400   1080   4 10444800        0  330    0 /tmp/plugin/MDBAAA0ASHts/pkg:/images/layer_5.png
+0x7961eb09  2400   1080   4 10444800        0  275    0 /tmp/plugin/MDBAAA0ASHts/pkg:/images/layer_8.png
+0x796132a1  2400   1080   4 10444800        0  276    0 /tmp/plugin/MDBAAA0ASHts/pkg:/images/layer_7.png
+0x791a0189   316    178   3   245760        0  110    0 cache+dhs_purge+https://images.sr.roku.com/idType/roku/context/global/id/38dd97b67e9b5c3f83e120e503fd1a7b/rokuFeed/assets/2a98b6db8aff5d49a0100457d8dd497f/magic/fit-in/316x178/filters:format(webp):quality(80)
+0x7967a4d1   316    178   3   245760        0   57    0 cache+dhs_purge+https://images.sr.roku.com/idType/roku/context/global/id/aa7d58fa60563c4531e78777313eac56/images/gracenote/assets/p27609542_b_h8_ad.jpg/magic/fit-in/316x178/filters:format(webp):quality(80)
+0x79615e99   256    384   3   393216        0   71    0 cache+dhs_purge+https://images.sr.roku.com/images/v1/artwork/teaser/generate/aHR0cHM6Ly9pbWFnZXMuc3Iucm9rdS5jb20vaWRUeXBlL3Jva3UvY29udGV4dC9nbG9iYWwvaWQvZTk1NmI5ZGZiYmRmNTU1ZGFjMDMxN2E2M2JmYmI3OGQvaW1hZ2VzL2dyYWNlbm90ZS9hc3NldHMvcDIwMDE2MjIzX2lfdjEyX2FmLmpwZztTdWJzO2VuLVVT/magic/fit-in/256x384/filters:format(webp):quality(80)
+0x792deaf9   316    178   3   245760        0  136    0 cache+dhs_purge+https://images.sr.roku.com/idType/roku/context/global/id/7622d381707f6b703ff3ee27f94a8c02/rokuFeed/assets/6b29366262a557efb535a64ff696f079.jpg/magic/fit-in/316x178/filters:format(webp):quality(80)
+0x791cf7a9   316    178   3   245760        0  100    0 cache+dhs_purge+https://images.sr.roku.com/idType/roku/context/global/id/183afd2c69a928d24c47973213921a52/images/gracenote/assets/p34111360_b_h8_ab.jpg/magic/fit-in/316x178/filters:format(webp):quality(80)
+0x794bb689    26     26   4     4096        0   72    0 https://image.roku.com/bh-uploads/badges/defaults/backgrounds/ContentBadges-purple-671DC5-top-right.9.png
+0x793a82d9    80     60   3    24576    14400    0    0 https://images.sr.roku.com/idType/roku/context/global/id/61322/https%3A%2F%2Fimage.roku.com%2Fdeveloper_channels%2Fprod%2F46d3fb433767525d0c25d3499db6d9c55a0eb7a71318005c0395b8385f87bd14.png/magic/80x60/filters:format(webp):quality(80)
+0x790bfa19    80     60   3    24576    14400    0    0 https://images.sr.roku.com/idType/roku/context/global/id/31440/https%3A%2F%2Fimage.roku.com%2Fdeveloper_channels%2Fprod%2F61e92cc2e43b46edf8216d98e2d7a845bbbbd23973b1ca8235adcb89d4714c82.png/magic/80x60/filters:format(webp):quality(80)
+0x794ec551   216    162   4   172032        0   83    0 cache+dhs_purge+https://images.sr.roku.com/sr/uploads/images/81a2c900-0fed-4b8e-b4d0-b600a39f7b9f_image/magic/216x0/filters:format(webp):quality(80)
+0x793564a9   216    121   4   114688        0   81    0 https://images.sr.roku.com/sr/uploads/images/81a2c900-0fed-4b8e-b4d0-b600a39f7b9f_image/magic/216x121/filters:format(webp):quality(80):brightness(-30):stretch():blur(65)
+0x79267901    72     72   4    36864        0  169    0 https://images.sr.roku.com/screenbuilder/home-screen-menu/arches-hsm-subscription2x-1774365643343.png
+0x790b3969   525    735   4  1601536        0  173    0 https://images.sr.roku.com/https%3A%2F%2Fads.w55c.net%2Ft%2Fcs%2Fassets%2FPacc3CYGGrj1%2F2026-10-23_18-47-17.379_0fb2a96b-946b-435f-b6c6-292f9405d84f_26Q4_FoxONE_Midterms-Elections_Solid_Transparent_2.png/magic/525x0/filters:format(webp):quality(80)
+0x790ca6a9    72     72   4    36864        0  163    0 https://images.sr.roku.com/screenbuilder/home-screen-menu/arches-hsm-subscription2x-1774365634781.png
+0x790b6629    36     36   4    16384        0  237    0 https://images.sr.roku.com/screenbuilder/home-screen-menu/on-1792516781603.png
+0x7917e381    36     36   4    16384        0  170    0 https://images.sr.roku.com/screenbuilder/home-screen-menu/hsm-sports-us-fhd-white-1786043789335.png
+0x79366569    36     36   4    16384        0  317    0 https://images.sr.roku.com/screenbuilder/home-screen-menu/ff-1792516787060.png
+0x793b4bb9    36     36   4    16384        0  171    0 https://images.sr.roku.com/screenbuilder/home-screen-menu/hsm-sports-us-fhd-white-1786043778211.png
+0x79256919    72     72   4    36864        0  123    0 https://images.sr.roku.com/screenbuilder/home-screen-menu/arches-hsm-subscription2x-1774365643343.png
+0x79256e49    72     72   4    36864        0   87    0 https://images.sr.roku.com/screenbuilder/home-screen-menu/arches-hsm-subscription2x-1774365634781.png
+0x79526f99    36     36   4    16384        0   82    0 https://images.sr.roku.com/screenbuilder/home-screen-menu/hsm-sports-us-fhd-white-1786043789335.png
+0x79526cc9    36     36   4    16384        0  272    0 https://images.sr.roku.com/screenbuilder/home-screen-menu/ff-1792516787060.png
+0x79526d39    36     36   4    16384        0  340    0 https://images.sr.roku.com/screenbuilder/home-screen-menu/on-1792516781603.png
+0x7926bf79    36     36   4    16384        0  342    0 https://images.sr.roku.com/screenbuilder/home-screen-menu/hsm-sports-us-fhd-white-1786043778211.png
+0x791c4569   316    178   3   245760        0  346    0 cache+dhs_purge+https://images.sr.roku.com/idType/roku/context/global/id/38dd97b67e9b5c3f83e120e503fd1a7b/rokuFeed/assets/2a98b6db8aff5d49a0100457d8dd497f/magic/fit-in/316x178/filters:format(webp):quality(80)
+0x79450661    26     26   4     4096        0  344    0 https://image.roku.com/bh-uploads/badges/defaults/backgrounds/ContentBadges-purple-671DC5-top-right.9.png
+0x79507e79   316    178   3   245760        0  343    0 cache+dhs_purge+https://images.sr.roku.com/idType/roku/context/global/id/aa7d58fa60563c4531e78777313eac56/images/gracenote/assets/p27609542_b_h8_ad.jpg/magic/fit-in/316x178/filters:format(webp):quality(80)
+0x79148929   256    384   3   393216        0  347    0 cache+dhs_purge+https://images.sr.roku.com/images/v1/artwork/teaser/generate/aHR0cHM6Ly9pbWFnZXMuc3Iucm9rdS5jb20vaWRUeXBlL3Jva3UvY29udGV4dC9nbG9iYWwvaWQvZTk1NmI5ZGZiYmRmNTU1ZGFjMDMxN2E2M2JmYmI3OGQvaW1hZ2VzL2dyYWNlbm90ZS9hc3NldHMvcDIwMDE2MjIzX2lfdjEyX2FmLmpwZztTdWJzO2VuLVVT/magic/fit-in/256x384/filters:format(webp):quality(80)
+0x795ecd21   316    178   3   245760        0  348    0 cache+dhs_purge+https://images.sr.roku.com/idType/roku/context/global/id/7622d381707f6b703ff3ee27f94a8c02/rokuFeed/assets/6b29366262a557efb535a64ff696f079.jpg/magic/fit-in/316x178/filters:format(webp):quality(80)
+0x7967b6a1   316    178   3   245760        0  349    0 cache+dhs_purge+https://images.sr.roku.com/idType/roku/context/global/id/183afd2c69a928d24c47973213921a52/images/gracenote/assets/p34111360_b_h8_ab.jpg/magic/fit-in/316x178/filters:format(webp):quality(80)
+0x79575881    80     60   3    24576    14400    0    0 https://images.sr.roku.com/idType/roku/context/global/id/61322/https%3A%2F%2Fimage.roku.com%2Fdeveloper_channels%2Fprod%2F46d3fb433767525d0c25d3499db6d9c55a0eb7a71318005c0395b8385f87bd14.png/magic/80x60/filters:format(webp):quality(80)
+0x795f5611    80     60   3    24576    14400    0    0 https://images.sr.roku.com/idType/roku/context/global/id/31440/https%3A%2F%2Fimage.roku.com%2Fdeveloper_channels%2Fprod%2F61e92cc2e43b46edf8216d98e2d7a845bbbbd23973b1ca8235adcb89d4714c82.png/magic/80x60/filters:format(webp):quality(80)
+0x7969a1a9   216    121   4   114688        0  351    0 https://images.sr.roku.com/sr/uploads/images/81a2c900-0fed-4b8e-b4d0-b600a39f7b9f_image/magic/216x121/filters:format(webp):quality(80):brightness(-30):stretch():blur(65)
+0x796607e9   216    162   4   172032        0  352    0 cache+dhs_purge+https://images.sr.roku.com/sr/uploads/images/81a2c900-0fed-4b8e-b4d0-b600a39f7b9f_image/magic/216x0/filters:format(webp):quality(80)
+0x792b3991   525    735   4  1601536        0  353    0 https://images.sr.roku.com/https%3A%2F%2Fads.w55c.net%2Ft%2Fcs%2Fassets%2FPacc3CYGGrj1%2F2026-10-23_18-47-17.379_0fb2a96b-946b-435f-b6c6-292f9405d84f_26Q4_FoxONE_Midterms-Elections_Solid_Transparent_2.png/magic/525x0/filters:format(webp):quality(80)
+0x793da351   240    140   4   163840        0  341    0 /tmp/plugin/FEBAAAR63SX4/pkg:/images/fish_orange.png
+0x793df159   240    140   4   163840        0  350    0 /tmp/plugin/FEBAAAR63SX4/pkg:/images/fish_blue.png
+0x790b78c9  2400   1080   4 10444800        0  345    0 /tmp/plugin/FEBAAAR63SX4/pkg:/images/layer_2.png
+0x79160c99  2400   1080   4 10444800        0    3    0 /tmp/plugin/FEBAAAR63SX4/pkg:/images/layer_1.png
+0x793729a9  2400   1080   4 10444800        0  282    0 /tmp/plugin/FEBAAAR63SX4/pkg:/images/layer_4.png
+0x792ecd91  2400   1080   4 10444800        0  289    0 /tmp/plugin/FEBAAAR63SX4/pkg:/images/layer_3.png
+0x790fdd01  2400   1080   4 10444800        0  315    0 /tmp/plugin/FEBAAAR63SX4/pkg:/images/layer_6.png
+0x79149de9  2400   1080   4 10444800        0  290    0 /tmp/plugin/FEBAAAR63SX4/pkg:/images/layer_5.png
+0x792eb0f9   525    735   4  1601536        0   32    0 https://images.sr.roku.com/https%3A%2F%2Fads.w55c.net%2Ft%2Fcs%2Fassets%2FPacc3CYGGrj1%2F2026-10-23_18-47-17.379_0fb2a96b-946b-435f-b6c6-292f9405d84f_26Q4_FoxONE_Midterms-Elections_Solid_Transparent_2.png/magic/525x0/filters:format(webp):quality(80)
+0x792ebe59   316    178   3   245760        0   93    0 cache+dhs_purge+https://images.sr.roku.com/idType/roku/context/global/id/38dd97b67e9b5c3f83e120e503fd1a7b/rokuFeed/assets/2a98b6db8aff5d49a0100457d8dd497f/magic/fit-in/316x178/filters:format(webp):quality(80)
+0x7917e849   316    178   3   245760        0   46    0 cache+dhs_purge+https://images.sr.roku.com/idType/roku/context/global/id/aa7d58fa60563c4531e78777313eac56/images/gracenote/assets/p27609542_b_h8_ad.jpg/magic/fit-in/316x178/filters:format(webp):quality(80)
+0x79420bf9   256    384   3   393216        0    7    0 cache+dhs_purge+https://images.sr.roku.com/images/v1/artwork/teaser/generate/aHR0cHM6Ly9pbWFnZXMuc3Iucm9rdS5jb20vaWRUeXBlL3Jva3UvY29udGV4dC9nbG9iYWwvaWQvZTk1NmI5ZGZiYmRmNTU1ZGFjMDMxN2E2M2JmYmI3OGQvaW1hZ2VzL2dyYWNlbm90ZS9hc3NldHMvcDIwMDE2MjIzX2lfdjEyX2FmLmpwZztTdWJzO2VuLVVT/magic/fit-in/256x384/filters:format(webp):quality(80)
+0x79689c31    26     26   4     4096        0   47    0 https://image.roku.com/bh-uploads/badges/defaults/backgrounds/ContentBadges-purple-671DC5-top-right.9.png
+0x792ff741    80     60   3    24576        0   91    0 https://images.sr.roku.com/idType/roku/context/global/id/61322/https%3A%2F%2Fimage.roku.com%2Fdeveloper_channels%2Fprod%2F46d3fb433767525d0c25d3499db6d9c55a0eb7a71318005c0395b8385f87bd14.png/magic/80x60/filters:format(webp):quality(80)
+0x79149089    80     60   3    24576        0   49    0 https://images.sr.roku.com/idType/roku/context/global/id/31440/https%3A%2F%2Fimage.roku.com%2Fdeveloper_channels%2Fprod%2F61e92cc2e43b46edf8216d98e2d7a845bbbbd23973b1ca8235adcb89d4714c82.png/magic/80x60/filters:format(webp):quality(80)
+0x790e1559   216    162   4   172032        0   33    0 cache+dhs_purge+https://images.sr.roku.com/sr/uploads/images/81a2c900-0fed-4b8e-b4d0-b600a39f7b9f_image/magic/216x0/filters:format(webp):quality(80)
+0x791e07f9   216    121   4   114688        0   34    0 https://images.sr.roku.com/sr/uploads/images/81a2c900-0fed-4b8e-b4d0-b600a39f7b9f_image/magic/216x121/filters:format(webp):quality(80):brightness(-30):stretch():blur(65)
+0x79188269   316    178   3   245760        0   56    0 cache+dhs_purge+https://images.sr.roku.com/idType/roku/context/global/id/7622d381707f6b703ff3ee27f94a8c02/rokuFeed/assets/6b29366262a557efb535a64ff696f079.jpg/magic/fit-in/316x178/filters:format(webp):quality(80)
+0x7918ffe9   316    178   3   245760        0   53    0 cache+dhs_purge+https://images.sr.roku.com/idType/roku/context/global/id/183afd2c69a928d24c47973213921a52/images/gracenote/assets/p34111360_b_h8_ab.jpg/magic/fit-in/316x178/filters:format(webp):quality(80)
+0x790b3309    36     36   4    16384        0   54    0 https://images.sr.roku.com/screenbuilder/home-screen-menu/ff-1792516787060.png
+0x791964d1    36     36   4    16384        0   98    0 https://images.sr.roku.com/screenbuilder/home-screen-menu/on-1792516781603.png
+0x792d31b1    36     36   4    16384        0   95    0 https://images.sr.roku.com/screenbuilder/home-screen-menu/hsm-sports-us-fhd-white-1786043789335.png
+0x791c89b9    36     36   4    16384        0   75    0 https://images.sr.roku.com/screenbuilder/home-screen-menu/hsm-sports-us-fhd-white-1786043778211.png
+0x79486561    72     72   4    36864        0  102    0 https://images.sr.roku.com/screenbuilder/home-screen-menu/arches-hsm-subscription2x-1774365643343.png
+0x790e4b49    72     72   4    36864        0   19    0 https://images.sr.roku.com/screenbuilder/home-screen-menu/arches-hsm-subscription2x-1774365634781.png
+0x790b7fb9    12     51   4     8192        0   24    0 /RokuOS/Artwork/SceneGraph/GenevaTheme/Base/FHD/divider_vertical.webp
+0x791d9099    75     75   4    36864        0  112    0 /tmp/plugin/NAAAAAyB5PW1/pkg:/images/Base/FHD/minihud-icons/search_mic.webp
+0x790e7669   800      1   4   102400        0  113    0 /tmp/plugin/NAAAAAyB5PW1/pkg:/images/Bottom/FHD/secondary_text_line.png
+0x79350cc9  1920     15   4   245760        0  114    0 /tmp/plugin/NAAAAAyB5PW1/pkg:/images/Bottom/FHD/positive.png
+0x790407c1   107    107   4    65536        0  101    0 /tmp/plugin/NAAAAAyB5PW1/pkg:/images/Base/FHD/audio_level_ring.webp
+0x790b36f9   120    120   4    65536        0  116    0 /tmp/plugin/NAAAAAyB5PW1/pkg:/images/Base/FHD/Spinner_MH.webp
+0x796363a1    75     75   4    36864        0  117    0 /tmp/plugin/NAAAAAyB5PW1/pkg:/images/Base/FHD/Icon_Search_MIC_MH.webp
+0x7927e661   105    101   4    65536        0  118    0 /tmp/plugin/NAAAAAyB5PW1/pkg:/images/Base/FHD/Container_MH.9.png
+0x791d72c9   120    120   4    65536        0  122    0 /tmp/plugin/NAAAAAyB5PW1/pkg:/images/Base/FHD/Circle_MH.webp
+0x790e0759   411    231   3   425984        0  128    0 https://images.sr.roku.com/idType/roku/context/global/id/da2d64f80e1b37c329f925a0bab8f2be/rokuFeed/assets/207031d5ae475e63bdd1c2b70c6cc3f9.jpg/magic/411x0/filters:format(webp):quality(80)
+0x792ff209   411    231   3   425984        0  129    0 https://images.sr.roku.com/idType/roku/context/global/id/c6e3460dec5750c4b0233488c7d49285/images/gracenote/assets/p25531351_b_h8_ah.jpg/magic/411x0/filters:format(webp):quality(80)
+0x790c1c41    36     36   4    16384        0  130    0 /RokuOS/Artwork/SceneGraph/GenevaTheme/Base/FHD/icon_add.webp
+0x7917b5e9   218    218   4   200704        0  133    0 /RokuOS/Artwork/SceneGraph/BrandTheme/Base/FHD/background_thumb_gear.png
+0x79188641   290    218   3   286720        0  135    0 /tmp/plugin/FEBAAAR63SX4/pkg:/images/icon_hd.png
+0x79122751   540    405   3   905216        0   55    0 http://cloudservices.roku.com/proxy/images/7a919fcb-54f1-425e-b09d-95d49adc3a7c.jpg
+0x792e8621    47     45   4    16384        0  139    0 /RokuOS/Artwork/SceneGraph/GenevaTheme/Base/FHD/icon_installedChannel.webp
+0x790d4e09   360    270   3   442368        0  151    0 https://rsp.web.roku.com/production/759fec7e-3732-48a1-a1ed-0d4d26674211
+0x79260559   360    270   3   442368        0  152    0 https://rsp.web.roku.com/production/3c2c2de3-973c-47bd-b67c-fc9640862ac1
+0x7949cdc1   360    270   3   442368        0  153    0 https://rsp.web.roku.com/production/a0c695cd-b980-48c6-9bef-7120589eabf6
+0x7932cdf9   360    270   3   442368        0  155    0 https://rsp.web.roku.com/production/cac45279-49ff-40c9-92b8-f2a0445a4542
+0x79414519   360    270   3   442368        0  156    0 https://rsp.web.roku.com/production/5c4012c7-d10f-4b25-b4fd-de4fdfa91292
+0x794277a1   360    270   3   442368        0  154    0 https://rsp.web.roku.com/production/be31a74c-1a95-4bf9-9546-794029338441
+0x79382969   360    270   3   442368        0  158    0 /nvram/plugins/738051.unloaded/sg_poster_hd.jpg
+0x7951e571   360    270   3   442368        0  160    0 /nvram/plugins/730594.unloaded/sg_poster_hd.jpg
+0x79305731   360    270   3   442368        0  159    0 /nvram/plugins/687148.unloaded/sg_poster_hd.jpg
+0x793ce611   360    270   3   442368        0  107    0 /nvram/plugins/680626.unloaded/sg_poster_hd.jpg
+0x790c3049   290    218   4   286720        0   68    0 https://image.roku.com/developer_channels/prod/87110765ccc877d563f15bc903b521c80a02cebfa337e93c08d98b26a2ceb76d.png
+0x791c4071   290    218   4   286720        0   23    0 https://image.roku.com/developer_channels/prod/6172565f49e8caafd36c3c4cedb19d250fce04487e819b5d155c54766a8dd583.png
+0x7931e259   360    270   3   442368        0   96    0 http://cloudservices.roku.com/proxy/images/1a6b44aa-4155-4fb6-8f01-2bc058d8fee9.jpg
+0x791c16b9   290    218   4   286720        0  140    0 https://image.roku.com/developer_channels/prod/0a62afb6f992bb24e5ea6b1c220525f2a3bbe73f1c6a37f4716c840089dc9720.png
+0x79581381   290    218   4   286720        0   31    0 https://image.roku.com/developer_channels/prod/ac1544ff5315baa4dbed0ef819bd82f611d995ffea9ce23dad29b17800f91316.png
+0x7929c171   360    270   3   442368        0   62    0 http://cloudservices.roku.com/proxy/assets/r14.6.0/Brown_FHD_pkg/Base/HD/thumb.jpg
+0x79416481   360    270   3   442368        0   22    0 http://cloudservices.roku.com/proxy/assets/r14.6.0/Space_FHD_pkg/Base/HD/thumb.jpg
+0x792f0821   360    270   3   442368        0  161    0 https://rsp.web.roku.com/production/40cad47f-0a74-4679-9e18-7d75b1caa361
+0x79356be9   360    270   3   442368        0  165    0 https://rsp.web.roku.com/production/7a54144c-b587-42da-82e3-17e1570887ac
+0x793c2419   360    270   3   442368        0   25    0 https://rsp.web.roku.com/production/6f9d0f60-aed1-4683-8cca-27b2958fd7eb
+0x790c7c41   360    270   3   442368        0    2    0 https://rsp.web.roku.com/production/8b0e4771-688c-4a00-9bcd-fbc690dbbad5
+0x791539e9   360    270   3   442368        0  166    0 https://rsp.web.roku.com/production/9911b33b-6a54-456b-b205-c6c16485fc3c
+0x7949dff1   360    270   3   442368        0  167    0 https://rsp.web.roku.com/production/97142d8c-7123-4264-91e1-a29ef5ddcd58
+0x7948c069   360    270   3   442368        0  202    0 https://rsp.web.roku.com/production/06deccb4-aa22-4a18-8ac7-9ebc0ef8de4c
+0x7917ef89   360    270   3   442368        0  168    0 https://rsp.web.roku.com/production/cb1350fd-5cf4-466d-bfdd-92745e7af201
+0x790f4b91   360    270   3   442368        0  203    0 https://rsp.web.roku.com/production/1888bf9f-85ce-49e5-8ed5-82269f7b4881
+0x792edcc9   290    218   4   286720        0  239    0 /nvram/plugins/278897.rom.unloaded/images/Icon_HD.png
+0x7916db21   290    218   4   286720        0  240    0 /nvram/plugins/556119.unloaded/sg_poster_hd.jpg
+0x7961ed29   290    218   4   286720        0  241    0 /nvram/plugins/577179.unloaded/sg_poster_hd.jpg
+0x790ce8a9   416    312   3   532480        0  218    0 /nvram/plugins/579183.unloaded/sg_poster_hd.jpg
+0x79166199   540    405   3   905216        0  242    0 /nvram/plugins/72728.unloaded/sg_poster_hd.jpg
+0x7920eac9   290    218   3   286720        0  253    0 /nvram/plugins/23932.unloaded/sg_poster_hd.jpg
+0x790bc441   290    218   3   286720        0  252    0 /nvram/plugins/15673.unloaded/sg_poster_hd.jpg
+0x79283411   360    270   3   442368        0  214    0 /nvram/plugins/261525.unloaded/sg_poster_hd.jpg
+0x7958da51   290    218   4   286720        0  256    0 /nvram/plugins/5534.unloaded/sg_poster_hd.jpg
+0x791d8111   290    218   4   286720        0  255    0 /nvram/plugins/5533.unloaded/sg_poster_hd.jpg
+0x792d5eb9   290    218   3   286720        0  254    0 /nvram/plugins/55545.unloaded/sg_poster_hd.jpg
+0x79f4e4d9   290    218   4   286720        0  258    0 https://image.roku.com/developer_channels/prod/d09389c279549b01a627d2a78b570023958a63d88239061c02c7b20b3407cca2.png
+0x790d4301   290    218   4   286720        0  257    0 https://image.roku.com/developer_channels/prod/af3ae9619c81cf83af95f54cbf530ee16c6010e0ab49dc308a42852aa254e1aa.png
+0x790f4851   290    218   4   286720        0  259    0 https://image.roku.com/developer_channels/prod/d83c24e77b72909ba16ed0610d4fd0aff6c58896656b53e181127e1ce4d11904.png
+0x795c83d9   290    218   4   286720        0  261    0 https://image.roku.com/developer_channels/prod/efffaca51c54262196087cb69984aace939b539219b71332d4f28e14afc3ca97.png
+0x79413939   290    218   4   286720        0  260    0 https://image.roku.com/developer_channels/prod/c9f6a0e00fb6b10f4c55d80a1f22f2fdd0233ec3c3a780bc56798e2cddc317f6.png
+0x79f24349   290    218   4   286720        0  263    0 https://image.roku.com/developer_channels/prod/265dd6d04ba2daace01eebbfecfb1975929d6686157ff54b7a6e517b3074515b.png
+0x79414cd1   290    218   4   286720        0  246    0 https://image.roku.com/developer_channels/prod/a04ae2f56dfa6c84fa74cb8d1601bcb436b4e54de874a30ba10784880da13e9c.png
+0x79303521   290    218   4   286720        0  262    0 https://image.roku.com/developer_channels/prod/1d4599244d0a544ee466771f416d8b7ab0a23eead89b97387e7bfba1497e6a1a.png
+0x79f4f2c9   290    218   4   286720        0  228    0 https://image.roku.com/developer_channels/prod/819d10f04cf81e37b537d7fe591d5c4497637cbe2470847bc1ce4b170f776702.png
+0x79520219   290    218   4   286720        0  208    0 https://image.roku.com/developer_channels/prod/ca91558c21115a8082378adba2e813b595e59871aebb09c3340870b912bec169.png
+0x7932ca01   290    218   4   286720        0  207    0 https://image.roku.com/developer_channels/prod/6dca7f2aaab24c224f78545bf3c8f3e239fd2b171e5f4d63b19b3c58f08f1ae8.png
+0x79355749   624    468   3  1228800        0  225    0 https://rsp.web.roku.com/production/42f80afd-936b-4013-9e08-43111388c3ae
+0x793735d9   360    270   3   442368        0  226    0 https://rsp.web.roku.com/production/ddd9f9f6-bffc-4d32-bd93-499db949120c
+0x7931d339   416    312   3   532480        0  245    0 https://rsp.web.roku.com/production/1495262b-8031-4b3c-a1b3-0e1251cf8f64
+0x79367221    36     36   4    16384        0  247    0 /RokuOS/Artwork/SceneGraph/GenevaTheme/Base/FHD/icon_generic.webp
+0x791ee549     6    473   4    61440        0  231    0 /RokuOS/Artwork/SceneGraph/GenevaTheme/Base/FHD/springboard_list_mask.webp
+0x7952a199    36     36   4    16384        0  227    0 /RokuOS/Artwork/SceneGraph/GenevaTheme/Base/FHD/icon_rating_starEmpty.webp
+0x7930d2a9    36     36   4    16384        0  232    0 /RokuOS/Artwork/SceneGraph/GenevaTheme/Base/FHD/icon_rating_starFull.webp
+0x790cc399    36     36   4    16384        0  233    0 /RokuOS/Artwork/SceneGraph/GenevaTheme/Base/FHD/icon_rating_starHalf.webp
+0x793dfc09    84     84   4    36864        0  234    0 /RokuOS/Artwork/SceneGraph/GenevaTheme/Base/FHD/focus_ratingSelector.webp
+0x791dffc9    36     36   4    16384        0  250    0 /RokuOS/Artwork/SceneGraph/GenevaTheme/Base/FHD/icon_rating_starEmpty_selected.webp
+0x79313039    36     36   4    16384        0  251    0 /RokuOS/Artwork/SceneGraph/GenevaTheme/Base/FHD/icon_rating_starFull_selected.webp
+0x79169f39    36     36   4    16384        0   97    0 /RokuOS/Artwork/SceneGraph/GenevaTheme/Base/FHD/icon_rating_starHalf_selected.webp
+0x790ea219  2400   1080   4 10444800        0  210    0 /tmp/plugin/FEBAAAR63SX4/pkg:/images/layer_8.png
+0x791c7af1  2400   1080   4 10444800        0   36    0 /tmp/plugin/FEBAAAR63SX4/pkg:/images/layer_7.png
+System memory used 86400
+Framebuffer objects  0
+Available texture memory 10505216 used 229494784 max 240000000
+RoGraphics instance 0xdef1c921
+Available texture memory 240000000 used 0 max 240000000
+RoGraphics instance 0xdfbda6b9
+Available texture memory 240000000 used 0 max 240000000
+RoGraphics instance 0xdfb44961
+WeelandGraphics: LayerId "Overlay"  Client: Overlay
+address    width height bpp     size name [id]
+0xdfb496c9  1920   1080   4  8294400  [0]
+Available texture memory 10505216 used 229494784 max 240000000
+RoGraphics instance 0xded71711
+Available texture memory 240000000 used 0 max 240000000
+RoGraphics instance 0xdede6171
+WeelandGraphics: LayerId "Main"  Client: Main
+address    width height bpp     size name [id]
+0xded22009  1920   1080   4  8294400  [848]
+Available texture memory 10505216 used 229494784 max 240000000
+>
