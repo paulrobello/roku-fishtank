@@ -1,0 +1,23 @@
+[
+  {
+    "created_at": "2026-11-04T17:15:59.088528Z",
+    "display_name": "Nano Banana Pro",
+    "id": "4ab9b52b-ce88-46f7-98b9-2e147db017ec",
+    "job_type": "nano_banana_pro",
+    "min_result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3Gv9RgU5roVxfEeNP9AFPAziDdM/hf_20261104_171559_4ab9b52b-ce88-46f7-98b9-2e147db017ec_min.webp",
+    "params": {
+      "application": null,
+      "aspect_ratio": "21:9",
+      "batch_size": 1,
+      "height": 2688,
+      "input_image": null,
+      "input_images": [],
+      "prompt": "Wide panoramic view through the front glass of a large tropical reef aquarium: deep clear blue water filling the upper two thirds, empty open water above for fish to swim, no water surface visible, no sun rays, no fish. Along the bottom third a natural reef of dark porous live rock arches and caves covered in varied corals (staghorn, brain, bubble, plate, soft corals, sea fans, anemones) in natural colors with depth and overlapping layers, pale crushed-coral sand floor at the very bottom, gentle haze toward the back, painterly realism: a high-end natural-history illustration rendered as a detailed digital oil painting, true-to-life anatomy and colors, fine scale and tissue texture, soft overhead aquarium light with gentle subsurface glow, rich but natural saturation, not cartoon, not vector, not 3D render, no text, no logo, no watermark",
+      "resolution": "4k",
+      "surface": null,
+      "width": 6336
+    },
+    "result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3Gv9RgU5roVxfEeNP9AFPAziDdM/hf_20261104_171559_4ab9b52b-ce88-46f7-98b9-2e147db017ec.png",
+    "status": "completed"
+  }
+]
