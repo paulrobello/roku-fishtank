@@ -23,6 +23,12 @@ function extrasTestSuite() as object
             { name: "hostCyclesNestleRoamApproach", fn: extrasTest_hostCyclesNestleRoamApproach }
             { name: "hostIsDeterministic", fn: extrasTest_hostIsDeterministic }
             { name: "hostForMatchesLaneAndSpecies", fn: extrasTest_hostForMatchesLaneAndSpecies }
+            { name: "walkOnGroundAllSeeds", fn: extrasStrict_walkOnGroundAllSeeds }
+            { name: "walkFacingMatchesMotionAllSeeds", fn: extrasStrict_walkFacingMatchesMotionAllSeeds }
+            { name: "shrimpTurnsWithin5Minutes", fn: extrasStrict_shrimpTurnsWithin5Minutes }
+            { name: "causticGridCoversClipAtAnyOffset", fn: extrasStrict_causticGridCoversClipAtAnyOffset }
+            { name: "hostStaysWithinLeash10kTicks", fn: extrasStrict_hostStaysWithinLeash10kTicks }
+            { name: "hostNestlesLeavesAndReturns", fn: extrasStrict_hostNestlesLeavesAndReturns }
         ]
     }
 end function
@@ -282,4 +288,125 @@ sub extrasTest_hostForMatchesLaneAndSpecies(t as object)
     if not assertTrue(t, hostFor(host, "midLane", "ocellaris_clownfish") = invalid, "other lanes are not hosted") then return
     if not assertTrue(t, hostFor(host, "frontLane", "yellow_tang") = invalid, "other species are not hosted") then return
     assertEqual(t, hostFor(invalid, "frontLane", "ocellaris_clownfish"), invalid, "no host block, no hosting")
+end sub
+
+' ---- Strict bounds (P4.1, P4.3, P4.5 verify lines) ----
+
+function extrasStrict_walks() as object
+    return [
+        extrasTest_shrimpWalk()
+        { x: 900, y: 934, left: 820, right: 1120, speed: 60, legPx: [20, 90], pauseSec: [1.0, 4.0], legs: 8 }
+        { x: 1300, y: 866, left: 1270, right: 1340, speed: 1.5, legPx: [15, 40], pauseSec: [10, 30], legs: 4 }
+    ]
+end function
+
+' Ground constraint: every key of every critter loop, 40 seeds each, stays on its y and range.
+sub extrasStrict_walkOnGroundAllSeeds(t as object)
+    for each w in extrasStrict_walks()
+        for seed = 1 to 40
+            p = extrasWalkPath(w, seed)
+            last = p.points.count() - 1
+            if not assertEqual(t, p.points[last][0], p.points[0][0], "loop closes seed " + seed.toStr()) then return
+            for each pt in p.points
+                if not assertEqual(t, pt[1], w.y, "ground y seed " + seed.toStr()) then return
+                if not assertTrue(t, pt[0] >= w.left - 0.001 and pt[0] <= w.right + 0.001, "x in bounds seed " + seed.toStr()) then return
+            end for
+        end for
+    end for
+end sub
+
+sub extrasStrict_walkFacingMatchesMotionAllSeeds(t as object)
+    w = extrasTest_shrimpWalk()
+    for seed = 1 to 60
+        p = extrasWalkPath(w, seed)
+        for i = 1 to p.points.count() - 1
+            dx = p.points[i][0] - p.points[i - 1][0]
+            if dx <> 0 then
+                f = 1
+                if dx < 0 then f = -1
+                if not assertEqual(t, p.facings[i - 1], f, "turned while moving seed " + seed.toStr()) then return
+                if not assertEqual(t, p.facings[i], f, "walks backwards seed " + seed.toStr()) then return
+            end if
+        end for
+    end for
+end sub
+
+' P4.3 verify: at ?seed=1 the shrimp (walk salt 0) moves and turns within 5 minutes.
+sub extrasStrict_shrimpTurnsWithin5Minutes(t as object)
+    p = extrasWalkPath(extrasTest_shrimpWalk(), 1)
+    assertTrue(t, p.duration < 300, "loop shorter than 5 min: " + Str(p.duration))
+    turns = 0
+    moves = 0
+    for i = 1 to p.facings.count() - 1
+        if p.facings[i] <> p.facings[i - 1] then turns = turns + 1
+        if p.points[i][0] <> p.points[i - 1][0] then moves = moves + 1
+    end for
+    assertTrue(t, turns >= 2, "turns")
+    assertTrue(t, moves >= 3, "moves")
+end sub
+
+' Every probe point of the clip is under some tile at 17 scroll offsets in [0, tile).
+sub extrasStrict_causticGridCoversClipAtAnyOffset(t as object)
+    clip = { x: -320, y: 952, width: 2560, height: 128 }
+    for each dir in [[1, 1], [-1, 1]]
+        grid = extrasTileGrid(clip, 512, dir)
+        for k = 0 to 16
+            off = 511.999 * k / 16
+            for py = clip.y to clip.y + clip.height - 1 step 31
+                for px = clip.x to clip.x + clip.width - 1 step 97
+                    hit = false
+                    for each o in grid
+                        if extrasTest_covers([o[0] + dir[0] * off, o[1] + dir[1] * off, 512, 512], px, py) then hit = true
+                    end for
+                    if not assertTrue(t, hit, "gap at " + Str(px) + "," + Str(py) + " off " + Str(off)) then return
+                end for
+            end for
+        end for
+    end for
+    assertEqual(t, extrasTileGrid(clip, 512, [1, 1]).count(), 12, "6 x 2 tiles")
+end sub
+
+' A hosted clownfish through brainTickBehavior on the drawn polyline, in the scene's front lane.
+function extrasStrict_runHost(seed as integer, ticks as integer) as object
+    cfg = extrasTest_brainCfg()
+    world = extrasTest_world()
+    h = extrasTest_host()
+    fish = brainNewFish(cfg, seed, world.lane, world.ellipses)
+    hostAttach(fish, h, world, cfg)
+    out = { maxDist: 0.0, nestleMax: 0.0, roams: 0, inside: 0, visits: 0 }
+    prev = ""
+    for now = 0 to ticks - 1
+        brainTickBehavior(fish, cfg, world, now)
+        p = fish.points[now - fish.startTick]
+        d = Sqr((p[0] - h.x) * (p[0] - h.x) + (p[1] - h.y) * (p[1] - h.y))
+        if d > out.maxDist then out.maxDist = d
+        if fish.hostMode = "nestle" and d > out.nestleMax then out.nestleMax = d
+        if fish.hostMode <> prev then
+            if fish.hostMode = "roam" then out.roams = out.roams + 1
+            prev = fish.hostMode
+        end if
+        if not brainClearOf(world.ellipses, p[0], p[1], 0.999) then out.inside = out.inside + 1
+    end for
+    out.visits = fish.hostVisits
+    return out
+end function
+
+' P4.1 verify: the hosted clownfish never leaves the host radius (the leash, +20 px of
+' arrive overshoot) over 10k steps, and never enters an ellipse.
+sub extrasStrict_hostStaysWithinLeash10kTicks(t as object)
+    h = extrasTest_host()
+    for each seed in [1, 7, 42]
+        r = extrasStrict_runHost(seed, 10000)
+        assertTrue(t, r.maxDist <= h.leash + 20, "seed " + seed.toStr() + " max distance " + Str(r.maxDist))
+        assertEqual(t, r.inside, 0, "inside an ellipse")
+    end for
+end sub
+
+' It nestles among the tentacles, leaves, and comes back many times in 10k ticks.
+sub extrasStrict_hostNestlesLeavesAndReturns(t as object)
+    h = extrasTest_host()
+    r = extrasStrict_runHost(3, 10000)
+    assertTrue(t, r.visits >= 10, "nestle visits " + r.visits.toStr())
+    assertTrue(t, r.roams >= 10, "roams " + r.roams.toStr())
+    assertTrue(t, r.nestleMax <= h.radius * 2.5, "nestle spread " + Str(r.nestleMax))
 end sub
