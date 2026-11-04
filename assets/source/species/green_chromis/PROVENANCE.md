@@ -1,6 +1,6 @@
 # Green Chromis (Chromis viridis) provenance (card P2.9, species art batch B)
 
-Status: **pending Paul approval**. Date: 2026-11-04.
+Status: **approved by Paul on 2026-11-04** (8-species preview, BehaviorDemoScene seed 1). Date: 2026-11-04.
 
 | Field | Value |
 |---|---|

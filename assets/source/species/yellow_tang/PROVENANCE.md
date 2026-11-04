@@ -1,6 +1,6 @@
 # Yellow tang (Zebrasoma flavescens) provenance (card P2.8, batch A)
 
-**Status: pending Paul approval.** Date: 2026-11-04.
+**Status: approved by Paul on 2026-11-04** (8-species preview, BehaviorDemoScene seed 1). Date: 2026-11-04.
 
 - Tool: `higgsfield` CLI 1.2.2, model `gpt_image_2_5`, `--variant sunburst --quality xhigh --resolution 2k --aspect-ratio 4:3 --background transparent`.
 - Style reference: `--image assets/source/style-board/higgsfield/tang_g25.png` (the approved style-board tang), passed as a painting-style reference only.
