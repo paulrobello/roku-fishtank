@@ -164,8 +164,12 @@ def sand_band() -> tuple[Float, Float, int]:
     band_src = arr[cut_src : cut_src + round(SAND_H / s) + 2]
     band = scale(band_src, (STRIP_W, round(band_src.shape[0] * s)))[:SAND_H]
     band = bleed(band)
-    rows = (band[..., 3] > 0.98).mean(1)
-    opaque = int(np.argmax(rows > 0.995))
+    # Per column, the first row from which alpha stays above 0.9 down to the bottom.
+    # The 99th percentile of those rows is where flat sprite bottoms can hide.
+    solid = band[..., 3] > 0.9
+    first = np.array([0 if solid[:, x].all() else int(np.nonzero(~solid[:, x])[0].max()) + 1 for x in range(band.shape[1])])
+    opaque = int(np.ceil(np.percentile(first, 99)))
+    assert 0 < opaque < SAND_H - 8, f"sand band has no usable opaque line ({opaque})"
     tufts_src = arr[y0:cut_src]
     tufts = scale(tufts_src, (STRIP_W, round(tufts_src.shape[0] * s)))
     return band, tufts, opaque

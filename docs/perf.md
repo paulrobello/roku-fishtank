@@ -54,7 +54,7 @@ The ceiling for our own resident textures is **100 MB**. Keeping 25% margin leav
 | Bubbles, sparkles | 0.5 MB total, each at most 64x64 | 0.5 | none |
 | Settings screen panel | 1 x 1280x704 (backdrop shared) | 3.6 | none |
 | Launch splash (resident at start) | 1920x1088 | 8.4 | `splash_fhd.png` 8.4 |
-| **Total** | | **68.5** | **22.2** |
+| **Total** | | **68.8** | **45.9** |
 
 68.5 MB leaves 6.5 MB of the 75 MB unallocated. P1.7 moved 0.3 MB of that reserve to the foreground row, for the algae tufts above the sand band, which leaves 6.2 MB. The P1.7, P3.7 and P4.6 figures above are printed by `uv run tools/art/reef_review.py`. An art card that needs more takes it from that reserve or from another row, and records the move in this table.
 

@@ -6,7 +6,7 @@ All coordinates are design pixels at 1920x1080 inside the camera Group, at camer
 
 ## Ground line and drift
 
-- **Ground line.** The sand band is 2560x128 at (-320, 952), and every one of its columns is opaque from y 952. Everything that stands on the sand (mid tiles, front clumps, rock pillar) ends at y = 960 (`_ground_y` in the JSON). Their flat bottom cut lines are therefore hidden 8 px inside the opaque sand.
+- **Ground line.** The sand band is 2560x128 at (-320, 952). Above y 1052 its top edge is bumpy and partly transparent. From y 1052 down, 99% of its columns are solid (alpha above 0.9 to the bottom). Everything with a flat bottom cut line (mid tiles, front clumps, rock pillar) ends at y = 1060 (`_ground_y` in the JSON), 8 px inside that solid sand.
 - **Drift margin.** The strips are 2560 wide, with 320 px of margin on each side. The camera drift amplitude A must satisfy A × parallax ≤ 320 for each layer:
 
 | Layer | Parallax | Maximum A |
@@ -23,10 +23,10 @@ All coordinates are design pixels at 1920x1080 inside the camera Group, at camer
 | Asset (files) | Layer (scene.json id) | Position / anchor | Drift | Day / night | Animation |
 |---|---|---|---|---|---|
 | `fx/shaft_day_a.png`, `shaft_day_b.png` 256x1088 | `lightShafts` | top at y -4, x 360 and 1160 | parallax 0.25 | day. Crossfade with the moon shafts by phase opacity, so the two pairs never stack | opacity breathe 0.5–0.8 over 7–11 s, out of phase. Optional ±4° sway (`scaleRotateCenter` at the top centre) |
-| `decor/mid_coral_0..9.png` (256 wide, 303–539 tall) | `midCoral` | strip origin (-320, 960 - 539), each tile at its JSON x/y | 0.6 | both; the night `blendColor` multiply darkens it | none (static) |
-| `decor/rock_pillar.png` 230x440 | `midCoral` | (1520, 516), base on the ground line | 0.6 | both | none. It is the tall back-lane occluder |
+| `decor/mid_coral_0..9.png` (256 wide, 303–539 tall) | `midCoral` | strip origin (-320, 1060 - 539), each tile at its JSON x/y | 0.6 | both; the night `blendColor` multiply darkens it | none (static) |
+| `decor/rock_pillar.png` 230x440 | `midCoral` | (1520, 616), base on the ground line | 0.6 | both | none. It is the tall back-lane occluder |
 | `extras/sea_fan_seg0..2` 270 wide, 340 tall in total | `midCoral` | base pivot at (640 + 149, 960) | 0.6 | both | 3-segment chain (P1.4 technique): rotation ±2°, ±3°, ±4° from base to tip, period 6–8 s, phase lag 0.4 s per segment, driven by the shared current value (P4.2) |
-| `decor/front_coral_{a0,a1,a2,b0,b1}_N.png` (192-wide chunks, 362–474 tall) | `frontCoral` | clump x: a0 -250, a1 330, b1 760, a2 1460, b0 1960. Bottoms on the ground line | 0.8 | both | none |
+| `decor/front_coral_{a0,a1,a2,b0,b1}_N.png` (192-wide chunks, 362–474 tall) | `frontCoral` | clump x: a0 -250, a1 330, b1 760, a2 1460, b0 1960. Bottoms on the ground line (y 1060) | 0.8 | both | none |
 | `extras/anemone_body.png` 315x240 | `frontCoral` | (1080, 728), bottom at y 968 | 0.8 | both | none. The clownfish host point is about (1238, 760) |
 | `extras/anemone_tentacle_seg0..2` 17 wide, 72 tall per chain | `frontCoral` | 6 to 8 chains across the crown, bases at y ≈ 760–790, x = 1150–1340 at ~34 px spacing, drawn after the body | 0.8 | both | 3-segment chain: ±6°, ±9°, ±12°, period 3–4 s, random phase per chain. Clownfish swim between the body and the chains (P4.1) |
 | `extras/soft_coral_seg0..2` 206 wide, 280 tall | `frontCoral` | base pivot at (1700 + 126, 960) | 0.8 | both | 3-segment chain: ±2°, ±3°, ±5°, period 7–9 s, from the shared current |
@@ -54,13 +54,13 @@ Two existing files are not used in this proposal: `decor/coral_acropora.png` and
 Each opaque mass below is big enough to hide a 233x154 body at lane scale.
 
 - **Back lane** (y 260–760), hidden by `midCoral`:
-  - rock pillar, x 1540–1730, y 540–960
-  - mid tiles: the reef mass is solid over roughly y 560–960, across x -320–2240
+  - rock pillar, x 1540–1730, y 640–1060
+  - mid tiles: the reef mass is solid over roughly y 660–1060, across x -320–2240
   - sea fan, x 650–900, y 640–900. It is lacy, so treat it as a partial occluder only
 - **Mid lane** (y 220–840), hidden by `frontCoral`:
-  - front clump a1, x 340–700, y 560–960
-  - b1, x 770–1490, y 520–960
-  - a2, x 1470–1800, y 520–960
+  - front clump a1, x 340–700, y 660–1060
+  - b1, x 770–1490, y 620–1060
+  - a2, x 1470–1800, y 620–1060
   - anemone body, x 1090–1380, y 740–960
 
 ## Fill rate (`tools/art/reef_review.py`, maps in `docs/art/overdraw-{day,night}.png`)
@@ -75,7 +75,7 @@ The sum of on-screen Poster rectangles for this art, excluding the backdrop and 
 
 The per-pixel worst case is 8 rectangles in the sand band at the bottom of the screen. That band holds the sand, two caustics, the bottoms of the mid and front tiles, and the plants. Elsewhere the reef area is 3–4, and the open water is 0–1.
 
-The day total is right at the measured limit of two full-screen layers. Night is over it, mostly because of the glow masks (about 0.8 screens). Options for the scene agents, ordered by gain:
+The day total is just under the measured limit of two full-screen layers. **At night the proposed defaults do not meet the limit (2.45 against 2.0)**, mostly because of the glow masks (about 0.8 screens). The combination that gets under it is to hide the caustics at night and glow only the front clumps, which brings night to about 1.7. Options for the scene agents, ordered by gain:
 
 1. Hide the caustics at night instead of dimming them (0.3).
 2. Fade the glow masks only on the front clumps and skip the mid ones (0.45).
