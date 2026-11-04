@@ -7,8 +7,8 @@ sub init()
     m.turnLift = m.top.findNode("turnLift")
     ' Set 0 draws the rig's layers as authored, set 1 its pre-mirrored layers.
     m.sets = [
-        fishFindSet("base", "body", "tail", "fin", "tailInterp", "finInterp", "baseFade"),
-        fishFindSet("mirrored", "mBody", "mTail", "mFin", "mTailInterp", "mFinInterp", "mirroredFade")
+        fishFindSet("base", "body", "tail", "fin", "tailInterp", "finInterp", "baseFade", "baseTailLag"),
+        fishFindSet("mirrored", "mBody", "mTail", "mFin", "mTailInterp", "mFinInterp", "mirroredFade", "mirroredTailLag")
     ]
 
     ' Interpolators resolve their target by node id, so each instance renames its rig
@@ -27,6 +27,7 @@ sub init()
         set.tailInterp.fieldToInterp = [set.tail.id + ".rotation"]
         set.finInterp.fieldToInterp = [set.fin.id + ".rotation"]
         set.fade.fieldToInterp = [set.group.id + ".opacity"]
+        set.tailLag.fieldToInterp = [set.tail.id + ".scale"]
     end for
     m.turnInterp.fieldToInterp = [m.rig.id + ".scale"]
     m.turnRoll.fieldToInterp = [m.rig.id + ".rotation"]
@@ -46,7 +47,7 @@ sub init()
     m.turnAnim.observeField("state", "onTurnState")
 end sub
 
-function fishFindSet(name as string, body as string, tail as string, fin as string, tailInterp as string, finInterp as string, fade as string) as object
+function fishFindSet(name as string, body as string, tail as string, fin as string, tailInterp as string, finInterp as string, fade as string, tailLag as string) as object
     return {
         name: name,
         group: m.top.findNode(name),
@@ -56,6 +57,7 @@ function fishFindSet(name as string, body as string, tail as string, fin as stri
         tailInterp: m.top.findNode(tailInterp),
         finInterp: m.top.findNode(finInterp),
         fade: m.top.findNode(fade),
+        tailLag: m.top.findNode(tailLag),
         extras: []
     }
 end function
@@ -143,6 +145,10 @@ sub onFacingChanged()
         fishSetKeys(m.turnLift, [0.0, 1.0], [[t[0], t[1]], [0.0, 0.0]])
         fishSetKeys(m.sets[drawn].fade, [0.0, 1.0], [1.0, 1.0])
         fishSetKeys(m.sets[other].fade, [0.0, 1.0], [0.0, 0.0])
+        ts = m.sets[drawn].tail.scale
+        fishSetKeys(m.sets[drawn].tailLag, [0.0, 1.0], [[ts[0], ts[1]], [1.0, 1.0]])
+        fishSetKeys(m.sets[other].tailLag, [0.0, 1.0], [[1.0, 1.0], [1.0, 1.0]])
+        m.turnAnim.delay = 0
     else
         keys = fishTurnKeys()
         pitch = m.turnPitch
@@ -151,12 +157,23 @@ sub onFacingChanged()
         scales = []
         rolls = []
         lifts = []
+        outTail = []
+        inTail = []
         for i = 0 to keys.count() - 1
             u = keys[i]
             arc = sin(3.14159265 * u)
-            scales.push([fishTurnWidth(u), 1.0 + 0.04 * arc])
+            w = fishTurnWidth(u)
+            scales.push([w, 1.0 + 0.04 * arc])
             rolls.push(pitch * arc)
             lifts.push([0.0, lift * arc])
+            lag = fishTurnWidth(fishTailTime(u)) / w
+            if u <= 0.5 then
+                outTail.push([lag, 1.0])
+                inTail.push([1.0, 1.0])
+            else
+                outTail.push([1.0, 1.0])
+                inTail.push([lag, 1.0])
+            end if
         end for
         ' A turn that starts mid-way (reversed after the swap) starts from where the rig is.
         scales[0] = [s[0], s[1]]
@@ -165,6 +182,9 @@ sub onFacingChanged()
         fishSetKeys(m.turnInterp, keys, scales)
         fishSetKeys(m.turnRoll, keys, rolls)
         fishSetKeys(m.turnLift, keys, lifts)
+        fishSetKeys(m.sets[drawn].tailLag, keys, outTail)
+        fishSetKeys(m.sets[other].tailLag, keys, inTail)
+        m.turnAnim.delay = m.top.turnDelay
         fishSetKeys(m.sets[drawn].fade, [0.0, 0.5, 0.53, 1.0], [1.0, 1.0, 0.0, 0.0])
         fishSetKeys(m.sets[other].fade, [0.0, 0.47, 0.5, 1.0], [0.0, 0.0, 1.0, 1.0])
     end if
@@ -186,6 +206,15 @@ function fishTurnWidth(u as float) as float
     w = m.turnNarrow + (1.0 - m.turnNarrow) * c
     if u > 0.5 and u < 1.0 then w = w + 0.08 * sin(3.14159265 * (u - 0.5) * 2.0)
     return w
+end function
+
+' The tail's own clock through the turn: it holds broadside while the body narrows
+' (behind u before the swap) and stays foreshortened while the body widens again
+' (behind u after it), meeting u at 0, 0.5 and 1. Its scale.x is the rig width at that
+' clock over the rig width now, about its joint pivot, so it stays attached.
+function fishTailTime(u as float) as float
+    if u <= 0.5 then return 0.5 * (u / 0.5) ^ 1.6
+    return 0.5 + 0.5 * ((u - 0.5) / 0.5) ^ 1.6
 end function
 
 sub fishSetKeys(interp as object, keys as object, values as object)

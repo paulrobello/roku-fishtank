@@ -68,6 +68,9 @@ function schoolBuildFish(prefix as string, i as integer, member as object) as ob
     node.id = prefix + "fish" + i.toStr()
     node.facing = member.facing
     node.swimSpeed = member.speed
+    ' Members turn up to about a third of a second apart, so a reversal ripples
+    ' through the school instead of every fish flipping on the same frame.
+    node.turnDelay = ((i * 7) mod 9) * 0.045
     node.species = m.cfg.species
     laneStyleFish(node, m.anchor, m.top.fishScale, m.top.fishTint)
     node.translation = schoolToTranslation(member.agent.x, member.agent.y)

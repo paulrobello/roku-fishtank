@@ -5,7 +5,8 @@
     or -1 (left) turns the fish: the rig narrows to its head-on thickness about
     mirror_center while it pitches nose-up and rises a little, crossfades to the rig's
     pre-mirrored art at the narrowest point, then widens nose-down with a slight
-    overshoot; turning is true while that turn runs. The Fish origin is the body Poster's
+    overshoot. The tail lags the body both ways, so the head leads the turn. turnDelay
+    (seconds) holds a turn back, which staggers a school; turning is true while it runs. The Fish origin is the body Poster's
     top-left corner.
 -->
 <component name="Fish" extends="Group">
@@ -14,6 +15,7 @@
         <field id="swimSpeed" type="float" value="60.0" onChange="onSwimSpeedChanged" />
         <field id="facing" type="integer" value="1" onChange="onFacingChanged" />
         <field id="turning" type="boolean" value="false" />
+        <field id="turnDelay" type="float" value="0.0" />
     </interface>
     <script type="text/brightscript" uri="Fish.brs" />
     <children>
@@ -39,6 +41,8 @@
             <Vector2DFieldInterpolator id="turnInterp" />
             <FloatFieldInterpolator id="turnRoll" />
             <Vector2DFieldInterpolator id="turnLift" />
+            <Vector2DFieldInterpolator id="baseTailLag" />
+            <Vector2DFieldInterpolator id="mirroredTailLag" />
             <FloatFieldInterpolator id="baseFade" />
             <FloatFieldInterpolator id="mirroredFade" />
         </Animation>
