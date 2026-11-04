@@ -29,10 +29,13 @@ echo "deploy $zip"
 resp="$(curl -sS --digest --user "rokudev:$ROKU_PASSWORD" -F "mysubmit=1" -F "archive=@$zip" "http://$ROKU_HOST/plugin_install")"
 grep -q "Install Success\|Identical to previous version" <<<"$resp" || { echo "install failed"; grep -o '<font color="red">[^<]*' <<<"$resp" || true; exit 1; }
 
-echo "wait for screensaver console on 8087 (max 60s)"
-deadline=$(( $(date +%s) + 60 ))
-until curl -s -m 2 "telnet://$ROKU_HOST:8087" </dev/null >/dev/null 2>&1; do
-    [ "$(date +%s)" -lt "$deadline" ] || { echo "8087 never opened: is the screensaver running?"; exit 1; }
+wait_s="${SCREENSAVER_WAIT:-600}"
+echo "wait for screensaver console on 8087 (max ${wait_s}s): start it on the TV with"
+echo "Settings > Theme > Screensavers > dev > Preview, or let the idle wait time expire"
+deadline=$(( $(date +%s) + wait_s ))
+# 8087 can stay open after a screensaver exits, so wait for ECP active-app to list it.
+until curl -s -m 3 "http://$ROKU_HOST:8060/query/active-app" | grep -q '<screensaver id="dev"'; do
+    [ "$(date +%s)" -lt "$deadline" ] || { echo "screensaver never started (active-app has no dev screensaver)"; exit 1; }
     sleep 1
 done
 # The scene pauses at 4 s and re-prints its report every 3 s, so 10 s catches at least one.
