@@ -2,11 +2,12 @@
 ' Main builds the same scene as RunScreenSaver and runs the same message loop.
 ' Preview-only: bsconfig.json excludes this file and it must never ship to a device.
 '
-' URL params arrive as deep-link strings in args (seed, time, speed, freeze) and are
+' URL params arrive as deep-link strings in args (seed, time, speed, freeze, scene) and are
 ' exposed to the scene as m.global.previewSeed/previewTime/previewSpeed/previewFreeze.
+' ?scene=<ComponentName> picks the scene to create (default FishtankTest).
 sub Main(args as object)
     params = previewParseArgs(args)
-    print "PREVIEW_PARAMS seed="; params.seed; " time="; params.time; " speed="; params.speed; " freeze="; params.freeze
+    print "PREVIEW_PARAMS scene="; params.scene; " seed="; params.seed; " time="; params.time; " speed="; params.speed; " freeze="; params.freeze
 
     screen = createObject("roSGScreen")
     port = createObject("roMessagePort")
@@ -17,7 +18,7 @@ sub Main(args as object)
         previewSpeed: params.speed,
         previewFreeze: params.freeze
     })
-    scene = screen.createScene("FishtankTest")
+    scene = screen.createScene(params.scene)
     screen.show()
 
     timeout = 0
@@ -42,8 +43,9 @@ sub Main(args as object)
 end sub
 
 function previewParseArgs(args as object) as object
-    params = { seed: 0, time: "", speed: 1.0, freeze: 0.0 }
+    params = { scene: "FishtankTest", seed: 0, time: "", speed: 1.0, freeze: 0.0 }
     if args = invalid then return params
+    if args.scene <> invalid and args.scene <> "" then params.scene = args.scene
     if args.seed <> invalid then params.seed = args.seed.toInt()
     if args.time <> invalid then params.time = args.time
     if args.speed <> invalid then params.speed = val(lCase(args.speed).replace("x", ""))

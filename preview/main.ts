@@ -17,7 +17,7 @@ declare global {
 
 const WIDTH = 1920;
 const HEIGHT = 1080;
-const PARAM_KEYS = ["seed", "time", "speed", "freeze"] as const;
+const PARAM_KEYS = ["scene", "seed", "time", "speed", "freeze"] as const;
 
 const state: PreviewState = { status: "loading", params: {}, log: [] };
 window.__preview = state;

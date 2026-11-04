@@ -41,6 +41,7 @@ brs-engine with the SceneGraph extension on a 1920x1080 canvas scaled to the win
 
   | Param | Example | Global field | Status |
   |---|---|---|---|
+  | `scene` | `?scene=FidelityScene` | scene component to create (default `FishtankTest`) | used by `Main` only |
   | `seed` | `?seed=42` | `previewSeed` (integer) | plumbed and printed |
   | `time` | `?time=18:30` | `previewTime` (string) | plumbed and printed |
   | `speed` | `?speed=4x` | `previewSpeed` (float) | plumbed and printed |
