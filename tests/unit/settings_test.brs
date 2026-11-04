@@ -13,6 +13,10 @@ function settingsTestSuite() as object
             { name: "saveSanitisesInvalid", fn: settingsTest_saveSanitisesInvalid }
             { name: "stepWraps", fn: settingsTest_stepWraps }
             { name: "registryRoundTrip", fn: settingsTest_registryRoundTrip }
+            { name: "applyPlanDefaults", fn: settingsTest_applyPlanDefaults }
+            { name: "applyPlanMapsValues", fn: settingsTest_applyPlanMapsValues }
+            { name: "applyPlanRejectsInvalid", fn: settingsTest_applyPlanRejectsInvalid }
+            { name: "applyToScene", fn: settingsTest_applyToScene }
         ]
     }
 end function
@@ -69,6 +73,49 @@ sub settingsTest_stepWraps(t as object)
     assertEqual(t, settingsStep("drift", "on", 1), "off", "on +1")
     assertEqual(t, settingsStep("drift", "off", 1), "on", "off +1 wraps")
     assertEqual(t, settingsStep("drift", "bogus", 1), "off", "invalid current counts as first")
+end sub
+
+sub settingsTest_applyPlanDefaults(t as object)
+    plan = settingsApplyPlan(settingsLoad(settingsMemoryStore()))
+    assertEqual(t, plan.density, "normal", "density")
+    assertEqual(t, plan.drift, true, "drift")
+    assertEqual(t, plan.nightMode, "auto", "nightMode")
+end sub
+
+sub settingsTest_applyPlanMapsValues(t as object)
+    store = settingsMemoryStore()
+    settingsSave(store, { nightMode: "night", density: "calm", drift: "off" })
+    plan = settingsApplyPlan(settingsLoad(store))
+    assertEqual(t, plan.density, "calm", "density")
+    assertEqual(t, plan.drift, false, "drift")
+    assertEqual(t, plan.nightMode, "night", "nightMode")
+    assertEqual(t, settingsApplyPlan({ nightMode: "day", density: "busy", drift: "on" }).nightMode, "day", "day")
+end sub
+
+sub settingsTest_applyPlanRejectsInvalid(t as object)
+    plan = settingsApplyPlan({ nightMode: "dusk", density: 5, drift: "maybe" })
+    assertEqual(t, plan.density, "normal", "density")
+    assertEqual(t, plan.drift, true, "drift")
+    assertEqual(t, plan.nightMode, "auto", "nightMode")
+    empty = settingsApplyPlan(invalid)
+    assertEqual(t, empty.density, "normal", "invalid input density")
+end sub
+
+sub settingsTest_applyToScene(t as object)
+    ' A stand-in for the ReefTank node: with and without the nightMode field.
+    scene = { density: "normal", drift: true, hasField: function(name as string) as boolean
+            return m[name] <> invalid
+        end function }
+    store = settingsMemoryStore()
+    settingsSave(store, { nightMode: "night", density: "calm", drift: "off" })
+    settingsApplyToScene(scene, store)
+    assertEqual(t, scene.density, "calm", "density applied")
+    assertEqual(t, scene.drift, false, "drift applied")
+    assertEqual(t, scene.nightMode, invalid, "no nightMode field, none written")
+
+    scene.nightMode = "auto"
+    settingsApplyToScene(scene, store)
+    assertEqual(t, scene.nightMode, "night", "nightMode applied when the field exists")
 end sub
 
 sub settingsTest_registryRoundTrip(t as object)

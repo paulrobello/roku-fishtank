@@ -92,3 +92,28 @@ function settingsStep(key as string, current as string, dir as integer) as strin
     if i < 0 then i = 0
     return list[(i + dir + n) mod n]
 end function
+
+' Maps stored settings to the ReefTank interface fields (P5.3):
+' { density: "calm"|"normal"|"busy", drift: boolean, nightMode: "auto"|"day"|"night" }.
+' Anything missing or unrecognised maps to the default, so the plan is always complete.
+function settingsApplyPlan(values as dynamic) as object
+    defaults = settingsDefaults()
+    opts = settingsOptions()
+    clean = {}
+    for each key in settingsKeys()
+        v = invalid
+        if type(values) = "roAssociativeArray" then v = values[key]
+        if settingsIndexOf(opts[key], v) >= 0 then clean[key] = v else clean[key] = defaults[key]
+    end for
+    return { density: clean.density, drift: clean.drift = "on", nightMode: clean.nightMode }
+end function
+
+' Applies the stored settings to a ReefTank scene node (call before the fish are built).
+' The nightMode field belongs to the night-mode work and is only written when it exists.
+sub settingsApplyToScene(scene as object, store as object)
+    plan = settingsApplyPlan(settingsLoad(store))
+    scene.density = plan.density
+    scene.drift = plan.drift
+    if scene.hasField("nightMode") then scene.nightMode = plan.nightMode
+    print "SETTINGS applied density="; plan.density; " drift="; plan.drift; " nightMode="; plan.nightMode
+end sub

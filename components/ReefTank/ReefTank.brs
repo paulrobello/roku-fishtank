@@ -1,4 +1,6 @@
 sub init()
+    ' Stored settings (P5.3) first; the preview ?density= param still wins in reefTankInitFish.
+    settingsApplyToScene(m.top, settingsRegistryStore())
     dr = m.top.currentDesignResolution
     fill = m.top.findNode("fill")
     fill.width = dr.width

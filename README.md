@@ -50,6 +50,11 @@ brs-engine with the SceneGraph extension on a 1920x1080 canvas scaled to the win
   | `freeze` | `?freeze=10` | `previewFreeze` (seconds) | pauses all Animations at T and snaps them to their value at T, so reloads give the same frame |
   | `species` | `?species=lionfish` | `previewSpecies` (string) | species shown by `FishDemoScene` (default `royal_blue_tang`) |
 
+- **Settings precedence (P5.3):** at launch `ReefTank` `init()` reads the stored settings
+  (registry section `ReefTank`: density, drift, nightMode) and writes them to its `density`,
+  `drift` and (when the field exists) `nightMode` fields through `settingsApplyPlan`.
+  Precedence, highest first: preview URL param (`?density=` overrides the stored density),
+  stored setting, built-in default. Under the preview the registry is brs-engine's.
 - **Console:** BrightScript `print` output goes to the browser console, and the page
   exposes `window.__preview` (`status`: loading, running, frozen or error, plus the log).
 - **Simulator patches:** `preview/vite.config.ts` patches brs-scenegraph 0.6.2 so the
