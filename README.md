@@ -52,11 +52,16 @@ brs-engine with the SceneGraph extension on a 1920x1080 canvas scaled to the win
 
 - **Console:** BrightScript `print` output goes to the browser console, and the page
   exposes `window.__preview` (`status`: loading, running, frozen or error, plus the log).
-- **Simulator patches:** `preview/vite.config.ts` patches three brs-scenegraph 0.6.2 gaps
-  so the channel runs unmodified. `fieldToInterp` accepts an roArray, as on the device.
-  A Group's `scale` (including negative, mirroring) applies to its children, which
-  brs-scenegraph otherwise ignores. The preview manifest lists `fhd` first, because
-  brs-scenegraph takes the first `ui_resolutions` entry as the design resolution.
+- **Simulator patches:** `preview/vite.config.ts` patches brs-scenegraph 0.6.2 so the
+  channel runs unmodified and renders like the 4850X. `fieldToInterp` accepts an roArray,
+  and a direct `fraction` write on a bare interpolator drives its target. A Group's
+  `|scale|` applies to its children. Rotate+scale pivots exactly about
+  `scaleRotateCenter`. A negative scale never mirrors: the sign is ignored at rotation 0,
+  and with a rotation set the bitmap draws turned 180 degrees. Colour tweens lerp hue with
+  no shortest-path wrap. Evidence and the exact rules: `docs/fidelity/README.md` F1-F5.
+  `?scene=MirrorProbeScene` (served from `tools/devicecheck/components`, preview only)
+  reproduces the device's negative-scale probe. The preview manifest lists `fhd` first,
+  because brs-scenegraph takes the first `ui_resolutions` entry as the design resolution.
 - **Fish rig demo:** `?scene=FishDemoScene` shows the royal blue tang rig
   (`components/Fish/`) at display scale and 2x, turning every 3 s. Its first turn starts
   with the scene, so `?freeze=0.15` and `0.35` land mid-turn, `1.25` and `1.75` land
@@ -96,7 +101,8 @@ brs-engine with the SceneGraph extension on a 1920x1080 canvas scaled to the win
   brs-engine's registry. Evidence: `docs/preview/settings-initial.png` and
   `settings-changed.png`.
 
-`make test-visual` (part of `make checkall`) starts an isolated server on 8139, opens
+`make test-visual` (part of `make checkall`) starts an isolated server on 8139
+(`PW_PORT=<port>` moves it when another worktree's gate holds 8139), opens
 `?freeze=3` (the Reef Tank), the camera drift at four loop phases (`tests/visual/drift.spec.ts`, `?speed=30&freeze=0.75..3`, asserts the frame edges never show the background) and `?scene=BrainDemoScene&seed=7&freeze=5`, and compares the
 canvas to `tests/visual/__screenshots__/reeftank-t3.png` and `brain-seed7-t5.png`.
 After an intended visual change, refresh the baseline with

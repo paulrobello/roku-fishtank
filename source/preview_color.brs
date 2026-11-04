@@ -1,25 +1,19 @@
 ' Preview-only colour helper for the ?freeze shim in preview.brs (excluded from the device
 ' build in bsconfig.json, unit-tested by tests/unit/preview_color_test.brs).
 '
-' Mirrors brs-scenegraph 0.6.2 ColorFieldInterpolator.interpolateColor/toHsv/fromHsv
-' exactly: hue takes the short way round (a gap over 180 degrees adds 360 to the smaller
-' hue), saturation and value are lerped and clamped to 0..1, alpha (0..255, not
-' normalised) is lerped and clamped only when packed. Math is in Double to match JS.
+' Matches the Roku 4850X (OS 15.3.4) ColorFieldInterpolator, which the preview's patched
+' brs-scenegraph 0.6.2 interpolateColor also follows (preview/vite.config.ts): hue is
+' lerped linearly in [0, 360) with NO shortest-path wrap (red -> blue measured yellow,
+' green, cyan at 0.25 / 0.5 / 0.75, docs/fidelity F5). A gap over 180 degrees therefore
+' goes the long way; that is measured only for 0 -> 240, the rest is assumed. Saturation
+' and value are lerped and clamped to 0..1, alpha (0..255, not normalised) is lerped and
+' clamped only when packed. toHsv/fromHsv are brs-sg's. Math is in Double to match JS.
 
 ' Colour at fraction t between 0xRRGGBBAA colours a and b, interpolated in HSV.
 function previewLerpColorHsv(a as integer, b as integer, t as double) as integer
     ca = previewToHsv(a)
     cb = previewToHsv(b)
-    h1 = ca.h
-    h2 = cb.h
-    if abs(h2 - h1) > 180 then
-        if h2 > h1 then
-            h1 = h1 + 360
-        else
-            h2 = h2 + 360
-        end if
-    end if
-    h = previewFmod(h1 + (h2 - h1) * t + 360, 360)
+    h = previewFmod(ca.h + (cb.h - ca.h) * t + 360, 360)
     s = previewClamp(ca.s + (cb.s - ca.s) * t, 0, 1)
     v = previewClamp(ca.v + (cb.v - ca.v) * t, 0, 1)
     alpha = ca.a + (cb.a - ca.a) * t
