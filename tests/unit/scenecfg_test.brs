@@ -174,6 +174,7 @@ sub scenecfgTest_driftLoopIsClosedAndInPhase(t as object)
     assertNear(t, values[12][0], -20.0, 0.001, "three quarters is the opposite extreme")
     full = sceneCfgDriftValues(drift, 1.0)
     assertNear(t, full[4][0], 40.0, 0.001, "a layer at parallax 1 moves the full amplitude")
+end sub
 
 ' scenecfgTest_sample() plus a population: one ellipse at (500, 500), a cave and a
 ' rock outside it, and three densities over backLane and frontLane.

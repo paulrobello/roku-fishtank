@@ -271,6 +271,7 @@ function sceneCfgDriftValues(drift as object, parallax as float) as object
     end for
     values.push(values[0])
     return values
+end function
 
 ' ---------------------------------------------------------------------------
 ' Tank population (P2.7): scene.json "population" holds the FishBrain/School

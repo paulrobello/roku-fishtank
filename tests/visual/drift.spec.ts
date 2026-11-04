@@ -23,7 +23,7 @@ async function frozenFrame(page: import("@playwright/test").Page, freeze: number
   await page.waitForFunction(
     () => ["frozen", "error"].includes((window as PreviewWindow).__preview?.status ?? ""),
     null,
-    { timeout: 30_000 },
+    { timeout: 90_000 },
   );
   const preview = await page.evaluate(() => (window as PreviewWindow).__preview);
   expect(preview?.status, preview?.log.join("\n")).toBe("frozen");
@@ -92,6 +92,8 @@ async function bandMaxDiff(page: import("@playwright/test").Page, a: Buffer, b: 
 }
 
 test("camera drift never reveals the backdrop edge at four loop phases", async ({ page }) => {
+  // Four page loads, each building the full fish population before the freeze.
+  test.setTimeout(400_000);
   const frames: Buffer[] = [];
   for (const [k, freeze] of PHASES.entries()) {
     const png = await frozenFrame(page, freeze);
