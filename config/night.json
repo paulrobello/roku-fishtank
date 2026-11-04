@@ -1,0 +1,151 @@
+{
+  "_notes": "Night mode (P3.3-P3.6), read by components/Night (logic in components/lib/night.brs). The phase and its 0..1 blend (0 day, 1 night) come from components/lib/daynight.brs with the scene.json location; the shown blend eases toward that target at most 1/easeSeconds per second, and the clock is re-read every evalSeconds. tints: per scene.json layer id, the moonlight multiply at blend 1; every Poster under that layer (except Night's own night_* Groups) gets blendColor = its own base x lerp(white, tint, blend), computed in RGB in BrightScript (no ColorFieldInterpolator, so the device's long-way hue lerp, docs/fidelity F5, never applies). background is the fill Rectangle colour at blend 1. Day shafts fade as 1 - 2 x blend and the night effects (moon shafts, glow, sparkles) as 2 x blend - 1, so the two shaft pairs are never drawn at once. Shaft and glow opacity breathe between opacityMin and opacityMax over period seconds. glow.items are copied from docs/art/placement-proposal.json by tools/art/night_config.py (the device zip has no docs/); only items whose over sprite starts with one of glow.groups are built (front clumps only by default, for fill rate). Colours are 0xRRGGBBAA strings.",
+  "evalSeconds": 5,
+  "easeSeconds": 3,
+  "background": "0x06183AFF",
+  "tints": {
+    "waterGradient": "0x40568CFF",
+    "backRockwork": "0x40568CFF",
+    "backLane": "0x4A62A0FF",
+    "midCoral": "0x4A62A0FF",
+    "midLane": "0x566EAEFF",
+    "frontCoral": "0x566EAEFF",
+    "frontLane": "0x6680BCFF",
+    "foreground": "0x5A72B0FF",
+    "surfaceRipple": "0x7896C8FF",
+    "bubbles": "0x96E6E0FF"
+  },
+  "dayShafts": {
+    "layer": "lightShafts",
+    "blendColor": "0xFFEEC4FF",
+    "items": [
+      {
+        "uri": "pkg:/images/fx/shaft_day_a.png",
+        "x": 360,
+        "y": -4,
+        "width": 256,
+        "height": 1088,
+        "opacityMin": 0.5,
+        "opacityMax": 0.8,
+        "period": 9.0,
+        "phaseDeg": 0
+      },
+      {
+        "uri": "pkg:/images/fx/shaft_day_b.png",
+        "x": 1160,
+        "y": -4,
+        "width": 256,
+        "height": 1088,
+        "opacityMin": 0.45,
+        "opacityMax": 0.7,
+        "period": 11.0,
+        "phaseDeg": 140
+      }
+    ]
+  },
+  "moonShafts": {
+    "layer": "lightShafts",
+    "blendColor": "0xAAC8FFFF",
+    "items": [
+      {
+        "uri": "pkg:/images/night/moon_shaft_a.png",
+        "x": 520,
+        "y": -4,
+        "width": 256,
+        "height": 1088,
+        "opacityMin": 0.4,
+        "opacityMax": 0.55,
+        "period": 10.0,
+        "phaseDeg": 60
+      },
+      {
+        "uri": "pkg:/images/night/moon_shaft_b.png",
+        "x": 1300,
+        "y": -4,
+        "width": 256,
+        "height": 1088,
+        "opacityMin": 0.3,
+        "opacityMax": 0.45,
+        "period": 13.0,
+        "phaseDeg": 220
+      }
+    ]
+  },
+  "glow": {
+    "groups": [
+      "front_coral"
+    ],
+    "opacityMin": 0.55,
+    "opacityMax": 0.85,
+    "periodMin": 5.0,
+    "periodMax": 9.0,
+    "items": [
+      {"id": "glow_mid_coral_0_0", "uri": "pkg:/images/night/glow_mid_coral_0_0.png", "layer": "midCoral", "over": "mid_coral_0", "x": -320, "y": 763, "width": 64, "height": 121, "scale": 2.0},
+      {"id": "glow_mid_coral_0_1", "uri": "pkg:/images/night/glow_mid_coral_0_1.png", "layer": "midCoral", "over": "mid_coral_0", "x": -192, "y": 581, "width": 64, "height": 204, "scale": 2.0},
+      {"id": "glow_mid_coral_1_0", "uri": "pkg:/images/night/glow_mid_coral_1_0.png", "layer": "midCoral", "over": "mid_coral_1", "x": -64, "y": 579, "width": 64, "height": 229, "scale": 2.0},
+      {"id": "glow_mid_coral_1_1", "uri": "pkg:/images/night/glow_mid_coral_1_1.png", "layer": "midCoral", "over": "mid_coral_1", "x": 64, "y": 615, "width": 64, "height": 214, "scale": 2.0},
+      {"id": "glow_mid_coral_2_0", "uri": "pkg:/images/night/glow_mid_coral_2_0.png", "layer": "midCoral", "over": "mid_coral_2", "x": 192, "y": 722, "width": 64, "height": 149, "scale": 2.0},
+      {"id": "glow_mid_coral_2_1", "uri": "pkg:/images/night/glow_mid_coral_2_1.png", "layer": "midCoral", "over": "mid_coral_2", "x": 320, "y": 710, "width": 64, "height": 139, "scale": 2.0},
+      {"id": "glow_mid_coral_3_0", "uri": "pkg:/images/night/glow_mid_coral_3_0.png", "layer": "midCoral", "over": "mid_coral_3", "x": 448, "y": 579, "width": 64, "height": 177, "scale": 2.0},
+      {"id": "glow_mid_coral_3_1", "uri": "pkg:/images/night/glow_mid_coral_3_1.png", "layer": "midCoral", "over": "mid_coral_3", "x": 576, "y": 527, "width": 64, "height": 232, "scale": 2.0},
+      {"id": "glow_mid_coral_4_0", "uri": "pkg:/images/night/glow_mid_coral_4_0.png", "layer": "midCoral", "over": "mid_coral_4", "x": 704, "y": 606, "width": 64, "height": 186, "scale": 2.0},
+      {"id": "glow_mid_coral_4_1", "uri": "pkg:/images/night/glow_mid_coral_4_1.png", "layer": "midCoral", "over": "mid_coral_4", "x": 832, "y": 674, "width": 64, "height": 171, "scale": 2.0},
+      {"id": "glow_mid_coral_5_0", "uri": "pkg:/images/night/glow_mid_coral_5_0.png", "layer": "midCoral", "over": "mid_coral_5", "x": 960, "y": 620, "width": 64, "height": 208, "scale": 2.0},
+      {"id": "glow_mid_coral_5_1", "uri": "pkg:/images/night/glow_mid_coral_5_1.png", "layer": "midCoral", "over": "mid_coral_5", "x": 1088, "y": 640, "width": 64, "height": 163, "scale": 2.0},
+      {"id": "glow_mid_coral_6_0", "uri": "pkg:/images/night/glow_mid_coral_6_0.png", "layer": "midCoral", "over": "mid_coral_6", "x": 1216, "y": 624, "width": 64, "height": 194, "scale": 2.0},
+      {"id": "glow_mid_coral_6_1", "uri": "pkg:/images/night/glow_mid_coral_6_1.png", "layer": "midCoral", "over": "mid_coral_6", "x": 1344, "y": 630, "width": 64, "height": 194, "scale": 2.0},
+      {"id": "glow_mid_coral_7_0", "uri": "pkg:/images/night/glow_mid_coral_7_0.png", "layer": "midCoral", "over": "mid_coral_7", "x": 1472, "y": 663, "width": 55, "height": 169, "scale": 2.0},
+      {"id": "glow_mid_coral_7_1", "uri": "pkg:/images/night/glow_mid_coral_7_1.png", "layer": "midCoral", "over": "mid_coral_7", "x": 1604, "y": 693, "width": 62, "height": 174, "scale": 2.0},
+      {"id": "glow_mid_coral_8_0", "uri": "pkg:/images/night/glow_mid_coral_8_0.png", "layer": "midCoral", "over": "mid_coral_8", "x": 1728, "y": 688, "width": 64, "height": 179, "scale": 2.0},
+      {"id": "glow_mid_coral_8_1", "uri": "pkg:/images/night/glow_mid_coral_8_1.png", "layer": "midCoral", "over": "mid_coral_8", "x": 1856, "y": 692, "width": 64, "height": 165, "scale": 2.0},
+      {"id": "glow_mid_coral_9_0", "uri": "pkg:/images/night/glow_mid_coral_9_0.png", "layer": "midCoral", "over": "mid_coral_9", "x": 1984, "y": 863, "width": 64, "height": 97, "scale": 2.0},
+      {"id": "glow_mid_coral_9_1", "uri": "pkg:/images/night/glow_mid_coral_9_1.png", "layer": "midCoral", "over": "mid_coral_9", "x": 2112, "y": 765, "width": 63, "height": 113, "scale": 2.0},
+      {"id": "glow_front_coral_a0_0_0", "uri": "pkg:/images/night/glow_front_coral_a0_0_0.png", "layer": "frontCoral", "over": "front_coral_a0_0", "x": -250, "y": 712, "width": 64, "height": 123, "scale": 2.0},
+      {"id": "glow_front_coral_a0_0_1", "uri": "pkg:/images/night/glow_front_coral_a0_0_1.png", "layer": "frontCoral", "over": "front_coral_a0_0", "x": -122, "y": 698, "width": 32, "height": 154, "scale": 2.0},
+      {"id": "glow_front_coral_a0_1_0", "uri": "pkg:/images/night/glow_front_coral_a0_1_0.png", "layer": "frontCoral", "over": "front_coral_a0_1", "x": -58, "y": 698, "width": 64, "height": 155, "scale": 2.0},
+      {"id": "glow_front_coral_a0_1_1", "uri": "pkg:/images/night/glow_front_coral_a0_1_1.png", "layer": "frontCoral", "over": "front_coral_a0_1", "x": 70, "y": 714, "width": 31, "height": 148, "scale": 2.0},
+      {"id": "glow_front_coral_a1_0_0", "uri": "pkg:/images/night/glow_front_coral_a1_0_0.png", "layer": "frontCoral", "over": "front_coral_a1_0", "x": 338, "y": 643, "width": 60, "height": 170, "scale": 2.0},
+      {"id": "glow_front_coral_a1_0_1", "uri": "pkg:/images/night/glow_front_coral_a1_0_1.png", "layer": "frontCoral", "over": "front_coral_a1_0", "x": 458, "y": 637, "width": 32, "height": 174, "scale": 2.0},
+      {"id": "glow_front_coral_a1_1_0", "uri": "pkg:/images/night/glow_front_coral_a1_1_0.png", "layer": "frontCoral", "over": "front_coral_a1_1", "x": 522, "y": 658, "width": 64, "height": 184, "scale": 2.0},
+      {"id": "glow_front_coral_a1_1_1", "uri": "pkg:/images/night/glow_front_coral_a1_1_1.png", "layer": "frontCoral", "over": "front_coral_a1_1", "x": 650, "y": 682, "width": 32, "height": 152, "scale": 2.0},
+      {"id": "glow_front_coral_a2_0_0", "uri": "pkg:/images/night/glow_front_coral_a2_0_0.png", "layer": "frontCoral", "over": "front_coral_a2_0", "x": 1460, "y": 595, "width": 64, "height": 196, "scale": 2.0},
+      {"id": "glow_front_coral_a2_0_1", "uri": "pkg:/images/night/glow_front_coral_a2_0_1.png", "layer": "frontCoral", "over": "front_coral_a2_0", "x": 1588, "y": 599, "width": 32, "height": 188, "scale": 2.0},
+      {"id": "glow_front_coral_a2_1_0", "uri": "pkg:/images/night/glow_front_coral_a2_1_0.png", "layer": "frontCoral", "over": "front_coral_a2_1", "x": 1652, "y": 645, "width": 64, "height": 157, "scale": 2.0},
+      {"id": "glow_front_coral_a2_1_1", "uri": "pkg:/images/night/glow_front_coral_a2_1_1.png", "layer": "frontCoral", "over": "front_coral_a2_1", "x": 1780, "y": 689, "width": 20, "height": 117, "scale": 2.0},
+      {"id": "glow_front_coral_b0_0_0", "uri": "pkg:/images/night/glow_front_coral_b0_0_0.png", "layer": "frontCoral", "over": "front_coral_b0_0", "x": 1960, "y": 712, "width": 64, "height": 144, "scale": 2.0},
+      {"id": "glow_front_coral_b0_0_1", "uri": "pkg:/images/night/glow_front_coral_b0_0_1.png", "layer": "frontCoral", "over": "front_coral_b0_0", "x": 2088, "y": 684, "width": 32, "height": 158, "scale": 2.0},
+      {"id": "glow_front_coral_b0_1_0", "uri": "pkg:/images/night/glow_front_coral_b0_1_0.png", "layer": "frontCoral", "over": "front_coral_b0_1", "x": 2152, "y": 682, "width": 64, "height": 124, "scale": 2.0},
+      {"id": "glow_front_coral_b0_1_1", "uri": "pkg:/images/night/glow_front_coral_b0_1_1.png", "layer": "frontCoral", "over": "front_coral_b0_1", "x": 2280, "y": 706, "width": 28, "height": 115, "scale": 2.0},
+      {"id": "glow_front_coral_b1_0_0", "uri": "pkg:/images/night/glow_front_coral_b1_0_0.png", "layer": "frontCoral", "over": "front_coral_b1_0", "x": 760, "y": 745, "width": 64, "height": 103, "scale": 2.0},
+      {"id": "glow_front_coral_b1_0_1", "uri": "pkg:/images/night/glow_front_coral_b1_0_1.png", "layer": "frontCoral", "over": "front_coral_b1_0", "x": 888, "y": 745, "width": 32, "height": 96, "scale": 2.0},
+      {"id": "glow_front_coral_b1_1_0", "uri": "pkg:/images/night/glow_front_coral_b1_1_0.png", "layer": "frontCoral", "over": "front_coral_b1_1", "x": 952, "y": 654, "width": 64, "height": 139, "scale": 2.0},
+      {"id": "glow_front_coral_b1_1_1", "uri": "pkg:/images/night/glow_front_coral_b1_1_1.png", "layer": "frontCoral", "over": "front_coral_b1_1", "x": 1080, "y": 652, "width": 32, "height": 190, "scale": 2.0},
+      {"id": "glow_front_coral_b1_2_0", "uri": "pkg:/images/night/glow_front_coral_b1_2_0.png", "layer": "frontCoral", "over": "front_coral_b1_2", "x": 1144, "y": 635, "width": 64, "height": 207, "scale": 2.0},
+      {"id": "glow_front_coral_b1_2_1", "uri": "pkg:/images/night/glow_front_coral_b1_2_1.png", "layer": "frontCoral", "over": "front_coral_b1_2", "x": 1272, "y": 689, "width": 32, "height": 160, "scale": 2.0},
+      {"id": "glow_front_coral_b1_3_0", "uri": "pkg:/images/night/glow_front_coral_b1_3_0.png", "layer": "frontCoral", "over": "front_coral_b1_3", "x": 1336, "y": 669, "width": 64, "height": 181, "scale": 2.0},
+      {"id": "glow_front_coral_b1_3_1", "uri": "pkg:/images/night/glow_front_coral_b1_3_1.png", "layer": "frontCoral", "over": "front_coral_b1_3", "x": 1464, "y": 767, "width": 20, "height": 125, "scale": 2.0},
+      {"id": "glow_backdrop_1", "uri": "pkg:/images/night/glow_backdrop_1.png", "layer": "waterGradient", "over": "reefBackdrop", "x": 883, "y": 788, "width": 74, "height": 68, "scale": 2.0}
+    ]
+  },
+  "sparkles": {
+    "layer": "bubbles",
+    "uri": "pkg:/images/night/sparkle.png",
+    "blendColor": "0x96FFE6FF",
+    "pool": 30,
+    "area": {
+      "left": 40,
+      "top": 120,
+      "right": 1880,
+      "bottom": 940
+    },
+    "sizeMin": 16,
+    "sizeMax": 32,
+    "driftMin": 20,
+    "driftMax": 70,
+    "periodMin": 7.0,
+    "periodMax": 13.0,
+    "delayMax": 4.0,
+    "opacityMin": 0.4,
+    "opacityMax": 1.0
+  }
+}

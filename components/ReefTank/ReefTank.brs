@@ -33,6 +33,7 @@ sub init()
     reefTankBuildDrift()
     print "REEFTANK ready: "; dr.width; "x"; dr.height; " layers="; m.sceneCfg.layers.count(); " decor="; decor.count()
     reefTankInitFish()
+    m.top.findNode("night").callFunc("nightStart", { camera: camera, fill: fill, scene: m.sceneCfg })
 end sub
 
 ' ---------------------------------------------------------------------------

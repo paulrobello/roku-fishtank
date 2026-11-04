@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+    Night mode controller (P3.3 moonlight tint, P3.4 light shafts, P3.5 coral glow,
+    P3.6 sparkles), configured by config/night.json. ReefTank declares it as a child and
+    calls nightStart({ camera, fill, scene }) once its layers, decor and fish exist.
+    Night then builds its own night_* Groups inside the scene layers (shafts, glow and the
+    pooled sparkles, every node created once) and re-reads the clock every
+    evalSeconds. ReefTank aliases its fields:
+      mode    (ReefTank.nightMode)  "auto" follows the sun, "day" and "night" force it.
+      phase   (ReefTank.nightPhase) "day" | "dusk" | "night" | "dawn" from daynight.brs.
+      blend   (ReefTank.nightBlend) 0 = day .. 1 = night, as shown (eased).
+      isNight (ReefTank.isNight)    true from blend 0.5, where the night overlays start to
+                                    fade in. Caustics hide while it is true.
+    Preview: m.global.previewTime (?time=HH:MM or YYYY-MM-DDTHH:MM) sets the clock and
+    ?speed runs it faster; under ?freeze the clock is read once (12:00 when ?time is
+    absent) and nothing changes after init.
+-->
+<component name="Night" extends="Group">
+    <interface>
+        <field id="mode" type="string" value="auto" onChange="onModeChange" />
+        <field id="phase" type="string" value="day" />
+        <field id="blend" type="float" value="0" />
+        <field id="isNight" type="boolean" value="false" />
+        <function name="nightStart" />
+    </interface>
+    <script type="text/brightscript" uri="Night.brs" />
+    <script type="text/brightscript" uri="pkg:/components/lib/night.brs" />
+    <script type="text/brightscript" uri="pkg:/components/lib/daynight.brs" />
+    <script type="text/brightscript" uri="pkg:/components/lib/solar.brs" />
+    <script type="text/brightscript" uri="pkg:/components/lib/prng.brs" />
+    <script type="text/brightscript" uri="pkg:/components/lib/scenecfg.brs" />
+    <children>
+        <Timer id="nightTick" repeat="false" duration="5" />
+    </children>
+</component>

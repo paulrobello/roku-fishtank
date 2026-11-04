@@ -22,6 +22,7 @@ function testSuites() as object
         behaviorTestSuite()
         settingsTestSuite()
         bubblesTestSuite()
+        nightTestSuite()
     ]
 end function
 

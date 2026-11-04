@@ -13,6 +13,13 @@
         <field id="density" type="string" value="normal" onChange="onDensityChanged" />
         <!-- Camera drift on/off (P5.3 settings). scene.json drift.enabled must also be true. -->
         <field id="drift" type="boolean" value="true" onChange="onDriftChange" />
+        <!-- Night mode (P3.3-P3.6, components/Night): nightMode "auto" | "day" | "night" (P5.3
+             settings). Outputs: nightPhase, nightBlend (0 day .. 1 night) and isNight (true from
+             blend 0.5, when the night overlays fade in; caustics hide while it is true). -->
+        <field id="nightMode" type="string" alias="night.mode" />
+        <field id="nightPhase" type="string" alias="night.phase" />
+        <field id="nightBlend" type="float" alias="night.blend" />
+        <field id="isNight" type="boolean" alias="night.isNight" />
     </interface>
     <script type="text/brightscript" uri="pkg:/components/lib/scenecfg.brs" />
     <script type="text/brightscript" uri="pkg:/components/lib/settings.brs" />
@@ -20,5 +27,6 @@
     <children>
         <Rectangle id="fill" color="0x0B2F55FF" />
         <Group id="camera" />
+        <Night id="night" />
     </children>
 </component>
