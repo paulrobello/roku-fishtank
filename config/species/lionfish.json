@@ -38,9 +38,9 @@
         [800, 580], [650, 500]
       ],
       "underlay_polygon": [
-        [600, 540], [750, 532], [900, 610], [1005, 680], [1100, 650],
-        [1230, 615], [1440, 580], [1650, 573], [1875, 602], [2025, 692],
-        [2100, 800], [600, 800]
+        [600, 485], [750, 477], [900, 555], [1005, 625], [1100, 595],
+        [1230, 560], [1440, 525], [1650, 518], [1875, 547], [2025, 637],
+        [2100, 745], [600, 745]
       ],
       "pivot": [1440, 615],
       "feather_px": 6,
@@ -48,5 +48,5 @@
       "z_after": "body"
     }
   ],
-  "_notes": "Untrimmed source pixels of lionfish_a1.png (2336x1744, generated at 4:3 so the spines and fans fit). Peduncle alpha>128 profile: 321 px at x=488 narrowing to 180 px at x=576 (y 887-1066); the soft dorsal tip starts at x=584. The cut sits 4 px head-side of that minimum. fin = the whole pectoral fan, pivot at its root behind the gill; it reaches below the belly, so underlay_polygon (the body and anal fin under the fan) keeps body alpha and everything else under the fan is cut to open water. Extra layer spines = the dorsal spine crest, pivot mid-base on the back; its underlay is the body below the back line plus the spotted soft dorsal fin under the rear spines; it reaches ~30 px above the back line so the body keeps the spine roots and no background shows when the crest swings. The fan uses fill_axis vertical so the flank it uncovers continues the vertical bands."
+  "_notes": "Untrimmed source pixels of lionfish_a1.png (2336x1744, generated at 4:3 so the spines and fans fit). Peduncle alpha>128 profile: 321 px at x=488 narrowing to 180 px at x=576 (y 887-1066); the soft dorsal tip starts at x=584. The cut sits 4 px head-side of that minimum. fin = the whole pectoral fan, pivot at its root behind the gill; it reaches below the belly, so underlay_polygon (the body and anal fin under the fan) keeps body alpha and everything else under the fan is cut to open water. Extra layer spines = the dorsal spine crest, pivot mid-base on the back; its underlay is the body below the back line plus the spotted soft dorsal fin under the rear spines, with the top edge raised ~50 px above the back line so body alpha survives the tan(3 deg) lift of the crest base at both swing extremes and no background shows when the crest swings. The fan uses fill_axis vertical so the flank it uncovers continues the vertical bands."
 }
