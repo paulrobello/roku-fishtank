@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+    Preview demo for the green chromis school (P2.5): 10 chromis driven by School from
+    config/school.json, with the lane rect and avoidance ellipses drawn as faint dot
+    markers (a preview aid). Open with ?scene=SchoolDemoScene&seed=3. Not created by
+    RunScreenSaver.
+-->
+<component name="SchoolDemoScene" extends="Scene">
+    <script type="text/brightscript" uri="SchoolDemoScene.brs" />
+    <children>
+        <Rectangle id="water" color="0x062B45" />
+        <Group id="markers" />
+        <School id="school" />
+    </children>
+</component>

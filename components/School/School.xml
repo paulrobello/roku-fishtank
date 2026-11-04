@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+    Green chromis school (P2.5). Set configUri to a school config (config/school.json) to
+    spawn the school and start the ~8 Hz schoolTimer, one tick for the whole school. Each
+    member gets one Fish node and one reused mover Animation + Vector2DFieldInterpolator,
+    all created once here; segments only rewrite key, keyValue and duration. Every member
+    uses the same species, so all share the same image URIs. Logic lives in
+    components/lib/school.brs. sceneTime is the school clock in seconds (wall time x
+    m.global.previewSpeed); holdCount counts moves refused by the spacing guard.
+-->
+<component name="School" extends="Group">
+    <interface>
+        <field id="configUri" type="string" onChange="onConfigUri" />
+        <field id="sceneTime" type="float" value="0.0" />
+        <field id="holdCount" type="integer" value="0" />
+    </interface>
+    <script type="text/brightscript" uri="School.brs" />
+    <script type="text/brightscript" uri="pkg:/components/lib/prng.brs" />
+    <script type="text/brightscript" uri="pkg:/components/lib/steer.brs" />
+    <script type="text/brightscript" uri="pkg:/components/lib/school.brs" />
+    <children>
+        <Group id="fishLayer" />
+        <Timer id="schoolTimer" duration="0.125" repeat="true" />
+    </children>
+</component>

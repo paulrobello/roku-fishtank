@@ -18,6 +18,7 @@ function testSuites() as object
         brainTestSuite()
         scenecfgTestSuite()
         previewColorTestSuite()
+        schoolTestSuite()
     ]
 end function
 

@@ -72,6 +72,11 @@ brs-engine with the SceneGraph extension on a 1920x1080 canvas scaled to the win
   out near 5x scene time with 25 fish, so `?speed` above ~5 does not run faster.
   `bun tools/preview_capture.ts` captures the log or a frame sequence from a running
   `make dev`.
+- **Chromis school demo:** `?scene=SchoolDemoScene&seed=3` runs 10 green chromis under
+  `School` (`components/School/`, boids in `components/lib/school.brs`, parameters in
+  `config/school.json`). The school follows a hidden wandering leader that detours around
+  the ellipses, and a spacing guard keeps members at least `minDist` apart. `?freeze=T`
+  poses the school from its logic like the brain demo.
 
 `make test-visual` (part of `make checkall`) starts an isolated server on 8139, opens
 `?freeze=3` (the Reef Tank) and `?scene=BrainDemoScene&seed=7&freeze=5`, and compares the
