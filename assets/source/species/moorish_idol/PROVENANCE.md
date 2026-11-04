@@ -13,12 +13,11 @@
 | File | What it is |
 |---|---|
 | `moorish_idol_a2.png` | Untouched generator output, job `4f27dad0-ea2d-4fce-815b-19d030163185` (`jobs/moorish_idol_a2.json`), 2336x1744 RGBA, 5.3 MB |
-| `moorish_idol_a2_rig.png` | Rig source derived by `derive_rig_source.py` (`uv run assets/source/species/moorish_idol/derive_rig_source.py`) |
 
-The derivation narrows the dorsal streamer about its own centre line from full width at x=960 to a point at x=740, which is on the body side of the tail cut (x=684). Without it the streamer pixels left of the cut would land in the tail layer and snap off at the seam whenever the tail swings. Nothing else is changed. The shipped fish therefore has a shorter streamer than the generated art.
+The rig uses the original directly. The streamer trails back over the tail fin, so `config/species/moorish_idol.json` sets `tail.band_y_px` [560, 1420]: only the tail-fin rows (y 636-1359) go to the tail layer and the full streamer (y 55-268) stays in the body, so it does not swing with the tail. Paul chose the full streamer on 2026-11-04 over an earlier tapered rig source.
 
 Alpha check (original): mode RGBA, corners 0, border max 1, opaque alpha 254. Edge rim (8 < alpha < 250) is 3.7% of visible pixels (the thin streamer and fin rays add rim), and a row through the snout ramps 243, 211, 76, 4. Anatomy: exact side profile facing right, complete black crescent tail with white edge, pectoral fin well forward, narrow yellow stalk (138 px). Markings: white body with two black bands, yellow rear wash, long snout with orange saddle, white streamer. The front black band carries an extra thin white bar between the eye and the band, which a real idol does not have.
 
 ## Rejected
 
-- `moorish_idol_a1` (job `71516202-cb76-44f2-ace9-70b401d7cea3`, JSON kept, PNG deleted): accurate and clean, but the streamer also trailed past the tail fin. Attempt 2 has the stronger paint quality and the same rig workaround applies to both.
+- `moorish_idol_a1` (job `71516202-cb76-44f2-ace9-70b401d7cea3`, JSON kept, PNG deleted): accurate and clean, but the streamer also trailed past the tail fin. Attempt 2 has the stronger paint quality.

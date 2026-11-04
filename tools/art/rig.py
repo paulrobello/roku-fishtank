@@ -27,6 +27,11 @@ Fish (``config/species/*.json``, generated ``*.rig.json`` skipped):
      ``docs/art/rig-check-<species>.png``.
 
 Optional species config keys (absent keys leave the output byte-identical):
+  - ``tail.band_y_px: [y0, y1]`` (+ ``tail.band_feather_px``, default the tail
+    feather): only rows inside the band go to the tail layer. Pixels left of the
+    cut outside the band stay in the body, so a fin that trails over the tail
+    (Moorish idol dorsal streamer) does not swing with it. Set ``pivot_y_px``
+    by hand when such a fin crosses the cut column.
   - ``fin.fill_axis: "vertical"``: rebuild the flank under the fin by
     interpolating down each column, which continues vertical bands (clownfish,
     lionfish) instead of smearing them.
@@ -232,6 +237,15 @@ def rig_species(cfg_path: Path) -> None:
     xs = np.arange(tw, dtype=np.float32)[None, :]
     tail_w = 1.0 - ramp(xs, cut - feather / 2, cut + feather / 2)
     body_w = ramp(xs, cut - overlap, cut - overlap + feather / 2)
+    if "band_y_px" in tail_cfg:
+        # Only rows inside the band belong to the tail; a fin that trails over the
+        # tail outside it (Moorish idol dorsal streamer) stays in the body layer.
+        y0, y1 = (float(v) - by0 for v in tail_cfg["band_y_px"])
+        bf = float(tail_cfg.get("band_feather_px", feather)) / 2
+        ys = np.arange(th, dtype=np.float32)[:, None]
+        band = ramp(ys, y0 - bf, y0 + bf) * (1.0 - ramp(ys, y1 - bf, y1 + bf))
+        tail_w = (tail_w * band).astype(np.float32)
+        body_w = (1.0 - band * (1.0 - body_w)).astype(np.float32)
 
     fin_cfg: dict[str, Any] = cfg["fin"]
     fin_mask_img = Image.new("L", (tw, th), 0)
