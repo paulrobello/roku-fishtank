@@ -2,9 +2,11 @@
 <!--
     Rigged fish. Set species to load config/species/<species>.json and its generated
     .rig.json. swimSpeed (px/s) sets the tail/fin beat rate. Setting facing to 1 (right)
-    or -1 (left) turns the fish with a short squashed turn about mirror_center that swaps
-    to the rig's pre-mirrored art at the narrowest point; turning is true while that turn
-    runs. The Fish origin is the body Poster's top-left corner.
+    or -1 (left) turns the fish: the rig narrows to its head-on thickness about
+    mirror_center while it pitches nose-up and rises a little, crossfades to the rig's
+    pre-mirrored art at the narrowest point, then widens nose-down with a slight
+    overshoot; turning is true while that turn runs. The Fish origin is the body Poster's
+    top-left corner.
 -->
 <component name="Fish" extends="Group">
     <interface>
@@ -33,10 +35,12 @@
             <FloatFieldInterpolator id="mTailInterp" />
             <FloatFieldInterpolator id="mFinInterp" />
         </Animation>
-        <Animation id="turnAnim" repeat="false" easeFunction="inOutQuad" duration="0.5">
-            <Vector2DFieldInterpolator id="turnInterp" key="[0.0, 0.5, 1.0]" />
-            <FloatFieldInterpolator id="baseFade" key="[0.0, 0.499, 0.501, 1.0]" />
-            <FloatFieldInterpolator id="mirroredFade" key="[0.0, 0.499, 0.501, 1.0]" />
+        <Animation id="turnAnim" repeat="false" easeFunction="linear" duration="0.85">
+            <Vector2DFieldInterpolator id="turnInterp" />
+            <FloatFieldInterpolator id="turnRoll" />
+            <Vector2DFieldInterpolator id="turnLift" />
+            <FloatFieldInterpolator id="baseFade" />
+            <FloatFieldInterpolator id="mirroredFade" />
         </Animation>
     </children>
 </component>

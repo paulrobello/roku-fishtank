@@ -3,6 +3,8 @@ sub init()
     m.swimAnim = m.top.findNode("swimAnim")
     m.turnAnim = m.top.findNode("turnAnim")
     m.turnInterp = m.top.findNode("turnInterp")
+    m.turnRoll = m.top.findNode("turnRoll")
+    m.turnLift = m.top.findNode("turnLift")
     ' Set 0 draws the rig's layers as authored, set 1 its pre-mirrored layers.
     m.sets = [
         fishFindSet("base", "body", "tail", "fin", "tailInterp", "finInterp", "baseFade"),
@@ -27,9 +29,17 @@ sub init()
         set.fade.fieldToInterp = [set.group.id + ".opacity"]
     end for
     m.turnInterp.fieldToInterp = [m.rig.id + ".scale"]
+    m.turnRoll.fieldToInterp = [m.rig.id + ".rotation"]
+    m.turnLift.fieldToInterp = [m.rig.id + ".translation"]
 
-    m.turnSquash = 0.05
-    m.turnNarrow = 0.05
+    ' Turn shape: narrowest width (a fish seen head-on keeps its thickness), pitch at
+    ' the swap in radians, and rise as a fraction of body height. The duration varies
+    ' per fish so neighbours and school members do not turn in lockstep.
+    m.turnNarrow = 0.22
+    m.turnPitch = 0.14
+    m.turnRise = 0.08
+    m.turnAnim.duration = 0.75 + ((serial * 37) mod 21) / 100.0
+    m.bodyHeight = 0.0
     m.artFacing = 1
     m.shownFacing = 1
     m.loaded = false
@@ -72,6 +82,9 @@ sub onSpeciesChanged()
     fishLoadSet(m.sets[1], rig.mirrored.layers, rig.mirrored.extra_layers, rig.draw_order)
     m.rig.scaleRotateCenter = rig.mirror_center
     m.rig.scale = [1.0, 1.0]
+    m.rig.rotation = 0.0
+    m.rig.translation = [0.0, 0.0]
+    m.bodyHeight = rig.layers.body.height
     m.shownFacing = fishSign(m.top.facing)
     fishShowSet(fishSetFor(m.shownFacing))
     m.top.turning = false
@@ -102,12 +115,15 @@ sub fishShowSet(index as integer)
     end for
 end sub
 
-' Turns about mirror_center: scale.x narrows to turnNarrow (never below 0) while scale.y
-' dips by turnSquash, the drawn set swaps to the other facing's art there, then scale.x
-' widens back to 1. The swap is two opacity interpolators stepping across the midpoint
-' of the same Animation as the scale, so it lands on the narrowest frame on the render
-' thread; a second Animation chained from a state observer would land a frame late and
-' would not seek correctly under the preview's ?freeze.
+' Turns about mirror_center in one Animation, sampled at the fractions of fishTurnKeys():
+' scale.x narrows to turnNarrow and widens back with a slight overshoot, scale.y swells a
+' little as the fish rolls its bulk toward the viewer, the rig pitches nose-up into the
+' turn and comes out nose-down (rotation keeps one sign, so the new art leaves the swap
+' tilted the other way), and it rises by turnRise of its height. The art crossfades across
+' the narrowest frame: the incoming set fades in under or over the outgoing one, then the
+' outgoing one fades, so coverage never dips. Everything rides the same Animation as the
+' scale, so the swap lands on the render thread and seeks correctly under ?freeze; a second
+' Animation chained from a state observer would land a frame late.
 sub onFacingChanged()
     if not m.loaded then return
     target = fishSign(m.top.facing)
@@ -118,20 +134,63 @@ sub onFacingChanged()
     drawn = fishDrawnSet()
     other = 1 - drawn
     s = m.rig.scale
+    r = m.rig.rotation
+    t = m.rig.translation
     if drawn = want then
-        ' Reversed before the narrowest point: widen again with the same art.
-        m.turnInterp.keyValue = [[s[0], s[1]], [(s[0] + 1.0) / 2.0, (s[1] + 1.0) / 2.0], [1.0, 1.0]]
-        m.sets[drawn].fade.keyValue = [1.0, 1.0, 1.0, 1.0]
-        m.sets[other].fade.keyValue = [0.0, 0.0, 0.0, 0.0]
+        ' Reversed before the swap: settle back to rest with the same art.
+        fishSetKeys(m.turnInterp, [0.0, 1.0], [[s[0], s[1]], [1.0, 1.0]])
+        fishSetKeys(m.turnRoll, [0.0, 1.0], [r, 0.0])
+        fishSetKeys(m.turnLift, [0.0, 1.0], [[t[0], t[1]], [0.0, 0.0]])
+        fishSetKeys(m.sets[drawn].fade, [0.0, 1.0], [1.0, 1.0])
+        fishSetKeys(m.sets[other].fade, [0.0, 1.0], [0.0, 0.0])
     else
-        m.turnInterp.keyValue = [[s[0], s[1]], [m.turnNarrow, 1.0 - m.turnSquash], [1.0, 1.0]]
-        m.sets[drawn].fade.keyValue = [1.0, 1.0, 0.0, 0.0]
-        m.sets[other].fade.keyValue = [0.0, 0.0, 1.0, 1.0]
+        keys = fishTurnKeys()
+        pitch = m.turnPitch
+        if target > 0 then pitch = -pitch
+        lift = -m.turnRise * m.bodyHeight
+        scales = []
+        rolls = []
+        lifts = []
+        for i = 0 to keys.count() - 1
+            u = keys[i]
+            arc = sin(3.14159265 * u)
+            scales.push([fishTurnWidth(u), 1.0 + 0.04 * arc])
+            rolls.push(pitch * arc)
+            lifts.push([0.0, lift * arc])
+        end for
+        ' A turn that starts mid-way (reversed after the swap) starts from where the rig is.
+        scales[0] = [s[0], s[1]]
+        rolls[0] = r
+        lifts[0] = [t[0], t[1]]
+        fishSetKeys(m.turnInterp, keys, scales)
+        fishSetKeys(m.turnRoll, keys, rolls)
+        fishSetKeys(m.turnLift, keys, lifts)
+        fishSetKeys(m.sets[drawn].fade, [0.0, 0.5, 0.53, 1.0], [1.0, 1.0, 0.0, 0.0])
+        fishSetKeys(m.sets[other].fade, [0.0, 0.47, 0.5, 1.0], [0.0, 0.0, 1.0, 1.0])
     end if
     m.sets[0].group.visible = true
     m.sets[1].group.visible = true
     m.top.turning = true
     m.turnAnim.control = "start"
+end sub
+
+function fishTurnKeys() as object
+    return [0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0]
+end function
+
+' Width at fraction u: |cos| keeps the narrow phase brief (a V at the swap, eased at the
+' ends), floored at turnNarrow, overshooting 1.0 slightly around u 0.9 as the body straightens.
+function fishTurnWidth(u as float) as float
+    c = cos(3.14159265 * u)
+    if c < 0 then c = -c
+    w = m.turnNarrow + (1.0 - m.turnNarrow) * c
+    if u > 0.5 and u < 1.0 then w = w + 0.08 * sin(3.14159265 * (u - 0.5) * 2.0)
+    return w
+end function
+
+sub fishSetKeys(interp as object, keys as object, values as object)
+    interp.key = keys
+    interp.keyValue = values
 end sub
 
 ' Hides the set that is not drawn once a turn has finished. A stale "stopped" from an
