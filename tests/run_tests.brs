@@ -12,6 +12,7 @@
 function testSuites() as object
     return [
         prngTestSuite()
+        steerTestSuite()
     ]
 end function
 
