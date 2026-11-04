@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+    P0.5 fidelity scene: one cell per SceneGraph primitive the reef relies on, laid out
+    on a 1920x1080 grid so simulator and device captures can be measured against the
+    analytic expectations in docs/fidelity/README.md. Row 1 (cells 1-5) is static.
+    Row 2 (cells 6-7) is built in FidelityScene.brs and paused by a Timer at 4 s.
+-->
+<component name="FidelityScene" extends="Scene">
+    <script type="text/brightscript" uri="FidelityScene.brs" />
+    <children>
+        <Rectangle id="bg" color="0x202020FF" width="1920" height="1080" />
+
+        <!-- grid lines -->
+        <Rectangle color="0x404040FF" translation="[383, 0]" width="2" height="520" />
+        <Rectangle color="0x404040FF" translation="[767, 0]" width="2" height="520" />
+        <Rectangle color="0x404040FF" translation="[1151, 0]" width="2" height="520" />
+        <Rectangle color="0x404040FF" translation="[1535, 0]" width="2" height="520" />
+        <Rectangle color="0x404040FF" translation="[0, 529]" width="1920" height="2" />
+
+        <Label text="1 blendColor" color="0xC0C0C0FF" translation="[12, 12]" />
+        <Label text="2 opacity stack" color="0xC0C0C0FF" translation="[396, 12]" />
+        <Label text="3 rotate+scale" color="0xC0C0C0FF" translation="[780, 12]" />
+        <Label text="4 mirror" color="0xC0C0C0FF" translation="[1164, 12]" />
+        <Label text="5 nested rotation" color="0xC0C0C0FF" translation="[1548, 12]" />
+        <Label text="6 Vector2D inOutCubic / linear, 7 Color HSV" color="0xC0C0C0FF" translation="[12, 540]" />
+
+        <!-- 1: blendColor multiply. Expected 0x00FF00 and 0x804000. -->
+        <Poster id="tintWhite" uri="pkg:/images/fidelity/white.png" width="128" height="128" translation="[40, 200]" blendColor="0x00FF00FF" />
+        <Poster id="tintGrey" uri="pkg:/images/fidelity/grey.png" width="128" height="128" translation="[216, 200]" blendColor="0xFF8000FF" />
+
+        <!-- 2: Group opacity 0.5 x Poster opacity 0.5 over black, beside a 0.25 reference. Expected 0x404040 both. -->
+        <Rectangle color="0x000000FF" translation="[408, 180]" width="336" height="200" />
+        <Group id="opacityGroup" translation="[432, 216]" opacity="0.5">
+            <Poster id="opacityInner" uri="pkg:/images/fidelity/white.png" width="128" height="128" opacity="0.5" />
+        </Group>
+        <Poster id="opacityRef" uri="pkg:/images/fidelity/white.png" width="128" height="128" translation="[592, 216]" opacity="0.25" />
+
+        <!-- 3: rotation 45 deg (CCW) and scale 1.5 about the poster centre (960, 300). -->
+        <Poster id="rotScale" uri="pkg:/images/fidelity/marker.png" width="128" height="128" translation="[896, 236]" scaleRotateCenter="[64, 64]" scale="[1.5, 1.5]" rotation="0.785398" />
+
+        <!-- 4: unmirrored reference, then scale.x = -1 about the poster centre (1432, 300). -->
+        <Poster id="mirrorRef" uri="pkg:/images/fidelity/marker.png" width="128" height="128" translation="[1192, 236]" />
+        <Poster id="mirror" uri="pkg:/images/fidelity/marker.png" width="128" height="128" translation="[1368, 236]" scaleRotateCenter="[64, 64]" scale="[-1, 1]" />
+
+        <!-- 5: three nested Groups, each rotated 30 deg, arms 80 px. Pivot (1616, 440). -->
+        <Group id="armA" translation="[1616, 440]" rotation="0.523599">
+            <Rectangle color="0x606060FF" translation="[0, -2]" width="80" height="4" />
+            <Rectangle id="pivotA" color="0xFFFFFFFF" translation="[-10, -10]" width="20" height="20" />
+            <Group id="armB" translation="[80, 0]" rotation="0.523599">
+                <Rectangle color="0x606060FF" translation="[0, -2]" width="80" height="4" />
+                <Rectangle id="pivotB" color="0xFFFF00FF" translation="[-10, -10]" width="20" height="20" />
+                <Group id="armC" translation="[80, 0]" rotation="0.523599">
+                    <Rectangle color="0x606060FF" translation="[0, -2]" width="80" height="4" />
+                    <Rectangle id="pivotC" color="0x00FFFFFF" translation="[-10, -10]" width="20" height="20" />
+                    <Rectangle id="armTip" color="0xFF00FFFF" translation="[70, -10]" width="20" height="20" />
+                </Group>
+            </Group>
+        </Group>
+
+        <Group id="lanes" />
+        <Label id="report" color="0xC0C0C0FF" translation="[1480, 650]" width="430" height="430" wrap="true" font="font:SmallestSystemFont" text="running" />
+    </children>
+</component>

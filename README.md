@@ -64,6 +64,14 @@ brs-engine with the SceneGraph extension on a 1920x1080 canvas scaled to the win
 After an intended visual change, refresh the baseline with
 `bunx playwright test --update-snapshots` and review the new PNG before committing.
 
+### Fidelity scene (P0.5)
+
+`components/Fidelity/FidelityScene` exercises each SceneGraph primitive in its own grid
+cell. It is excluded from `dist/channel.zip` and ships only in `dist/fidelity.zip`
+(`make fidelity-build`, a `checkall` leg). `make fidelity-sim` captures it from the
+preview (`?scene=FidelityScene`) and `make fidelity-device` sideloads it to the TV.
+Layout, expected values and verdicts are in `docs/fidelity/README.md`.
+
 ## Deploy
 
 ### Devices on this LAN (discovered 2026-11-04 via mDNS + ECP)

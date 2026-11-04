@@ -1,7 +1,11 @@
 ZIP := dist/channel.zip
+FIDELITY_ZIP := dist/fidelity.zip
 BIN := node_modules/.bin
-BRS_GLOBS := "source/**/*.brs" "components/**/*.brs"
+BRS_GLOBS := "source/**/*.brs" "components/**/*.brs" "fidelity/**/*.brs"
 SHELL := /bin/bash
+
+# Gitignored ROKU_HOST / ROKU_PASSWORD for the device targets.
+-include .env
 
 .PHONY: install build fmt fmt-check lint typecheck test checkall checkall-ci deploy art clean
 .PHONY: dev dev-start dev-stop dev-restart test-visual
@@ -49,7 +53,7 @@ test: node_modules
 	$(BIN)/brs-cli tests/run_tests.brs tests/lib/*.brs tests/unit/*.brs components/lib/*.brs
 
 # Fast gate, ordered cheapest first. No CI exists, so checkall-ci is the same gate.
-checkall: api-guard fmt-check lint typecheck test build zip-check test-visual
+checkall: api-guard fmt-check lint typecheck test build zip-check fidelity-build test-visual
 	@echo "checkall OK"
 
 checkall-ci: checkall
@@ -101,6 +105,32 @@ test-visual: node_modules
 	@mkdir -p dist
 	@bunx playwright install chromium > dist/playwright-install.log 2>&1 || { cat dist/playwright-install.log; exit 1; }
 	bunx playwright test
+
+.PHONY: fidelity-build fidelity-device fidelity-sim
+
+# Fidelity device package (P0.5): FidelityScene as the screensaver. bsc with bslint
+# validates it (FidelityScene is excluded from bsconfig.json, so this leg is its
+# lint/typecheck); any warning fails, then zip-check runs on the package.
+fidelity-build: node_modules
+	@mkdir -p dist
+	@rm -f $(FIDELITY_ZIP)
+	@$(BIN)/bsc --project bsconfig.fidelity.json --create-package --out-file $(FIDELITY_ZIP) > dist/bsc-fidelity.log 2>&1; ec=$$?; \
+	  grep -E " - (error|warning) " dist/bsc-fidelity.log; \
+	  if [ $$ec -ne 0 ] || grep -qE " - (error|warning) " dist/bsc-fidelity.log; then cat dist/bsc-fidelity.log; echo "fidelity-build FAILED"; exit 1; fi
+	@bash tools/zip_check.sh $(FIDELITY_ZIP)
+	@echo "built $(FIDELITY_ZIP)"
+
+# Sideloads dist/fidelity.zip (replacing the dev channel), captures the FIDELITY
+# console lines and tries a device screenshot into docs/fidelity/. Needs ROKU_HOST
+# and ROKU_PASSWORD (env or .env). Re-deploy the channel with `make deploy` after.
+fidelity-device: fidelity-build
+	ROKU_HOST="$(ROKU_HOST)" ROKU_PASSWORD="$(ROKU_PASSWORD)" bash tools/fidelity/run_device.sh docs/fidelity
+
+# Simulator capture: ?scene=FidelityScene in the preview -> docs/fidelity/simulator.png
+# and docs/fidelity/simulator-console.txt, then PIL measurements. Not part of checkall.
+fidelity-sim: node_modules
+	bunx playwright test --config playwright.fidelity.config.ts
+	uv run tools/fidelity/measure.py docs/fidelity/simulator.png > docs/fidelity/simulator-measure.md
 
 clean:
 	rm -rf dist

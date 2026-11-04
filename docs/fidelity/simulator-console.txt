@@ -1,0 +1,12 @@
+print,FIDELITY scene started
+print,FIDELITY_PAUSED elapsed_ms= 4011 pause_s= 4
+print,FIDELITY lane=io16 frac= 0.0623473 x= 274.817 lerp_x= 274.817 exp_frac= 0.062345 exp_x= 274.814
+print,FIDELITY lane=io8 frac= 0.49876 x= 798.512 lerp_x= 798.512 exp_frac= 0.498764 exp_x= 798.516
+print,FIDELITY lane=io5 frac= 0.937033 x= 1324.44 lerp_x= 1324.44 exp_frac= 0.937035 exp_x= 1324.44
+print,FIDELITY lane=li16 frac= 0.249793 x= 499.752 lerp_x= 499.752 exp_frac= 0.249793 exp_x= 499.752
+print,FIDELITY lane=li8 frac= 0.499588 x= 799.505 lerp_x= 799.505 exp_frac= 0.499588 exp_x= 799.505
+print,FIDELITY lane=li5 frac= 0.749381 x= 1099.26 lerp_x= 1099.26 exp_frac= 0.749381 exp_x= 1099.26
+print,FIDELITY swatch=c16 frac= 0.249794 color=0xFF007FFF exp_hsv=0xFF007FFF
+print,FIDELITY swatch=c8 frac= 0.499589 color=0xFF00FFFF exp_hsv=0xFF00FFFF
+print,FIDELITY swatch=c5 frac= 0.749389 color=0x8000FFFF exp_hsv=0x8000FFFF
+print,FIDELITY fraction_probe x= 1500 (1650 = direct fraction drives, 1500 = ignored)

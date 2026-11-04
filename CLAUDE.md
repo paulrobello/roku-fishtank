@@ -4,7 +4,7 @@ A Roku screensaver channel written in BrightScript/SceneGraph. Scope and phases 
 
 ## Gate
 
-- `make checkall` (== `checkall-ci`; there is no CI). Legs run cheapest first: `api-guard` (`tools/api_guard.sh`: OS 16.0-only APIs, `Main`/`RunUserInterface`, manifest `title=`), `fmt-check` (bsfmt), `lint` (bslint), `typecheck` (bsc validate), `test`, `build` (bsc package to `dist/channel.zip`), `zip-check` (`tools/zip_check.sh`: zip holds only manifest, `source/`, `components/`, `images/`, `config/`), `test-visual` (Playwright screenshot of the brs-engine preview frozen at 3 s, compared to `tests/visual/__screenshots__/`). Any bsc or bslint **warning** fails the gate.
+- `make checkall` (== `checkall-ci`; there is no CI). Legs run cheapest first: `api-guard` (`tools/api_guard.sh`: OS 16.0-only APIs, `Main`/`RunUserInterface`, manifest `title=`), `fmt-check` (bsfmt), `lint` (bslint), `typecheck` (bsc validate), `test`, `build` (bsc package to `dist/channel.zip`), `zip-check` (`tools/zip_check.sh`: zip holds only manifest, `source/`, `components/`, `images/`, `config/`), `fidelity-build` (bsc+bslint package of `FidelityScene` to `dist/fidelity.zip`, warnings fail, then zip-check), `test-visual` (Playwright screenshot of the brs-engine preview frozen at 3 s, compared to `tests/visual/__screenshots__/`). Any bsc or bslint **warning** fails the gate.
 - Preview: `make dev` on 8138 runs the channel in brs-engine via the `source/preview.brs` `Main` shim. See README "Browser preview" for params and the dev loop.
 - Toolchain is pinned in `package.json`. Install with `bun install`. Never run `node` on project scripts; use bun.
 - `make fmt` rewrites BrightScript formatting in place.

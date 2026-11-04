@@ -1,0 +1,15 @@
+{
+  "rootDir": ".",
+  "stagingDir": "dist/fidelity-staging",
+  "files": [
+    "manifest",
+    "images/*.png",
+    "images/fidelity/**/*",
+    "components/Fidelity/**/*",
+    { "src": "fidelity/source/main.brs", "dest": "source/main.brs" }
+  ],
+  "createPackage": false,
+  "retainStagingDir": false,
+  "plugins": ["@rokucommunity/bslint"],
+  "lintConfig": "bslint.json"
+}
