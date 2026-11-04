@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+    Pooled bubble column (P1.3). Set config to the scene.json "bubbles" block. init builds
+    the whole pool once: per slot one Poster (all share uri) and one Animation with a
+    Vector2DFieldInterpolator (rise + wobble) and a FloatFieldInterpolator (fade). When a
+    slot's Animation stops, the slot recycles in place (restarted from restartTimer): components/lib/bubbles.brs draws its
+    next cycle and only key, keyValue, duration and delay are rewritten, so no node is ever
+    created or removed after init. Under ?freeze=T the schedule runs to T at once and the
+    Posters are posed without starting any Animation, so the frame depends only on seed and T.
+-->
+<component name="Bubbles" extends="Group">
+    <interface>
+        <field id="config" type="assocarray" onChange="onConfig" />
+        <field id="recycles" type="integer" value="0" />
+    </interface>
+    <script type="text/brightscript" uri="Bubbles.brs" />
+    <script type="text/brightscript" uri="pkg:/components/lib/prng.brs" />
+    <script type="text/brightscript" uri="pkg:/components/lib/bubbles.brs" />
+    <children>
+        <Timer id="restartTimer" duration="0.05" repeat="false" />
+    </children>
+</component>

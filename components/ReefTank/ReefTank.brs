@@ -27,6 +27,7 @@ sub init()
         poster.height = d.height
         poster.translation = [d.x, d.y]
     end for
+    reefTankAddAmbient(camera)
     reefTankBuildDrift()
     print "REEFTANK ready: "; dr.width; "x"; dr.height; " layers="; m.sceneCfg.layers.count(); " decor="; decor.count()
 end sub
@@ -77,6 +78,17 @@ sub reefTankApplyDrift()
             node = m.top.findNode(layer.id)
             if node <> invalid then node.translation = [0, 0]
         end for
+    end if
+end sub
+
+' P1.3 bubbles: own component, configured by the scene.json "bubbles" block and
+' placed in its layer.
+sub reefTankAddAmbient(camera as object)
+    cfg = m.sceneCfg
+    if cfg.bubbles <> invalid then
+        bubbles = camera.findNode("bubbles").createChild("Bubbles")
+        bubbles.id = "bubbleColumn"
+        bubbles.config = cfg.bubbles
     end if
 end sub
 

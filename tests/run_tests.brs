@@ -21,6 +21,7 @@ function testSuites() as object
         schoolTestSuite()
         behaviorTestSuite()
         settingsTestSuite()
+        bubblesTestSuite()
     ]
 end function
 

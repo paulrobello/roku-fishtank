@@ -116,6 +116,11 @@ art-placeholder:
 key-art:
 	uv run tools/art/key_art.py
 
+# Bubble sprite for P1.3 (byte-reproducible).
+.PHONY: ambient-art
+ambient-art:
+	uv run tools/art/bubble.py
+
 # Browser preview (brs-engine) on 8138. The channel zip is rebuilt from source on every page load.
 PREVIEW_PORT := 8138
 
