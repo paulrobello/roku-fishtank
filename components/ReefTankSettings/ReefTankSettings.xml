@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+    Reef Tank settings screen (P5.2), shown by RunScreenSaverSettings. Three rows
+    (Night mode, Fish density, Camera drift): left/right changes the focused row's value,
+    up/down/OK move between rows, Back exits. Every change is saved to the registry at once.
+    Overdraw: the backdrop and one dim layer are the only full-screen layers (no
+    background Rectangle under the backdrop); the panel covers about a third of the screen.
+-->
+<component name="ReefTankSettings" extends="Scene">
+    <script type="text/brightscript" uri="pkg:/components/lib/settings.brs" />
+    <script type="text/brightscript" uri="ReefTankSettings.brs" />
+    <children>
+        <Poster id="backdrop" uri="pkg:/images/decor/reef_backdrop.png" />
+        <Rectangle id="dim" color="0x03142AB0" />
+        <Group id="panel">
+            <Rectangle id="panelBg" color="0x0A2A4AD8" />
+            <Rectangle id="panelEdge" color="0x7FD6E8FF" />
+            <Label id="title" text="Reef Tank" color="0xEAF6FFFF" />
+            <Label id="subtitle" text="Screensaver settings" color="0x9FD0E6FF" />
+            <Rectangle id="highlight" color="0x1F6F8FE0" />
+            <Group id="rows" />
+            <Label id="hint" text="Left / right changes a value. Up / down moves. Back saves and exits." color="0x8FB8D0FF" />
+        </Group>
+    </children>
+</component>

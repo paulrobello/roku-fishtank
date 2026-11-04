@@ -89,6 +89,13 @@ brs-engine with the SceneGraph extension on a 1920x1080 canvas scaled to the win
   `_notes` documents the schema. Evidence: `docs/perf/behavior-seed1.log` and
   `docs/preview/behavior-*.png`.
 
+- **Settings screen (P5.2):** `?scene=ReefTankSettings` shows the screen that
+  `RunScreenSaverSettings()` opens on the device (Settings > Theme > Screensavers > Reef Tank).
+  Arrow keys and Enter drive it in the browser (up/down/Enter move rows, left/right change
+  the value). Values persist through `components/lib/settings.brs`; the preview saves to
+  brs-engine's registry. Evidence: `docs/preview/settings-initial.png` and
+  `settings-changed.png`.
+
 `make test-visual` (part of `make checkall`) starts an isolated server on 8139, opens
 `?freeze=3` (the Reef Tank), the camera drift at four loop phases (`tests/visual/drift.spec.ts`, `?speed=30&freeze=0.75..3`, asserts the frame edges never show the background) and `?scene=BrainDemoScene&seed=7&freeze=5`, and compares the
 canvas to `tests/visual/__screenshots__/reeftank-t3.png` and `brain-seed7-t5.png`.
