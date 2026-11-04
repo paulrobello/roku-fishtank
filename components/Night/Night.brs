@@ -78,6 +78,7 @@ function nightMakeState(scene as object, speed as float, freeze as float) as obj
     month = 0
     day = 0
     timeText = ""
+    parsed = invalid
     if m.global.hasField("previewTime") then timeText = m.global.previewTime
     if timeText <> "" then
         parsed = nightParseClock(timeText)
@@ -91,11 +92,14 @@ function nightMakeState(scene as object, speed as float, freeze as float) as obj
     if year = 0 then
         dt = CreateObject("roDateTime")
         dt.ToLocalTime()
-        ' Under ?freeze with no ?time and no ?night the clock starts at noon, so the
-        ' frozen frame is the same day tank whatever the wall clock says (noon is
-        ' inside (sunrise, sunset) on every Woodland date); live runs use the clock.
-        minutes = 720.0
-        if freeze <= 0 then minutes = dt.GetHours() * 60.0 + dt.GetMinutes() + dt.GetSeconds() / 60.0
+        ' A time-only ?time keeps its minutes on today's date. Otherwise, under ?freeze
+        ' with no ?time and no ?night the clock starts at noon, so the frozen frame is
+        ' the same day tank whatever the wall clock says (noon is inside (sunrise,
+        ' sunset) on every Woodland date); live runs use the clock.
+        if parsed = invalid then
+            minutes = 720.0
+            if freeze <= 0 then minutes = dt.GetHours() * 60.0 + dt.GetMinutes() + dt.GetSeconds() / 60.0
+        end if
         year = dt.GetYear()
         month = dt.GetMonth()
         day = dt.GetDayOfMonth()
