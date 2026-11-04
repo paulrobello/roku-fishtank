@@ -11,6 +11,6 @@
   "createPackage": false,
   "retainStagingDir": false,
   "plugins": ["@rokucommunity/bslint"],
-  "diagnosticFilters": [],
+  "diagnosticFilters": [{ "src": "components/lib/**/*.brs", "codes": [1013] }],
   "lintConfig": "bslint.json"
 }

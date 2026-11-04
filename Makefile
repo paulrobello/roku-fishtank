@@ -42,9 +42,10 @@ typecheck: node_modules
 	  if [ $$ec -ne 0 ] || grep -qE " - (error|warning) " dist/bsc.log; then echo "typecheck FAILED"; exit 1; fi; \
 	  echo "typecheck ok"
 
-# Unit tests under brs-cli land with P0.4 (plans/phase-0-foundation.md).
-test:
-	@echo "test: no unit tests yet (runner lands in P0.4)"
+# BrightScript unit tests under brs-cli. The runner throws when any test fails,
+# which makes brs-cli exit 1.
+test: node_modules
+	$(BIN)/brs-cli tests/run_tests.brs tests/lib/*.brs tests/unit/*.brs components/lib/*.brs
 
 # Fast gate, ordered cheapest first. No CI exists, so checkall-ci is the same gate.
 checkall: api-guard fmt-check lint typecheck test build zip-check
