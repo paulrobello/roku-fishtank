@@ -20,6 +20,7 @@ function testSuites() as object
         previewColorTestSuite()
         schoolTestSuite()
         behaviorTestSuite()
+        settingsTestSuite()
     ]
 end function
 
