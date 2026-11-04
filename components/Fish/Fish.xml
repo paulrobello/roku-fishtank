@@ -2,8 +2,9 @@
 <!--
     Rigged fish. Set species to load config/species/<species>.json and its generated
     .rig.json. swimSpeed (px/s) sets the tail/fin beat rate. Setting facing to 1 (right)
-    or -1 (left) mirrors the rig about mirror_center with a short squashed turn; turning
-    is true while that turn runs. The Fish origin is the body Poster's top-left corner.
+    or -1 (left) turns the fish with a short squashed turn about mirror_center that swaps
+    to the rig's pre-mirrored art at the narrowest point; turning is true while that turn
+    runs. The Fish origin is the body Poster's top-left corner.
 -->
 <component name="Fish" extends="Group">
     <interface>
@@ -15,16 +16,27 @@
     <script type="text/brightscript" uri="Fish.brs" />
     <children>
         <Group id="rig">
-            <Poster id="body" />
-            <Poster id="tail" />
-            <Poster id="fin" />
+            <Group id="base">
+                <Poster id="body" />
+                <Poster id="tail" />
+                <Poster id="fin" />
+            </Group>
+            <Group id="mirrored" visible="false" opacity="0.0">
+                <Poster id="mBody" />
+                <Poster id="mTail" />
+                <Poster id="mFin" />
+            </Group>
         </Group>
         <Animation id="swimAnim" repeat="true" easeFunction="linear" duration="1.0">
             <FloatFieldInterpolator id="tailInterp" />
             <FloatFieldInterpolator id="finInterp" />
+            <FloatFieldInterpolator id="mTailInterp" />
+            <FloatFieldInterpolator id="mFinInterp" />
         </Animation>
         <Animation id="turnAnim" repeat="false" easeFunction="inOutQuad" duration="0.5">
             <Vector2DFieldInterpolator id="turnInterp" key="[0.0, 0.5, 1.0]" />
+            <FloatFieldInterpolator id="baseFade" key="[0.0, 0.499, 0.501, 1.0]" />
+            <FloatFieldInterpolator id="mirroredFade" key="[0.0, 0.499, 0.501, 1.0]" />
         </Animation>
     </children>
 </component>
