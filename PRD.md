@@ -66,7 +66,7 @@ Sources: RESEARCH.md, `~/.claude/guides/roku.md`, and live doc checks on 2026-11
 
 ## Architecture Direction
 
-- **Toolchain** (pinned in `plans/phase-0-foundation.md`): BrighterScript `brighterscript@0.73.8` (`bsc` compile and validate), `@rokucommunity/bslint@0.8.47`, `brs-engine@2.6.2` + `brs-scenegraph@0.6.2` (browser preview), `brs-node@2.6.2` (`brs-cli` for Node unit tests and headless runs), `vite@8.3.5` (preview server on **port 8134**), `@playwright/test@1.64.1` (screenshot gate), and bun as the package manager. Deploys use the existing `curl --digest` Makefile target (`roku-deploy@3.18.4` only if packaging needs it).
+- **Toolchain** (pinned in `plans/phase-0-foundation.md`): BrighterScript `brighterscript@0.73.8` (`bsc` compile and validate), `@rokucommunity/bslint@0.8.47`, `brs-engine@2.6.2` + `brs-scenegraph@0.6.2` (browser preview), `brs-node@2.6.2` (`brs-cli` for Node unit tests and headless runs), `vite@8.3.5` (preview server on **port 8138**), `@playwright/test@1.64.1` (screenshot gate), and bun as the package manager. Deploys use the existing `curl --digest` Makefile target (`roku-deploy@3.18.4` only if packaging needs it).
 - **Layout:**
   - `source/main.brs`: `RunScreenSaver`, `RunScreenSaverSettings`
   - `source/preview.brs`: `Main` shim, excluded from the device zip
@@ -111,7 +111,7 @@ Each phase ends with gates green and something visible in **both** the Mac previ
 ### P0: Foundation and feasibility spike
 Scope: toolchain and Makefile gate, a preview harness running the existing test channel in the browser, a fidelity test scene, on-device perf and memory instrumentation, the texture budget, the api-guard leg, and the art style board.
 Acceptance:
-- `make dev` serves the preview on 8134 showing the channel, and `make checkall` is green with all legs present.
+- `make dev` serves the preview on 8138 showing the channel, and `make checkall` is green with all legs present.
 - The fidelity scene covers `blendColor` tint, stacked opacity, rotation and scale around `scaleRotateCenter`, negative `scale.x`, Animation easing and nested-group rotation. Simulator and device screenshots sit side by side in `docs/fidelity/`. **Pass rule:** positions within 2% of screen width, colors visually matched, and every primitive renders. Any failure stops the phase for Paul's fallback decision.
 - The perf method is documented in `docs/perf.md`: how frame rate, texture memory and app memory are read on OS 15.3.4 (developer console port 8080 commands, `roAppMemoryMonitor`, telnet 8087 logging), verified live. It records the measured headroom for N fish Posters with Animations at 60 fps on the 4850X.
 - The texture budget, measured and written down, sized for the worst case (all layers plus night overlays plus caustics resident).

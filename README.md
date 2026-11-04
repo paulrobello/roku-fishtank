@@ -36,7 +36,7 @@ bsconfig.json            RokuCommunity BrightScript VS Code extension config
    set a `rokudev` password, note the device IP.
 2. Command line: `ROKU_HOST=<ip> ROKU_PASSWORD=<pw> make deploy`
    (or VS Code: open this folder, set host+password per the extension's prompt, press the deploy/debug button).
-3. Browser fallback: upload `dist/fishtank-test.zip` at `http://<ip>/plugin_install`.
+3. Browser fallback: upload `dist/channel.zip` at `http://<ip>/plugin_install`.
 4. On the Roku: **Settings > Theme > Screensavers** → select *Fishtank Test*,
    shorten the wait timer, let it idle, confirm the fish appear.
 

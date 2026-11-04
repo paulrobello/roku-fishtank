@@ -1,20 +1,62 @@
-ZIP := dist/fishtank-test.zip
+ZIP := dist/channel.zip
+BIN := node_modules/.bin
+BRS_GLOBS := "source/**/*.brs" "components/**/*.brs"
+SHELL := /bin/bash
 
-.PHONY: build deploy checkall clean art
+.PHONY: install build fmt fmt-check lint typecheck test checkall checkall-ci deploy art clean
 
-build: $(ZIP)
+install: node_modules
 
-$(ZIP): manifest source/main.brs components/FishtankTest.xml components/FishtankTest.brs images
-	mkdir -p dist
-	rm -f $(ZIP)
-	zip -r $(ZIP) manifest source components images -x "*.DS_Store" > /dev/null
+node_modules: package.json bun.lock
+	bun install --frozen-lockfile
+	@touch node_modules
 
+# Device package: bsc validates, transpiles to dist/staging and zips it.
+build: node_modules
+	@mkdir -p dist
+	@rm -f $(ZIP)
+	$(BIN)/bsc --project bsconfig.json --create-package --out-file $(ZIP) > dist/bsc-build.log 2>&1 || { cat dist/bsc-build.log; exit 1; }
+	@unzip -l $(ZIP) | grep -qE " manifest$$" || { echo "zip missing manifest"; exit 1; }
+	@unzip -l $(ZIP) | grep -qE " source/main\.brs$$" || { echo "zip missing source/main.brs"; exit 1; }
+	@echo "built $(ZIP)"
+
+fmt: node_modules
+	$(BIN)/bsfmt $(BRS_GLOBS) --write
+
+fmt-check: node_modules
+	$(BIN)/bsfmt $(BRS_GLOBS) --check
+
+# bslint only; any warning fails the gate.
+lint: node_modules
+	@mkdir -p dist
+	@$(BIN)/bslint --project bsconfig.json > dist/bslint.log 2>&1; ec=$$?; \
+	  grep -E " - (error|warning) " dist/bslint.log; \
+	  if [ $$ec -ne 0 ] || grep -qE " - (error|warning) " dist/bslint.log; then echo "lint FAILED"; exit 1; fi; \
+	  echo "lint ok"
+
+# bsc validate (types, scopes, missing functions); any warning fails the gate.
+typecheck: node_modules
+	@mkdir -p dist
+	@$(BIN)/bsc --project bsconfig.json > dist/bsc.log 2>&1; ec=$$?; \
+	  grep -E " - (error|warning) " dist/bsc.log; \
+	  if [ $$ec -ne 0 ] || grep -qE " - (error|warning) " dist/bsc.log; then echo "typecheck FAILED"; exit 1; fi; \
+	  echo "typecheck ok"
+
+# Unit tests under brs-cli land with P0.4 (plans/phase-0-foundation.md).
+test:
+	@echo "test: no unit tests yet (runner lands in P0.4)"
+
+# Fast gate, ordered cheapest first. No CI exists, so checkall-ci is the same gate.
+checkall: fmt-check lint typecheck test build
+	@echo "checkall OK"
+
+checkall-ci: checkall
+
+# Exit the screensaver on the TV before deploying: deploying under a running
+# instance wedges it until a device reboot.
 # ROKU_HOST=<ip> ROKU_PASSWORD=<dev password> make deploy
 deploy: build
 	curl -sS -f --digest --user rokudev:$(ROKU_PASSWORD) -F "mysubmit=1" -F "archive=@$(ZIP)" "http://$(ROKU_HOST)/plugin_install"
-
-checkall: build
-	unzip -l $(ZIP) | grep -E "manifest|main\.brs|FishtankTest\.xml|FishtankTest\.brs|fish_|pebbles|icon_|splash_" | sort
 
 art:
 	python3 tools/make_art.py

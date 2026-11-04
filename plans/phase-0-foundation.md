@@ -2,14 +2,14 @@
 
 PRD: `PRD.md` § P0. Goal: one gate, one preview, measured device limits, and an approved art style before any feature work.
 
-**Pinned versions** (`npm view`, 2026-11-04): `brighterscript@0.73.8`, `@rokucommunity/bslint@0.8.47`, `brs-engine@2.6.2`, `brs-scenegraph@0.6.2` (peer `brs-engine ^2.6.2`), `brs-node@2.6.2` (`brs-cli`), `vite@8.3.5`, `@playwright/test@1.64.1`, `roku-deploy@3.18.4` (optional). Package manager: bun. Preview port: **8134** (record it in `~/.claude/used_ports.md` in P0.1).
+**Pinned versions** (`npm view`, 2026-11-04): `brighterscript@0.73.8`, `@rokucommunity/bslint@0.8.47`, `brs-engine@2.6.2`, `brs-scenegraph@0.6.2` (peer `brs-engine ^2.6.2`), `brs-node@2.6.2` (`brs-cli`), `vite@8.3.5`, `@playwright/test@1.64.1`, `roku-deploy@3.18.4` (optional). Package manager: bun. Preview port: **8138** (record it in `~/.claude/used_ports.md` in P0.1).
 
 **Device rule for every deploy step in every phase:** exit the screensaver on the TV first. Deploying under a running instance wedges it until a reboot.
 
 ## Tasks
 
 ### P0.1: Toolchain and Makefile gate skeleton
-Add `package.json` (pinned versions above), `bsconfig.json` for bsc + bslint, and Makefile targets `build`, `lint`, `typecheck` (bsc validate), `test`, `checkall`, `checkall-ci` (alias), `dev`/`dev-start`/`dev-restart`/`dev-stop`, `deploy`, `art`. Add `CLAUDE.md` with the gate, the deploy-exit rule and the device table. Reserve port 8134.
+Add `package.json` (pinned versions above), `bsconfig.json` for bsc + bslint, and Makefile targets `build`, `lint`, `typecheck` (bsc validate), `test`, `checkall`, `checkall-ci` (alias), `fmt`/`fmt-check`, `deploy`, `art` (the `dev`/`dev-start`/`dev-restart`/`dev-stop` targets land with the preview in P0.3). Add `CLAUDE.md` with the gate, the deploy-exit rule and the device table. Reserve port 8138.
 - Verify: `make checkall` runs and is green on the existing test channel. `bsc` reports 0 errors.
 - Depends on: none.
 
@@ -19,7 +19,7 @@ Add `package.json` (pinned versions above), `bsconfig.json` for bsc + bslint, an
 - Depends on: P0.1.
 
 ### P0.3: Browser preview harness
-`preview/` Vite app on 8134 that loads the channel into brs-engine + brs-scenegraph. `source/preview.brs` holds a `Main(args)` that builds the same scene as `RunScreenSaver`. Confirm how launch params reach `Main`, and implement `?seed=`, `?time=HH:MM`, `?speed=Nx` and `?freeze=t` either directly or via `pkg:/config/preview.json` injection (PRD Q2).
+`preview/` Vite app on 8138 that loads the channel into brs-engine + brs-scenegraph. `source/preview.brs` holds a `Main(args)` that builds the same scene as `RunScreenSaver`. Confirm how launch params reach `Main`, and implement `?seed=`, `?time=HH:MM`, `?speed=Nx` and `?freeze=t` either directly or via `pkg:/config/preview.json` injection (PRD Q2).
 - Verify: `make dev`, then the agentchrome screenshot shows the test-channel fish swimming. `?freeze=10` gives the identical frame on two reloads.
 - Depends on: P0.1.
 

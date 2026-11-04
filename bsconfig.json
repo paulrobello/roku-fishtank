@@ -1,10 +1,16 @@
 {
   "rootDir": ".",
-  "outDir": "dist",
+  "stagingDir": "dist/staging",
   "files": [
     "manifest",
     "source/**/*",
     "components/**/*",
-    "images/**/*"
-  ]
+    "images/**/*",
+    "!source/preview.brs"
+  ],
+  "createPackage": false,
+  "retainStagingDir": false,
+  "plugins": ["@rokucommunity/bslint"],
+  "diagnosticFilters": [],
+  "lintConfig": "bslint.json"
 }
