@@ -88,5 +88,29 @@
     "gapMax": 0.5,
     "opacity": 0.85,
     "keyCount": 13
+  },
+  "seaweed": {
+    "_notes": "P1.4 segmented seaweed (components/Seaweed): one Seaweed component per stalk, placed in its layer with its base at (x, y). segmentUris run base to tip (tools/art/seaweed.py); each Poster is segmentSize and the next segment starts segmentStep px higher, so joints overlap by segmentSize[1] - segmentStep px. Segment k swings amplitudeDeg * (0.5 + 0.5 * k / (n - 1)) degrees with a lag of k * phaseStepDeg, so the bend travels up the stalk over period seconds. scale must stay positive (fidelity F4). tint is a 0xRRGGBBAA multiply.",
+    "segmentUris": [
+      "pkg:/images/decor/seaweed_seg0.png",
+      "pkg:/images/decor/seaweed_seg1.png",
+      "pkg:/images/decor/seaweed_seg2.png",
+      "pkg:/images/decor/seaweed_seg3.png",
+      "pkg:/images/decor/seaweed_seg4.png",
+      "pkg:/images/decor/seaweed_seg5.png",
+      "pkg:/images/decor/seaweed_seg6.png"
+    ],
+    "segmentSize": [64, 64],
+    "segmentStep": 56,
+    "period": 5.0,
+    "amplitudeDeg": 4.0,
+    "phaseStepDeg": 40,
+    "keyCount": 17,
+    "stalks": [
+      { "id": "weedA", "layer": "frontCoral", "x": 1004, "y": 1030, "scale": 1.0, "phaseDeg": 0, "tint": "0x88A8A0FF" },
+      { "id": "weedB", "layer": "frontCoral", "x": 1034, "y": 1040, "scale": 0.8, "phaseDeg": 70, "period": 5.6, "tint": "0x7898A0FF" },
+      { "id": "weedC", "layer": "frontCoral", "x": 1700, "y": 1030, "scale": 1.1, "phaseDeg": 150, "tint": "0x88A8A0FF" },
+      { "id": "weedD", "layer": "frontCoral", "x": 1732, "y": 1045, "scale": 0.85, "phaseDeg": 230, "period": 4.6, "tint": "0x7898A0FF" }
+    ]
   }
 }

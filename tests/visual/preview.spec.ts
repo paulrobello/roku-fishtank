@@ -3,8 +3,9 @@ import { expect, test } from "@playwright/test";
 type PreviewWindow = Window & { __preview?: { status: string; log: string[] } };
 
 // ?freeze=3 snaps the camera drift loop to T=3 s (a few px off centre at speed 1), so the frame
-// is the layered tank (backdrop + decor from config/scene.json) at that drift offset, and the
-// bubble column posed from its schedule at T=3 (fixed seed 1 under freeze).
+// is the layered tank (backdrop + decor from config/scene.json) at that drift offset, the bubble
+// column posed from its schedule at T=3 (fixed seed 1 under freeze) and the seaweed sway snapped
+// to T=3 by the preview shim.
 test("frozen Reef Tank frame matches the baseline", async ({ page }) => {
   const renderer = await page.evaluate(() => {
     const gl = document.createElement("canvas").getContext("webgl");

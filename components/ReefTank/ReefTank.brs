@@ -81,14 +81,21 @@ sub reefTankApplyDrift()
     end if
 end sub
 
-' P1.3 bubbles: own component, configured by the scene.json "bubbles" block and
-' placed in its layer.
+' P1.3 bubbles and P1.4 seaweed: own components, configured by the scene.json
+' "bubbles" and "seaweed" blocks and placed in their layers.
 sub reefTankAddAmbient(camera as object)
     cfg = m.sceneCfg
     if cfg.bubbles <> invalid then
         bubbles = camera.findNode("bubbles").createChild("Bubbles")
         bubbles.id = "bubbleColumn"
         bubbles.config = cfg.bubbles
+    end if
+    if cfg.seaweed <> invalid then
+        for each stalk in cfg.seaweed.stalks
+            weed = camera.findNode(stalk.layer).createChild("Seaweed")
+            weed.id = stalk.id
+            weed.config = { art: cfg.seaweed, stalk: stalk }
+        end for
     end if
 end sub
 

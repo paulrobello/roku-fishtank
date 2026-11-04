@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+    Segmented seaweed stalk (P1.4). Set config to { art, stalk } from the scene.json
+    "seaweed" block (art = the block, stalk = one entry of its stalks). The stalk is a chain
+    of nested Groups: segment k's Group sits at the top of segment k - 1 (segmentStep px up, so
+    neighbouring segments overlap by size - segmentStep px), carries a Poster drawn upward from its
+    origin, and rotates about that origin (scaleRotateCenter [0, 0], the segment's base).
+    One repeating linear Animation holds a FloatFieldInterpolator per segment; segment k lags
+    k * phaseStepDeg behind the base, so the bend travels up the stalk. Rotation only: no
+    scale is ever negative (fidelity F4). Under ?freeze the preview shim snaps the Animation.
+-->
+<component name="Seaweed" extends="Group">
+    <interface>
+        <field id="config" type="assocarray" onChange="onConfig" />
+    </interface>
+    <script type="text/brightscript" uri="Seaweed.brs" />
+    <script type="text/brightscript" uri="pkg:/components/lib/scenecfg.brs" />
+</component>
