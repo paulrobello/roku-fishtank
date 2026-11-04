@@ -1,0 +1,20 @@
+{
+  "rootDir": ".",
+  "stagingDir": "dist/check-staging",
+  "files": [
+    "manifest",
+    "components/**/*",
+    "images/**/*",
+    "config/**/*",
+    "!components/Fidelity/**/*",
+    "!images/fidelity/**/*",
+    { "src": "tools/devicecheck/source/main.brs", "dest": "source/main.brs" },
+    { "src": "tools/devicecheck/components/**/*", "dest": "components/DeviceCheck" },
+    { "src": "dist/devicecheck.json", "dest": "config/devicecheck.json" }
+  ],
+  "createPackage": false,
+  "retainStagingDir": false,
+  "plugins": ["@rokucommunity/bslint"],
+  "diagnosticFilters": [{ "src": "components/lib/**/*.brs", "codes": [1013] }],
+  "lintConfig": "bslint.json"
+}

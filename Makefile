@@ -11,7 +11,7 @@ export ROKU_HOST ROKU_PASSWORD
 
 .PHONY: install build fmt fmt-check lint typecheck test checkall checkall-ci deploy art clean
 .PHONY: dev dev-start dev-stop dev-restart test-visual
-.PHONY: probe probe-build
+.PHONY: probe probe-build check-build device-check
 
 install: node_modules
 
@@ -86,6 +86,21 @@ probe-build: node_modules
 probe: probe-build
 	tools/perf/run_probe.sh docs/perf/raw
 
+# Device check: any channel scene as the screensaver plus an FpsMeter on the console.
+# make device-check SCENE=BrainDemoScene SECONDS=90 -> docs/perf/raw/check-<scene>-<stamp>-*
+SCENE ?= ReefTank
+SECONDS ?= 90
+check-build: node_modules
+	@mkdir -p dist
+	@rm -f dist/check.zip
+	@printf '{"scene": "%s"}\n' "$(SCENE)" > dist/devicecheck.json
+	@$(BIN)/bsc --project bsconfig.check.json --create-package --out-file dist/check.zip > dist/bsc-check.log 2>&1; ec=$$?; \
+	  if [ $$ec -ne 0 ] || grep -qE " - (error|warning) " dist/bsc-check.log; then cat dist/bsc-check.log; echo "check-build FAILED"; exit 1; fi
+	@echo "built dist/check.zip ($(SCENE))"
+
+device-check: check-build
+	bash tools/devicecheck/run.sh dist/check.zip docs/perf/raw/check-$(SCENE)-$$(date +%Y%m%d-%H%M%S) $(SECONDS)
+
 # Rig pipeline: approved cutouts in assets/source/ -> images/fish, images/decor,
 # config/species/*.rig.json and docs/art/rig-check-*.png (byte-reproducible).
 art:
@@ -141,7 +156,7 @@ fidelity-build: node_modules
 # console lines and tries a device screenshot into docs/fidelity/. Needs ROKU_HOST
 # and ROKU_PASSWORD (env or .env). Re-deploy the channel with `make deploy` after.
 fidelity-device: fidelity-build
-	ROKU_HOST="$(ROKU_HOST)" ROKU_PASSWORD="$(ROKU_PASSWORD)" bash tools/fidelity/run_device.sh docs/fidelity
+	@ROKU_HOST="$(ROKU_HOST)" ROKU_PASSWORD="$(ROKU_PASSWORD)" bash tools/fidelity/run_device.sh docs/fidelity
 
 # Simulator capture: ?scene=FidelityScene in the preview -> docs/fidelity/simulator.png
 # and docs/fidelity/simulator-console.txt, then PIL measurements. Not part of checkall.

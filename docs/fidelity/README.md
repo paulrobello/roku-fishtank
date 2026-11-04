@@ -11,7 +11,7 @@
 | `simulator.png` | Playwright capture of `?scene=FidelityScene` (brs-engine 2.6.2 + brs-scenegraph 0.6.2), taken by `make fidelity-sim` |
 | `simulator-console.txt` | the scene's `FIDELITY` read-back lines in the simulator |
 | `simulator-measure.md` | `measure.py` output for `simulator.png` |
-| `device.jpg` / `device-photo.jpg`, `device-console.txt` | written by `make fidelity-device` (or a TV photo), still to do |
+| `device.jpg`, `device-console.txt`, `device-measure.md` | `make fidelity-device` on the Primary 4850X (OS 15.3.4), 2026-11-04: `plugin_inspect` screenshot, console read-back, `measure.py` output |
 
 ## Cell layout
 
@@ -65,16 +65,18 @@ Positions are measured centroids at nominal t = 4 s from `simulator-measure.md`.
 
 | # | Primitive | Simulator measured | Simulator verdict | Device measured | Device verdict |
 |---|---|---|---|---|---|
-| 1 | blendColor multiply | 0x00FF00 and 0x804000, exact | PASS | | |
-| 2 | stacked opacity | 0x404040 and 0x404040, exact | PASS | | |
-| 3 | rotation + scale about center | red (871.0, 268.0), blue (973.0, 166.0), green (1032.5, 327.5): all 34.5 px (1.80% W) off, the same shift (+13, -32) | PASS (marginal, simulator bug, see F1) | | |
-| 4 | negative scale.x | red (1480, 252), blue (1384, 252), exact | PASS | | |
-| 5 | nested rotation | within 0.2 px at every joint | PASS | | |
-| 6 | Vector2D + inOutCubic / linear | read back at 4011 ms: io fractions 0.06235/0.49876/0.93703 vs inOutCubic(linear partner) 0.06235/0.49876/0.93704; x equals the keyValue lerp exactly; nominal-time error 0.0 to 1.5 px | PASS | | |
-| 7 | ColorFieldInterpolator | 0xFF007F / 0xFF00FE / 0x8000FF at f 0.250/0.500/0.749, matching HSV (diff 1 or less) | PASS | | |
-| probe | bare interpolator | x 1512: brs-scenegraph ignores a direct fraction write | info | | |
+| 1 | blendColor multiply | 0x00FF00 and 0x804000, exact | PASS | 0x00FF01 and 0x804000 | PASS |
+| 2 | stacked opacity | 0x404040 and 0x404040, exact | PASS | 0x3F3F3F and 0x3F3F3F | PASS |
+| 3 | rotation + scale about center | red (871.0, 268.0), blue (973.0, 166.0), green (1032.5, 327.5): all 34.5 px (1.80% W) off, the same shift (+13, -32) | PASS (marginal, simulator bug, see F1) | red (858.5, 300.0), blue (960.0, 198.2), green (1019.3, 359.4), within 0.3 px | PASS (exact, so F1 is a simulator-only bug) |
+| 4 | negative scale.x | red (1480, 252), blue (1384, 252), exact | PASS | red (1384, 252), blue (1480, 252): drawn unmirrored, 96 px (5% W) off | **FAIL (F4)** |
+| 5 | nested rotation | within 0.2 px at every joint | PASS | within 0.4 px at every joint | PASS |
+| 6 | Vector2D + inOutCubic / linear | read back at 4011 ms: io fractions 0.06235/0.49876/0.93703 vs inOutCubic(linear partner) 0.06235/0.49876/0.93704; x equals the keyValue lerp exactly; nominal-time error 0.0 to 1.5 px | PASS | read back at 4012 ms: io fractions 0.06288/0.50299/0.93865 equal inOutCubic of their linear partners; x equals the keyValue lerp; nominal-time error 0.0 to 3.0 px | PASS |
+| 7 | ColorFieldInterpolator | 0xFF007F / 0xFF00FE / 0x8000FF at f 0.250/0.500/0.749, matching HSV (diff 1 or less) | PASS | 0xFEFF01 / 0x00FF01 / 0x00FEFF at f 0.251/0.501/0.752: yellow, green, cyan | **FAIL (F5)** |
+| probe | bare interpolator | x 1512: brs-scenegraph ignores a direct fraction write | info | x 1662: a direct fraction write drives the target | info (F3 answered) |
 
 **Simulator overall: every primitive renders and every probe is within the pass rule.** Cell 3 passes only marginally because of F1.
+
+**Device overall (4850X, OS 15.3.4): every primitive renders, and cells 1, 2, 3, 5 and 6 pass within 3 px. Cells 4 and 7 fail (F4, F5)**, so per the pass rule the fallback decision is Paul's.
 
 ## Findings
 
@@ -82,9 +84,13 @@ Positions are measured centroids at nominal t = 4 s from `simulator-measure.md`.
 - **F2 (fixed 2026-11-04): the `?freeze` shim interpolated colors in RGB** (`previewApplyInterpolator` in `source/preview.brs`), but the Roku `ColorFieldInterpolator` doc and brs-scenegraph both use HSV. The shim now calls `previewLerpColorHsv` (`source/preview_color.brs`), a line-for-line port of brs-scenegraph's `interpolateColor`, unit-tested against values from brs-scenegraph's own code. `freeze-hsv-swatches.png` shows `?freeze=2` before (RGB: 0xDF001F / 0xBF003F / 0x9F005F) and after (HSV: 0xFF0040 / 0xFF0080 / 0xFF00BF).
 - **F3: direct `fraction` writes are a no-op in brs-scenegraph.** Whether they drive the target on OS 15.3.4 is unknown until the device run. The Roku doc lists `fraction` as writable but only describes the Animation setting it.
 
+- **F3 answered:** on the device a direct `fraction` write moves the target (probe x 1662); brs-scenegraph ignores it (x 1512). Code that relies on either behaviour diverges between preview and TV.
+- **F4: a Poster with `scale="[-1, 1]"` set in XML is not mirrored on the device.** It draws exactly like the reference. The simulator mirrors it. Fish facing uses a negative `scale.x` on a Group set from BrightScript (`components/Fish/Fish.brs`), so `make device-check SCENE=BrainDemoScene` decides whether that path mirrors. If it does not, the fallback is pre-mirrored left-facing art per species (fish bitmaps are small, see `docs/perf.md`).
+- **F5: the device's `ColorFieldInterpolator` lerps hue the long way.** Red to blue passes yellow (f 0.25), green (0.5) and cyan (0.75), so hue goes 0 to 240 degrees with no shortest-path wrap. brs-scenegraph wraps to 360 and passes magenta. Colour tweens must use keys whose hues are close, or add intermediate keys so the path is the same either way; the preview's HSV lerp (brs-sg and `source/preview_color.brs`) should be patched to the device rule.
+
 ## Device run
 
-Done by Paul, since agents do not contact the TV:
+`make fidelity-device` deploys and waits up to `SCREENSAVER_WAIT` seconds (default 600) for the screensaver, which someone starts on the TV with Settings > Theme > Screensavers > dev > Preview (a sideloaded screensaver does not start on install):
 
 1. Put `ROKU_HOST=192.168.1.10` and `ROKU_PASSWORD=<dev password>` in the repo's gitignored `.env`.
 2. `make fidelity-device`. It builds `dist/fidelity.zip`, exits any running screensaver (`press k` on 8080), sideloads it with digest auth, captures 10 s of console 8087 into `docs/fidelity/device-console.txt`, and tries a `plugin_inspect` screenshot into `docs/fidelity/device.jpg`.

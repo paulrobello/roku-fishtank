@@ -1,0 +1,45 @@
+FIDELITY scene started
+FIDELITY_PAUSED elapsed_ms= 4012 pause_s= 4 
+FIDELITY lane=io16 frac= 0.0628758  x= 275.451  lerp_x= 275.451  exp_frac= 0.0628758  exp_x= 275.451 
+FIDELITY lane=io8 frac= 0.502994  x= 803.593  lerp_x= 803.593  exp_frac= 0.502994  exp_x= 803.593 
+FIDELITY lane=io5 frac= 0.938653  x= 1326.38  lerp_x= 1326.38  exp_frac= 0.938653  exp_x= 1326.38 
+FIDELITY lane=li16 frac= 0.2505  x= 500.6  lerp_x= 500.6  exp_frac= 0.2505  exp_x= 500.6 
+FIDELITY lane=li8 frac= 0.501  x= 801.2  lerp_x= 801.2  exp_frac= 0.501  exp_x= 801.2 
+FIDELITY lane=li5 frac= 0.751547  x= 1101.86  lerp_x= 1101.86  exp_frac= 0.751547  exp_x= 1101.86 
+FIDELITY swatch=c16 frac= 0.2505  color=0xFEFF00FF exp_hsv=0xFF0080FF
+FIDELITY swatch=c8 frac= 0.501  color=0x00FF01FF exp_hsv=0xFE00FFFF
+FIDELITY swatch=c5 frac= 0.751547  color=0x00FDFFFF exp_hsv=0x7F00FFFF
+FIDELITY fraction_probe x= 1650  (1650 = direct fraction drives, 1500 = ignored)
+FIDELITY_PAUSED elapsed_ms= 4012 pause_s= 4 
+FIDELITY lane=io16 frac= 0.0628758  x= 275.451  lerp_x= 275.451  exp_frac= 0.0628758  exp_x= 275.451 
+FIDELITY lane=io8 frac= 0.502994  x= 803.593  lerp_x= 803.593  exp_frac= 0.502994  exp_x= 803.593 
+FIDELITY lane=io5 frac= 0.938653  x= 1326.38  lerp_x= 1326.38  exp_frac= 0.938653  exp_x= 1326.38 
+FIDELITY lane=li16 frac= 0.2505  x= 500.6  lerp_x= 500.6  exp_frac= 0.2505  exp_x= 500.6 
+FIDELITY lane=li8 frac= 0.501  x= 801.2  lerp_x= 801.2  exp_frac= 0.501  exp_x= 801.2 
+FIDELITY lane=li5 frac= 0.751547  x= 1101.86  lerp_x= 1101.86  exp_frac= 0.751547  exp_x= 1101.86 
+FIDELITY swatch=c16 frac= 0.2505  color=0xFEFF00FF exp_hsv=0xFF0080FF
+FIDELITY swatch=c8 frac= 0.501  color=0x00FF01FF exp_hsv=0xFE00FFFF
+FIDELITY swatch=c5 frac= 0.751547  color=0x00FDFFFF exp_hsv=0x7F00FFFF
+FIDELITY fraction_probe x= 1650  (1650 = direct fraction drives, 1500 = ignored)
+FIDELITY_PAUSED elapsed_ms= 4012 pause_s= 4 
+FIDELITY lane=io16 frac= 0.0628758  x= 275.451  lerp_x= 275.451  exp_frac= 0.0628758  exp_x= 275.451 
+FIDELITY lane=io8 frac= 0.502994  x= 803.593  lerp_x= 803.593  exp_frac= 0.502994  exp_x= 803.593 
+FIDELITY lane=io5 frac= 0.938653  x= 1326.38  lerp_x= 1326.38  exp_frac= 0.938653  exp_x= 1326.38 
+FIDELITY lane=li16 frac= 0.2505  x= 500.6  lerp_x= 500.6  exp_frac= 0.2505  exp_x= 500.6 
+FIDELITY lane=li8 frac= 0.501  x= 801.2  lerp_x= 801.2  exp_frac= 0.501  exp_x= 801.2 
+FIDELITY lane=li5 frac= 0.751547  x= 1101.86  lerp_x= 1101.86  exp_frac= 0.751547  exp_x= 1101.86 
+FIDELITY swatch=c16 frac= 0.2505  color=0xFEFF00FF exp_hsv=0xFF0080FF
+FIDELITY swatch=c8 frac= 0.501  color=0x00FF01FF exp_hsv=0xFE00FFFF
+FIDELITY swatch=c5 frac= 0.751547  color=0x00FDFFFF exp_hsv=0x7F00FFFF
+FIDELITY fraction_probe x= 1650  (1650 = direct fraction drives, 1500 = ignored)
+FIDELITY_PAUSED elapsed_ms= 4012 pause_s= 4 
+FIDELITY lane=io16 frac= 0.0628758  x= 275.451  lerp_x= 275.451  exp_frac= 0.0628758  exp_x= 275.451 
+FIDELITY lane=io8 frac= 0.502994  x= 803.593  lerp_x= 803.593  exp_frac= 0.502994  exp_x= 803.593 
+FIDELITY lane=io5 frac= 0.938653  x= 1326.38  lerp_x= 1326.38  exp_frac= 0.938653  exp_x= 1326.38 
+FIDELITY lane=li16 frac= 0.2505  x= 500.6  lerp_x= 500.6  exp_frac= 0.2505  exp_x= 500.6 
+FIDELITY lane=li8 frac= 0.501  x= 801.2  lerp_x= 801.2  exp_frac= 0.501  exp_x= 801.2 
+FIDELITY lane=li5 frac= 0.751547  x= 1101.86  lerp_x= 1101.86  exp_frac= 0.751547  exp_x= 1101.86 
+FIDELITY swatch=c16 frac= 0.2505  color=0xFEFF00FF exp_hsv=0xFF0080FF
+FIDELITY swatch=c8 frac= 0.501  color=0x00FF01FF exp_hsv=0xFE00FFFF
+FIDELITY swatch=c5 frac= 0.751547  color=0x00FDFFFF exp_hsv=0x7F00FFFF
+FIDELITY fraction_probe x= 1650  (1650 = direct fraction drives, 1500 = ignored)

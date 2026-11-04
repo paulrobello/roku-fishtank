@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Counts rendered frames: an interpolator changes ticker.opacity every frame and
+     each observer callback counts one. Prints "FPS n" once a second. -->
+<component name="FpsMeter" extends="Group">
+    <script type="text/brightscript" uri="FpsMeter.brs" />
+    <children>
+        <Rectangle id="ticker" width="1" height="1" color="0x00000000" opacity="0.02" />
+    </children>
+</component>
