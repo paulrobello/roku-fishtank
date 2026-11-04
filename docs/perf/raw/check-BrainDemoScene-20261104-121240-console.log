@@ -1,0 +1,149 @@
+BRAIN seed= 1795913998 fish= 25 speed= 1 
+BRAIN nodes=463 t=0
+DEVICECHECK scene=BrainDemoScene
+BRAIN dart fish=8 t=0.75 gap=0.4 from=787,824 to=903,649
+FPS  64
+BRAIN dart fish=11 t=1.125 gap=0.6 from=1717,760 to=1531,662
+BRAIN dart fish=21 t=1.125 gap=1.8 from=311,336 to=478,463
+BRAIN dart fish=7 t=1.375 gap=0.3 from=1648,847 to=1449,881
+FPS  60
+BRAIN dart fish=13 t=2.5 gap=1.5 from=562,829 to=772,826
+BRAIN dart fish=15 t=3 gap=0.6 from=863,817 to=722,922
+FPS  60
+BRAIN dart fish=17 t=3.375 gap=0.4 from=562,259 to=718,400
+FPS  60
+BRAIN dart fish=8 t=4.375 gap=0.3 from=1166,435 to=1313,586
+FPS  60
+FPS  60
+FPS  59
+FPS  60
+BRAIN dart fish=20 t=8.75 gap=0.5 from=445,358 to=388,165
+FPS  60
+FPS  60
+FPS  60
+BRAIN dart fish=3 t=11.5 gap=0.4 from=1394,519 to=1506,692
+BRAIN dart fish=4 t=11.5 gap=0.7 from=327,280 to=284,486
+FPS  60
+FPS  60
+BRAIN dart fish=1 t=13.75 gap=2.1 from=1161,305 to=1369,333
+FPS  60
+BRAIN dart fish=17 t=14.125 gap=0.6 from=761,861 to=568,900
+FPS  60
+BRAIN dart fish=12 t=15.375 gap=0.6 from=566,406 to=728,540
+FPS  60
+FPS  60
+FPS  60
+BRAIN dart fish=9 t=18.5 gap=0.8 from=1361,340 to=1559,273
+BRAIN dart fish=16 t=19 gap=1.1 from=357,759 to=494,911
+FPS  60
+BRAIN dart fish=13 t=19.125 gap=0.4 from=1582,787 to=1378,836
+FPS  60
+BRAIN dart fish=1 t=20.25 gap=0.9 from=1737,312 to=1660,508
+FPS  60
+BRAIN dart fish=24 t=21.125 gap=1 from=1710,789 to=1687,937
+BRAIN dart fish=2 t=21.875 gap=1.2 from=311,513 to=211,328
+FPS  60
+FPS  60
+BRAIN dart fish=24 t=24 gap=0.1 from=1581,757 to=1461,921
+FPS  59
+BRAIN dart fish=12 t=24.375 gap=1.5 from=453,865 to=290,734
+FPS  60
+BRAIN dart fish=13 t=25.125 gap=0.5 from=808,704 to=645,700
+BRAIN dart fish=17 t=25.125 gap=1 from=257,672 to=233,463
+FPS  60
+FPS  60
+FPS  60
+FPS  60
+FPS  60
+BRAIN dart fish=17 t=30.375 gap=0.1 from=243,383 to=149,397
+FPS  60
+BRAIN dart fish=1 t=31.875 gap=0.2 from=961,513 to=1170,499
+FPS  60
+FPS  60
+FPS  60
+FPS  60
+FPS  60
+BRAIN dart fish=15 t=36.375 gap=0.4 from=267,242 to=201,440
+BRAIN dart fish=6 t=36.625 gap=0.4 from=1624,661 to=1773,799
+FPS  60
+FPS  60
+BRAIN dart fish=24 t=38.375 gap=0.9 from=413,805 to=609,873
+BRAIN dart fish=18 t=38.75 gap=1.3 from=465,428 to=266,496
+FPS  60
+BRAIN dart fish=18 t=39.5 gap=0.6 from=240,505 to=161,691
+FPS  59
+BRAIN dart fish=20 t=41 gap=0.5 from=907,276 to=1105,345
+FPS  60
+BRAIN dart fish=18 t=41.75 gap=0.4 from=277,829 to=265,921
+FPS  60
+BRAIN dart fish=7 t=42.125 gap=0.5 from=784,843 to=592,897
+BRAIN dart fish=6 t=42.25 gap=0.8 from=1256,835 to=1137,823
+BRAIN dart fish=23 t=42.75 gap=0.3 from=1541,746 to=1496,745
+FPS  60
+BRAIN dart fish=11 t=43.125 gap=0.2 from=666,616 to=636,823
+FPS  60
+BRAIN dart fish=11 t=44.75 gap=0.4 from=607,871 to=422,773
+FPS  60
+BRAIN dart fish=1 t=45.625 gap=0.7 from=1735,775 to=1730,923
+FPS  60
+BRAIN dart fish=8 t=46.25 gap=0.2 from=1740,811 to=1577,906
+BRAIN dart fish=14 t=46.375 gap=0.4 from=728,295 to=548,404
+BRAIN dart fish=16 t=46.875 gap=0.7 from=1725,388 to=1755,402
+FPS  60
+BRAIN dart fish=20 t=47.75 gap=1.3 from=1724,581 to=1753,636
+BRAIN dart fish=5 t=47.875 gap=0.3 from=883,720 to=1048,850
+FPS  60
+BRAIN dart fish=12 t=49 gap=0.6 from=1262,309 to=1074,220
+FPS  60
+BRAIN dart fish=0 t=49.125 gap=0.2 from=848,847 to=1052,794
+FPS  60
+FPS  60
+BRAIN dart fish=15 t=51.75 gap=1.3 from=1334,842 to=1466,910
+FPS  60
+FPS  60
+FPS  60
+FPS  60
+BRAIN dart fish=13 t=55.125 gap=2.2 from=827,328 to=666,200
+BRAIN dart fish=19 t=56 gap=0.3 from=965,300 to=786,202
+FPS  60
+BRAIN dart fish=0 t=56.5 gap=0.1 from=1733,838 to=1658,926
+BRAIN dart fish=22 t=57 gap=0.5 from=1520,504 to=1719,570
+FPS  59
+BRAIN dart fish=21 t=57.125 gap=1.7 from=265,785 to=471,825
+BRAIN dart fish=15 t=57.75 gap=0.5 from=1647,778 to=1499,630
+FPS  60
+BRAIN dart fish=19 t=59 gap=0.3 from=581,343 to=376,295
+FPS  60
+BRAIN dart fish=2 t=59.25 gap=0.6 from=259,780 to=125,860
+BRAIN dart fish=18 t=59.25 gap=0.4 from=222,498 to=310,654
+BRAIN dart fish=0 t=59.5 gap=0.3 from=1508,749 to=1361,851
+BRAIN nodes=468 t=60
+FPS  60
+FPS  60
+BRAIN dart fish=20 t=61.5 gap=0.5 from=1499,842 to=1522,636
+BRAIN dart fish=24 t=62 gap=0.2 from=1665,741 to=1595,930
+FPS  60
+BRAIN dart fish=9 t=62.625 gap=1.5 from=1203,268 to=1105,188
+FPS  60
+FPS  60
+FPS  60
+FPS  60
+FPS  60
+FPS  60
+FPS  60
+FPS  60
+BRAIN dart fish=15 t=70.25 gap=1.1 from=422,435 to=308,560
+FPS  60
+BRAIN dart fish=12 t=71.125 gap=0.3 from=1471,292 to=1653,248
+FPS  60
+FPS  60
+BRAIN dart fish=19 t=73.125 gap=1.6 from=245,320 to=455,333
+FPS  59
+BRAIN dart fish=1 t=74.5 gap=0.4 from=595,387 to=389,343
+FPS  60
+FPS  60
+FPS  60
+FPS  60
+BRAIN dart fish=1 t=78.375 gap=1.1 from=241,311 to=381,467
+FPS  60
+FPS  60

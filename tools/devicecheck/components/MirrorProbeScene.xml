@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Device check for fidelity F4: which ways of setting a negative scale.x mirror a
+     bitmap on the device. Every cell shows the tang body (art faces right), so a
+     mirrored cell has the eye on the left. Built only into dist/check.zip. -->
+<component name="MirrorProbeScene" extends="Scene">
+    <script type="text/brightscript" uri="MirrorProbeScene.brs" />
+    <children>
+        <Rectangle width="1920" height="1080" color="0x203040FF" />
+    </children>
+</component>
