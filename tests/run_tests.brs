@@ -16,6 +16,7 @@ function testSuites() as object
         solarTestSuite()
         daynightTestSuite()
         brainTestSuite()
+        scenecfgTestSuite()
     ]
 end function
 

@@ -1,23 +1,25 @@
 # roku-fishtank
 
-A custom Roku **screensaver** channel — tropical fish over a pebble bottom, built to
-replace Roku's "Aquatic Life" screensaver (removed December 1, 2026). See
+**Reef Tank**, a custom Roku **screensaver** channel: a layered tropical reef tank built
+to replace Roku's "Aquatic Life" screensaver (removed December 1, 2026). See
 `RESEARCH.md` for the full feasibility research.
 
-**Current state: test channel verified on device (2026-11-04).** The minimal
-channel answered the research's open question — a sideloaded dev screensaver
-appears in Settings > Theme > Screensavers (as "dev") and runs. It draws three
-placeholder fish swimming across a full-width pebble bottom. Next up: **Reef
-Tank**, the real screensaver. See `PRD.md` for scope and phases and `plans/` for
-the per-phase task plans.
+**Current state: Reef Tank channel shell (P1.1).** The channel scene is
+`components/ReefTank/`. It reads `config/scene.json` and builds the PRD layer stack as
+named Groups inside a `camera` Group, with the reef backdrop and one coral placed; fish,
+drift, bubbles and seaweed land in later P1/P2 tasks. The earlier test channel proved a
+sideloaded dev screensaver appears in Settings > Theme > Screensavers and runs. See
+`PRD.md` for scope and phases and `plans/` for the per-phase task plans.
 
 ## Layout
 
 ```
 manifest                 screensaver_title (no channel title — see RESEARCH.md §1)
 source/main.brs          RunScreenSaver() entry point
-components/FishtankTest* Scene: water rect + pebbles + N fish, animation built in init()
-images/                  generated placeholder art (python3 tools/make_art.py)
+components/ReefTank/     channel scene: camera Group + layer Groups built from config/scene.json
+components/lib/          pure logic (PRNG, steering, brain, solar, day/night, scene config)
+config/scene.json        location, layer stack (id, PRD name, parallax), lanes, decor placements
+images/                  runtime art: decor/, fish/, icons and splashes (make key-art)
 bsconfig.json            RokuCommunity BrightScript VS Code extension config
 source/preview.brs       Main(args) shim for the browser preview (excluded from the device zip)
 preview/                 Vite page that runs the channel in brs-engine + brs-scenegraph
@@ -41,7 +43,7 @@ brs-engine with the SceneGraph extension on a 1920x1080 canvas scaled to the win
 
   | Param | Example | Global field | Status |
   |---|---|---|---|
-  | `scene` | `?scene=FidelityScene` | scene component to create (default `FishtankTest`) | used by `Main` only |
+  | `scene` | `?scene=FidelityScene` | scene component to create (default `ReefTank`) | used by `Main` only |
   | `seed` | `?seed=42` | `previewSeed` (integer) | plumbed and printed |
   | `time` | `?time=18:30` | `previewTime` (string) | plumbed and printed |
   | `speed` | `?speed=4x` | `previewSpeed` (float) | scales the FishBrain clock and its mover durations; Fish tail/turn animations run at 1x |
@@ -69,7 +71,8 @@ brs-engine with the SceneGraph extension on a 1920x1080 canvas scaled to the win
   `make dev`.
 
 `make test-visual` (part of `make checkall`) starts an isolated server on 8139, opens
-`?freeze=3` and compares the canvas to `tests/visual/__screenshots__/frozen-t3.png`.
+`?freeze=3` (the Reef Tank) and `?scene=BrainDemoScene&seed=7&freeze=5`, and compares the
+canvas to `tests/visual/__screenshots__/reeftank-t3.png` and `brain-seed7-t5.png`.
 After an intended visual change, refresh the baseline with
 `bunx playwright test --update-snapshots` and review the new PNG before committing.
 
@@ -97,8 +100,9 @@ Layout, expected values and verdicts are in `docs/fidelity/README.md`.
 2. Command line: `ROKU_HOST=<ip> ROKU_PASSWORD=<pw> make deploy`
    (or VS Code: open this folder, set host+password per the extension's prompt, press the deploy/debug button).
 3. Browser fallback: upload `dist/channel.zip` at `http://<ip>/plugin_install`.
-4. On the Roku: **Settings > Theme > Screensavers** → select *Fishtank Test*,
-   shorten the wait timer, let it idle, confirm the fish appear.
+4. On the Roku: **Settings > Theme > Screensavers** → select *Reef Tank*,
+   shorten the wait timer, let it idle, confirm the tank appears.
 
-Debug output (the `print` in `FishtankTest.brs`) is on telnet port **8087**:
+Debug output (`REEFTANK ...` lines from `ReefTank.brs`, including any scene.json
+validation errors) is on telnet port **8087**:
 `telnet <ip> 8087`.

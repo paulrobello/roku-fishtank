@@ -2,7 +2,7 @@ sub RunScreenSaver()
     screen = createObject("roSGScreen")
     port = createObject("roMessagePort")
     screen.setMessagePort(port)
-    screen.createScene("FishtankTest")
+    screen.createScene("ReefTank")
     screen.show()
 
     ' Any remote keypress terminates a screensaver (platform behavior);

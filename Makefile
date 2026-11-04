@@ -79,10 +79,15 @@ deploy: build
 art:
 	uv run tools/art/rig.py
 
-# Old programmatic placeholder art used by the test channel.
+# Placeholder fish sprites (images/fish_orange.png, fish_blue.png) for the P1.5 lane fish.
 .PHONY: art-placeholder
 art-placeholder:
 	python3 tools/make_art.py
+
+# Icon and splash art from the reef backdrop, scene.json decor and fish rigs (byte-reproducible).
+.PHONY: key-art
+key-art:
+	uv run tools/art/key_art.py
 
 # Browser preview (brs-engine) on 8138. The channel zip is rebuilt from source on every page load.
 PREVIEW_PORT := 8138

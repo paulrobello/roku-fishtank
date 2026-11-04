@@ -1,0 +1,66 @@
+{
+  "_notes": "ReefTank layout (P1.1). Coordinates are design pixels at 1920x1080 inside the camera Group; ReefTank scales the camera by screen width / design.width. layers run back to front, each built as a Group whose id is the layer id; name is the PRD scene-stack label. parallax is the per-layer drift factor P1.2 applies to the camera offset (0 = fixed, 1 = moves with the camera); the values here are placeholders. A layer with a lane block is a fish lane: rect bounds the fish anchor, scale and tint (0xRRGGBBAA multiply) set the lane's depth. Until P1.7 splits the art, the single painted backdrop (water, back rock and coral in one image) sits in waterGradient, centered with 313 px of drift margin on each side; coral_acropora stands in midCoral so back-lane fish pass behind it. Colors are hex strings because JSON integers cannot hold the 32-bit RGBA values.",
+  "location": { "name": "Woodland, CA", "latitude": 38.68, "longitude": -121.77 },
+  "design": { "width": 1920, "height": 1080 },
+  "backgroundColor": "0x0B2F55FF",
+  "layers": [
+    { "id": "waterGradient", "name": "Water gradient", "parallax": 0.2 },
+    { "id": "lightShafts", "name": "Light shafts", "parallax": 0.25 },
+    { "id": "backRockwork", "name": "Back rockwork", "parallax": 0.4 },
+    {
+      "id": "backLane",
+      "name": "Back lane",
+      "parallax": 0.5,
+      "lane": {
+        "rect": { "left": 160, "top": 260, "right": 1760, "bottom": 760 },
+        "scale": 0.6,
+        "tint": "0x9FB8D2FF"
+      }
+    },
+    { "id": "midCoral", "name": "Mid coral", "parallax": 0.6 },
+    {
+      "id": "midLane",
+      "name": "Mid lane",
+      "parallax": 0.7,
+      "lane": {
+        "rect": { "left": 160, "top": 220, "right": 1760, "bottom": 840 },
+        "scale": 0.8,
+        "tint": "0xD2E0EEFF"
+      }
+    },
+    { "id": "frontCoral", "name": "Coral and anemone front layer", "parallax": 0.8 },
+    {
+      "id": "frontLane",
+      "name": "Front lane",
+      "parallax": 0.9,
+      "lane": {
+        "rect": { "left": 160, "top": 180, "right": 1760, "bottom": 940 },
+        "scale": 1.0,
+        "tint": "0xFFFFFFFF"
+      }
+    },
+    { "id": "foreground", "name": "Foreground plants and sand lip", "parallax": 1.0 },
+    { "id": "surfaceRipple", "name": "Surface ripple", "parallax": 0.3 },
+    { "id": "bubbles", "name": "Bubbles and sparkles", "parallax": 0.9 }
+  ],
+  "decor": [
+    {
+      "id": "reefBackdrop",
+      "layer": "waterGradient",
+      "uri": "pkg:/images/decor/reef_backdrop.png",
+      "x": -313,
+      "y": 0,
+      "width": 2546,
+      "height": 1080
+    },
+    {
+      "id": "coralAcropora",
+      "layer": "midCoral",
+      "uri": "pkg:/images/decor/coral_acropora.png",
+      "x": 320,
+      "y": 650,
+      "width": 474,
+      "height": 360
+    }
+  ]
+}

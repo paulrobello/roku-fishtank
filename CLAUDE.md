@@ -28,4 +28,4 @@ A Roku screensaver channel written in BrightScript/SceneGraph. Scope and phases 
 
 ## Art
 
-AI-generated originals, prompts, seeds and provenance live in `assets/source/` and are never shipped. Runtime PNGs go in `images/`. Local moss-image comes first. Higgsfield (paid) runs only per batch with Paul's approval. `screensaver-ref.jpg` is a third-party photo used as reference only. Never commit it.
+AI-generated originals, prompts, seeds and provenance live in `assets/source/` and are never shipped. Runtime PNGs go in `images/`. Icons and splashes are derived from the backdrop, `config/scene.json` and the fish rigs by `make key-art` (`tools/art/key_art.py`). Local moss-image comes first. Higgsfield (paid) runs only per batch with Paul's approval. `screensaver-ref.jpg` is a third-party photo used as reference only. Never commit it.

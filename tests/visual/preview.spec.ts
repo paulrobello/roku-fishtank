@@ -2,7 +2,9 @@ import { expect, test } from "@playwright/test";
 
 type PreviewWindow = Window & { __preview?: { status: string; log: string[] } };
 
-test("frozen test-channel frame matches the baseline", async ({ page }) => {
+// ReefTank has no running Animations yet, so ?freeze=3 still reports PREVIEW_FROZEN at T=3
+// and the frame is the static layered tank (backdrop + decor from config/scene.json).
+test("frozen Reef Tank frame matches the baseline", async ({ page }) => {
   const renderer = await page.evaluate(() => {
     const gl = document.createElement("canvas").getContext("webgl");
     const ext = gl?.getExtension("WEBGL_debug_renderer_info");
@@ -21,7 +23,7 @@ test("frozen test-channel frame matches the baseline", async ({ page }) => {
   expect(preview?.status, preview?.log.join("\n")).toBe("frozen");
 
   // toHaveScreenshot waits for two identical consecutive captures before comparing.
-  await expect(page.locator("#display")).toHaveScreenshot("frozen-t3.png");
+  await expect(page.locator("#display")).toHaveScreenshot("reeftank-t3.png");
 });
 
 // FishBrain under ?freeze runs its logic to T at once and poses the fish without movers,

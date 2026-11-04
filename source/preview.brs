@@ -4,7 +4,7 @@
 '
 ' URL params arrive as deep-link strings in args (seed, time, speed, freeze, scene) and are
 ' exposed to the scene as m.global.previewSeed/previewTime/previewSpeed/previewFreeze.
-' ?scene=<ComponentName> picks the scene to create (default FishtankTest).
+' ?scene=<ComponentName> picks the scene to create (default ReefTank).
 sub Main(args as object)
     params = previewParseArgs(args)
     print "PREVIEW_PARAMS scene="; params.scene; " seed="; params.seed; " time="; params.time; " speed="; params.speed; " freeze="; params.freeze
@@ -43,7 +43,7 @@ sub Main(args as object)
 end sub
 
 function previewParseArgs(args as object) as object
-    params = { scene: "FishtankTest", seed: 0, time: "", speed: 1.0, freeze: 0.0 }
+    params = { scene: "ReefTank", seed: 0, time: "", speed: 1.0, freeze: 0.0 }
     if args = invalid then return params
     if args.scene <> invalid and args.scene <> "" then params.scene = args.scene
     if args.seed <> invalid then params.seed = args.seed.toInt()

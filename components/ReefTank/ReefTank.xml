@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+    Reef Tank channel scene (P1.1). init() reads config/scene.json and builds the PRD
+    layer stack, back to front, as Groups (id = layer id) inside the camera Group, then
+    places the decor Posters into their layers. Later phases find layers by id.
+-->
+<component name="ReefTank" extends="Scene">
+    <script type="text/brightscript" uri="pkg:/components/lib/scenecfg.brs" />
+    <script type="text/brightscript" uri="ReefTank.brs" />
+    <children>
+        <Rectangle id="fill" color="0x0B2F55FF" />
+        <Group id="camera" />
+    </children>
+</component>
