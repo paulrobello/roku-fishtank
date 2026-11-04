@@ -50,7 +50,7 @@ Sources: RESEARCH.md, `~/.claude/guides/roku.md`, and live doc checks on 2026-11
 | The system falls back to the default screensaver if memory is short at launch | Keep the resident set under the measured budget with margin |
 | `fieldToInterp` from BrightScript must be an roArray of path strings; Posters draw at natural size unless `width`/`height` are set; `Rectangle` has no `size` | Encoded in the scene builder (see the guide) |
 | Deploying while the screensaver runs wedges the app until a reboot | **Every deploy step: exit the screensaver first** |
-| ECP runs in Limited mode on this LAN (no launch or keypress) | Starting a preview and a soak run are physical-remote steps. Logs come from telnet 8087 |
+| ECP runs in Limited mode on this LAN (no launch or keypress) | Starting a preview and a soak run are physical-remote steps. Exiting is remote via `press k` on the 8080 developer console. Logs come from telnet 8087 |
 | Only one sideloaded app per device, and dev mode is required | Reef Tank replaces the test channel. The 4800Xs need dev mode enabled in P6 |
 | No geolocation | Lat/long is baked into config. Time zone and DST come from `roDateTime` local time (device: `America/Los_Angeles`, auto) |
 

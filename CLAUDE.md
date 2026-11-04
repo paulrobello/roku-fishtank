@@ -14,7 +14,7 @@ A Roku screensaver channel written in BrightScript/SceneGraph. Scope and phases 
 - **Exit the screensaver on the TV before `make deploy`.** Deploying under a running instance wedges it until a device reboot.
 - Deploy: `ROKU_HOST=<ip> ROKU_PASSWORD=<pw> make deploy`. The installer uses digest auth.
 - Debug console: telnet port **8087**, which only listens while the screensaver runs. Read runtime errors there before guessing.
-- ECP is in Limited mode on this LAN, so launching, exiting and rebooting are physical-remote steps.
+- ECP is in Limited mode on this LAN, so launching and rebooting are physical-remote steps. Exiting is remote: `press k` on the port 8080 developer console (`tools/perf/run_probe.sh` does this before deploying). `http://<ip>:8060/query/active-app` shows whether the screensaver is running.
 - Devices: Primary 192.168.1.10 (Ultra 4850X, dev mode on, primary target). Roku Ultra 192.168.1.11 and Second 192.168.1.12 (4800X, dev mode off until P6). All run OS 15.3.4.
 
 ## Platform constraints
