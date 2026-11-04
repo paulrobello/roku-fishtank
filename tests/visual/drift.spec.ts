@@ -59,13 +59,21 @@ async function edgeStats(page: import("@playwright/test").Page, png: Buffer): Pr
 }
 
 // Bubbles, seaweed and fish run on their own clocks, so drift is compared only in the surface
-// water band (above every fish lane), skipping columns within 120 px of a bubble source.
+// water band (above every fish lane), skipping columns within 120 px of a bubble source and
+// the light-shaft columns (P3.4 day and moon shafts breathe on their own clocks, so their
+// opacity differs between freeze times).
 const BAND = { top: 0, bottom: 120 };
 const BUBBLE_SOURCES_X: readonly number[] = [1176, 1590];
+const SHAFT_SPANS: readonly (readonly [number, number])[] = [
+  [360, 256],
+  [1160, 256],
+  [520, 256],
+  [1300, 256],
+];
 
 async function bandMaxDiff(page: import("@playwright/test").Page, a: Buffer, b: Buffer): Promise<number> {
   return page.evaluate(
-    async ({ a64, b64, band, sources }) => {
+    async ({ a64, b64, band, sources, shafts }) => {
       const load = async (s: string): Promise<Uint8ClampedArray> => {
         const img = new Image();
         img.src = `data:image/png;base64,${s}`;
@@ -83,11 +91,18 @@ async function bandMaxDiff(page: import("@playwright/test").Page, a: Buffer, b: 
       for (let i = 0; i < da.length; i += 4) {
         const x = (i / 4) % width;
         if (sources.some((s) => Math.abs(x - s) < 120)) continue;
+        if (shafts.some(([sx, sw]) => x >= sx - 8 && x < sx + sw + 8)) continue;
         for (let ch = 0; ch < 3; ch++) max = Math.max(max, Math.abs(da[i + ch] - db[i + ch]));
       }
       return max;
     },
-    { a64: a.toString("base64"), b64: b.toString("base64"), band: BAND, sources: [...BUBBLE_SOURCES_X] },
+    {
+      a64: a.toString("base64"),
+      b64: b.toString("base64"),
+      band: BAND,
+      sources: [...BUBBLE_SOURCES_X],
+      shafts: SHAFT_SPANS.map((s) => [...s]),
+    },
   );
 }
 
