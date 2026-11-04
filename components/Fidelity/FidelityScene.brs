@@ -173,17 +173,27 @@ function fidEase(f as float, ease as string) as float
     return f
 end function
 
-' HSV shortest-hue path from red (h=360) to blue (h=240), s=v=1, alpha 255.
+' Device HSV rule (fidelity F5): hue lerped 0 -> 240 with no shortest-path wrap, so red
+' -> blue passes yellow, green and cyan. s = v = 1, alpha 255.
 function fidHsvRedToBlue(f as float) as integer
-    h = 360 - 120 * f
-    r = 255
-    b = 255
-    if h >= 300 then
-        b = int((360 - h) / 60 * 255 + 0.5)
+    h = 240 * f
+    r = 0
+    g = 0
+    b = 0
+    if h < 60 then
+        r = 255
+        g = int(h / 60 * 255 + 0.5)
+    else if h < 120 then
+        g = 255
+        r = int((120 - h) / 60 * 255 + 0.5)
+    else if h < 180 then
+        g = 255
+        b = int((h - 120) / 60 * 255 + 0.5)
     else
-        r = int((h - 240) / 60 * 255 + 0.5)
+        b = 255
+        g = int((240 - h) / 60 * 255 + 0.5)
     end if
-    return (r << 24) or (b << 8) or 255
+    return (r << 24) or (g << 16) or (b << 8) or 255
 end function
 
 function fidHex(c as integer) as string

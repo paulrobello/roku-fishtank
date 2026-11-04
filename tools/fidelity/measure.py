@@ -118,8 +118,9 @@ def main() -> None:
         pos_row(cap, "3 rotate+scale blue corner", (770, 60, 1150, 520), blue, (960, 300 - 72 * 2 * r45)),
         pos_row(cap, "3 rotate+scale green bar", (770, 60, 1150, 520), green, (960 + 84 * r45, 300 + 84 * r45)),
         pos_row(cap, "4 reference red", (1160, 200, 1340, 400), red, (1208, 252)),
-        pos_row(cap, "4 mirror red", (1350, 200, 1530, 400), red, (1480, 252)),
-        pos_row(cap, "4 mirror blue", (1350, 200, 1530, 400), blue, (1384, 252)),
+        # Device rule (F4): with rotation 0 the sign of scale.x is ignored, so no mirror.
+        pos_row(cap, "4 scale -1 red (unmirrored)", (1350, 200, 1530, 400), red, (1384, 252)),
+        pos_row(cap, "4 scale -1 blue (unmirrored)", (1350, 200, 1530, 400), blue, (1480, 252)),
         pos_row(cap, "5 pivot A (white)", (1540, 100, 1920, 520), white, (1616, 440)),
         pos_row(cap, "5 group B origin (yellow)", (1540, 100, 1920, 520), yellow, (1616 + 80 * math.cos(math.pi / 6), 440 - 80 * math.sin(math.pi / 6))),
         pos_row(cap, "5 group C origin (cyan)", (1540, 100, 1920, 520), cyan, (1616 + 80 * (math.cos(math.pi / 6) + math.cos(math.pi / 3)), 440 - 80 * (math.sin(math.pi / 6) + math.sin(math.pi / 3)))),
@@ -132,10 +133,11 @@ def main() -> None:
     lanes = [("io16", 580, io(0.25)), ("io8", 640, io(0.5)), ("io5", 700, io(0.75)), ("li16", 780, 0.25), ("li8", 840, 0.5), ("li5", 900, 0.75)]
     for name, y, f in lanes:
         rows.append(pos_row(cap, f"6 lane {name} (nominal t=4 s)", (150, y - 2, 1450, y + 26), yellow, (200 + 1200 * f + 12, y + 12)))
-    hsv = [(255, 0, 128), (255, 0, 255), (128, 0, 255)]
-    rgb = ["0xBF0040", "0x800080", "0x4000BF"]
+    # Device rule (F5): hue lerped 0 -> 240 with no wrap: yellow, green, cyan.
+    hsv = [(255, 255, 0), (0, 255, 0), (0, 255, 255)]
+    short = ["0xFF0080", "0xFF00FF", "0x8000FF"]
     for i, (name, x) in enumerate([("c16 f=0.25", 300), ("c8 f=0.5", 600), ("c5 f=0.75", 900)]):
-        rows.append(color_row(cap, f"7 swatch {name}", (x + 60, 990), hsv[i], f" (HSV; RGB-lerp would be {rgb[i]})"))
+        rows.append(color_row(cap, f"7 swatch {name}", (x + 60, 990), hsv[i], f" (HSV no wrap; shortest hue path would be {short[i]})"))
     probe = cap.centroid((1450, 596, 1900, 628), white)
     rows.append(
         f"| fraction probe (unscored) | position | x 1662 if direct fraction drives, 1512 if ignored | "
