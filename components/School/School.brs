@@ -14,6 +14,13 @@ sub onConfigUri()
         print "School ERROR: cannot read config '"; m.top.configUri; "'"
         return
     end if
+    ' An unset assocarray field reads as invalid in brs-scenegraph.
+    over = m.top.configOverride
+    if over <> invalid then
+        for each k in over
+            cfg[k] = over[k]
+        end for
+    end if
     rig = ParseJson(ReadAsciiFile("pkg:/config/species/" + cfg.species + ".rig.json"))
     if rig = invalid then
         print "School ERROR: cannot read rig for species '"; cfg.species; "'"
@@ -26,7 +33,7 @@ sub onConfigUri()
     m.anchor = rig.mirror_center
     m.speed = schoolPreviewSpeed()
 
-    seed = schoolSeed()
+    seed = schoolSeed() + m.top.seedSalt * 1000003
     m.school = schoolNew(cfg, seed, m.lane, m.ellipses)
     if m.school = invalid then
         print "School ERROR: no free spawn for seed "; seed
@@ -62,6 +69,7 @@ function schoolBuildFish(prefix as string, i as integer, member as object) as ob
     node.facing = member.facing
     node.swimSpeed = member.speed
     node.species = m.cfg.species
+    laneStyleFish(node, m.anchor, m.top.fishScale, m.top.fishTint)
     node.translation = schoolToTranslation(member.agent.x, member.agent.y)
     anim = m.top.createChild("Animation")
     anim.id = prefix + "move" + i.toStr()

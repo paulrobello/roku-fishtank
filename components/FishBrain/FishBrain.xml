@@ -8,9 +8,18 @@
     Fish node and one reused mover Animation + Vector2DFieldInterpolator, all created once
     here; segments and mode changes only rewrite key, keyValue, duration and easeFunction. Logic lives in components/lib/brain.brs.
     sceneTime is the brain clock in seconds (wall time x m.global.previewSpeed).
+    Tank use (P2.7): configOverride and behaviorOverride (set before configUri) replace
+    top-level keys of the two configs (ReefTank passes the lane rect, ellipses, caves,
+    rocks, band and population from config/scene.json); seedSalt separates the brains of
+    one scene; fishScale and fishTint (RGBA, -1 = white) are the lane's depth styling.
 -->
 <component name="FishBrain" extends="Group">
     <interface>
+        <field id="configOverride" type="assocarray" />
+        <field id="behaviorOverride" type="assocarray" />
+        <field id="seedSalt" type="integer" value="0" />
+        <field id="fishScale" type="float" value="1.0" />
+        <field id="fishTint" type="integer" value="-1" />
         <field id="behaviorUri" type="string" />
         <field id="configUri" type="string" onChange="onConfigUri" />
         <field id="sceneTime" type="float" value="0.0" />
@@ -20,6 +29,7 @@
     <script type="text/brightscript" uri="pkg:/components/lib/prng.brs" />
     <script type="text/brightscript" uri="pkg:/components/lib/steer.brs" />
     <script type="text/brightscript" uri="pkg:/components/lib/brain.brs" />
+    <script type="text/brightscript" uri="pkg:/components/lib/tint.brs" />
     <children>
         <Group id="fishLayer" />
         <Timer id="brainTimer" duration="0.125" repeat="true" />

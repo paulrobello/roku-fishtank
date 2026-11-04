@@ -19,6 +19,11 @@ sub onConfigUri()
         beh = ParseJson(ReadAsciiFile(m.top.behaviorUri))
         if beh = invalid then print "FishBrain ERROR: cannot read behaviour config '"; m.top.behaviorUri; "'"
     end if
+    ' An unset assocarray field reads as invalid in brs-scenegraph.
+    over = m.top.configOverride
+    if over <> invalid then cfg = brainMerge(cfg, over)
+    over = m.top.behaviorOverride
+    if beh <> invalid and over <> invalid then beh = brainMerge(beh, over)
     m.cfg = cfg
     m.world = brainNewWorld(cfg, beh)
     m.speed = brainPreviewSpeed()
@@ -29,7 +34,7 @@ sub onConfigUri()
     if not m.global.hasField("brainSerial") then m.global.addFields({ brainSerial: 0 })
     m.global.brainSerial = m.global.brainSerial + 1
     prefix = "brain" + m.global.brainSerial.toStr() + "_"
-    seed = brainSeed()
+    seed = brainSeed() + m.top.seedSalt * 1000003
     spawned = brainSpawnAll(cfg, beh, m.world, seed)
     print "BRAIN seed="; seed; " fish="; spawned.count(); " speed="; m.speed
     for i = 0 to spawned.count() - 1
@@ -65,6 +70,7 @@ function brainBuildFish(prefix as string, i as integer, species as string, ancho
     node.facing = state.facing
     node.swimSpeed = state.speed
     node.species = species
+    laneStyleFish(node, anchor, m.top.fishScale, m.top.fishTint)
     node.translation = brainToTranslation(anchor, state.agent.x, state.agent.y)
     anim = m.top.createChild("Animation")
     anim.id = prefix + "move" + i.toStr()

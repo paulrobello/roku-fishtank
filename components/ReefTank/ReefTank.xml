@@ -3,8 +3,15 @@
     Reef Tank channel scene (P1.1). init() reads config/scene.json and builds the PRD
     layer stack, back to front, as Groups (id = layer id) inside the camera Group, then
     places the decor Posters into their layers. Later phases find layers by id.
+    Fish (P2.7): density ("calm", "normal" or "busy"; unknown names build normal) picks
+    the scene.json population. Each lane with fish gets a FishBrain inside its Group and
+    the chromis School goes in its configured lane; setting density rebuilds them.
+    m.global.previewDensity (preview ?density=) overrides the default at init.
 -->
 <component name="ReefTank" extends="Scene">
+    <interface>
+        <field id="density" type="string" value="normal" onChange="onDensityChanged" />
+    </interface>
     <script type="text/brightscript" uri="pkg:/components/lib/scenecfg.brs" />
     <script type="text/brightscript" uri="ReefTank.brs" />
     <interface>

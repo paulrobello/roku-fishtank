@@ -30,6 +30,71 @@ sub init()
     reefTankAddAmbient(camera)
     reefTankBuildDrift()
     print "REEFTANK ready: "; dr.width; "x"; dr.height; " layers="; m.sceneCfg.layers.count(); " decor="; decor.count()
+    reefTankInitFish()
+end sub
+
+' ---------------------------------------------------------------------------
+' Fish population (P2.7): one FishBrain per lane with fish and the chromis School,
+' all built from scene.json "population" for the selected density.
+
+sub reefTankInitFish()
+    m.tankNodes = []
+    m.tankDensity = ""
+    if m.sceneCfg.population = invalid then return
+    name = m.top.density
+    if m.global.hasField("previewDensity") and m.global.previewDensity <> "" then name = m.global.previewDensity
+    reefTankBuildFish(name)
+    if m.top.density <> name then m.top.density = name
+end sub
+
+sub onDensityChanged()
+    if m.tankNodes = invalid then return
+    if m.top.density <> m.tankDensity then reefTankBuildFish(m.top.density)
+end sub
+
+sub reefTankBuildFish(name as string)
+    for each node in m.tankNodes
+        node.getParent().removeChild(node)
+    end for
+    m.tankNodes = []
+    m.tankDensity = name
+    cfg = m.sceneCfg
+    pop = cfg.population
+    camera = m.top.findNode("camera")
+    plan = sceneCfgDensityPlan(cfg, name)
+    salt = 0
+    total = 0
+    for each entry in plan.lanes
+        lane = entry.lane
+        brain = camera.findNode(lane.id).createChild("FishBrain")
+        brain.id = lane.id + "Brain"
+        brain.seedSalt = salt
+        brain.fishScale = lane.scale
+        brain.fishTint = lane.tint
+        brain.configOverride = { lane: sceneCfgLaneRect(lane), ellipses: pop.ellipses }
+        brain.behaviorOverride = { population: entry.groups, caves: pop.caves, rocks: pop.rocks, band: pop.band }
+        brain.behaviorUri = pop.behaviorUri
+        brain.configUri = pop.brainUri
+        m.tankNodes.push(brain)
+        salt = salt + 1
+        for each g in entry.groups
+            total = total + g.count
+        end for
+    end for
+    schoolCount = 0
+    if plan.school <> invalid then
+        lane = plan.school.lane
+        school = camera.findNode(lane.id).createChild("School")
+        school.id = lane.id + "School"
+        school.seedSalt = salt
+        school.fishScale = lane.scale
+        school.fishTint = lane.tint
+        school.configOverride = { lane: sceneCfgLaneRect(lane), ellipses: pop.ellipses, count: plan.school.count }
+        school.configUri = pop.schoolUri
+        m.tankNodes.push(school)
+        schoolCount = plan.school.count
+    end if
+    print "REEFTANK fish density="; sceneCfgDensityName(cfg, name); " fish="; total; " school="; schoolCount; " brains="; plan.lanes.count()
 end sub
 
 ' ---- Camera drift (P1.2) ----

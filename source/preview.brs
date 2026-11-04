@@ -2,13 +2,13 @@
 ' Main builds the same scene as RunScreenSaver and runs the same message loop.
 ' Preview-only: bsconfig.json excludes this file and it must never ship to a device.
 '
-' URL params arrive as deep-link strings in args (seed, time, speed, freeze, scene, species)
-' and are exposed to the scene as m.global.previewSeed/previewTime/previewSpeed/previewFreeze/
-' previewSpecies.
+' URL params arrive as deep-link strings in args (seed, time, speed, freeze, scene, species,
+' density) and are exposed to the scene as m.global.previewSeed/previewTime/previewSpeed/
+' previewFreeze/previewSpecies/previewDensity.
 ' ?scene=<ComponentName> picks the scene to create (default ReefTank).
 sub Main(args as object)
     params = previewParseArgs(args)
-    print "PREVIEW_PARAMS scene="; params.scene; " seed="; params.seed; " time="; params.time; " speed="; params.speed; " freeze="; params.freeze; " species="; params.species
+    print "PREVIEW_PARAMS scene="; params.scene; " seed="; params.seed; " time="; params.time; " speed="; params.speed; " freeze="; params.freeze; " species="; params.species; " density="; params.density
 
     screen = createObject("roSGScreen")
     port = createObject("roMessagePort")
@@ -18,7 +18,8 @@ sub Main(args as object)
         previewTime: params.time,
         previewSpeed: params.speed,
         previewFreeze: params.freeze,
-        previewSpecies: params.species
+        previewSpecies: params.species,
+        previewDensity: params.density
     })
     scene = screen.createScene(params.scene)
     screen.show()
@@ -45,7 +46,7 @@ sub Main(args as object)
 end sub
 
 function previewParseArgs(args as object) as object
-    params = { scene: "ReefTank", seed: 0, time: "", speed: 1.0, freeze: 0.0, species: "" }
+    params = { scene: "ReefTank", seed: 0, time: "", speed: 1.0, freeze: 0.0, species: "", density: "" }
     if args = invalid then return params
     if args.scene <> invalid and args.scene <> "" then params.scene = args.scene
     if args.seed <> invalid then params.seed = args.seed.toInt()
@@ -53,6 +54,7 @@ function previewParseArgs(args as object) as object
     if args.speed <> invalid then params.speed = val(lCase(args.speed).replace("x", ""))
     if args.freeze <> invalid then params.freeze = val(args.freeze)
     if args.species <> invalid then params.species = args.species
+    if args.density <> invalid then params.density = args.density
     return params
 end function
 

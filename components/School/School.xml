@@ -7,9 +7,16 @@
     uses the same species, so all share the same image URIs. Logic lives in
     components/lib/school.brs. sceneTime is the school clock in seconds (wall time x
     m.global.previewSpeed); holdCount counts moves refused by the spacing guard.
+    Tank use (P2.7): configOverride (set before configUri) replaces top-level keys of the
+    config (ReefTank passes lane, ellipses and count from config/scene.json); seedSalt,
+    fishScale and fishTint (RGBA, -1 = white) as on FishBrain.
 -->
 <component name="School" extends="Group">
     <interface>
+        <field id="configOverride" type="assocarray" />
+        <field id="seedSalt" type="integer" value="0" />
+        <field id="fishScale" type="float" value="1.0" />
+        <field id="fishTint" type="integer" value="-1" />
         <field id="configUri" type="string" onChange="onConfigUri" />
         <field id="sceneTime" type="float" value="0.0" />
         <field id="holdCount" type="integer" value="0" />
@@ -18,6 +25,7 @@
     <script type="text/brightscript" uri="pkg:/components/lib/prng.brs" />
     <script type="text/brightscript" uri="pkg:/components/lib/steer.brs" />
     <script type="text/brightscript" uri="pkg:/components/lib/school.brs" />
+    <script type="text/brightscript" uri="pkg:/components/lib/tint.brs" />
     <children>
         <Group id="fishLayer" />
         <Timer id="schoolTimer" duration="0.125" repeat="true" />

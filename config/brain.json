@@ -1,5 +1,5 @@
 {
-  "_notes": "FishBrain parameters (P2.3). Coordinates are scene pixels of the fish anchor (the rig mirror_center), times in seconds, speeds in px/s. The lane and ellipses are the BrainDemoScene layout until P1.1 moves lanes and avoidance ellipses into config/scene.json. Ellipse radii are padded for the anchor point, not the 240x113 body, so a body can still overlap an ellipse edge. nodeLogSeconds > 0 logs the scene node count every that many seconds of scene time (preview aid; 0 disables).",
+  "_notes": "FishBrain parameters (P2.3). Coordinates are scene pixels of the fish anchor (the rig mirror_center), times in seconds, speeds in px/s. The lane and ellipses are the BrainDemoScene layout; ReefTank replaces them with its lane rects and config/scene.json population.ellipses (P2.7). Ellipse radii are padded for the anchor point, not the 240x113 body, so a body can still overlap an ellipse edge. nodeLogSeconds > 0 logs the scene node count every that many seconds of scene time (preview aid; 0 disables).",
   "species": "royal_blue_tang",
   "count": 25,
   "tick": 0.125,

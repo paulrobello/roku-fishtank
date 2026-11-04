@@ -112,5 +112,110 @@
       { "id": "weedC", "layer": "frontCoral", "x": 1700, "y": 1030, "scale": 1.1, "phaseDeg": 150, "tint": "0x88A8A0FF" },
       { "id": "weedD", "layer": "frontCoral", "x": 1732, "y": 1045, "scale": 0.85, "phaseDeg": 230, "period": 4.6, "tint": "0x7898A0FF" }
     ]
+  },
+  "population": {
+    "_notes": "Tank fish (P2.7). ReefTank builds one FishBrain per lane that has fish, inside that lane's Group, and one School in school.lane. Each gets the lane rect from layers[].lane.rect and the world below as overrides on brainUri/behaviorUri/schoolUri, which keep the motion parameters and the species-to-kind map. Lane scale and tint are applied per fish (scale about the rig mirror_center, tint as Poster blendColor). Positions are design pixels of the fish anchor, measured on the painted backdrop (docs/preview/reef-tank-empty.png is 1:1 with design pixels). ellipses keep fish anchors out of the rock masses: e0 arch top, e1 arch left pillar, e2 arch right pillar, e3 centre reef under the red plate coral, e4 right reef, e5 far-right rock, e6 brain coral and staghorn; the arch opening (x 300-610, y 510-760) is left free so back-lane fish pass behind the acropora. caves: the round hole in the arch's left pillar, the through-hole between the centre and right reef, and the dark recess under the far-right rocks; mouth and den sit outside every ellipse. rocks are graze points on real rock or coral tops. band is the sand line in front of the reef for the mandarin. densities: per lane [{species, count}] plus the chromis school {lane, count}; ReefTank.density picks one (default normal, unknown names fall back to normal).",
+    "brainUri": "pkg:/config/brain.json",
+    "behaviorUri": "pkg:/config/behavior.json",
+    "schoolUri": "pkg:/config/school.json",
+    "ellipses": [
+      { "cx": 445, "cy": 445, "rx": 250, "ry": 60 },
+      { "cx": 180, "cy": 640, "rx": 120, "ry": 180 },
+      { "cx": 690, "cy": 560, "rx": 75, "ry": 140 },
+      { "cx": 990, "cy": 760, "rx": 170, "ry": 170 },
+      { "cx": 1450, "cy": 800, "rx": 180, "ry": 170 },
+      { "cx": 1810, "cy": 720, "rx": 130, "ry": 140 },
+      { "cx": 1580, "cy": 560, "rx": 170, "ry": 80 }
+    ],
+    "caves": [
+      { "mouth": [392, 722], "den": [338, 722], "out": 1 },
+      { "mouth": [1172, 848], "den": [1222, 852], "out": -1 },
+      { "mouth": [1652, 836], "den": [1712, 852], "out": -1 }
+    ],
+    "rocks": [
+      [330, 372],
+      [560, 365],
+      [420, 600],
+      [790, 455],
+      [1060, 585],
+      [1470, 430],
+      [1765, 545]
+    ],
+    "band": { "left": 470, "top": 968, "right": 1500, "bottom": 992 },
+    "densities": {
+      "calm": {
+        "lanes": {
+          "backLane": [
+            { "species": "royal_gramma", "count": 1 },
+            { "species": "yellow_tang", "count": 1 }
+          ],
+          "midLane": [
+            { "species": "royal_blue_tang", "count": 1 },
+            { "species": "emperor_angelfish", "count": 1 },
+            { "species": "lionfish", "count": 1 }
+          ],
+          "frontLane": [
+            { "species": "ocellaris_clownfish", "count": 1 },
+            { "species": "moorish_idol", "count": 1 },
+            { "species": "mandarin_dragonet", "count": 1 }
+          ]
+        },
+        "school": { "lane": "midLane", "count": 6 }
+      },
+      "normal": {
+        "lanes": {
+          "backLane": [
+            { "species": "royal_gramma", "count": 2 },
+            { "species": "yellow_tang", "count": 1 },
+            { "species": "royal_blue_tang", "count": 1 },
+            { "species": "moorish_idol", "count": 1 }
+          ],
+          "midLane": [
+            { "species": "royal_blue_tang", "count": 1 },
+            { "species": "yellow_tang", "count": 1 },
+            { "species": "emperor_angelfish", "count": 1 },
+            { "species": "lionfish", "count": 1 },
+            { "species": "ocellaris_clownfish", "count": 1 }
+          ],
+          "frontLane": [
+            { "species": "royal_blue_tang", "count": 1 },
+            { "species": "yellow_tang", "count": 1 },
+            { "species": "ocellaris_clownfish", "count": 1 },
+            { "species": "moorish_idol", "count": 1 },
+            { "species": "mandarin_dragonet", "count": 1 }
+          ]
+        },
+        "school": { "lane": "midLane", "count": 10 }
+      },
+      "busy": {
+        "lanes": {
+          "backLane": [
+            { "species": "royal_gramma", "count": 3 },
+            { "species": "yellow_tang", "count": 2 },
+            { "species": "royal_blue_tang", "count": 2 },
+            { "species": "moorish_idol", "count": 1 },
+            { "species": "emperor_angelfish", "count": 1 }
+          ],
+          "midLane": [
+            { "species": "royal_blue_tang", "count": 2 },
+            { "species": "yellow_tang", "count": 2 },
+            { "species": "emperor_angelfish", "count": 1 },
+            { "species": "lionfish", "count": 1 },
+            { "species": "ocellaris_clownfish", "count": 2 },
+            { "species": "moorish_idol", "count": 1 }
+          ],
+          "frontLane": [
+            { "species": "royal_blue_tang", "count": 2 },
+            { "species": "yellow_tang", "count": 2 },
+            { "species": "emperor_angelfish", "count": 1 },
+            { "species": "ocellaris_clownfish", "count": 2 },
+            { "species": "mandarin_dragonet", "count": 2 },
+            { "species": "moorish_idol", "count": 1 },
+            { "species": "lionfish", "count": 1 }
+          ]
+        },
+        "school": { "lane": "midLane", "count": 14 }
+      }
+    }
   }
 }

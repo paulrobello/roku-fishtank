@@ -69,6 +69,7 @@ function sceneCfgValidate(cfg as dynamic) as object
     end if
 
     ids = {}
+    laneIds = {}
     if not sceneCfgIsArray(cfg.layers) or cfg.layers.count() = 0 then
         errors.push("layers must be a non-empty array")
     else
@@ -81,7 +82,10 @@ function sceneCfgValidate(cfg as dynamic) as object
                 if ids.doesExist(layer.id) then errors.push(where + " duplicates id " + layer.id)
                 ids[layer.id] = true
                 if not sceneCfgIsNumber(layer.parallax) then errors.push(layer.id + " needs a numeric parallax")
-                if layer.lane <> invalid then sceneCfgValidateLane(layer.id, layer.lane, errors)
+                if layer.lane <> invalid then
+                    sceneCfgValidateLane(layer.id, layer.lane, errors)
+                    laneIds[layer.id] = true
+                end if
             end if
         end for
     end if
@@ -96,6 +100,7 @@ function sceneCfgValidate(cfg as dynamic) as object
         end if
     end if
     sceneCfgValidateDrift(cfg, errors)
+    if cfg.population <> invalid then sceneCfgValidatePopulation(cfg.population, laneIds, errors)
     return errors
 end function
 
@@ -266,4 +271,175 @@ function sceneCfgDriftValues(drift as object, parallax as float) as object
     end for
     values.push(values[0])
     return values
+
+' ---------------------------------------------------------------------------
+' Tank population (P2.7): scene.json "population" holds the FishBrain/School
+' config URIs, the shared world (ellipses, caves, rocks, band) and, per density,
+' the fish per lane plus the chromis school.
+
+function sceneCfgDensityNames() as object
+    return ["calm", "normal", "busy"]
+end function
+
+sub sceneCfgValidatePopulation(pop as dynamic, laneIds as object, errors as object)
+    if not sceneCfgIsObject(pop) then
+        errors.push("population must be an object")
+        return
+    end if
+    for each key in ["brainUri", "behaviorUri", "schoolUri"]
+        if not sceneCfgIsString(pop[key]) or pop[key] = "" then errors.push("population needs a " + key)
+    end for
+
+    ellipses = []
+    if not sceneCfgIsArray(pop.ellipses) or pop.ellipses.count() = 0 then
+        errors.push("population.ellipses must be a non-empty array")
+    else
+        for i = 0 to pop.ellipses.count() - 1
+            e = pop.ellipses[i]
+            if not sceneCfgIsObject(e) or not sceneCfgIsNumber(e.cx) or not sceneCfgIsNumber(e.cy) or not sceneCfgIsNumber(e.rx) or not sceneCfgIsNumber(e.ry) or e.rx <= 0 or e.ry <= 0 then
+                errors.push("population.ellipses[" + i.toStr() + "] needs numeric cx, cy and positive rx, ry")
+            else
+                ellipses.push(e)
+            end if
+        end for
+    end if
+
+    ' FishBrain gives cave fish caves[nth mod count], so an empty list would divide by zero.
+    if not sceneCfgIsArray(pop.caves) or pop.caves.count() = 0 then
+        errors.push("population.caves must be a non-empty array")
+    else
+        for i = 0 to pop.caves.count() - 1
+            c = pop.caves[i]
+            where = "population.caves[" + i.toStr() + "]"
+            if not sceneCfgIsObject(c) or not sceneCfgIsPoint(c.mouth) or not sceneCfgIsPoint(c.den) then
+                errors.push(where + " needs mouth and den [x, y]")
+            else
+                if not sceneCfgIsNumber(c.out) or (c.out <> 1 and c.out <> -1) then errors.push(where + " out must be 1 or -1")
+                if not sceneCfgOutsideAll(ellipses, c.mouth) then errors.push(where + " mouth is inside an ellipse")
+                if not sceneCfgOutsideAll(ellipses, c.den) then errors.push(where + " den is inside an ellipse")
+            end if
+        end for
+    end if
+
+    if not sceneCfgIsArray(pop.rocks) or pop.rocks.count() = 0 then
+        errors.push("population.rocks must be a non-empty array")
+    else
+        for i = 0 to pop.rocks.count() - 1
+            r = pop.rocks[i]
+            if not sceneCfgIsPoint(r) then
+                errors.push("population.rocks[" + i.toStr() + "] must be [x, y]")
+            else if not sceneCfgOutsideAll(ellipses, r) then
+                errors.push("population.rocks[" + i.toStr() + "] is inside an ellipse")
+            end if
+        end for
+    end if
+
+    b = pop.band
+    if not sceneCfgIsObject(b) or not sceneCfgIsNumber(b.left) or not sceneCfgIsNumber(b.top) or not sceneCfgIsNumber(b.right) or not sceneCfgIsNumber(b.bottom) then
+        errors.push("population.band needs a numeric rect {left, top, right, bottom}")
+    else if b.right <= b.left or b.bottom <= b.top then
+        errors.push("population.band is empty")
+    end if
+
+    if not sceneCfgIsObject(pop.densities) then
+        errors.push("population.densities must be an object")
+        return
+    end if
+    for each name in sceneCfgDensityNames()
+        if not pop.densities.doesExist(name) then errors.push("population.densities needs " + name)
+    end for
+    for each name in pop.densities
+        sceneCfgValidateDensity("density " + name, pop.densities[name], laneIds, errors)
+    end for
+end sub
+
+sub sceneCfgValidateDensity(where as string, d as dynamic, laneIds as object, errors as object)
+    if not sceneCfgIsObject(d) or not sceneCfgIsObject(d.lanes) then
+        errors.push(where + " needs a lanes object")
+        return
+    end if
+    for each laneId in d.lanes
+        if not laneIds.doesExist(laneId) then errors.push(where + " names " + laneId + ", which is not a lane")
+        groups = d.lanes[laneId]
+        if not sceneCfgIsArray(groups) then
+            errors.push(where + " " + laneId + " must be an array")
+        else
+            for each g in groups
+                if not sceneCfgIsObject(g) or not sceneCfgIsString(g.species) or g.species = "" then
+                    errors.push(where + " " + laneId + " entry needs a species")
+                else if not sceneCfgIsNumber(g.count) or g.count < 0 or g.count <> Int(g.count) then
+                    errors.push(where + " " + laneId + " " + g.species + " count must be a whole number >= 0")
+                end if
+            end for
+        end if
+    end for
+    s = d.school
+    if s <> invalid then
+        if not sceneCfgIsObject(s) or not sceneCfgIsString(s.lane) or not laneIds.doesExist(s.lane) then
+            errors.push(where + " school needs a lane id")
+        else if not sceneCfgIsNumber(s.count) or s.count < 0 or s.count <> Int(s.count) then
+            errors.push(where + " school count must be a whole number >= 0")
+        end if
+    end if
+end sub
+
+function sceneCfgIsPoint(p as dynamic) as boolean
+    return sceneCfgIsArray(p) and p.count() = 2 and sceneCfgIsNumber(p[0]) and sceneCfgIsNumber(p[1])
+end function
+
+' True when p is on or outside every ellipse (the FishBrain steering guard).
+function sceneCfgOutsideAll(ellipses as object, p as object) as boolean
+    for each e in ellipses
+        dx = (p[0] - e.cx) / e.rx
+        dy = (p[1] - e.cy) / e.ry
+        if dx * dx + dy * dy < 1 then return false
+    end for
+    return true
+end function
+
+' The density to build: name when the config defines it, otherwise "normal".
+function sceneCfgDensityName(cfg as object, name as string) as string
+    if cfg.population.densities.doesExist(name) then return name
+    return "normal"
+end function
+
+' What ReefTank builds for a density: { lanes: [{ lane, groups }], school }. lanes
+' run back to front and skip lanes with no fish; lane is a sceneCfgLanes entry and
+' groups the [{ species, count }] list. school is { lane, count } or invalid.
+function sceneCfgDensityPlan(cfg as object, name as string) as object
+    d = cfg.population.densities[sceneCfgDensityName(cfg, name)]
+    plan = { lanes: [], school: invalid }
+    for each lane in sceneCfgLanes(cfg)
+        groups = d.lanes[lane.id]
+        if groups <> invalid then
+            n = 0
+            for each g in groups
+                n = n + g.count
+            end for
+            if n > 0 then plan.lanes.push({ lane: lane, groups: groups })
+        end if
+        if d.school <> invalid and d.school.count > 0 and d.school.lane = lane.id then plan.school = { lane: lane, count: d.school.count }
+    end for
+    return plan
+end function
+
+' Totals for a density: { fish, school, species: { name: count } } (fish excludes the school).
+function sceneCfgDensityCounts(cfg as object, name as string) as object
+    plan = sceneCfgDensityPlan(cfg, name)
+    out = { fish: 0, school: 0, species: {} }
+    for each entry in plan.lanes
+        for each g in entry.groups
+            out.fish = out.fish + g.count
+            n = 0
+            if out.species.doesExist(g.species) then n = out.species[g.species]
+            out.species[g.species] = n + g.count
+        end for
+    end for
+    if plan.school <> invalid then out.school = plan.school.count
+    return out
+end function
+
+' Lane rect as the { left, top, right, bottom } FishBrain and School expect.
+function sceneCfgLaneRect(lane as object) as object
+    return { left: lane.left, top: lane.top, right: lane.right, bottom: lane.bottom }
 end function
