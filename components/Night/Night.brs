@@ -199,7 +199,7 @@ sub nightTintGroup(group as object, prefix as string, mult as integer, info as o
             path = prefix + i.toStr()
             if node.subtype() = "Poster" then
                 entry = info.bases[path]
-                if entry = invalid or entry.node <> node then
+                if entry = invalid or not entry.node.isSameNode(node) then
                     entry = { node: node, base: node.blendColor }
                     info.bases[path] = entry
                 end if
