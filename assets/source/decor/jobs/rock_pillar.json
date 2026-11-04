@@ -1,0 +1,33 @@
+[
+  {
+    "created_at": "2026-11-04T20:46:15.934287Z",
+    "display_name": "GPT Image 2.5",
+    "id": "310cb623-4c98-4322-929e-93a039f388be",
+    "job_type": "gpt_image_2_5",
+    "min_result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3Gv9RgU5roVxfEeNP9AFPAziDdM/hf_20261104_204615_310cb623-4c98-4322-929e-93a039f388be_min.webp",
+    "params": {
+      "aspect_ratio": "3:4",
+      "background": "transparent",
+      "height": 2336,
+      "medias": [
+        {
+          "data": {
+            "id": "f8f67a87-a2ba-4f27-b6c8-e855e6060a45",
+            "type": "media_input",
+            "url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3Gv9RgU5roVxfEeNP9AFPAziDdM/f8f67a87-a2ba-4f27-b6c8-e855e6060a45_resize.jpg"
+          },
+          "role": "image"
+        }
+      ],
+      "model": "sunburst",
+      "prompt": "One tall pillar of porous purple-grey live rock seen from the side, rising from a flat base, its ledges covered in corals: orange branching acropora at the top, a green brain coral and pink bubble coral on the ledges, teal zoanthids and a small violet sea fan, the whole pillar visible. No water, no background, no fish, painterly realism: a high-end natural-history illustration rendered as a detailed digital oil painting, true-to-life anatomy and colors, fine scale and tissue texture, soft overhead aquarium light with gentle subsurface glow, rich but natural saturation, not cartoon, not vector, not 3D render, no text, no logo, no watermark. Use the reference image only for its painting style, lighting and level of detail; it shows a different subject, do not copy its shape, colors or composition. Transparent background, isolated subject, no mockup, no checkerboard.",
+      "quality": "xhigh",
+      "reference_elements": [],
+      "remove_bg": false,
+      "resolution": "2k",
+      "width": 1744
+    },
+    "result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3Gv9RgU5roVxfEeNP9AFPAziDdM/hf_20261104_204615_310cb623-4c98-4322-929e-93a039f388be.png",
+    "status": "completed"
+  }
+]
