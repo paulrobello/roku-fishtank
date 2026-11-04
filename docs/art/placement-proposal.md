@@ -47,7 +47,7 @@ All coordinates are design pixels at 1920x1080 inside the camera Group, at camer
 | `night/glow_mid_coral_*`, `glow_front_coral_*`, `glow_backdrop_*` (half resolution) | the same layer as the sprite named in `over` | the JSON x/y, with **`scale` 2** (`scaleRotateCenter` at 0,0) | alpha-over (no additive blending on the device). Opacity = phase blend × (0.7 + 0.15 sin), breathing over 5–9 s. The colour is baked in, so `blendColor` stays white |
 | `night/sparkle.png` 32x32 | `bubbles` | pool of ~30 (P3.6) | `blendColor` 0x96FFE6FF, scale 0.5–1.0, opacity twinkle, slow drift |
 
-Two existing files are not used in this proposal: `decor/coral_acropora.png` and its glow mask. The mid strip replaces the stand-in coral. Both stay in the texture total until P1.8 removes them from `scene.json`.
+Two existing files are not used in this proposal: `decor/coral_acropora.png` and its glow mask. The mid strip replaces the stand-in coral. P1.8 removed both files and the `coralAcropora` decor entry.
 
 ## Occluders for weaving (P1.8 input)
 

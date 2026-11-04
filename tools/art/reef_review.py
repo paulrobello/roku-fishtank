@@ -312,11 +312,11 @@ def padded_mb(path: Path) -> float:
 
 
 GROUPS: list[tuple[str, list[str], float]] = [
-    ("Mid and front coral strips", ["decor/mid_coral_*.png", "decor/front_coral_*.png", "decor/rock_pillar.png", "decor/coral_acropora.png"], 11.5),
+    ("Mid and front coral strips", ["decor/mid_coral_*.png", "decor/front_coral_*.png", "decor/rock_pillar.png"], 11.5),
     ("Foreground sand lip and plants", ["decor/sand_lip.png", "decor/sand_tuft_*.png", "decor/plant_cluster.png"], 3.6),
     ("Anemone, soft coral, invertebrates (this batch)", ["extras/*.png"], 6.0),
     ("Day light shafts", ["fx/shaft_day_*.png"], 4.5),
-    ("Night: moon shafts, coral glow masks", ["night/moon_shaft_*.png", "night/glow_*.png", "decor/coral_acropora_glowmask.png"], 10.5),
+    ("Night: moon shafts, coral glow masks", ["night/moon_shaft_*.png", "night/glow_*.png"], 10.5),
     ("Caustic and ripple tiles", ["fx/caustic_*.png", "fx/ripple.png"], 3.1),
     ("Sparkles (this batch)", ["night/sparkle.png"], 0.5),
 ]

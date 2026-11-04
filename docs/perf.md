@@ -44,17 +44,17 @@ The ceiling for our own resident textures is **100 MB**. Keeping 25% margin leav
 | Asset group | Allowance (pixels) | MB | Now (2026-11-04) |
 |---|---|---|---|
 | Back reef: water, back rockwork | 1 x 2560x1088 | 11.1 | `reef_backdrop.png` 11.1 |
-| Mid and front coral strips (P1.7 split) | 2560x608 + 2560x512 | 11.5 | 9.6: mid tiles 4.5, front clumps 3.9, rock pillar 0.5, `coral_acropora.png` 0.7 |
+| Mid and front coral strips (P1.7 split) | 2560x608 + 2560x512 | 11.5 | 8.9: mid tiles 4.5, front clumps 3.9, rock pillar 0.5 (P1.8 retired `coral_acropora.png`) |
 | Foreground sand lip and plants | 2560x320, plus 0.3 from the reserve | 3.6 | 3.6: sand band 1.3, algae tufts 1.8, plant cluster 0.4 |
 | Seaweed, anemone, soft coral, invertebrates | 6 MB total, each sprite at most 512x512 | 6.0 | 1.8 of P4.6 extras (seaweed not counted here) |
 | Fish rigs: 8 species plus chromis, right and left facing | 6 MB total, each layer at most 512x320 | 6.0 | 1.3 (right only) |
 | Day light shafts | 2 x 512x1088 | 4.5 | 2.2 (2 x 256x1088) |
-| Night: moon shafts, coral glow masks | 2 x 512x1088 + 6 MB of masks at half resolution | 10.5 | 4.8: moon shafts 2.2, glow masks 1.8, acropora glow mask 0.7 |
+| Night: moon shafts, coral glow masks | 2 x 512x1088 + 6 MB of masks at half resolution | 10.5 | 4.0: moon shafts 2.2, glow masks 1.8 (P1.8 retired the acropora glow mask) |
 | Caustic and ripple tiles | 2 x 512x512 + 1920x128 | 3.1 | 3.1 |
 | Bubbles, sparkles | 0.5 MB total, each at most 64x64 | 0.5 | none |
 | Settings screen panel | 1 x 1280x704 (backdrop shared) | 3.6 | none |
 | Launch splash (resident at start) | 1920x1088 | 8.4 | `splash_fhd.png` 8.4 |
-| **Total** | | **68.8** | **45.9** |
+| **Total** | | **68.8** | **44.5** |
 
 68.5 MB leaves 6.5 MB of the 75 MB unallocated. P1.7 moved 0.3 MB of that reserve to the foreground row, for the algae tufts above the sand band, which leaves 6.2 MB. The P1.7, P3.7 and P4.6 figures above are printed by `uv run tools/art/reef_review.py`. An art card that needs more takes it from that reserve or from another row, and records the move in this table.
 
