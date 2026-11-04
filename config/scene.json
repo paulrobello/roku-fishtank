@@ -580,7 +580,7 @@
     "keyCount": 13
   },
   "seaweed": {
-    "_notes": "P1.4 segmented seaweed (components/Seaweed): one Seaweed component per stalk, placed in its layer with its base at (x, y). segmentUris run base to tip (tools/art/seaweed.py); each Poster is segmentSize and the next segment starts segmentStep px higher, so joints overlap by segmentSize[1] - segmentStep px. Segment k swings amplitudeDeg * (0.5 + 0.5 * k / (n - 1)) degrees with a lag of k * phaseStepDeg, so the bend travels up the stalk over period seconds. scale must stay positive (fidelity F4). tint is a 0xRRGGBBAA multiply.",
+    "_notes": "P1.4 segmented seaweed (components/Seaweed): one Seaweed component per stalk, placed in its layer with its base at (x, y). segmentUris run base to tip (tools/art/seaweed.py); each Poster is segmentSize and the next segment starts segmentStep px higher, so joints overlap by segmentSize[1] - segmentStep px. Segment k swings amplitudeDeg * (0.5 + 0.5 * k / (n - 1)) degrees with a lag of k * phaseStepDeg, so the bend travels up the stalk over period seconds. The twelve segments make a 680 px blade at scale 1 (P1.4 made it 400 px); with phaseStepDeg 25 the stalk holds about three quarters of a wave and the tip swings about 8% of the blade height either side. The tallest tip (weedC) reaches about y 270, well clear of the y 0-120 surface band the drift spec compares. scale must stay positive (fidelity F4). tint is a 0xRRGGBBAA multiply.",
     "segmentUris": [
       "pkg:/images/decor/seaweed_seg0.png",
       "pkg:/images/decor/seaweed_seg1.png",
@@ -588,7 +588,12 @@
       "pkg:/images/decor/seaweed_seg3.png",
       "pkg:/images/decor/seaweed_seg4.png",
       "pkg:/images/decor/seaweed_seg5.png",
-      "pkg:/images/decor/seaweed_seg6.png"
+      "pkg:/images/decor/seaweed_seg6.png",
+      "pkg:/images/decor/seaweed_seg7.png",
+      "pkg:/images/decor/seaweed_seg8.png",
+      "pkg:/images/decor/seaweed_seg9.png",
+      "pkg:/images/decor/seaweed_seg10.png",
+      "pkg:/images/decor/seaweed_seg11.png"
     ],
     "segmentSize": [
       64,
@@ -596,8 +601,8 @@
     ],
     "segmentStep": 56,
     "period": 5.0,
-    "amplitudeDeg": 4.0,
-    "phaseStepDeg": 40,
+    "amplitudeDeg": 3.0,
+    "phaseStepDeg": 25,
     "keyCount": 17,
     "stalks": [
       {
@@ -605,7 +610,7 @@
         "layer": "frontCoral",
         "x": 1004,
         "y": 1030,
-        "scale": 1.0,
+        "scale": 0.95,
         "phaseDeg": 0,
         "tint": "0x88A8A0FF"
       },
@@ -614,7 +619,7 @@
         "layer": "frontCoral",
         "x": 1034,
         "y": 1040,
-        "scale": 0.8,
+        "scale": 0.78,
         "phaseDeg": 70,
         "period": 5.6,
         "tint": "0x7898A0FF"
@@ -624,7 +629,7 @@
         "layer": "frontCoral",
         "x": 1700,
         "y": 1030,
-        "scale": 1.1,
+        "scale": 1.12,
         "phaseDeg": 150,
         "tint": "0x88A8A0FF"
       },
@@ -633,7 +638,7 @@
         "layer": "frontCoral",
         "x": 1732,
         "y": 1045,
-        "scale": 0.85,
+        "scale": 0.88,
         "phaseDeg": 230,
         "period": 4.6,
         "tint": "0x7898A0FF"

@@ -2,14 +2,15 @@
 # requires-python = ">=3.12"
 # dependencies = ["pillow==11.3.0"]
 # ///
-"""Seaweed segments for the P1.4 sway: images/decor/seaweed_seg<k>.png, k = 0 (base) .. 6 (tip).
+"""Seaweed segments for the P1.4 sway: images/decor/seaweed_seg<k>.png, k = 0 (base) .. 11 (tip).
 
 Run from anywhere: ``uv run tools/art/seaweed.py`` (``make ambient-art``). Byte-reproducible.
 
 Input: assets/source/seaweed/blade_rgba.png, the approved MOSS-Image cutout (provenance in
 assets/source/seaweed/PROVENANCE.md). The blade is cropped to its alpha bounds, scaled to
-SEGMENTS * STEP + OVERLAP px tall, centred in a SIZE-wide strip and cut into SEGMENTS
-slices of SIZE x SIZE. Slice k starts k * STEP px above the base, so neighbouring slices
+SEGMENTS * STEP + OVERLAP px tall and BLADE_WIDTH px wide (a vertical stretch of the cutout,
+which at its own aspect would be about 80 px wide at that height and not fit the strip), centred
+in a SIZE-wide strip and cut into SEGMENTS slices of SIZE x SIZE. Slice k starts k * STEP px above the base, so neighbouring slices
 share OVERLAP rows: at rest the stacked slices reproduce the blade exactly, and when a
 joint bends the lower slice's top rows cover the wedge that opens under the upper slice.
 Each slice is one 64x64 tile (docs/perf.md: no padding), 16 KB of texture each.
@@ -24,17 +25,18 @@ from PIL import Image
 ROOT = Path(__file__).resolve().parents[2]
 SRC = ROOT / "assets" / "source" / "seaweed" / "blade_rgba.png"
 OUT_DIR = ROOT / "images" / "decor"
-SEGMENTS = 7
+SEGMENTS = 12
 SIZE = 64
 STEP = 56
 OVERLAP = SIZE - STEP
+BLADE_WIDTH = 54
 
 
 def main() -> None:
     blade = Image.open(SRC).convert("RGBA")
     blade = blade.crop(blade.getchannel("A").getbbox())
     height = SEGMENTS * STEP + OVERLAP
-    width = round(blade.width * height / blade.height)
+    width = BLADE_WIDTH
     assert width <= SIZE, f"blade {width} px wide does not fit the {SIZE} px strip"
     blade = blade.resize((width, height), Image.Resampling.LANCZOS)
     strip = Image.new("RGBA", (SIZE, height), (0, 0, 0, 0))
