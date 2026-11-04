@@ -1,0 +1,24 @@
+{
+  "species": "green_chromis",
+  "source": "assets/source/species/green_chromis/green_chromis_a1.png",
+  "facing": "right",
+  "display_length_px": 80,
+  "tail": {
+    "cut_x_px": 562,
+    "feather_px": 24,
+    "overlap_px": 56,
+    "swing_deg": 22
+  },
+  "fin": {
+    "polygon": [
+      [1317, 610], [1374, 614], [1423, 637], [1473, 667], [1518, 702],
+      [1556, 732], [1587, 753], [1583, 785], [1564, 827], [1534, 844],
+      [1488, 852], [1442, 850], [1401, 840], [1359, 821], [1328, 795],
+      [1304, 759], [1292, 717], [1292, 671], [1302, 633]
+    ],
+    "pivot": [1564, 785],
+    "feather_px": 6,
+    "swing_deg": 15
+  },
+  "_notes": "Untrimmed source pixels of green_chromis_a1.png (2048x1360). Peduncle alpha>128 profile: 192 px at x=492 narrowing to 151 px at x=564 (y 580-730); dorsal and anal fins start at x=572. The cut sits just head-side of that minimum. Fin polygon traces the translucent pectoral fin; pivot is the fleshy root at its lower right. Used as a ~10-fish school, so it renders at 80 px."
+}

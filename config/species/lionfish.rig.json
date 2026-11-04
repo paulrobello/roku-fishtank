@@ -1,0 +1,86 @@
+{
+  "_generated": "by tools/art/rig.py from config/species/lionfish.json; do not edit",
+  "bounds": {
+    "height": 209,
+    "width": 280,
+    "x": -60,
+    "y": -2
+  },
+  "coordinate_space": "body Poster local pixels at display size; offset = Poster translation, pivot = scaleRotateCenter",
+  "display_length_px": 280,
+  "draw_order": [
+    "body",
+    "spines",
+    "tail",
+    "fin"
+  ],
+  "extra_layers": [
+    {
+      "height": 86,
+      "name": "spines",
+      "offset": [
+        16,
+        -2
+      ],
+      "pivot": [
+        96.79,
+        73.51
+      ],
+      "swing_deg": 3,
+      "uri": "pkg:/images/fish/lionfish_spines.png",
+      "width": 174,
+      "z_after": "body"
+    }
+  ],
+  "layers": {
+    "body": {
+      "height": 207,
+      "offset": [
+        0,
+        0
+      ],
+      "uri": "pkg:/images/fish/lionfish_body.png",
+      "width": 220
+    },
+    "fin": {
+      "height": 108,
+      "offset": [
+        37,
+        99
+      ],
+      "pivot": [
+        116.08,
+        21.97
+      ],
+      "swing_deg": 4,
+      "uri": "pkg:/images/fish/lionfish_fin.png",
+      "width": 149
+    },
+    "tail": {
+      "height": 84,
+      "offset": [
+        -60,
+        74
+      ],
+      "pivot": [
+        66.79,
+        41.65
+      ],
+      "swing_deg": 12,
+      "uri": "pkg:/images/fish/lionfish_tail.png",
+      "width": 69
+    }
+  },
+  "mirror_center": [
+    80.0,
+    102.5
+  ],
+  "scale": 0.122111,
+  "species": "lionfish",
+  "texture_bytes": 329568,
+  "z_order": [
+    "body",
+    "tail",
+    "fin"
+  ]
+}

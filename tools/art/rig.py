@@ -26,6 +26,25 @@ Fish (``config/species/*.json``, generated ``*.rig.json`` skipped):
      Poster's local coordinates at display size) and the rig check render
      ``docs/art/rig-check-<species>.png``.
 
+Optional species config keys (absent keys leave the output byte-identical):
+  - ``fin.fill_axis: "vertical"``: rebuild the flank under the fin by
+    interpolating down each column, which continues vertical bands (clownfish,
+    lionfish) instead of smearing them.
+  - ``fin.underlay_polygon``: for a fin that reaches past the body outline
+    (lionfish pectoral fan). Inside the polygon the flank is rebuilt; elsewhere
+    under the fin the body alpha is removed, so open water shows when it swings.
+  - ``extra_fins``: list of additional swinging layers (lionfish dorsal spines),
+    each ``{name, polygon, pivot, swing_deg, feather_px?, underlay_polygon?,
+    fill_seed_min_value?, z_after?}``. Each is cut from the body the same way
+    and written as ``images/fish/<species>_<name>.png``.
+
+Rig JSON: ``layers.{body,tail,fin}``, ``z_order`` and the other existing fields
+never change meaning. Species with ``extra_fins`` additionally get
+``extra_layers`` (ordered list; each entry has the per-layer fields of
+``layers`` plus ``name`` and ``z_after``, the layer it draws directly above)
+and ``draw_order`` (the full back-to-front list including extras). A consumer
+that ignores both still draws a correct rest pose minus the extra layers.
+
 Decor (``config/decor/*.json``): ``backdrop`` layers are scaled to target_height;
 ``sprite`` layers are trimmed, scaled, and get an optional glow-mask stub.
 
@@ -149,6 +168,24 @@ def smooth_region(rgb: Float, region: Bool, iterations: int) -> Float:
     return rgb
 
 
+def column_fill(rgb: Float, seed: Bool, todo: Bool) -> Float:
+    """Interpolate todo pixels down each column between the nearest seeds.
+
+    Continues vertical stripes (lionfish bands) across a fin hole, where the
+    isotropic diffusion fill would smear them into a flat patch. Columns with
+    no seed keep the input fill.
+    """
+    rgb = rgb.copy()
+    for x in range(rgb.shape[1]):
+        ys = np.nonzero(seed[:, x])[0]
+        rows = np.nonzero(todo[:, x])[0]
+        if ys.size == 0 or rows.size == 0:
+            continue
+        for c in range(3):
+            rgb[rows, x, c] = np.interp(rows, ys, rgb[ys, x, c])
+    return rgb
+
+
 def finish_sprite(arr: Float) -> tuple[Image.Image, tuple[int, int]]:
     """Zero alpha dust, crop tight, bleed colour into transparent pixels.
 
@@ -226,24 +263,81 @@ def rig_species(cfg_path: Path) -> None:
     todo = (body_d[..., 3] > 0) & ~seed
     fill = neighbour_fill(body_d[..., :3], seed, todo, 10_000)
     fill = smooth_region(fill, todo, 60)
+    if fin_cfg.get("fill_axis") == "vertical":
+        fill = column_fill(fill, seed, todo)
     # Blend the fill in by fin coverage so pixels the fin only grazes keep their
     # own colour: the rest pose stays faithful outside the fin.
     w = np.clip(fin_disp_mask * 2.0, 0.0, 1.0)[..., None]
     body_d[..., :3] = body_d[..., :3] * (1.0 - w) + fill * w
+
+    def disp_mask(polygon: list[list[float]], feather_px: float) -> tuple[Float, Float]:
+        """Rasterise a source-pixel polygon: (source-res weight, display-res weight)."""
+        img = Image.new("L", (tw, th), 0)
+        ImageDraw.Draw(img).polygon([(float(x) - bx0, float(y) - by0) for x, y in polygon], fill=255)
+        if feather_px > 0:
+            img = img.filter(ImageFilter.GaussianBlur(feather_px / 2))
+        src_w = np.asarray(img, dtype=np.float32) / 255.0
+        return src_w, np.asarray(img.resize(disp_size, Image.Resampling.BILINEAR), dtype=np.float32) / 255.0
+
+    # Optional: a pectoral fin that extends past the body outline into open water
+    # (lionfish fan) keeps body alpha only inside its underlay polygon.
+    if "underlay_polygon" in fin_cfg:
+        _, fin_under = disp_mask(fin_cfg["underlay_polygon"], fin_feather)
+        body_d[..., 3] *= 1.0 - fin_disp_mask * (1.0 - fin_under)
+
+    # Extra fin layers (optional, e.g. lionfish spines and pectoral fans). Each is
+    # cut out of the body: inside its underlay polygon the flank is rebuilt by
+    # diffusion (the fin lies over the body), elsewhere the body alpha is removed
+    # (the fin sticks out into open water), so a swinging fin leaves no ghost.
+    extra_cfgs: list[dict[str, Any]] = cfg.get("extra_fins", [])
+    extra_d: dict[str, Float] = {}
+    for ecfg in extra_cfgs:
+        ename = str(ecfg["name"])
+        if ename in ("body", "tail", "fin") or ename in extra_d:
+            raise ValueError(f"{name}: duplicate layer name {ename!r}")
+        e_src, e_disp = disp_mask(ecfg["polygon"], float(ecfg.get("feather_px", 0)))
+        extra_d[ename] = to_float(layer(e_src))
+        if "underlay_polygon" in ecfg:
+            _, under = disp_mask(ecfg["underlay_polygon"], float(ecfg.get("feather_px", 0)))
+        else:
+            under = np.zeros_like(e_disp)
+        e_hole = (e_disp > 0.02) & (body_d[..., 3] > 0)
+        e_grown = np.asarray(Image.fromarray((e_hole * 255).astype(np.uint8)).filter(ImageFilter.MaxFilter(3)), dtype=np.uint8) > 0
+        e_seed = (body_d[..., 3] > 0.99) & ~e_grown & (body_d[..., :3].max(axis=-1) > float(ecfg.get("fill_seed_min_value", seed_min)))
+        e_todo = (body_d[..., 3] > 0) & ~e_seed
+        e_fill = smooth_region(neighbour_fill(body_d[..., :3], e_seed, e_todo, 10_000), e_todo, 60)
+        e_w = np.clip(e_disp * 2.0, 0.0, 1.0)
+        keep = e_w * under
+        body_d[..., :3] = body_d[..., :3] * (1.0 - keep[..., None]) + e_fill * keep[..., None]
+        body_d[..., 3] *= 1.0 - e_disp * (1.0 - under)
 
     layers: dict[str, tuple[Image.Image, tuple[int, int]]] = {
         "body": finish_sprite(body_d),
         "tail": finish_sprite(tail_d),
         "fin": finish_sprite(fin_d),
     }
+    for ename, arr in extra_d.items():
+        layers[ename] = finish_sprite(arr)
     body_origin = layers["body"][1]
 
     pivots_disp = {
         "tail": (cut * scale, pivot_y * scale),
         "fin": ((float(fin_cfg["pivot"][0]) - bx0) * scale, (float(fin_cfg["pivot"][1]) - by0) * scale),
     }
+    for ecfg in extra_cfgs:
+        pivots_disp[str(ecfg["name"])] = ((float(ecfg["pivot"][0]) - bx0) * scale, (float(ecfg["pivot"][1]) - by0) * scale)
+    swing_by_layer: dict[str, Any] = {"tail": tail_cfg["swing_deg"], "fin": fin_cfg["swing_deg"]}
+    swing_by_layer.update({str(e["name"]): e["swing_deg"] for e in extra_cfgs})
+
+    draw_order = ["body", "tail", "fin"]
+    for ecfg in extra_cfgs:
+        after = str(ecfg.get("z_after", draw_order[-1]))
+        if after not in draw_order:
+            raise ValueError(f"{name}: z_after {after!r} names no earlier layer")
+        draw_order.insert(draw_order.index(after) + 1, str(ecfg["name"]))
 
     rig_layers: dict[str, Any] = {}
+    extra_entries: list[dict[str, Any]] = []
     total = 0
     for key, (img, (ox, oy)) in layers.items():
         out = FISH_OUT / f"{name}_{key}.png"
@@ -259,14 +353,20 @@ def rig_species(cfg_path: Path) -> None:
         if key in pivots_disp:
             px, py = pivots_disp[key]
             entry["pivot"] = [round(px - ox, 2), round(py - oy, 2)]
-            entry["swing_deg"] = (tail_cfg if key == "tail" else fin_cfg)["swing_deg"]
-        rig_layers[key] = entry
+            entry["swing_deg"] = swing_by_layer[key]
+        if key in extra_d:
+            entry["name"] = key
+            entry["z_after"] = draw_order[draw_order.index(key) - 1]
+            extra_entries.append(entry)
+        else:
+            rig_layers[key] = entry
 
-    min_x = min(e["offset"][0] for e in rig_layers.values())
-    min_y = min(e["offset"][1] for e in rig_layers.values())
-    max_x = max(e["offset"][0] + e["width"] for e in rig_layers.values())
-    max_y = max(e["offset"][1] + e["height"] for e in rig_layers.values())
-    rig = {
+    every = [*rig_layers.values(), *extra_entries]
+    min_x = min(e["offset"][0] for e in every)
+    min_y = min(e["offset"][1] for e in every)
+    max_x = max(e["offset"][0] + e["width"] for e in every)
+    max_y = max(e["offset"][1] + e["height"] for e in every)
+    rig: dict[str, Any] = {
         "_generated": "by tools/art/rig.py from " + str(cfg_path.relative_to(ROOT)) + "; do not edit",
         "species": name,
         "display_length_px": length,
@@ -278,10 +378,13 @@ def rig_species(cfg_path: Path) -> None:
         "layers": rig_layers,
         "texture_bytes": total,
     }
+    if extra_entries:
+        rig["extra_layers"] = extra_entries
+        rig["draw_order"] = draw_order
     write_json(SPECIES_DIR / f"{name}.rig.json", rig)
 
     reference = resize_premultiplied(to_image(trim), disp_size)
-    render_rig_check(name, rig, layers, reference)
+    render_rig_check(name, rig, layers, reference, draw_order)
 
 
 def compose(
@@ -290,10 +393,11 @@ def compose(
     angles: dict[str, float],
     canvas: tuple[int, int],
     pad: int,
+    order: list[str],
 ) -> Image.Image:
-    """Composite layers in z order, rotating tail/fin about their pivots."""
+    """Composite layers in draw order, rotating swinging layers about their pivots."""
     out = Image.new("RGBA", canvas, (0, 0, 0, 0))
-    for key in ("body", "tail", "fin"):
+    for key in order:
         img, (ox, oy) = layers[key]
         sheet = Image.new("RGBA", canvas, (0, 0, 0, 0))
         sheet.paste(img, (ox + pad, oy + pad))
@@ -314,14 +418,18 @@ def render_rig_check(
     rig: dict[str, Any],
     layers: dict[str, tuple[Image.Image, tuple[int, int]]],
     reference: Image.Image,
+    order: list[str],
 ) -> None:
     pad = CHECK_PAD
     canvas = (reference.width + 2 * pad, reference.height + 2 * pad)
-    pivots = {k: (float(v["pivot"][0]), float(v["pivot"][1])) for k, v in rig["layers"].items() if "pivot" in v}
+    entries: dict[str, Any] = {**rig["layers"], **{e["name"]: e for e in rig.get("extra_layers", [])}}
+    pivots = {k: (float(v["pivot"][0]), float(v["pivot"][1])) for k, v in entries.items() if "pivot" in v}
     tail_swing = float(rig["layers"]["tail"]["swing_deg"])
     fin_swing = float(rig["layers"]["fin"]["swing_deg"])
+    # Extra layers swing in phase with the pectoral fin, each by its own limit.
+    extra_swing = {e["name"]: float(e["swing_deg"]) for e in rig.get("extra_layers", [])}
 
-    rest = compose(layers, pivots, {}, canvas, pad)
+    rest = compose(layers, pivots, {}, canvas, pad, order)
     ref_canvas = Image.new("RGBA", canvas, (0, 0, 0, 0))
     ref_canvas.paste(reference, (pad, pad))
     diff = np.abs(to_float(rest) - to_float(ref_canvas)) * to_float(ref_canvas)[..., 3:4]
@@ -332,9 +440,8 @@ def render_rig_check(
     for fin_a, first in ((-fin_swing, ("source (scaled)", ref_canvas)), (fin_swing, ("rig at rest", rest))):
         tiles.append(first)
         for tail_a in (-tail_swing, 0.0, tail_swing):
-            tiles.append(
-                (f"tail {tail_a:+.0f}  fin {fin_a:+.0f}", compose(layers, pivots, {"tail": tail_a, "fin": fin_a}, canvas, pad))
-            )
+            angles = {"tail": tail_a, "fin": fin_a, **{k: s * np.sign(fin_a) for k, s in extra_swing.items()}}
+            tiles.append((f"tail {tail_a:+.0f}  fin {fin_a:+.0f}", compose(layers, pivots, angles, canvas, pad, order)))
 
     cols = 4
     tw, th = canvas[0] * CHECK_ZOOM, canvas[1] * CHECK_ZOOM

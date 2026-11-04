@@ -1,0 +1,24 @@
+{
+  "species": "royal_gramma",
+  "source": "assets/source/species/royal_gramma/royal_gramma_a1.png",
+  "facing": "right",
+  "display_length_px": 110,
+  "tail": {
+    "cut_x_px": 526,
+    "feather_px": 24,
+    "overlap_px": 56,
+    "swing_deg": 20
+  },
+  "fin": {
+    "polygon": [
+      [1302, 590], [1348, 588], [1390, 598], [1425, 616], [1460, 640],
+      [1488, 665], [1516, 688], [1540, 703], [1540, 742], [1526, 773],
+      [1502, 787], [1467, 801], [1425, 814], [1383, 821], [1351, 810],
+      [1327, 786], [1306, 756], [1292, 721], [1283, 679], [1285, 630]
+    ],
+    "pivot": [1526, 728],
+    "feather_px": 6,
+    "swing_deg": 15
+  },
+  "_notes": "Untrimmed source pixels of royal_gramma_a1.png (2048x1360). Peduncle alpha>128 profile: 147 px at x=488 narrowing to 134 px at x=528 (y 592-725); the dorsal and anal fins start at x=536. The cut sits 2 px head-side of that minimum, in the plain yellow stalk. Fin polygon traces the violet pectoral fin; pivot is the fleshy root at its right."
+}

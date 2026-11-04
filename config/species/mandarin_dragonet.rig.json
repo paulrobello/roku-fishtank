@@ -1,0 +1,62 @@
+{
+  "_generated": "by tools/art/rig.py from config/species/mandarin_dragonet.json; do not edit",
+  "bounds": {
+    "height": 48,
+    "width": 110,
+    "x": -24,
+    "y": 0
+  },
+  "coordinate_space": "body Poster local pixels at display size; offset = Poster translation, pivot = scaleRotateCenter",
+  "display_length_px": 110,
+  "layers": {
+    "body": {
+      "height": 48,
+      "offset": [
+        0,
+        0
+      ],
+      "uri": "pkg:/images/fish/mandarin_dragonet_body.png",
+      "width": 86
+    },
+    "fin": {
+      "height": 24,
+      "offset": [
+        37,
+        20
+      ],
+      "pivot": [
+        17.37,
+        12.39
+      ],
+      "swing_deg": 15,
+      "uri": "pkg:/images/fish/mandarin_dragonet_fin.png",
+      "width": 20
+    },
+    "tail": {
+      "height": 40,
+      "offset": [
+        -24,
+        8
+      ],
+      "pivot": [
+        27.93,
+        18.39
+      ],
+      "swing_deg": 18,
+      "uri": "pkg:/images/fish/mandarin_dragonet_tail.png",
+      "width": 29
+    }
+  },
+  "mirror_center": [
+    31.0,
+    24.0
+  ],
+  "scale": 0.054348,
+  "species": "mandarin_dragonet",
+  "texture_bytes": 23072,
+  "z_order": [
+    "body",
+    "tail",
+    "fin"
+  ]
+}

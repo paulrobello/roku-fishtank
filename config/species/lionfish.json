@@ -1,0 +1,52 @@
+{
+  "species": "lionfish",
+  "source": "assets/source/species/lionfish/lionfish_a1.png",
+  "facing": "right",
+  "display_length_px": 280,
+  "tail": {
+    "cut_x_px": 572,
+    "feather_px": 24,
+    "overlap_px": 56,
+    "swing_deg": 12
+  },
+  "fin": {
+    "polygon": [
+      [926, 846], [1178, 846], [1430, 886], [1619, 949], [1745, 1006],
+      [1808, 1050], [1846, 1138], [1896, 1239], [1972, 1327], [2028, 1440],
+      [2028, 1516], [2010, 1541], [1909, 1604], [1808, 1655], [1682, 1718],
+      [1556, 1730], [1405, 1692], [1216, 1629], [1115, 1541], [1014, 1440],
+      [926, 1340], [888, 1201], [876, 1100], [825, 1025], [838, 936]
+    ],
+    "underlay_polygon": [
+      [800, 780], [2100, 780], [2100, 1262], [1960, 1250], [1700, 1240],
+      [1500, 1230], [1300, 1200], [1100, 1160], [1030, 1250], [980, 1380],
+      [900, 1420], [800, 1420]
+    ],
+    "pivot": [1770, 1020],
+    "feather_px": 6,
+    "fill_axis": "vertical",
+    "swing_deg": 4
+  },
+  "extra_fins": [
+    {
+      "name": "spines",
+      "polygon": [
+        [645, 480], [645, 397], [682, 285], [765, 202], [892, 128],
+        [1035, 68], [1215, 30], [1410, 8], [1605, 22], [1845, 90],
+        [2040, 292], [2062, 360], [2040, 495], [1950, 660], [1875, 618],
+        [1650, 588], [1440, 597], [1230, 633], [1095, 675], [1020, 712],
+        [800, 580], [650, 500]
+      ],
+      "underlay_polygon": [
+        [600, 540], [750, 532], [900, 610], [1005, 680], [1100, 650],
+        [1230, 615], [1440, 580], [1650, 573], [1875, 602], [2025, 692],
+        [2100, 800], [600, 800]
+      ],
+      "pivot": [1440, 615],
+      "feather_px": 6,
+      "swing_deg": 3,
+      "z_after": "body"
+    }
+  ],
+  "_notes": "Untrimmed source pixels of lionfish_a1.png (2336x1744, generated at 4:3 so the spines and fans fit). Peduncle alpha>128 profile: 321 px at x=488 narrowing to 180 px at x=576 (y 887-1066); the soft dorsal tip starts at x=584. The cut sits 4 px head-side of that minimum. fin = the whole pectoral fan, pivot at its root behind the gill; it reaches below the belly, so underlay_polygon (the body and anal fin under the fan) keeps body alpha and everything else under the fan is cut to open water. Extra layer spines = the dorsal spine crest, pivot mid-base on the back; its underlay is the body below the back line plus the spotted soft dorsal fin under the rear spines; it reaches ~30 px above the back line so the body keeps the spine roots and no background shows when the crest swings. The fan uses fill_axis vertical so the flank it uncovers continues the vertical bands."
+}

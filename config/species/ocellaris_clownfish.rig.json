@@ -1,0 +1,62 @@
+{
+  "_generated": "by tools/art/rig.py from config/species/ocellaris_clownfish.json; do not edit",
+  "bounds": {
+    "height": 67,
+    "width": 130,
+    "x": -29,
+    "y": 0
+  },
+  "coordinate_space": "body Poster local pixels at display size; offset = Poster translation, pivot = scaleRotateCenter",
+  "display_length_px": 130,
+  "layers": {
+    "body": {
+      "height": 67,
+      "offset": [
+        0,
+        0
+      ],
+      "uri": "pkg:/images/fish/ocellaris_clownfish_body.png",
+      "width": 101
+    },
+    "fin": {
+      "height": 26,
+      "offset": [
+        46,
+        29
+      ],
+      "pivot": [
+        21.14,
+        15.24
+      ],
+      "swing_deg": 15,
+      "uri": "pkg:/images/fish/ocellaris_clownfish_fin.png",
+      "width": 25
+    },
+    "tail": {
+      "height": 42,
+      "offset": [
+        -29,
+        15
+      ],
+      "pivot": [
+        34.91,
+        20.28
+      ],
+      "swing_deg": 20,
+      "uri": "pkg:/images/fish/ocellaris_clownfish_tail.png",
+      "width": 36
+    }
+  },
+  "mirror_center": [
+    36.0,
+    33.5
+  ],
+  "scale": 0.066124,
+  "species": "ocellaris_clownfish",
+  "texture_bytes": 35716,
+  "z_order": [
+    "body",
+    "tail",
+    "fin"
+  ]
+}

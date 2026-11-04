@@ -1,0 +1,62 @@
+{
+  "_generated": "by tools/art/rig.py from config/species/green_chromis.json; do not edit",
+  "bounds": {
+    "height": 41,
+    "width": 80,
+    "x": -17,
+    "y": 0
+  },
+  "coordinate_space": "body Poster local pixels at display size; offset = Poster translation, pivot = scaleRotateCenter",
+  "display_length_px": 80,
+  "layers": {
+    "body": {
+      "height": 41,
+      "offset": [
+        0,
+        0
+      ],
+      "uri": "pkg:/images/fish/green_chromis_body.png",
+      "width": 63
+    },
+    "fin": {
+      "height": 14,
+      "offset": [
+        32,
+        16
+      ],
+      "pivot": [
+        13.09,
+        9.34
+      ],
+      "swing_deg": 15,
+      "uri": "pkg:/images/fish/green_chromis_fin.png",
+      "width": 16
+    },
+    "tail": {
+      "height": 30,
+      "offset": [
+        -17,
+        5
+      ],
+      "pivot": [
+        21.4,
+        15.08
+      ],
+      "swing_deg": 22,
+      "uri": "pkg:/images/fish/green_chromis_tail.png",
+      "width": 24
+    }
+  },
+  "mirror_center": [
+    23.0,
+    20.5
+  ],
+  "scale": 0.040609,
+  "species": "green_chromis",
+  "texture_bytes": 14108,
+  "z_order": [
+    "body",
+    "tail",
+    "fin"
+  ]
+}

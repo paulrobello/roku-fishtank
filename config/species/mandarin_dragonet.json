@@ -1,0 +1,25 @@
+{
+  "species": "mandarin_dragonet",
+  "source": "assets/source/species/mandarin_dragonet/mandarin_dragonet_a1.png",
+  "facing": "right",
+  "display_length_px": 110,
+  "tail": {
+    "cut_x_px": 526,
+    "feather_px": 24,
+    "overlap_px": 56,
+    "swing_deg": 18
+  },
+  "fin": {
+    "polygon": [
+      [1278, 620], [1322, 628], [1358, 650], [1390, 682], [1422, 718],
+      [1450, 748], [1466, 778], [1462, 830], [1446, 878], [1426, 922],
+      [1398, 958], [1358, 976], [1318, 976], [1278, 962], [1242, 934],
+      [1214, 902], [1194, 862], [1182, 814], [1180, 762], [1190, 710],
+      [1210, 670], [1238, 638]
+    ],
+    "pivot": [1454, 814],
+    "feather_px": 6,
+    "swing_deg": 15
+  },
+  "_notes": "Untrimmed source pixels of mandarin_dragonet_a1.png (2048x1360). Peduncle alpha>128 profile: 233 px at x=488 narrowing to 189 px at x=528 (y 608-796); dorsal and anal fins start at x=536. The cut sits 2 px head-side of that minimum. Fin polygon traces the blue fan-shaped pectoral fin; pivot is its speckled fleshy root. A bottom grazer, so it is drawn small."
+}

@@ -1,0 +1,26 @@
+{
+  "species": "ocellaris_clownfish",
+  "source": "assets/source/species/ocellaris_clownfish/ocellaris_clownfish_a1.png",
+  "facing": "right",
+  "display_length_px": 130,
+  "tail": {
+    "cut_x_px": 574,
+    "feather_px": 24,
+    "overlap_px": 56,
+    "swing_deg": 20
+  },
+  "fin": {
+    "polygon": [
+      [1314, 615], [1360, 622], [1398, 637], [1436, 664], [1474, 694],
+      [1504, 724], [1525, 745], [1519, 778], [1515, 823], [1496, 857],
+      [1466, 895], [1428, 922], [1382, 939], [1337, 935], [1291, 914],
+      [1257, 880], [1230, 831], [1215, 770], [1219, 713], [1238, 667],
+      [1272, 633]
+    ],
+    "pivot": [1500, 808],
+    "feather_px": 6,
+    "fill_axis": "vertical",
+    "swing_deg": 15
+  },
+  "_notes": "Untrimmed source pixels of ocellaris_clownfish_a1.png (2048x1360). Peduncle alpha>128 column profile: 307 px at x=488 narrowing to 240 px at x=576-584 (y 552-791); the anal fin starts at x=584. The cut sits 2 px head-side of that minimum, at the front black edge of the tail-stalk white band, so the seam runs through the band's black outline. Fin polygon traces the black-rimmed pectoral fin; pivot is the fleshy root at its right. fill_axis vertical continues the vertical white band under the fin instead of smearing white into the orange flank."
+}
