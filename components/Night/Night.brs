@@ -211,29 +211,56 @@ sub nightTintGroup(group as object, prefix as string, mult as integer, info as o
 end sub
 
 ' One shaft pair (day or moon) inside a master Group whose opacity the phase
-' drives; each shaft breathes on its own repeating Animation.
+' drives. Each shaft is a Group pivoted at its top centre holding the Poster: the
+' Group breathes (opacity) on one repeating Animation, and a second one, the
+' shimmer, sways the Group (rotation), wobbles its width (scale.x) and flickers
+' the Poster's opacity, each an irregular nightWaveKeys curve over shimmer.loopSec.
 function nightBuildShafts(block as object, prefix as string, freeze as float) as dynamic
     if not sceneCfgIsObject(block) or not sceneCfgIsArray(block.items) then return invalid
     master = m.camera.findNode(block.layer).createChild("Group")
     master.id = prefix + "s"
     master.opacity = 0
     blend = sceneCfgParseColor(block.blendColor, &hFFFFFFFF)
+    sh = block.shimmer
+    if not sceneCfgIsObject(sh) then sh = {}
+    loopSec = nightNum(sh.loopSec, 21.0)
+    perCycle = Int(nightNum(sh.keysPerCycle, 8))
+    depth = nightNum(sh.flickerDepth, 0.0)
+    wobble = nightNum(sh.widthWobble, 0.0)
+    flickerCycles = sh.flickerCycles
+    if not sceneCfgIsArray(flickerCycles) then flickerCycles = []
+    swayCycles = sh.swayCycles
+    if not sceneCfgIsArray(swayCycles) then swayCycles = []
+    widthCycles = sh.widthCycles
+    if not sceneCfgIsArray(widthCycles) then widthCycles = []
     for i = 0 to block.items.count() - 1
         item = block.items[i]
-        poster = master.createChild("Poster")
-        poster.id = prefix + i.toStr()
+        shaft = master.createChild("Group")
+        shaft.id = prefix + i.toStr()
+        shaft.translation = [item.x + item.width / 2.0, item.y]
+        shaft.opacity = 0
+        poster = shaft.createChild("Poster")
+        poster.id = prefix + "Ray" + i.toStr()
         poster.uri = item.uri
         poster.width = item.width
         poster.height = item.height
-        poster.translation = [item.x, item.y]
+        poster.translation = [-item.width / 2.0, 0]
         poster.blendColor = blend
-        poster.opacity = 0
         lo = nightNum(item.opacityMin, 0.4)
         hi = nightNum(item.opacityMax, 0.6)
         period = nightNum(item.period, 10.0)
         phase = nightNum(item.phaseDeg, 0.0)
+        ' Sway is given as px at the bottom edge; the Group turns about its top.
+        swayRad = nightNum(sh.swayPx, 0.0) / item.height
+        flicker = nightWaveKeys(flickerCycles, phase + 200, perCycle)
+        sway = nightWaveKeys(swayCycles, phase, perCycle)
+        width = nightWaveKeys(widthCycles, phase + 90, perCycle)
         if freeze > 0 then
-            poster.opacity = nightBreathAt(lo, hi, phase, freeze, period)
+            shaft.opacity = nightBreathAt(lo, hi, phase, freeze, period)
+            f = freeze / loopSec - Int(freeze / loopSec)
+            poster.opacity = 1 - depth * (0.5 + 0.5 * nightKeyAt(flicker.keys, flicker.values, f))
+            shaft.rotation = swayRad * nightKeyAt(sway.keys, sway.values, f)
+            shaft.scale = [1 + wobble * nightKeyAt(width.keys, width.values, f), 1]
         else
             anim = master.createChild("Animation")
             anim.id = prefix + "Breathe" + i.toStr()
@@ -241,11 +268,42 @@ function nightBuildShafts(block as object, prefix as string, freeze as float) as
             anim.easeFunction = "linear"
             anim.duration = period
             fade = anim.createChild("FloatFieldInterpolator")
-            fade.fieldToInterp = [poster.id + ".opacity"]
+            fade.fieldToInterp = [shaft.id + ".opacity"]
             keys = nightBreathKeys(lo, hi, phase, 9)
             fade.key = keys.keys
             fade.keyValue = keys.values
             anim.control = "start"
+
+            shim = master.createChild("Animation")
+            shim.id = prefix + "Shimmer" + i.toStr()
+            shim.repeat = true
+            shim.easeFunction = "linear"
+            shim.duration = loopSec
+            values = []
+            for each v in flicker.values
+                values.push(1 - depth * (0.5 + 0.5 * v))
+            end for
+            glint = shim.createChild("FloatFieldInterpolator")
+            glint.fieldToInterp = [poster.id + ".opacity"]
+            glint.key = flicker.keys
+            glint.keyValue = values
+            values = []
+            for each v in sway.values
+                values.push(swayRad * v)
+            end for
+            turn = shim.createChild("FloatFieldInterpolator")
+            turn.fieldToInterp = [shaft.id + ".rotation"]
+            turn.key = sway.keys
+            turn.keyValue = values
+            values = []
+            for each v in width.values
+                values.push([1 + wobble * v, 1])
+            end for
+            stretch = shim.createChild("Vector2DFieldInterpolator")
+            stretch.fieldToInterp = [shaft.id + ".scale"]
+            stretch.key = width.keys
+            stretch.keyValue = values
+            shim.control = "start"
         end if
     end for
     return master

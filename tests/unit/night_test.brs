@@ -12,6 +12,7 @@ function nightTestSuite() as object
             { name: "lerpColor", fn: nightTest_lerpColor }
             { name: "multiplyColor", fn: nightTest_multiplyColor }
             { name: "breathKeysLoop", fn: nightTest_breathKeysLoop }
+            { name: "waveKeysLoop", fn: nightTest_waveKeysLoop }
             { name: "glowItemsFilter", fn: nightTest_glowItemsFilter }
             { name: "sparklePoolConstant", fn: nightTest_sparklePoolConstant }
         ]
@@ -116,6 +117,27 @@ sub nightTest_breathKeysLoop(t as object)
     assertNear(t, k.values[6], 0.5, 0.0001, "trough at three quarters")
     p = nightBreathKeys(0.5, 0.8, 90, 9)
     assertNear(t, p.values[0], 0.8, 0.0001, "phase 90 starts at the peak")
+end sub
+
+sub nightTest_waveKeysLoop(t as object)
+    k = nightWaveKeys([9, 13, 17], 40, 8)
+    assertEqual(t, k.keys.count(), 137, "17 cycles x 8 keys + 1")
+    assertNear(t, k.keys[0], 0, 0.0001, "first key")
+    assertNear(t, k.keys[136], 1, 0.0001, "last key")
+    assertNear(t, k.values[0], k.values[136], 0.0001, "loops without a jump")
+    lo = 1.0
+    hi = -1.0
+    for each v in k.values
+        if v < lo then lo = v
+        if v > hi then hi = v
+    end for
+    assertTrue(t, lo >= -1 and hi <= 1, "values in -1..1")
+    assertTrue(t, hi - lo > 0.8, "wave has real swing")
+    again = nightWaveKeys([9, 13, 17], 40, 8)
+    assertNear(t, again.values[57], k.values[57], 0.000001, "deterministic")
+    other = nightWaveKeys([9, 13, 17], 180, 8)
+    assertTrue(t, Abs(other.values[57] - k.values[57]) > 0.0001, "phase shifts the wave")
+    assertNear(t, nightWaveAt([], 0, 0.3), 0, 0.0001, "no components is flat")
 end sub
 
 sub nightTest_glowItemsFilter(t as object)

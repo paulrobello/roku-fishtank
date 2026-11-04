@@ -135,6 +135,40 @@ function nightBreathAt(lo as float, hi as float, phaseDeg as float, t as float, 
     return lo + (hi - lo) * (0.5 + 0.5 * Sin(6.283185307 * f + phaseDeg * 0.0174532925))
 end function
 
+' A loop-closing irregular wave in -1..1 at fraction f of its loop: a weighted
+' sum of sines with an integer number of cycles each (weight 1 / (j + 1)), the
+' j-th started phaseDeg + 137.5 x (j + 1) degrees in, so the components are
+' mutually non-harmonic yet the loop has no seam.
+function nightWaveAt(cycles as object, phaseDeg as float, f as float) as float
+    sum = 0.0
+    total = 0.0
+    for j = 0 to cycles.count() - 1
+        w = 1.0 / (j + 1)
+        sum = sum + w * Sin(6.283185307 * cycles[j] * f + (phaseDeg + 137.5 * (j + 1)) * 0.0174532925)
+        total = total + w
+    end for
+    if total <= 0 then return 0.0
+    return sum / total
+end function
+
+' nightWaveAt sampled as linear keys, keysPerCycle per cycle of the fastest
+' component, for a repeating Animation (first and last values match).
+function nightWaveKeys(cycles as object, phaseDeg as float, keysPerCycle as integer) as object
+    most = 1
+    for each c in cycles
+        if c > most then most = c
+    end for
+    count = most * keysPerCycle + 1
+    keys = []
+    values = []
+    for i = 0 to count - 1
+        f = i / (count - 1.0)
+        keys.push(f)
+        values.push(nightWaveAt(cycles, phaseDeg, f))
+    end for
+    return { keys: keys, values: values }
+end function
+
 ' Glow items whose over sprite starts with one of groups.
 function nightGlowItems(glow as object) as object
     out = []

@@ -1,5 +1,5 @@
 {
-  "_notes": "Night mode (P3.3-P3.6), read by components/Night (logic in components/lib/night.brs). The phase and its 0..1 blend (0 day, 1 night) come from components/lib/daynight.brs with the scene.json location; the shown blend eases toward that target at most 1/easeSeconds per second, and the clock is re-read every evalSeconds. tints: per scene.json layer id, the moonlight multiply at blend 1; every Poster under that layer (except Night's own night_* Groups) gets blendColor = its own base x lerp(white, tint, blend), computed in RGB in BrightScript (no ColorFieldInterpolator, so the device's long-way hue lerp, docs/fidelity F5, never applies). background is the fill Rectangle colour at blend 1. Day shafts fade as 1 - 2 x blend and the night effects (moon shafts, glow, sparkles) as 2 x blend - 1, so the two shaft pairs are never drawn at once. Shaft and glow opacity breathe between opacityMin and opacityMax over period seconds. glow.items are copied from docs/art/placement-proposal.json by tools/art/night_config.py (the device zip has no docs/); only items whose over sprite starts with one of glow.groups are built (front clumps only by default, for fill rate). Colours are 0xRRGGBBAA strings.",
+  "_notes": "Night mode (P3.3-P3.6), read by components/Night (logic in components/lib/night.brs). The phase and its 0..1 blend (0 day, 1 night) come from components/lib/daynight.brs with the scene.json location; the shown blend eases toward that target at most 1/easeSeconds per second, and the clock is re-read every evalSeconds. tints: per scene.json layer id, the moonlight multiply at blend 1; every Poster under that layer (except Night's own night_* Groups) gets blendColor = its own base x lerp(white, tint, blend), computed in RGB in BrightScript (no ColorFieldInterpolator, so the device's long-way hue lerp, docs/fidelity F5, never applies). background is the fill Rectangle colour at blend 1. Day shafts fade as 1 - 2 x blend and the night effects (moon shafts, glow, sparkles) as 2 x blend - 1, so the two shaft pairs are never drawn at once. Shaft and glow opacity breathe between opacityMin and opacityMax over period seconds. Each shaft also shimmers (light through the moving surface ripple) on one repeating shimmer.loopSec Animation: a flicker multiplies its opacity by 1 - flickerDepth x (0..1), it sways about its top by up to swayPx at the bottom edge, and its width wobbles by +-widthWobble about its centre; each curve is a weighted sum of sines with flickerCycles / swayCycles / widthCycles whole cycles per loop (components/lib/night.brs nightWaveKeys), so the loop closes while the components stay non-harmonic. Keep widthWobble x width / 2 under the 8 px shaft margin in tests/visual/drift.spec.ts. glow.items are copied from docs/art/placement-proposal.json by tools/art/night_config.py (the device zip has no docs/); only items whose over sprite starts with one of glow.groups are built (front clumps only by default, for fill rate). Colours are 0xRRGGBBAA strings.",
   "evalSeconds": 5,
   "easeSeconds": 3,
   "background": "0x06183AFF",
@@ -18,6 +18,16 @@
   "dayShafts": {
     "layer": "lightShafts",
     "blendColor": "0xFFEEC4FF",
+    "shimmer": {
+      "loopSec": 21,
+      "keysPerCycle": 8,
+      "flickerDepth": 0.2,
+      "flickerCycles": [9, 13, 17],
+      "swayPx": 8,
+      "swayCycles": [3, 5],
+      "widthWobble": 0.04,
+      "widthCycles": [4, 7]
+    },
     "items": [
       {
         "uri": "pkg:/images/fx/shaft_day_a.png",
@@ -46,6 +56,16 @@
   "moonShafts": {
     "layer": "lightShafts",
     "blendColor": "0xAAC8FFFF",
+    "shimmer": {
+      "loopSec": 21,
+      "keysPerCycle": 8,
+      "flickerDepth": 0.15,
+      "flickerCycles": [8, 11, 16],
+      "swayPx": 6,
+      "swayCycles": [3, 5],
+      "widthWobble": 0.03,
+      "widthCycles": [4, 6]
+    },
     "items": [
       {
         "uri": "pkg:/images/night/moon_shaft_a.png",

@@ -60,8 +60,8 @@ async function edgeStats(page: import("@playwright/test").Page, png: Buffer): Pr
 
 // Bubbles, seaweed and fish run on their own clocks, so drift is compared only in the surface
 // water band (above every fish lane), skipping columns within 120 px of a bubble source and
-// the light-shaft columns (P3.4 day and moon shafts breathe on their own clocks, so their
-// opacity differs between freeze times).
+// the light-shaft columns (P3.4 day and moon shafts breathe and shimmer on their own clocks,
+// so their opacity differs between freeze times; the 8 px margin covers the width wobble).
 const BAND = { top: 0, bottom: 120 };
 const BUBBLE_SOURCES_X: readonly number[] = [1176, 1590];
 const SHAFT_SPANS: readonly (readonly [number, number])[] = [
