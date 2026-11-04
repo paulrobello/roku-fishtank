@@ -35,6 +35,16 @@ sub init()
     print "REEFTANK ready: "; dr.width; "x"; dr.height; " layers="; m.sceneCfg.layers.count(); " decor="; decor.count()
     reefTankInitFish()
     m.top.findNode("night").callFunc("nightStart", { camera: camera, fill: fill, scene: m.sceneCfg })
+    reefTankAddExtras()
+end sub
+
+' P4 reef extras (components/Extras, config/extras.json). Built after the fish, so the
+' anemone tentacles land after the front lane's FishBrain. reefExtras.nightLevel
+' (0 day .. 1 night) dims the caustics and ripple; the night phase owner sets it.
+sub reefTankAddExtras()
+    extras = m.top.createChild("Extras")
+    extras.id = "reefExtras"
+    extras.configUri = "pkg:/config/extras.json"
 end sub
 
 ' ---------------------------------------------------------------------------

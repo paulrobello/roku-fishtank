@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+    Reef extras (P4.1-P4.5). Set configUri to config/extras.json once the scene layers and
+    fish exist (ReefTank calls it last in init). Nothing is drawn under this node: every
+    piece is attached into a scene.json layer Group found by id, with its Animations inside
+    that piece's own Group so fieldToInterp resolves there.
+    - Sway chains (sea fan, soft coral, anemone tentacles): nested segment Groups rotating
+      about each segment's pivot, one repeating Animation per chain, phases from the shared
+      current (P4.2).
+    - Anemone (P4.1): the body and critters go in a Group inserted at index 0 of the front
+      lane (behind its FishBrain); the tentacle chains go in a Group appended after it, so the
+      hosted clownfish draws between them. reorderTimer moves the tentacles back to the end
+      of the lane when something is appended after them (a density rebuild).
+    - Critters (P4.3): seeded walk loops (components/lib/extras.brs) as repeating Animations;
+      the shrimp turns by stepping the opacity of its r and l art, never a negative scale.
+    - Ripple (P4.4) and caustics (P4.5): translate loops of periodic art; the caustic tiles
+      scroll inside a static Group with clippingRect over the sand band.
+    Every Animation starts here with the scene, so ?freeze seeks them all, and the walk loops
+    depend only on ?seed (1 under ?freeze). Durations divide by ?speed.
+    nightLevel (0 day .. 1 night): fades the caustics (hidden from caustics.hideAt) and blends
+    the ripple tint and opacity to night. The night phase owner sets it; it stays 0 until wired.
+-->
+<component name="Extras" extends="Group">
+    <interface>
+        <field id="configUri" type="string" onChange="onConfigUri" />
+        <field id="nightLevel" type="float" value="0.0" onChange="onNightLevel" />
+    </interface>
+    <script type="text/brightscript" uri="Extras.brs" />
+    <script type="text/brightscript" uri="pkg:/components/lib/prng.brs" />
+    <script type="text/brightscript" uri="pkg:/components/lib/scenecfg.brs" />
+    <script type="text/brightscript" uri="pkg:/components/lib/extras.brs" />
+    <children>
+        <Timer id="reorderTimer" duration="1.0" repeat="true" />
+    </children>
+</component>

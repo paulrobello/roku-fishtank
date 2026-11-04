@@ -36,6 +36,7 @@ sub onConfigUri()
     prefix = "brain" + m.global.brainSerial.toStr() + "_"
     seed = brainSeed() + m.top.seedSalt * 1000003
     spawned = brainSpawnAll(cfg, beh, m.world, seed)
+    brainAttachHosts(spawned)
     print "BRAIN seed="; seed; " fish="; spawned.count(); " speed="; m.speed
     for i = 0 to spawned.count() - 1
         s = spawned[i]
@@ -61,6 +62,19 @@ sub onConfigUri()
     m.tick = -1
     brainAdvance(0)
     m.timer.control = "start"
+end sub
+
+' P4.1 anemone hosting: config/extras.json anemone.host names a lane and species;
+' those fish in this brain's lane start nestling at the anemone (components/lib/host.brs).
+sub brainAttachHosts(spawned as object)
+    parent = m.top.getParent()
+    if parent = invalid then return
+    extras = ParseJson(ReadAsciiFile("pkg:/config/extras.json"))
+    if extras = invalid or extras.anemone = invalid then return
+    for each s in spawned
+        host = hostFor(extras.anemone.host, parent.id, s.species)
+        if host <> invalid and s.state <> invalid then hostAttach(s.state, host, m.world, m.cfg)
+    end for
 end sub
 
 ' One Fish and its reused mover, created once per fish inside a holder Group. Facing is

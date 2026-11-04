@@ -24,6 +24,7 @@ function testSuites() as object
         bubblesTestSuite()
         nightTestSuite()
         weaveTestSuite()
+        extrasTestSuite()
     ]
 end function
 

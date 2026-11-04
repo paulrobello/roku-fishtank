@@ -363,6 +363,8 @@ end sub
 ' behaviour fish only rolls for darts mid-segment in cruise mode; when its
 ' segment has ended it may change mode, then plans the next segment.
 function brainTickBehavior(fish as object, cfg as object, world as object, now as integer) as string
+    if fish.host <> invalid then return hostTick(fish, cfg, world, now)
+
     if fish.wv <> invalid then
         ' Lane weaving (weave.brs) goes first; a fish that left its home lane moves in its own lane world.
         if weaveTick(fish, cfg, world, now) <> "" then return "segment"

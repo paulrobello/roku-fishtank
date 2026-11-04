@@ -1,0 +1,119 @@
+{
+  "_notes": "Reef extras (P4.1-P4.5), built by components/Extras and attached into the config/scene.json layer Groups by id. Positions are design pixels (1920x1080 inside the camera Group) from docs/art/placement-proposal.json. current is the one shared water current: every sway chain loops over current.period x art.periodScale seconds, with its phase taken from its base x (one wave of waveLength px travelling right) plus phaseDeg. chainArt: segments run base to tip; pivot is the segment's rotation point in its own pixels (the Poster is drawn at -pivot) and attach is where the next segment's pivot sits; amplitudeDeg is each segment's own swing (nested, so the tip sums them); lagSec delays each segment behind the one below. chains are free-standing sway chains: x, y is the base pivot. anemone: body and tentacle chains go in anemone.layer (the front lane) so the hosted clownfish draws between them: the body and the critters are inserted behind the lane's FishBrain and the tentacles after it. anemone.host is read by FishBrain (components/lib/host.brs): fish of host.species in host.lane start nestling within radius px of (x, y), roam out to leash px and return. critters walk seeded loops along y (top-left of the sprite, so the feet sit on the ground) between left and right (components/lib/extras.brs extrasWalkPath); the shrimp turns by switching between its pre-mirrored r and l art. ripple: copies of a 1920-wide strip side by side from x0, scrolled left by one strip width per periodSec plus a +-bobPx vertical bob, tinted day..night. caustics: tiles in a clipped Group over the sand band; each tile layer scrolls one tile along dir per periodSec. Night: the Extras nightLevel field (0 day, 1 night) fades the caustics (hidden from hideAt) and moves the ripple tint/opacity from day to night. Colours are 0xRRGGBBAA strings.",
+  "current": { "period": 7.0, "waveLength": 2400, "keyCount": 17 },
+  "chainArt": {
+    "seaFan": {
+      "segments": [
+        { "uri": "pkg:/images/extras/sea_fan_seg0.png", "width": 270, "height": 75, "pivot": [149, 75], "attach": [164, 0] },
+        { "uri": "pkg:/images/extras/sea_fan_seg1.png", "width": 270, "height": 141, "pivot": [164, 133], "attach": [136, 0] },
+        { "uri": "pkg:/images/extras/sea_fan_seg2.png", "width": 270, "height": 140, "pivot": [136, 132], "attach": [173, 0] }
+      ],
+      "amplitudeDeg": [2, 3, 4],
+      "lagSec": 0.4,
+      "periodScale": 1.0
+    },
+    "softCoral": {
+      "segments": [
+        { "uri": "pkg:/images/extras/soft_coral_seg0.png", "width": 206, "height": 70, "pivot": [126, 70], "attach": [111, 0] },
+        { "uri": "pkg:/images/extras/soft_coral_seg1.png", "width": 206, "height": 113, "pivot": [111, 105], "attach": [97, 0] },
+        { "uri": "pkg:/images/extras/soft_coral_seg2.png", "width": 206, "height": 113, "pivot": [97, 105], "attach": [103, 0] }
+      ],
+      "amplitudeDeg": [2, 3, 5],
+      "lagSec": 0.4,
+      "periodScale": 1.0
+    },
+    "tentacle": {
+      "segments": [
+        { "uri": "pkg:/images/extras/anemone_tentacle_seg0.png", "width": 17, "height": 24, "pivot": [7, 24], "attach": [9, 0] },
+        { "uri": "pkg:/images/extras/anemone_tentacle_seg1.png", "width": 17, "height": 28, "pivot": [9, 24], "attach": [9, 0] },
+        { "uri": "pkg:/images/extras/anemone_tentacle_seg2.png", "width": 17, "height": 28, "pivot": [9, 24], "attach": [7, 0] }
+      ],
+      "amplitudeDeg": [6, 9, 12],
+      "lagSec": 0.25,
+      "periodScale": 0.5
+    }
+  },
+  "chains": [
+    { "id": "seaFan", "art": "seaFan", "layer": "midCoral", "x": 789, "y": 960, "phaseDeg": 0 },
+    { "id": "softCoral", "art": "softCoral", "layer": "frontCoral", "x": 1826, "y": 960, "phaseDeg": 0 }
+  ],
+  "anemone": {
+    "layer": "frontLane",
+    "body": { "uri": "pkg:/images/extras/anemone_body.png", "x": 1080, "y": 728, "width": 315, "height": 240 },
+    "tentacleArt": "tentacle",
+    "tentacles": [
+      { "x": 1152, "y": 798, "phaseDeg": 0, "scale": 1.0 },
+      { "x": 1184, "y": 784, "phaseDeg": 140, "scale": 1.15 },
+      { "x": 1214, "y": 776, "phaseDeg": 60, "scale": 1.0 },
+      { "x": 1246, "y": 774, "phaseDeg": 250, "scale": 1.2 },
+      { "x": 1278, "y": 778, "phaseDeg": 20, "scale": 1.05 },
+      { "x": 1308, "y": 786, "phaseDeg": 190, "scale": 1.1 },
+      { "x": 1338, "y": 800, "phaseDeg": 300, "scale": 0.95 }
+    ],
+    "host": {
+      "lane": "frontLane",
+      "species": ["ocellaris_clownfish"],
+      "x": 1238,
+      "y": 752,
+      "radius": 28,
+      "leash": 200,
+      "nestleSec": [12, 22],
+      "roamSec": [6, 14],
+      "segSec": [1.0, 2.5],
+      "approachSec": 8,
+      "nestleSpeed": 14,
+      "roamSpeed": 45
+    }
+  },
+  "critters": {
+    "shrimp": {
+      "right": { "body": "pkg:/images/extras/shrimp_body_r.png", "antennae": "pkg:/images/extras/shrimp_antennae_r.png", "pivot": [169, 72] },
+      "left": { "body": "pkg:/images/extras/shrimp_body_l.png", "antennae": "pkg:/images/extras/shrimp_antennae_l.png", "pivot": [32, 72] },
+      "width": 201,
+      "height": 130,
+      "walk": { "x": 600, "y": 862, "left": 470, "right": 860, "speed": 24, "legPx": [40, 150], "pauseSec": [1.5, 5.0], "legs": 6, "turnSec": 0.02 },
+      "antennaDeg": 6,
+      "antennaSec": 0.9
+    },
+    "crab": {
+      "uri": "pkg:/images/extras/crab.png",
+      "width": 150,
+      "height": 82,
+      "walk": { "x": 900, "y": 934, "left": 820, "right": 1120, "speed": 60, "legPx": [20, 90], "pauseSec": [1.0, 4.0], "legs": 8 }
+    },
+    "starfish": {
+      "uri": "pkg:/images/extras/starfish.png",
+      "width": 112,
+      "height": 110,
+      "walk": { "x": 1300, "y": 866, "left": 1270, "right": 1340, "speed": 1.5, "legPx": [15, 40], "pauseSec": [10, 30], "legs": 4 },
+      "rotateDeg": 3,
+      "rotateSec": 40
+    }
+  },
+  "ripple": {
+    "layer": "surfaceRipple",
+    "uri": "pkg:/images/fx/ripple.png",
+    "width": 1920,
+    "height": 128,
+    "copies": 3,
+    "x0": -64,
+    "y": 0,
+    "periodSec": 60,
+    "bobPx": 4,
+    "bobSec": 7.5,
+    "dayTint": "0xE1F5FFFF",
+    "dayOpacity": 0.6,
+    "nightTint": "0x7896C8FF",
+    "nightOpacity": 0.35
+  },
+  "caustics": {
+    "layer": "foreground",
+    "clip": { "x": -320, "y": 952, "width": 2560, "height": 128 },
+    "tile": 512,
+    "hideAt": 0.9,
+    "tiles": [
+      { "uri": "pkg:/images/fx/caustic_a.png", "opacity": 0.3, "dir": [1, 1], "periodSec": 40 },
+      { "uri": "pkg:/images/fx/caustic_b.png", "opacity": 0.22, "dir": [-1, 1], "periodSec": 55 }
+    ]
+  }
+}

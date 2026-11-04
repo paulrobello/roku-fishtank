@@ -171,6 +171,9 @@ sub nightApply()
         g.opacity = nightLevel
     end for
     if m.sparkleMaster <> invalid then m.sparkleMaster.opacity = nightLevel
+    ' The reef extras (caustics, ripple) are built after nightStart, so look the node up lazily.
+    if m.extras = invalid then m.extras = m.top.getParent().findNode("reefExtras")
+    if m.extras <> invalid then m.extras.nightLevel = nightLevel
     for each id in m.layers
         info = m.layers[id]
         mult = nightLerpColor(&hFFFFFFFF, info.tint, shown)

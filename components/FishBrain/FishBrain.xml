@@ -32,6 +32,7 @@
     <script type="text/brightscript" uri="pkg:/components/lib/prng.brs" />
     <script type="text/brightscript" uri="pkg:/components/lib/steer.brs" />
     <script type="text/brightscript" uri="pkg:/components/lib/brain.brs" />
+    <script type="text/brightscript" uri="pkg:/components/lib/host.brs" />
     <script type="text/brightscript" uri="pkg:/components/lib/tint.brs" />
     <script type="text/brightscript" uri="pkg:/components/lib/weave.brs" />
     <children>

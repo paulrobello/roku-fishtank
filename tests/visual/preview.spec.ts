@@ -5,7 +5,9 @@ type PreviewWindow = Window & { __preview?: { status: string; log: string[] } };
 // ?freeze=3 snaps the camera drift loop to T=3 s (a few px off centre at speed 1), so the frame
 // is the layered tank (backdrop + decor from config/scene.json) at that drift offset, the bubble
 // column posed from its schedule at T=3 (fixed seed 1 under freeze), the seaweed sway snapped
-// to T=3, and the default (normal) density: the lane FishBrains and the chromis School posed
+// to T=3, the reef extras (config/extras.json: sway chains, anemone, critter walk loops
+// from seed 7, ripple and caustics) snapped to T=3 with the front-lane clownfish nestled in the
+// anemone, and the default (normal) density: the lane FishBrains and the chromis School posed
 // from seed and T, so the seed is pinned.
 test("frozen Reef Tank frame matches the baseline", async ({ page }) => {
   const renderer = await page.evaluate(() => {

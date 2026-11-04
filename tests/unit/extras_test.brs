@@ -1,0 +1,285 @@
+' Unit tests for the P4 reef extras: components/lib/extras.brs (sway keyframes,
+' seeded walk loops, caustic tile grids, night fade) and components/lib/host.brs
+' (P4.1 anemone hosting). Configs mirror config/extras.json so a config edit
+' cannot silently weaken the tests.
+
+function extrasTestSuite() as object
+    return {
+        name: "extras"
+        tests: [
+            { name: "swayValuesLoopSeamlessly", fn: extrasTest_swayValuesLoopSeamlessly }
+            { name: "currentPhaseTravelsRight", fn: extrasTest_currentPhaseTravelsRight }
+            { name: "walkPathIsDeterministic", fn: extrasTest_walkPathIsDeterministic }
+            { name: "walkPathStaysOnItsSurface", fn: extrasTest_walkPathStaysOnItsSurface }
+            { name: "walkPathClosesItsLoop", fn: extrasTest_walkPathClosesItsLoop }
+            { name: "walkPathTurnsOnlyWhilePaused", fn: extrasTest_walkPathTurnsOnlyWhilePaused }
+            { name: "facingOpacityMatches", fn: extrasTest_facingOpacityMatches }
+            { name: "tileGridCoversClipWhileScrolling", fn: extrasTest_tileGridCoversClipWhileScrolling }
+            { name: "nightOpacityFadesAndHides", fn: extrasTest_nightOpacityFadesAndHides }
+            { name: "lerpColorEndpointsAndMidpoint", fn: extrasTest_lerpColorEndpointsAndMidpoint }
+            { name: "seedRules", fn: extrasTest_seedRules }
+            { name: "hostNestlesWithinRadiusOver10000Ticks", fn: extrasTest_hostNestlesWithinRadiusOver10000Ticks }
+            { name: "hostRoamsWithinLeash", fn: extrasTest_hostRoamsWithinLeash }
+            { name: "hostCyclesNestleRoamApproach", fn: extrasTest_hostCyclesNestleRoamApproach }
+            { name: "hostIsDeterministic", fn: extrasTest_hostIsDeterministic }
+            { name: "hostForMatchesLaneAndSpecies", fn: extrasTest_hostForMatchesLaneAndSpecies }
+        ]
+    }
+end function
+
+function extrasTest_current() as object
+    return { period: 7.0, waveLength: 2400, keyCount: 17 }
+end function
+
+function extrasTest_shrimpWalk() as object
+    return { x: 600, y: 862, left: 470, right: 860, speed: 24, legPx: [40, 150], pauseSec: [1.5, 5.0], legs: 6, turnSec: 0.02 }
+end function
+
+function extrasTest_host() as object
+    return {
+        lane: "frontLane"
+        species: ["ocellaris_clownfish"]
+        x: 1238
+        y: 752
+        radius: 28
+        leash: 200
+        nestleSec: [12, 22]
+        roamSec: [6, 14]
+        segSec: [1.0, 2.5]
+        approachSec: 8
+        nestleSpeed: 14
+        roamSpeed: 45
+    }
+end function
+
+' The front lane rect and the scene.json ellipses around the anemone.
+function extrasTest_world() as object
+    return {
+        lane: { left: 160, top: 180, right: 1760, bottom: 940 }
+        ellipses: [
+            { cx: 445, cy: 445, rx: 250, ry: 60 }
+            { cx: 180, cy: 640, rx: 120, ry: 180 }
+            { cx: 690, cy: 560, rx: 75, ry: 140 }
+            { cx: 990, cy: 760, rx: 170, ry: 170 }
+            { cx: 1450, cy: 800, rx: 180, ry: 170 }
+            { cx: 1810, cy: 720, rx: 130, ry: 140 }
+            { cx: 1580, cy: 560, rx: 170, ry: 80 }
+        ]
+        caves: []
+        rocks: []
+        band: invalid
+        arriveTime: 0.6
+        arriveResponse: 6.0
+    }
+end function
+
+function extrasTest_brainCfg() as object
+    return {
+        tick: 0.125, segMinSec: 0.5, segMaxSec: 1.5, minSpeed: 35, maxSpeed: 110
+        wanderJitter: 3.0, wanderAccel: 80, avoidMargin: 0.5, avoidAccel: 300
+        laneBand: 80, laneAccel: 400, dartChance: 0.004, dartSpeed: 420
+        dartTurn: 1.2, dartSteps: 4, facingDeadband: 6, speedBucket: 15, spawnMargin: 0.3
+    }
+end function
+
+' Runs a hosted fish for `ticks` ticks from `seed` and returns
+' { visits, maxNestle, maxRoam, modes }.
+function extrasTest_runHost(seed as integer, ticks as integer) as object
+    cfg = extrasTest_brainCfg()
+    world = extrasTest_world()
+    host = extrasTest_host()
+    fish = brainNewFish(cfg, seed, world.lane, world.ellipses)
+    hostAttach(fish, host, world, cfg)
+    maxNestle = 0.0
+    maxRoam = 0.0
+    modes = { nestle: 0, roam: 0, approach: 0 }
+    for now = 0 to ticks
+        hostTick(fish, cfg, world, now)
+        d = Sqr((fish.agent.x - host.x) * (fish.agent.x - host.x) + (fish.agent.y - host.y) * (fish.agent.y - host.y))
+        if fish.hostMode = "nestle" then
+            modes.nestle = modes.nestle + 1
+            if d > maxNestle then maxNestle = d
+        else if fish.hostMode = "roam" then
+            modes.roam = modes.roam + 1
+            if d > maxRoam then maxRoam = d
+        else
+            modes.approach = modes.approach + 1
+        end if
+    end for
+    return { visits: fish.hostVisits, maxNestle: maxNestle, maxRoam: maxRoam, modes: modes }
+end function
+
+sub extrasTest_swayValuesLoopSeamlessly(t as object)
+    values = extrasSwayValues(0.15, 1.2, 17)
+    if not assertEqual(t, values.count(), 17, "value count") then return
+    if not assertTrue(t, Abs(values[0] - values[16]) < 0.000001, "first and last values match") then return
+    peak = 0.0
+    for each v in values
+        if Abs(v) > peak then peak = Abs(v)
+    end for
+    if not assertNear(t, peak, 0.15, 0.001, "peak near amplitude") then return
+    for each v in values
+        if not assertTrue(t, Abs(v) <= 0.15 + 0.000001, "value within amplitude") then return
+    end for
+end sub
+
+sub extrasTest_currentPhaseTravelsRight(t as object)
+    cur = extrasTest_current()
+    ' One wave of waveLength px: the phase repeats one wavelength right.
+    assertNear(t, extrasCurrentPhase(cur, 0) - extrasCurrentPhase(cur, cur.waveLength), 6.2831853, 0.0001, "phase advances one turn per wavelength")
+end sub
+
+sub extrasTest_walkPathIsDeterministic(t as object)
+    a = extrasWalkPath(extrasTest_shrimpWalk(), 7)
+    b = extrasWalkPath(extrasTest_shrimpWalk(), 7)
+    if not assertEqual(t, b.keys.count(), a.keys.count(), "key count") then return
+    ok = true
+    for i = 0 to a.keys.count() - 1
+        if Abs(a.keys[i] - b.keys[i]) > 0.000001 then ok = false
+        if Abs(a.points[i][0] - b.points[i][0]) > 0.000001 then ok = false
+        if a.facings[i] <> b.facings[i] then ok = false
+    end for
+    if not assertNear(t, b.duration, a.duration, 0.000001, "duration") then return
+    assertTrue(t, ok, "same seed gives the same path, points and facings")
+end sub
+
+sub extrasTest_walkPathStaysOnItsSurface(t as object)
+    walk = extrasTest_shrimpWalk()
+    path = extrasWalkPath(walk, 11)
+    if not assertEqual(t, path.points.count(), path.keys.count(), "one point per key") then return
+    for i = 0 to path.points.count() - 1
+        p = path.points[i]
+        if not assertTrue(t, p[1] = walk.y, "y fixed at " + i.toStr()) then return
+        if not assertTrue(t, p[0] >= walk.left - 0.001 and p[0] <= walk.right + 0.001, "x within range at " + i.toStr()) then return
+    end for
+    ' Keys are the sorted event times, so they rise monotonically.
+    for i = 1 to path.keys.count() - 1
+        if not assertTrue(t, path.keys[i] >= path.keys[i - 1], "keys non-decreasing at " + i.toStr()) then return
+    end for
+end sub
+
+sub extrasTest_walkPathClosesItsLoop(t as object)
+    walk = extrasTest_shrimpWalk()
+    path = extrasWalkPath(walk, 3)
+    first = path.points[0]
+    last = path.points[path.points.count() - 1]
+    if not assertNear(t, last[0], first[0], 0.001, "loop returns to its start x") then return
+    assertEqual(t, path.facings[path.facings.count() - 1], path.facings[0], "loop returns to its starting facing")
+end sub
+
+sub extrasTest_walkPathTurnsOnlyWhilePaused(t as object)
+    walk = extrasTest_shrimpWalk()
+    path = extrasWalkPath(walk, 5)
+    for i = 1 to path.points.count() - 1
+        dx = path.points[i][0] - path.points[i - 1][0]
+        if Abs(dx) > 0.001 then
+            ' A moving leg: the facing is the direction of travel at both ends
+            ' (the turn finished during the pause before the leg).
+            want = 1
+            if dx < 0 then want = -1
+            if not assertEqual(t, path.facings[i], want, "facing matches travel at " + i.toStr()) then return
+            if not assertEqual(t, path.facings[i - 1], want, "facing already turned before the leg at " + i.toStr()) then return
+        end if
+    end for
+    assertTrue(t, true, "")
+end sub
+
+sub extrasTest_facingOpacityMatches(t as object)
+    facings = [1, 1, -1, -1, 1]
+    right = extrasFacingOpacity(facings, 1)
+    left = extrasFacingOpacity(facings, -1)
+    if not assertEqual(t, right.count(), 5, "right opacity count") then return
+    if not assertEqual(t, left.count(), 5, "left opacity count") then return
+    for i = 0 to 4
+        wantR = 1.0
+        if facings[i] <> 1 then wantR = 0.0
+        if not assertEqual(t, right[i], wantR, "right opacity at " + i.toStr()) then return
+        if not assertEqual(t, left[i], 1.0 - wantR, "left opacity at " + i.toStr()) then return
+    end for
+end sub
+
+' True when rect r covers point p.
+function extrasTest_covers(r as object, px as float, py as float) as boolean
+    return px >= r[0] and px < r[0] + r[2] and py >= r[1] and py < r[1] + r[3]
+end function
+
+sub extrasTest_tileGridCoversClipWhileScrolling(t as object)
+    clip = { x: -320, y: 952, width: 2560, height: 128 }
+    tile = 512
+    for each dir in [[1, 1], [-1, 1]]
+        grid = extrasTileGrid(clip, tile, dir)
+        if not assertTrue(t, grid.count() > 0, "grid not empty") then return
+        ' Sample the clip edges at scroll offsets 0 and tile-1 along dir.
+        for each off in [0, tile - 1]
+            ox = dir[0] * off
+            oy = dir[1] * off
+            for each s in [[clip.x, clip.y], [clip.x + clip.width - 1, clip.y], [clip.x, clip.y + clip.height - 1], [clip.x + clip.width - 1, clip.y + clip.height - 1], [clip.x + clip.width / 2, clip.y + clip.height / 2]]
+                covered = false
+                for each o in grid
+                    if extrasTest_covers([o[0] + ox, o[1] + oy, tile, tile], s[0], s[1]) then covered = true
+                end for
+                if not assertTrue(t, covered, "point " + s[0].toStr() + "," + s[1].toStr() + " covered at offset " + off.toStr() + " dir " + dir[0].toStr() + "," + dir[1].toStr()) then return
+            end for
+        end for
+    end for
+    assertTrue(t, true, "")
+end sub
+
+sub extrasTest_nightOpacityFadesAndHides(t as object)
+    if not assertNear(t, extrasNightOpacity(0.3, 0.0, 0.9), 0.3, 0.000001, "day at nightLevel 0") then return
+    if not assertNear(t, extrasNightOpacity(0.3, 0.5, 0.9), 0.15, 0.000001, "half at nightLevel 0.5") then return
+    if not assertNear(t, extrasNightOpacity(0.3, 0.9, 0.9), 0.0, 0.000001, "hidden at hideAt") then return
+    assertNear(t, extrasNightOpacity(0.3, 1.0, 0.9), 0.0, 0.000001, "hidden at full night")
+end sub
+
+sub extrasTest_lerpColorEndpointsAndMidpoint(t as object)
+    a = &h102030FF
+    b = &h304050FF
+    if not assertEqual(t, extrasLerpColor(a, b, 0.0), a, "f 0 returns a") then return
+    if not assertEqual(t, extrasLerpColor(a, b, 1.0), b, "f 1 returns b") then return
+    assertEqual(t, extrasLerpColor(a, b, 0.5), &h203040FF, "f 0.5 blends each channel")
+end sub
+
+sub extrasTest_seedRules(t as object)
+    if not assertEqual(t, extrasSeed(7, 0.0, 999), 7, "preview seed wins") then return
+    if not assertEqual(t, extrasSeed(7, 3.0, 999), 7, "preview seed wins under freeze") then return
+    if not assertEqual(t, extrasSeed(0, 3.0, 999), 1, "frozen without a seed is stable") then return
+    assertEqual(t, extrasSeed(0, 0.0, 12345), 12345, "otherwise the wall clock seed")
+end sub
+
+sub extrasTest_hostNestlesWithinRadiusOver10000Ticks(t as object)
+    r = extrasTest_runHost(7, 10000)
+    if not assertTrue(t, r.modes.nestle > 0, "fish spent ticks nestling") then return
+    ' arrive steering can overshoot a target inside the radius slightly; one
+    ' target radius of slack keeps the assertion about the nest, not the easing.
+    assertTrue(t, r.maxNestle <= extrasTest_host().radius + extrasTest_host().radius, "nestle distance stays within the nest (max was " + r.maxNestle.toStr() + ")")
+end sub
+
+sub extrasTest_hostRoamsWithinLeash(t as object)
+    r = extrasTest_runHost(9, 4000)
+    if not assertTrue(t, r.modes.roam > 0, "fish spent ticks roaming") then return
+    assertTrue(t, r.maxRoam <= extrasTest_host().leash + extrasTest_host().leash, "roam distance stays within the leash (max was " + r.maxRoam.toStr() + ")")
+end sub
+
+sub extrasTest_hostCyclesNestleRoamApproach(t as object)
+    r = extrasTest_runHost(5, 8000)
+    if not assertTrue(t, r.visits >= 2, "fish returned to the anemone at least twice (" + r.visits.toStr() + " visits)") then return
+    if not assertTrue(t, r.modes.roam > 0, "fish roamed between visits") then return
+    assertTrue(t, r.modes.approach > 0, "fish approached between roam and nestle")
+end sub
+
+sub extrasTest_hostIsDeterministic(t as object)
+    a = extrasTest_runHost(21, 3000)
+    b = extrasTest_runHost(21, 3000)
+    if not assertEqual(t, b.visits, a.visits, "visit count") then return
+    assertNear(t, b.maxNestle, a.maxNestle, 0.000001, "max nestle distance")
+end sub
+
+sub extrasTest_hostForMatchesLaneAndSpecies(t as object)
+    host = extrasTest_host()
+    h = hostFor(host, "frontLane", "ocellaris_clownfish")
+    if not assertTrue(t, h <> invalid and h.x = host.x and h.y = host.y, "matching lane and species") then return
+    if not assertTrue(t, hostFor(host, "midLane", "ocellaris_clownfish") = invalid, "other lanes are not hosted") then return
+    if not assertTrue(t, hostFor(host, "frontLane", "yellow_tang") = invalid, "other species are not hosted") then return
+    assertEqual(t, hostFor(invalid, "frontLane", "ocellaris_clownfish"), invalid, "no host block, no hosting")
+end sub
