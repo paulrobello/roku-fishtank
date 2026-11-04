@@ -1,0 +1,25 @@
+{
+  "species": "yellow_tang",
+  "source": "assets/source/species/yellow_tang/yellow_tang_a1.png",
+  "facing": "right",
+  "display_length_px": 200,
+  "tail": {
+    "cut_x_px": 548,
+    "feather_px": 24,
+    "overlap_px": 56,
+    "swing_deg": 20
+  },
+  "fin": {
+    "polygon": [
+      [1495, 800], [1555, 815], [1615, 845], [1672, 890], [1722, 945],
+      [1762, 995], [1795, 1035], [1814, 1065], [1802, 1097], [1780, 1110],
+      [1740, 1125], [1700, 1148], [1660, 1170], [1610, 1182], [1555, 1172],
+      [1512, 1140], [1480, 1095], [1458, 1040], [1446, 975], [1448, 905],
+      [1465, 848]
+    ],
+    "pivot": [1795, 1065],
+    "feather_px": 6,
+    "swing_deg": 15
+  },
+  "_notes": "All coordinates are untrimmed source pixels of yellow_tang_a1.png (2336x1744). Peduncle alpha column profile (alpha>128): 204 px at x=492, narrowing to a 149 px plateau at x=568-598 (y 781-930); the anal fin starts at x=566 and the dorsal fin at x=576. The cut sits at x=548 (155 px, y 777-932) so the tail ramp (536-560) ends before either fin begins. Tail pivot y is auto: the centre of the single opaque run at cut_x. The fin polygon traces the pectoral fin rays; pivot is the fleshy fin root at its right end."
+}

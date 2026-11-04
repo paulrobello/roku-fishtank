@@ -1,0 +1,33 @@
+[
+  {
+    "created_at": "2026-11-04T18:27:06.314713Z",
+    "display_name": "GPT Image 2.5",
+    "id": "7c3564e9-8735-4585-b128-983949ac4cd1",
+    "job_type": "gpt_image_2_5",
+    "min_result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3Gv9RgU5roVxfEeNP9AFPAziDdM/hf_20261104_182706_7c3564e9-8735-4585-b128-983949ac4cd1_min.webp",
+    "params": {
+      "aspect_ratio": "3:2",
+      "background": "transparent",
+      "height": 1360,
+      "medias": [
+        {
+          "data": {
+            "id": "c0e8cc8e-8707-46a6-b1c4-88bc69fe276f",
+            "type": "media_input",
+            "url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3Gv9RgU5roVxfEeNP9AFPAziDdM/c0e8cc8e-8707-46a6-b1c4-88bc69fe276f.png"
+          },
+          "role": "image"
+        }
+      ],
+      "model": "sunburst",
+      "prompt": "A single adult emperor angelfish (Pomacanthus imperator) in exact side profile facing right, the whole fish visible including the complete rounded tail fin, body horizontal, pectoral fin held close to the body and away from the tail, a short tail stalk visible between the ends of the dorsal and anal fins and the tail fin, accurate adult markings: many slightly diagonal bright yellow and electric-blue horizontal stripes along the body, black mask bar across the eye edged in pale blue, dark blue-black shoulder patch behind the gill edged in bright blue, pale blue-white mouth, deep blue anal fin with fine light-blue curved lines, rounded orange-yellow tail fin, the dorsal and anal fins end above and below the tail stalk without overlapping the tail fin, painterly realism: a high-end natural-history illustration rendered as a detailed digital oil painting, true-to-life anatomy and colors, fine scale and tissue texture, soft overhead aquarium light with gentle subsurface glow, rich but natural saturation, not cartoon, not vector, not 3D render, no text, no logo, no watermark. The attached image is a painting-style reference only, showing a different species: match its rendering, lighting and brushwork, but do not copy its colors, body shape or markings. Transparent background, isolated subject, no mockup, no checkerboard.",
+      "quality": "xhigh",
+      "reference_elements": [],
+      "remove_bg": false,
+      "resolution": "2k",
+      "width": 2048
+    },
+    "result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3Gv9RgU5roVxfEeNP9AFPAziDdM/hf_20261104_182706_7c3564e9-8735-4585-b128-983949ac4cd1.png",
+    "status": "completed"
+  }
+]

@@ -1,0 +1,62 @@
+{
+  "_generated": "by tools/art/rig.py from config/species/moorish_idol.json; do not edit",
+  "bounds": {
+    "height": 171,
+    "width": 230,
+    "x": -55,
+    "y": 0
+  },
+  "coordinate_space": "body Poster local pixels at display size; offset = Poster translation, pivot = scaleRotateCenter",
+  "display_length_px": 230,
+  "layers": {
+    "body": {
+      "height": 171,
+      "offset": [
+        0,
+        0
+      ],
+      "uri": "pkg:/images/fish/moorish_idol_body.png",
+      "width": 175
+    },
+    "fin": {
+      "height": 35,
+      "offset": [
+        90,
+        85
+      ],
+      "pivot": [
+        25.56,
+        21.63
+      ],
+      "swing_deg": 15,
+      "uri": "pkg:/images/fish/moorish_idol_fin.png",
+      "width": 30
+    },
+    "tail": {
+      "height": 81,
+      "offset": [
+        -55,
+        58
+      ],
+      "pivot": [
+        60.27,
+        40.26
+      ],
+      "swing_deg": 20,
+      "uri": "pkg:/images/fish/moorish_idol_tail.png",
+      "width": 62
+    }
+  },
+  "mirror_center": [
+    60.0,
+    85.5
+  ],
+  "scale": 0.104641,
+  "species": "moorish_idol",
+  "texture_bytes": 143988,
+  "z_order": [
+    "body",
+    "tail",
+    "fin"
+  ]
+}

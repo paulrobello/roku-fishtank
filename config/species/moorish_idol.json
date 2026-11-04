@@ -1,0 +1,26 @@
+{
+  "species": "moorish_idol",
+  "source": "assets/source/species/moorish_idol/moorish_idol_a2_rig.png",
+  "facing": "right",
+  "display_length_px": 230,
+  "tail": {
+    "cut_x_px": 684,
+    "feather_px": 20,
+    "overlap_px": 48,
+    "pivot_y_px": 995,
+    "swing_deg": 20
+  },
+  "fin": {
+    "polygon": [
+      [1548, 872], [1590, 880], [1640, 918], [1690, 965], [1725, 1005],
+      [1755, 1030], [1770, 1065], [1765, 1100], [1740, 1118], [1700, 1135],
+      [1650, 1158], [1600, 1180], [1550, 1195], [1517, 1170], [1506, 1120],
+      [1503, 1060], [1507, 1000], [1517, 945], [1532, 900]
+    ],
+    "pivot": [1738, 1075],
+    "feather_px": 6,
+    "fill_seed_min_value": 0.0,
+    "swing_deg": 15
+  },
+  "_notes": "All coordinates are untrimmed source pixels of moorish_idol_a2_rig.png (2336x1744), which is moorish_idol_a2.png with the dorsal streamer tapered to a tip at x=740 by derive_rig_source.py (the generated streamer trailed past the tail fin and would have snapped at the tail seam). Peduncle alpha column profile (alpha>128): 148 px at x=688, narrowing to 138 px at x=720-736 (y 924-1062); the anal fin's trailing tip reaches back to x=696 (y 1586+). The cut sits at x=684 (y 921-1069) so the tail ramp (674-694) ends before that tip. pivot_y is the stalk run centre, set by hand so the streamer can never pull it upward. Fin fill seeds from every flank pixel (seed min 0) because the pectoral root sits in the front black band."
+}

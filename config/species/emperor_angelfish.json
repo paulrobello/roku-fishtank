@@ -1,0 +1,26 @@
+{
+  "species": "emperor_angelfish",
+  "source": "assets/source/species/emperor_angelfish/emperor_angelfish_a2.png",
+  "facing": "right",
+  "display_length_px": 280,
+  "tail": {
+    "cut_x_px": 404,
+    "feather_px": 16,
+    "overlap_px": 16,
+    "pivot_y_px": 658,
+    "swing_deg": 15
+  },
+  "fin": {
+    "polygon": [
+      [1205, 660], [1255, 652], [1305, 664], [1355, 692], [1405, 733],
+      [1448, 772], [1478, 795], [1495, 812], [1497, 840], [1482, 868],
+      [1452, 893], [1415, 912], [1378, 930], [1338, 940], [1295, 935],
+      [1255, 910], [1225, 872], [1203, 830], [1192, 780], [1190, 720]
+    ],
+    "pivot": [1478, 830],
+    "feather_px": 6,
+    "fill_seed_min_value": 0.0,
+    "swing_deg": 10
+  },
+  "_notes": "All coordinates are untrimmed source pixels of emperor_angelfish_a2.png (2048x1360). The stalk is short and deep: its own opaque run narrows to 167 px at x=452-468 (y 576-743), but there the soft dorsal and anal fin tips overlap it (separated by clear gaps) and both fins reach back to x=412-420. The cut sits at x=404 (191 px, y 562-753), where the tail base begins to flare, so the tail ramp (396-412) ends before either fin tip. Overlap is the minimum (= feather) because left of the cut the column is already tail fin, not stalk. pivot_y is set by hand to the stalk run centre at the cut (562-753) because the anal fin tip shares the x=412 column. Fin fill seeds from every flank pixel (seed min 0) because the pectoral root sits on the dark shoulder patch. The fill under the fin cannot reproduce the stripes (it is a soft olive-blue patch), so the fin swing is 10 deg instead of 15 to keep the exposed patch small."
+}

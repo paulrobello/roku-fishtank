@@ -1,0 +1,62 @@
+{
+  "_generated": "by tools/art/rig.py from config/species/yellow_tang.json; do not edit",
+  "bounds": {
+    "height": 138,
+    "width": 200,
+    "x": -40,
+    "y": 0
+  },
+  "coordinate_space": "body Poster local pixels at display size; offset = Poster translation, pivot = scaleRotateCenter",
+  "display_length_px": 200,
+  "layers": {
+    "body": {
+      "height": 138,
+      "offset": [
+        0,
+        0
+      ],
+      "uri": "pkg:/images/fish/yellow_tang_body.png",
+      "width": 160
+    },
+    "fin": {
+      "height": 38,
+      "offset": [
+        82,
+        62
+      ],
+      "pivot": [
+        32.53,
+        25.25
+      ],
+      "swing_deg": 15,
+      "uri": "pkg:/images/fish/yellow_tang_fin.png",
+      "width": 35
+    },
+    "tail": {
+      "height": 70,
+      "offset": [
+        -40,
+        34
+      ],
+      "pivot": [
+        44.85,
+        34.73
+      ],
+      "swing_deg": 20,
+      "uri": "pkg:/images/fish/yellow_tang_tail.png",
+      "width": 46
+    }
+  },
+  "mirror_center": [
+    60.0,
+    69.0
+  ],
+  "scale": 0.087951,
+  "species": "yellow_tang",
+  "texture_bytes": 106520,
+  "z_order": [
+    "body",
+    "tail",
+    "fin"
+  ]
+}

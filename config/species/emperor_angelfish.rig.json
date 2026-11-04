@@ -1,0 +1,62 @@
+{
+  "_generated": "by tools/art/rig.py from config/species/emperor_angelfish.json; do not edit",
+  "bounds": {
+    "height": 154,
+    "width": 280,
+    "x": -47,
+    "y": 0
+  },
+  "coordinate_space": "body Poster local pixels at display size; offset = Poster translation, pivot = scaleRotateCenter",
+  "display_length_px": 280,
+  "layers": {
+    "body": {
+      "height": 154,
+      "offset": [
+        0,
+        0
+      ],
+      "uri": "pkg:/images/fish/emperor_angelfish_body.png",
+      "width": 233
+    },
+    "fin": {
+      "height": 42,
+      "offset": [
+        114,
+        76
+      ],
+      "pivot": [
+        41.68,
+        25.62
+      ],
+      "swing_deg": 10,
+      "uri": "pkg:/images/fish/emperor_angelfish_fin.png",
+      "width": 45
+    },
+    "tail": {
+      "height": 86,
+      "offset": [
+        -47,
+        35
+      ],
+      "pivot": [
+        50.03,
+        42.18
+      ],
+      "swing_deg": 15,
+      "uri": "pkg:/images/fish/emperor_angelfish_tail.png",
+      "width": 51
+    }
+  },
+  "mirror_center": [
+    93.0,
+    77.0
+  ],
+  "scale": 0.142132,
+  "species": "emperor_angelfish",
+  "texture_bytes": 168632,
+  "z_order": [
+    "body",
+    "tail",
+    "fin"
+  ]
+}

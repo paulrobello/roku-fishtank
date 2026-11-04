@@ -1,0 +1,33 @@
+[
+  {
+    "created_at": "2026-11-04T18:29:04.133074Z",
+    "display_name": "GPT Image 2.5",
+    "id": "4f27dad0-ea2d-4fce-815b-19d030163185",
+    "job_type": "gpt_image_2_5",
+    "min_result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3Gv9RgU5roVxfEeNP9AFPAziDdM/hf_20261104_182904_4f27dad0-ea2d-4fce-815b-19d030163185_min.webp",
+    "params": {
+      "aspect_ratio": "4:3",
+      "background": "transparent",
+      "height": 1744,
+      "medias": [
+        {
+          "data": {
+            "id": "8d8e8a58-9172-4232-ba36-f232c3a13db2",
+            "type": "media_input",
+            "url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3Gv9RgU5roVxfEeNP9AFPAziDdM/8d8e8a58-9172-4232-ba36-f232c3a13db2.png"
+          },
+          "role": "image"
+        }
+      ],
+      "model": "sunburst",
+      "prompt": "A single Moorish idol fish (Zanclus cornutus) in exact side profile facing right, the whole fish visible including the complete tail fin, body horizontal, pectoral fin held close to the body and away from the tail, the narrow tail stalk clearly visible between body and tail fin, accurate markings: tall strongly compressed disc-shaped white body with two broad black vertical bands (one through the eye and gill, one across the rear body), soft yellow wash on the rear upper body, long tubular snout with an orange-yellow saddle on top, the dorsal fin rising into a white sickle-shaped streamer that arcs back over the top of the body and ends above the rear black band, well in front of the tail stalk, with clear empty space above the tail stalk and tail fin, black crescent tail fin with a thin white edge, painterly realism: a high-end natural-history illustration rendered as a detailed digital oil painting, true-to-life anatomy and colors, fine scale and tissue texture, soft overhead aquarium light with gentle subsurface glow, rich but natural saturation, not cartoon, not vector, not 3D render, no text, no logo, no watermark. The attached image is a painting-style reference only, showing a different species: match its rendering, lighting and brushwork, but do not copy its colors, body shape or markings. Transparent background, isolated subject, no mockup, no checkerboard.",
+      "quality": "xhigh",
+      "reference_elements": [],
+      "remove_bg": false,
+      "resolution": "2k",
+      "width": 2336
+    },
+    "result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3Gv9RgU5roVxfEeNP9AFPAziDdM/hf_20261104_182904_4f27dad0-ea2d-4fce-815b-19d030163185.png",
+    "status": "completed"
+  }
+]
