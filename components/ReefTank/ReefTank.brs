@@ -53,7 +53,12 @@ sub onDensityChanged()
 end sub
 
 sub reefTankBuildFish(name as string)
+    ' A removed brain or school would keep its timer ticking, so stop it first.
     for each node in m.tankNodes
+        for each timerId in ["brainTimer", "schoolTimer"]
+            timer = node.findNode(timerId)
+            if timer <> invalid then timer.control = "stop"
+        end for
         node.getParent().removeChild(node)
     end for
     m.tankNodes = []

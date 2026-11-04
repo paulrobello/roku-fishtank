@@ -88,12 +88,14 @@ probe: probe-build
 
 # Device check: any channel scene as the screensaver plus an FpsMeter on the console.
 # make device-check SCENE=BrainDemoScene SECONDS=90 -> docs/perf/raw/check-<scene>-<stamp>-*
+# DENSITY=calm|normal|busy picks the ReefTank population (empty = the scene default).
 SCENE ?= ReefTank
 SECONDS ?= 90
+DENSITY ?=
 check-build: node_modules
 	@mkdir -p dist
 	@rm -f dist/check.zip
-	@printf '{"scene": "%s"}\n' "$(SCENE)" > dist/devicecheck.json
+	@printf '{"scene": "%s", "density": "%s"}\n' "$(SCENE)" "$(DENSITY)" > dist/devicecheck.json
 	@$(BIN)/bsc --project bsconfig.check.json --create-package --out-file dist/check.zip > dist/bsc-check.log 2>&1; ec=$$?; \
 	  if [ $$ec -ne 0 ] || grep -qE " - (error|warning) " dist/bsc-check.log; then cat dist/bsc-check.log; echo "check-build FAILED"; exit 1; fi
 	@echo "built dist/check.zip ($(SCENE))"
