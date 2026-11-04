@@ -16,6 +16,7 @@
 '   steps      segment length in ticks
 '   dart       true while the current segment is a dart
 '   facing     1 (right) or -1 (left)
+'   lockFacing 0, or +/-1 to pin facing whatever the segment's direction
 '   speed      bucketed swim speed in px/s for the Fish tail beat
 '
 ' Config fields used (see config/brain.json): tick, segMinSec, segMaxSec,
@@ -40,7 +41,7 @@ function brainNewFish(cfg as object, seed as integer, lane as object, ellipses a
             agent = steerNewAgent(x, y, heading, speed)
             facing = 1
             if agent.vx < 0 then facing = -1
-            return { agent: agent, rng: rng, points: [[x, y]], startTick: 0, steps: 0, dart: false, facing: facing, speed: brainBucket(speed, cfg.speedBucket) }
+            return { agent: agent, rng: rng, points: [[x, y]], startTick: 0, steps: 0, dart: false, facing: facing, lockFacing: 0, speed: brainBucket(speed, cfg.speedBucket), beh: invalid }
         end if
     end for
     return invalid
@@ -184,7 +185,11 @@ sub brainStartSegment(fish as object, cfg as object, now as integer, steps as in
     fish.steps = steps
     fish.dart = dart
     last = fish.points[fish.points.count() - 1]
-    fish.facing = brainFacing(fish.facing, last[0] - fish.points[0][0], cfg.facingDeadband)
+    if fish.lockFacing <> 0 then
+        fish.facing = fish.lockFacing
+    else
+        fish.facing = brainFacing(fish.facing, last[0] - fish.points[0][0], cfg.facingDeadband)
+    end if
     fish.speed = brainBucket(brainPathSpeed(fish.points, cfg.tick), cfg.speedBucket)
 end sub
 
@@ -205,4 +210,404 @@ end function
 function brainOutCubic(f as float) as float
     g = f - 1
     return g * g * g + 1
+end function
+
+' ---------------------------------------------------------------------------
+' Per-species behaviours (P2.6). A behaviour config (config/behavior.json)
+' maps each species to a kind, and each kind is a small state machine:
+'   cruise  no state machine: the P2.3 cruise + dart path, unchanged
+'   grazer  cruise -> approach (a rock point) -> graze (pecks and pauses) -> cruise
+'   cave    hover (at a cave mouth) -> retreat (tail first into the den)
+'           -> hide -> emerge -> hover; facing is pinned to the cave's opening
+'   bottom  graze (pause) <-> hop, inside the rock/sand band
+'   hover   drift (slow wander, no darts) <-> hang (near-still)
+' Every state plans per-tick sub-steps that end in steerMove, so the ellipse
+' guard holds in every state. Modes change only when a segment ends. Each
+' change is recorded on the fish as trFrom/trTo (the caller logs and clears
+' it); a fish starts in mode "spawn" and leaves it on its first tick.
+'
+' Behaviour fish fields, on top of brainNewFish's: species, kind, beh (the
+' kind's parameters), mode, modeEnd (tick the mode ends), motion (the brain
+' config with per-mode overrides), motion2 (hover kind: the hang motion),
+' cave (cave kind: { mouth, den, out }), target ([x, y]), peck (grazer:
+' next graze segment is a peck), trFrom, trTo.
+
+' The world a population moves in. beh may be invalid (P2.3 cruise only).
+function brainNewWorld(cfg as object, beh as object) as object
+    world = { lane: cfg.lane, ellipses: cfg.ellipses, caves: [], rocks: [], band: invalid, arriveTime: 0.6, arriveResponse: 6.0 }
+    if beh <> invalid then
+        world.caves = beh.caves
+        world.rocks = beh.rocks
+        world.band = beh.band
+        world.arriveTime = beh.arriveTime
+        world.arriveResponse = beh.arriveResponse
+    end if
+    return world
+end function
+
+' The population as [{ species, count }]: beh.population when present,
+' otherwise the brain config's single species.
+function brainPopulation(cfg as object, beh as object) as object
+    if beh <> invalid and beh.population <> invalid then return beh.population
+    return [{ species: cfg.species, count: cfg.count }]
+end function
+
+' Spawns the whole population from one master seed, in population order.
+' Returns [{ species, state }], state invalid when no spawn point was free.
+' Without a behaviour config every fish is brainNewFish(cfg, ...) exactly as
+' in P2.3, so seeds give the same tank.
+function brainSpawnAll(cfg as object, beh as object, world as object, seed as integer) as object
+    master = prngNew(seed)
+    out = []
+    kindCount = {}
+    for each group in brainPopulation(cfg, beh)
+        for k = 1 to group.count
+            fishSeed = brainFishSeed(master)
+            state = invalid
+            if beh = invalid then
+                state = brainNewFish(cfg, fishSeed, world.lane, world.ellipses)
+            else
+                kind = brainKindOf(beh, group.species)
+                nth = 0
+                if kindCount.doesExist(kind) then nth = kindCount[kind]
+                kindCount[kind] = nth + 1
+                state = brainNewBehaviorFish(cfg, beh, world, group.species, fishSeed, nth)
+            end if
+            out.push({ species: group.species, state: state })
+        end for
+    end for
+    return out
+end function
+
+' A non-zero per-fish seed drawn from the master PRNG.
+function brainFishSeed(master as object) as integer
+    s = prngNextU32(master)
+    if s = 0 then s = 1
+    return s
+end function
+
+function brainKindOf(beh as object, species as string) as string
+    if beh.species.doesExist(species) then return beh.species[species]
+    return "cruise"
+end function
+
+' Spawns one fish of `species` with its behaviour. nth counts earlier fish
+' of the same kind, so cave fish take caves in turn.
+function brainNewBehaviorFish(cfg as object, beh as object, world as object, species as string, seed as integer, nth as integer) as object
+    kind = brainKindOf(beh, species)
+    lane = world.lane
+    if kind = "bottom" then lane = world.band
+    fish = brainNewFish(cfg, seed, lane, world.ellipses)
+    if fish = invalid then return invalid
+    fish.species = species
+    fish.kind = kind
+    fish.beh = invalid
+    if beh.kinds.doesExist(kind) then fish.beh = beh.kinds[kind]
+    fish.mode = "spawn"
+    fish.modeEnd = 0
+    fish.trFrom = ""
+    fish.trTo = ""
+    fish.target = invalid
+    fish.peck = true
+    fish.cave = invalid
+    fish.motion = cfg
+    fish.motion2 = cfg
+    if fish.beh = invalid then
+        fish.kind = "cruise"
+    else if kind = "hover" then
+        fish.motion = brainMerge(cfg, fish.beh.drift)
+        fish.motion2 = brainMerge(cfg, fish.beh.hang)
+    else if kind = "cave" then
+        cave = world.caves[nth mod world.caves.count()]
+        fish.cave = cave
+        a = fish.agent
+        a.x = cave.mouth[0]
+        a.y = cave.mouth[1]
+        a.vx = 0
+        a.vy = 0
+        fish.points = [[a.x, a.y]]
+        fish.lockFacing = cave.out
+        fish.facing = cave.out
+    end if
+    return fish
+end function
+
+' Shallow copy of base with every key of over set on it.
+function brainMerge(base as object, over as object) as object
+    out = {}
+    for each k in base
+        out[k] = base[k]
+    end for
+    for each k in over
+        out[k] = over[k]
+    end for
+    return out
+end function
+
+' Whole ticks for a [minSec, maxSec] range, at least 1.
+function brainSecTicks(rng as object, range as object, tick as float) as integer
+    n = Int(prngRange(rng, range[0], range[1]) / tick + 0.5)
+    if n < 1 then n = 1
+    return n
+end function
+
+sub brainSetMode(fish as object, mode as string, modeEnd as integer)
+    fish.trFrom = fish.mode
+    fish.trTo = mode
+    fish.mode = mode
+    fish.modeEnd = modeEnd
+end sub
+
+' One brain tick for any fish: P2.3 fish go straight to brainTickFish. A
+' behaviour fish only rolls for darts mid-segment in cruise mode; when its
+' segment has ended it may change mode, then plans the next segment.
+function brainTickBehavior(fish as object, cfg as object, world as object, now as integer) as string
+    if fish.beh = invalid then return brainTickFish(fish, cfg, world.lane, world.ellipses, now)
+    if now < fish.startTick + fish.steps then
+        if fish.mode = "cruise" then return brainTickFish(fish, fish.motion, world.lane, world.ellipses, now)
+        return ""
+    end if
+    if fish.kind = "grazer" then return brainTickGrazer(fish, cfg, world, now)
+    if fish.kind = "cave" then return brainTickCave(fish, cfg, world, now)
+    if fish.kind = "bottom" then return brainTickBottom(fish, cfg, world, now)
+    return brainTickHover(fish, cfg, world, now)
+end function
+
+function brainTickGrazer(fish as object, cfg as object, world as object, now as integer) as string
+    b = fish.beh
+    a = fish.agent
+    tick = cfg.tick
+    if fish.mode = "spawn" then
+        brainSetMode(fish, "cruise", now + brainSecTicks(fish.rng, b.cruiseSec, tick))
+    else if fish.mode = "cruise" then
+        if now >= fish.modeEnd and world.rocks.count() > 0 then
+            fish.target = brainNearest(world.rocks, a.x, a.y)
+            brainSetMode(fish, "approach", now + Int(b.approachSec / tick))
+        end if
+    else if fish.mode = "approach" then
+        if brainDist(a, fish.target) <= b.arriveRadius then
+            ' Grazing opens with a pause, which stops the fish, so pecks start still.
+            fish.peck = true
+            brainSetMode(fish, "graze", now + brainSecTicks(fish.rng, b.grazeSec, tick))
+        else if now >= fish.modeEnd then
+            brainSetMode(fish, "cruise", now + brainSecTicks(fish.rng, b.cruiseSec, tick))
+        end if
+    else if fish.mode = "graze" and now >= fish.modeEnd then
+        brainLeave(fish, world.ellipses)
+        brainSetMode(fish, "cruise", now + brainSecTicks(fish.rng, b.cruiseSec, tick))
+    end if
+
+    if fish.mode = "cruise" then return brainTickFish(fish, fish.motion, world.lane, world.ellipses, now)
+    steps = 4
+    if fish.mode = "approach" then
+        fish.points = brainPlanArrive(fish, world, fish.target[0], fish.target[1], b.approachSpeed, steps, tick)
+    else
+        ' graze: a slow peck to a point near the rock, then a pause, alternating
+        fish.peck = not fish.peck
+        if fish.peck then
+            steps = brainSecTicks(fish.rng, b.peckSec, tick)
+            tx = fish.target[0] + prngRange(fish.rng, -b.peckRadius, b.peckRadius)
+            ty = fish.target[1] + prngRange(fish.rng, -b.peckRadius, b.peckRadius)
+            fish.points = brainPlanArrive(fish, world, tx, ty, b.peckSpeed, steps, tick)
+        else
+            steps = brainSecTicks(fish.rng, b.pauseSec, tick)
+            fish.points = brainPlanHold(fish, world.ellipses, steps, tick)
+        end if
+    end if
+    brainStartSegment(fish, cfg, now, steps, false)
+    return "segment"
+end function
+
+function brainTickCave(fish as object, cfg as object, world as object, now as integer) as string
+    b = fish.beh
+    a = fish.agent
+    cave = fish.cave
+    tick = cfg.tick
+    if fish.mode = "spawn" then
+        brainSetMode(fish, "hover", now + brainSecTicks(fish.rng, b.hoverSec, tick))
+    else if fish.mode = "hover" then
+        if now >= fish.modeEnd then brainSetMode(fish, "retreat", now + Int(b.retreatSec / tick))
+    else if fish.mode = "retreat" then
+        if brainDist(a, cave.den) <= b.arriveRadius or now >= fish.modeEnd then brainSetMode(fish, "hide", now + brainSecTicks(fish.rng, b.hideSec, tick))
+    else if fish.mode = "hide" then
+        if now >= fish.modeEnd then brainSetMode(fish, "emerge", now + Int(b.emergeSec / tick))
+    else if fish.mode = "emerge" then
+        if brainDist(a, cave.mouth) <= b.arriveRadius or now >= fish.modeEnd then brainSetMode(fish, "hover", now + brainSecTicks(fish.rng, b.hoverSec, tick))
+    end if
+
+    steps = 4
+    if fish.mode = "hover" then
+        steps = brainSecTicks(fish.rng, b.hoverSegSec, tick)
+        tx = cave.mouth[0] + prngRange(fish.rng, -b.hoverRadius, b.hoverRadius)
+        ty = cave.mouth[1] + prngRange(fish.rng, -b.hoverRadius, b.hoverRadius)
+        fish.points = brainPlanArrive(fish, world, tx, ty, b.hoverSpeed, steps, tick)
+    else if fish.mode = "retreat" then
+        fish.points = brainPlanArrive(fish, world, cave.den[0], cave.den[1], b.backSpeed, steps, tick)
+    else if fish.mode = "hide" then
+        steps = brainAtLeastOne(fish.modeEnd - now)
+        fish.points = brainPlanHold(fish, world.ellipses, steps, tick)
+    else
+        fish.points = brainPlanArrive(fish, world, cave.mouth[0], cave.mouth[1], b.emergeSpeed, steps, tick)
+    end if
+    brainStartSegment(fish, cfg, now, steps, false)
+    return "segment"
+end function
+
+function brainTickBottom(fish as object, cfg as object, world as object, now as integer) as string
+    b = fish.beh
+    a = fish.agent
+    band = world.band
+    tick = cfg.tick
+    if fish.mode = "spawn" then
+        brainSetMode(fish, "graze", now + brainSecTicks(fish.rng, b.pauseSec, tick))
+    else if fish.mode = "graze" then
+        if now >= fish.modeEnd then
+            dir = 1
+            if prngNextFloat(fish.rng) < 0.5 then dir = -1
+            hop = prngRange(fish.rng, b.hopPx[0], b.hopPx[1])
+            if a.x + dir * hop > band.right or a.x + dir * hop < band.left then dir = -dir
+            tx = a.x + dir * hop
+            if tx > band.right then tx = band.right
+            if tx < band.left then tx = band.left
+            fish.target = [tx, prngRange(fish.rng, band.top, band.bottom)]
+            brainSetMode(fish, "hop", now + Int(b.hopSec / tick))
+        end if
+    else if fish.mode = "hop" then
+        if brainDist(a, fish.target) <= b.arriveRadius or now >= fish.modeEnd then brainSetMode(fish, "graze", now + brainSecTicks(fish.rng, b.pauseSec, tick))
+    end if
+
+    steps = 4
+    if fish.mode = "hop" then
+        fish.points = brainPlanArrive(fish, world, fish.target[0], fish.target[1], b.hopSpeed, steps, tick)
+    else
+        steps = brainAtLeastOne(fish.modeEnd - now)
+        fish.points = brainPlanHold(fish, world.ellipses, steps, tick)
+    end if
+    brainStartSegment(fish, cfg, now, steps, false)
+    return "segment"
+end function
+
+function brainTickHover(fish as object, cfg as object, world as object, now as integer) as string
+    b = fish.beh
+    tick = cfg.tick
+    if fish.mode = "spawn" then
+        brainSetMode(fish, "drift", now + brainSecTicks(fish.rng, b.driftSec, tick))
+    else if fish.mode = "drift" and now >= fish.modeEnd then
+        brainSetMode(fish, "hang", now + brainSecTicks(fish.rng, b.hangSec, tick))
+    else if fish.mode = "hang" and now >= fish.modeEnd then
+        brainSetMode(fish, "drift", now + brainSecTicks(fish.rng, b.driftSec, tick))
+    end if
+    motion = fish.motion
+    if fish.mode = "hang" then motion = fish.motion2
+    ' The old segment has ended, so brainTickFish plans a cruise segment with
+    ' the slow motion's speeds (its dartChance is 0).
+    return brainTickFish(fish, motion, world.lane, world.ellipses, now)
+end function
+
+function brainAtLeastOne(n as integer) as integer
+    if n < 1 then return 1
+    return n
+end function
+
+' Arrive steering: the desired velocity points at (tx, ty) with speed
+' dist / arriveTime capped at maxSpeed, and the velocity closes on it at
+' arriveResponse per second. Changes velocity only.
+sub brainArrive(agent as object, world as object, tx as float, ty as float, maxSpeed as float, dt as float)
+    dx = tx - agent.x
+    dy = ty - agent.y
+    dist = Sqr(dx * dx + dy * dy)
+    wx = 0.0
+    wy = 0.0
+    if dist > 0 then
+        speed = dist / world.arriveTime
+        if speed > maxSpeed then speed = maxSpeed
+        wx = dx / dist * speed
+        wy = dy / dist * speed
+    end if
+    k = world.arriveResponse * dt
+    if k > 1 then k = 1
+    agent.vx = agent.vx + (wx - agent.vx) * k
+    agent.vy = agent.vy + (wy - agent.vy) * k
+end sub
+
+' Velocity limit that keeps the next sub-step inside rect r (the bottom
+' band): a component that would cross an edge is cut to land on it.
+sub brainKeepInRect(agent as object, r as object, dt as float)
+    nx = agent.x + agent.vx * dt
+    ny = agent.y + agent.vy * dt
+    if nx > r.right then agent.vx = (r.right - agent.x) / dt
+    if nx < r.left then agent.vx = (r.left - agent.x) / dt
+    if ny > r.bottom then agent.vy = (r.bottom - agent.y) / dt
+    if ny < r.top then agent.vy = (r.top - agent.y) / dt
+end sub
+
+' Plans `steps` arrive sub-steps toward (tx, ty), each ending in steerMove.
+' Bottom fish are also held inside the band.
+function brainPlanArrive(fish as object, world as object, tx as float, ty as float, maxSpeed as float, steps as integer, dt as float) as object
+    agent = fish.agent
+    points = [[agent.x, agent.y]]
+    for i = 1 to steps
+        brainArrive(agent, world, tx, ty, maxSpeed, dt)
+        if fish.kind = "bottom" then brainKeepInRect(agent, world.band, dt)
+        steerMove(agent, world.ellipses, dt)
+        points.push([agent.x, agent.y])
+    end for
+    return points
+end function
+
+' Plans `steps` still sub-steps: zero velocity, still through steerMove.
+function brainPlanHold(fish as object, ellipses as object, steps as integer, dt as float) as object
+    agent = fish.agent
+    agent.vx = 0
+    agent.vy = 0
+    points = [[agent.x, agent.y]]
+    for i = 1 to steps
+        steerMove(agent, ellipses, dt)
+        points.push([agent.x, agent.y])
+    end for
+    return points
+end function
+
+' Leaving a graze: head away from the nearest rock at cruise minSpeed.
+sub brainLeave(fish as object, ellipses as object)
+    a = fish.agent
+    best = -1
+    bestN = 0.0
+    for i = 0 to ellipses.count() - 1
+        n = steerEllipseNorm2(ellipses[i], a.x, a.y)
+        if best < 0 or n < bestN then
+            best = i
+            bestN = n
+        end if
+    end for
+    if best < 0 then return
+    e = ellipses[best]
+    dx = a.x - e.cx
+    dy = a.y - e.cy
+    d = Sqr(dx * dx + dy * dy)
+    if d <= 0 then return
+    a.vx = dx / d * fish.motion.minSpeed
+    a.vy = dy / d * fish.motion.minSpeed
+    a.wanderAngle = brainAtan2(dy, dx)
+end sub
+
+function brainNearest(points as object, x as float, y as float) as object
+    best = points[0]
+    bestD = -1.0
+    for each p in points
+        dx = p[0] - x
+        dy = p[1] - y
+        d = dx * dx + dy * dy
+        if bestD < 0 or d < bestD then
+            best = p
+            bestD = d
+        end if
+    end for
+    return best
+end function
+
+function brainDist(agent as object, p as object) as float
+    dx = p[0] - agent.x
+    dy = p[1] - agent.y
+    return Sqr(dx * dx + dy * dy)
 end function

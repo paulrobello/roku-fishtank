@@ -19,6 +19,7 @@ function testSuites() as object
         scenecfgTestSuite()
         previewColorTestSuite()
         schoolTestSuite()
+        behaviorTestSuite()
     ]
 end function
 

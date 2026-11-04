@@ -1,0 +1,76 @@
+{
+  "_notes": "Per-species behaviours (P2.6), read by FishBrain through its behaviorUri field on top of config/brain.json (which keeps the motion parameters, lane and ellipses). species maps a species to a kind; a species not listed, or a kind not in kinds, cruises exactly as in P2.3 (clownfish until P4 anemone hosting). Times are seconds ([min, max] ranges are drawn per state), speeds px/s, positions scene pixels of the fish anchor (rig mirror_center). caves: mouth is where the fish hovers, den is where it backs to, both outside every brain.json ellipse; out is the side the opening faces (+1 right, -1 left) and pins the fish's facing in every cave state, so retreat moves tail first. rocks are graze points just outside the ellipses. band is the rock/sand edge rect the bottom kind never leaves. hover.drift and hover.hang override brain.json motion fields for those modes. arriveTime and arriveResponse shape arrive steering (desired speed = distance / arriveTime, closed at arriveResponse per second). population is the BehaviorDemoScene mix (FishBrain uses it instead of brain.json species/count); the tank's per-density population lands in scene.json with P2.7.",
+  "population": [
+    { "species": "royal_blue_tang", "count": 2 },
+    { "species": "yellow_tang", "count": 2 },
+    { "species": "emperor_angelfish", "count": 1 },
+    { "species": "moorish_idol", "count": 1 },
+    { "species": "ocellaris_clownfish", "count": 2 },
+    { "species": "royal_gramma", "count": 2 },
+    { "species": "lionfish", "count": 1 },
+    { "species": "mandarin_dragonet", "count": 1 }
+  ],
+  "species": {
+    "royal_blue_tang": "grazer",
+    "yellow_tang": "grazer",
+    "emperor_angelfish": "grazer",
+    "moorish_idol": "grazer",
+    "ocellaris_clownfish": "cruise",
+    "royal_gramma": "cave",
+    "lionfish": "hover",
+    "mandarin_dragonet": "bottom"
+  },
+  "kinds": {
+    "grazer": {
+      "cruiseSec": [20, 50],
+      "approachSpeed": 70,
+      "approachSec": 15,
+      "arriveRadius": 10,
+      "grazeSec": [6, 12],
+      "peckSpeed": 18,
+      "peckRadius": 8,
+      "peckSec": [0.25, 0.5],
+      "pauseSec": [0.25, 1.0]
+    },
+    "cave": {
+      "hoverSec": [5, 12],
+      "hoverSegSec": [1, 2.5],
+      "hoverRadius": 16,
+      "hoverSpeed": 14,
+      "backSpeed": 22,
+      "retreatSec": 8,
+      "hideSec": [4, 9],
+      "emergeSpeed": 30,
+      "emergeSec": 8,
+      "arriveRadius": 3
+    },
+    "bottom": {
+      "pauseSec": [1, 4],
+      "hopPx": [30, 90],
+      "hopSpeed": 70,
+      "hopSec": 3,
+      "arriveRadius": 3
+    },
+    "hover": {
+      "driftSec": [25, 50],
+      "hangSec": [6, 12],
+      "drift": { "minSpeed": 8, "maxSpeed": 20, "wanderJitter": 0.6, "wanderAccel": 12, "segMinSec": 3, "segMaxSec": 6, "dartChance": 0 },
+      "hang": { "minSpeed": 0, "maxSpeed": 4, "wanderJitter": 0.4, "wanderAccel": 4, "segMinSec": 3, "segMaxSec": 6, "dartChance": 0 }
+    }
+  },
+  "arriveTime": 0.6,
+  "arriveResponse": 6,
+  "caves": [
+    { "mouth": [695, 640], "den": [638, 640], "out": 1 },
+    { "mouth": [1030, 700], "den": [1098, 700], "out": -1 },
+    { "mouth": [1425, 380], "den": [1459, 380], "out": -1 }
+  ],
+  "rocks": [
+    [400, 515],
+    [900, 320],
+    [950, 520],
+    [1250, 590],
+    [1665, 380]
+  ],
+  "band": { "left": 200, "top": 850, "right": 1720, "bottom": 890 }
+}

@@ -1,13 +1,17 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <!--
-    Fish brain (P2.3). Set configUri to a brain config (config/brain.json) to spawn its
-    fish and start the ~8 Hz brainTimer. Each fish gets one Fish node and one reused mover
-    Animation + Vector2DFieldInterpolator, all created once here; segments only rewrite
-    key, keyValue, duration and easeFunction. Logic lives in components/lib/brain.brs.
+    Fish brain (P2.3, behaviours P2.6). Set behaviorUri (optional, config/behavior.json)
+    first, then configUri to a brain config (config/brain.json) to spawn the fish and start
+    the ~8 Hz brainTimer. Without behaviorUri every fish cruises as in P2.3; with it, the
+    behaviour config's population and per-species state machines apply, and each mode
+    change prints BEHAVIOR fish=<i> species=<s> <from>-><to> t=<s>. Each fish gets one
+    Fish node and one reused mover Animation + Vector2DFieldInterpolator, all created once
+    here; segments and mode changes only rewrite key, keyValue, duration and easeFunction. Logic lives in components/lib/brain.brs.
     sceneTime is the brain clock in seconds (wall time x m.global.previewSpeed).
 -->
 <component name="FishBrain" extends="Group">
     <interface>
+        <field id="behaviorUri" type="string" />
         <field id="configUri" type="string" onChange="onConfigUri" />
         <field id="sceneTime" type="float" value="0.0" />
         <field id="dartCount" type="integer" value="0" />

@@ -77,6 +77,17 @@ brs-engine with the SceneGraph extension on a 1920x1080 canvas scaled to the win
   `config/school.json`). The school follows a hidden wandering leader that detours around
   the ellipses, and a spacing guard keeps members at least `minDist` apart. `?freeze=T`
   poses the school from its logic like the brain demo.
+- **Behaviour demo (P2.6):** `?scene=BehaviorDemoScene&seed=1` runs the
+  `config/behavior.json` population (at least one of each rigged species) under
+  `FishBrain` with its `behaviorUri` set. Each species maps to a kind with its own state
+  machine: grazers (tangs, emperor angelfish, Moorish idol) cruise, approach a rock point
+  and peck; the royal gramma hovers at a cave mouth and backs tail first into its den;
+  the mandarin pauses and hops inside the rock/sand band; the lionfish drifts and hangs
+  with no darts; clownfish cruise until P4. Cave mouths (yellow), dens (violet), rock
+  graze points (green) and the band (sand) are drawn as markers, and every mode change
+  logs `BEHAVIOR fish=<i> species=<s> <from>-><to> t=<s>`. `config/behavior.json`'s
+  `_notes` documents the schema. Evidence: `docs/perf/behavior-seed1.log` and
+  `docs/preview/behavior-*.png`.
 
 `make test-visual` (part of `make checkall`) starts an isolated server on 8139, opens
 `?freeze=3` (the Reef Tank) and `?scene=BrainDemoScene&seed=7&freeze=5`, and compares the

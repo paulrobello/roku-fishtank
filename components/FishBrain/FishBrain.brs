@@ -14,32 +14,34 @@ sub onConfigUri()
         print "FishBrain ERROR: cannot read config '"; m.top.configUri; "'"
         return
     end if
-    rig = ParseJson(ReadAsciiFile("pkg:/config/species/" + cfg.species + ".rig.json"))
-    if rig = invalid then
-        print "FishBrain ERROR: cannot read rig for species '"; cfg.species; "'"
-        return
+    beh = invalid
+    if m.top.behaviorUri <> "" then
+        beh = ParseJson(ReadAsciiFile(m.top.behaviorUri))
+        if beh = invalid then print "FishBrain ERROR: cannot read behaviour config '"; m.top.behaviorUri; "'"
     end if
     m.cfg = cfg
-    m.lane = cfg.lane
-    m.ellipses = cfg.ellipses
-    ' The steering anchor is the rig's mirror centre, so turns pivot on the tracked point.
-    m.anchor = rig.mirror_center
+    m.world = brainNewWorld(cfg, beh)
     m.speed = brainPreviewSpeed()
     m.nodeLogSeconds = cfg.nodeLogSeconds
     m.nextNodeLog = 0.0
+    m.rigs = {}
 
     if not m.global.hasField("brainSerial") then m.global.addFields({ brainSerial: 0 })
     m.global.brainSerial = m.global.brainSerial + 1
     prefix = "brain" + m.global.brainSerial.toStr() + "_"
     seed = brainSeed()
-    print "BRAIN seed="; seed; " fish="; cfg.count; " speed="; m.speed
-    master = prngNew(seed)
-    for i = 0 to cfg.count - 1
-        state = brainNewFish(cfg, brainFishSeed(master), m.lane, m.ellipses)
-        if state = invalid then
+    spawned = brainSpawnAll(cfg, beh, m.world, seed)
+    print "BRAIN seed="; seed; " fish="; spawned.count(); " speed="; m.speed
+    for i = 0 to spawned.count() - 1
+        s = spawned[i]
+        ' The steering anchor is the rig's mirror centre, so turns pivot on the tracked point.
+        rig = brainRig(s.species)
+        if s.state = invalid then
             print "FishBrain ERROR: no free spawn point for fish "; i
+        else if rig = invalid then
+            print "FishBrain ERROR: cannot read rig for species '"; s.species; "'"
         else
-            m.items.push(brainBuildFish(prefix, i, state))
+            m.items.push(brainBuildFish(prefix, i, s.species, rig.mirror_center, s.state))
         end if
     end for
 
@@ -57,13 +59,13 @@ end sub
 
 ' One Fish and its reused mover, created once per fish. Facing is set before species so
 ' the spawn does not play a turn.
-function brainBuildFish(prefix as string, i as integer, state as object) as object
+function brainBuildFish(prefix as string, i as integer, species as string, anchor as object, state as object) as object
     node = m.fishLayer.createChild("Fish")
     node.id = prefix + "fish" + i.toStr()
     node.facing = state.facing
     node.swimSpeed = state.speed
-    node.species = m.cfg.species
-    node.translation = brainToTranslation(state.agent.x, state.agent.y)
+    node.species = species
+    node.translation = brainToTranslation(anchor, state.agent.x, state.agent.y)
     anim = m.top.createChild("Animation")
     anim.id = prefix + "move" + i.toStr()
     anim.repeat = false
@@ -71,7 +73,13 @@ function brainBuildFish(prefix as string, i as integer, state as object) as obje
     interp = anim.createChild("Vector2DFieldInterpolator")
     interp.id = prefix + "moveInterp" + i.toStr()
     interp.fieldToInterp = [node.id + ".translation"]
-    return { index: i, state: state, node: node, anim: anim, interp: interp, dirty: false, speed: state.speed }
+    return { index: i, species: species, anchor: anchor, state: state, node: node, anim: anim, interp: interp, dirty: false, speed: state.speed }
+end function
+
+' Rig JSON per species, read once.
+function brainRig(species as string) as object
+    if not m.rigs.doesExist(species) then m.rigs[species] = ParseJson(ReadAsciiFile("pkg:/config/species/" + species + ".rig.json"))
+    return m.rigs[species]
 end function
 
 sub onTick()
@@ -85,8 +93,11 @@ end sub
 sub brainAdvance(target as integer)
     for now = m.tick + 1 to target
         for each item in m.items
-            kind = brainTickFish(item.state, m.cfg, m.lane, m.ellipses, now)
+            kind = brainTickBehavior(item.state, m.cfg, m.world, now)
             if kind <> "" then item.dirty = true
+            if item.state.beh <> invalid then
+                if item.state.trTo <> "" then brainLogBehavior(item, now)
+            end if
             if kind = "dart" then
                 m.top.dartCount = m.top.dartCount + 1
                 brainLogDart(item, now)
@@ -110,12 +121,19 @@ end sub
 sub brainLogDart(item as object, now as integer)
     p = item.state.points[0]
     tr = item.node.translation
-    dx = tr[0] + m.anchor[0] - p[0]
-    dy = tr[1] + m.anchor[1] - p[1]
+    dx = tr[0] + item.anchor[0] - p[0]
+    dy = tr[1] + item.anchor[1] - p[1]
     gap = Int(Sqr(dx * dx + dy * dy) * 10 + 0.5) / 10.0
     last = item.state.points[item.state.points.count() - 1]
     at = " from=" + Int(p[0]).toStr() + "," + Int(p[1]).toStr() + " to=" + Int(last[0]).toStr() + "," + Int(last[1]).toStr()
     print "BRAIN dart fish=" + item.index.toStr() + " t=" + Str(now * m.cfg.tick).trim() + " gap=" + Str(gap).trim() + at
+end sub
+
+sub brainLogBehavior(item as object, now as integer)
+    st = item.state
+    print "BEHAVIOR fish=" + item.index.toStr() + " species=" + item.species + " " + st.trFrom + "->" + st.trTo + " t=" + Str(now * m.cfg.tick).trim()
+    st.trFrom = ""
+    st.trTo = ""
 end sub
 
 sub brainIssue(item as object, now as integer)
@@ -128,7 +146,7 @@ sub brainIssue(item as object, now as integer)
     for k = 0 to remain
         keys.push(k / remain)
         p = st.points[offset + k]
-        values.push(brainToTranslation(p[0], p[1]))
+        values.push(brainToTranslation(item.anchor, p[0], p[1]))
     end for
     ease = "linear"
     if st.dart and offset = 0 then ease = m.cfg.dartEase
@@ -152,7 +170,7 @@ end sub
 sub brainPose(last as integer)
     for now = 0 to last
         for each item in m.items
-            brainTickFish(item.state, m.cfg, m.lane, m.ellipses, now)
+            brainTickBehavior(item.state, m.cfg, m.world, now)
         end for
     end for
     for each item in m.items
@@ -160,7 +178,7 @@ sub brainPose(last as integer)
         f = (last - st.startTick) / st.steps
         if st.dart then f = brainOutCubic(f)
         p = brainPolylineAt(st.points, f)
-        item.node.translation = brainToTranslation(p[0], p[1])
+        item.node.translation = brainToTranslation(item.anchor, p[0], p[1])
         item.node.facing = st.facing
         item.node.swimSpeed = st.speed
     end for
@@ -168,15 +186,8 @@ sub brainPose(last as integer)
     print "BRAIN posed t="; m.top.sceneTime
 end sub
 
-function brainToTranslation(x as float, y as float) as object
-    return [x - m.anchor[0], y - m.anchor[1]]
-end function
-
-' A non-zero per-fish seed drawn from the master PRNG.
-function brainFishSeed(master as object) as integer
-    s = prngNextU32(master)
-    if s = 0 then s = 1
-    return s
+function brainToTranslation(anchor as object, x as float, y as float) as object
+    return [x - anchor[0], y - anchor[1]]
 end function
 
 ' ?seed in the preview, otherwise derived from the wall clock.
