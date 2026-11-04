@@ -3,13 +3,8 @@
 ' Preview-only: bsconfig.json excludes this file and it must never ship to a device.
 '
 ' URL params arrive as deep-link strings in args (seed, time, speed, freeze, scene, species,
-<<<<<<< HEAD
-' density, night) and are exposed to the scene as m.global.previewSeed/previewTime/
-' previewSpeed/previewFreeze/previewSpecies/previewDensity/previewNight.
-=======
-' density, debug) and are exposed to the scene as m.global.previewSeed/previewTime/previewSpeed/
-' previewFreeze/previewSpecies/previewDensity/previewDebug.
->>>>>>> 3a31cba (P1.8 avoidance and occlusion data: re-measured ellipses, caves, rocks and band for the composed tank, per-layer occluder rects, ?debug=1 overlay)
+' density, night, debug) and are exposed to the scene as m.global.previewSeed/previewTime/
+' previewSpeed/previewFreeze/previewSpecies/previewDensity/previewNight/previewDebug.
 ' ?scene=<ComponentName> picks the scene to create (default ReefTank).
 ' ?night=1 / ?night=0 force the ReefTank night mode (P3); ?time=HH:MM (or
 ' YYYY-MM-DDTHH:MM) sets its clock, so dusk can be frozen deterministically.
@@ -27,11 +22,8 @@ sub Main(args as object)
         previewFreeze: params.freeze,
         previewSpecies: params.species,
         previewDensity: params.density,
-<<<<<<< HEAD
         previewNight: params.night
-=======
         previewDebug: params.debug
->>>>>>> 3a31cba (P1.8 avoidance and occlusion data: re-measured ellipses, caves, rocks and band for the composed tank, per-layer occluder rects, ?debug=1 overlay)
     })
     scene = screen.createScene(params.scene)
     screen.show()
@@ -59,9 +51,7 @@ end sub
 
 function previewParseArgs(args as object) as object
 <<<<<<< HEAD
-    params = { scene: "ReefTank", seed: 0, time: "", speed: 1.0, freeze: 0.0, species: "", density: "", night: "" }
-=======
-    params = { scene: "ReefTank", seed: 0, time: "", speed: 1.0, freeze: 0.0, species: "", density: "", debug: 0 }
+    params = { scene: "ReefTank", seed: 0, time: "", speed: 1.0, freeze: 0.0, species: "", density: "", night: "", debug: 0 }
 >>>>>>> 3a31cba (P1.8 avoidance and occlusion data: re-measured ellipses, caves, rocks and band for the composed tank, per-layer occluder rects, ?debug=1 overlay)
     if args = invalid then return params
     if args.scene <> invalid and args.scene <> "" then params.scene = args.scene
@@ -71,11 +61,8 @@ function previewParseArgs(args as object) as object
     if args.freeze <> invalid then params.freeze = val(args.freeze)
     if args.species <> invalid then params.species = args.species
     if args.density <> invalid then params.density = args.density
-<<<<<<< HEAD
     if args.night <> invalid then params.night = args.night
-=======
     if args.debug <> invalid then params.debug = args.debug.toInt()
->>>>>>> 3a31cba (P1.8 avoidance and occlusion data: re-measured ellipses, caves, rocks and band for the composed tank, per-layer occluder rects, ?debug=1 overlay)
     return params
 end function
 

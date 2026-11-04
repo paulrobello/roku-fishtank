@@ -234,8 +234,9 @@ end function
 
 ' The world a population moves in. beh may be invalid (P2.3 cruise only).
 function brainNewWorld(cfg as object, beh as object) as object
-    world = { lane: cfg.lane, ellipses: cfg.ellipses, caves: [], rocks: [], band: invalid, arriveTime: 0.6, arriveResponse: 6.0 }
+    world = { lane: cfg.lane, ellipses: cfg.ellipses, caves: [], rocks: [], band: invalid, arriveTime: 0.6, arriveResponse: 6.0, weave: invalid }
     if beh <> invalid then
+        world.weave = beh.weave
         world.caves = beh.caves
         world.rocks = beh.rocks
         world.band = beh.band
@@ -362,6 +363,11 @@ end sub
 ' behaviour fish only rolls for darts mid-segment in cruise mode; when its
 ' segment has ended it may change mode, then plans the next segment.
 function brainTickBehavior(fish as object, cfg as object, world as object, now as integer) as string
+    if fish.wv <> invalid then
+        ' Lane weaving (weave.brs) goes first; a fish that left its home lane moves in its own lane world.
+        if weaveTick(fish, cfg, world, now) <> "" then return "segment"
+        if fish.world <> invalid then world = fish.world
+    end if
     if fish.beh = invalid then return brainTickFish(fish, cfg, world.lane, world.ellipses, now)
     if now < fish.startTick + fish.steps then
         if fish.mode = "cruise" then return brainTickFish(fish, fish.motion, world.lane, world.ellipses, now)

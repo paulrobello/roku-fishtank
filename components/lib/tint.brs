@@ -18,3 +18,10 @@ sub laneStyleFish(node as object, anchor as object, scale as float, tint as inte
     end if
     if tint <> -1 then laneTintPosters(node, tint)
 end sub
+
+' Sets both the lane scale and tint whatever their values (a fish changing lane, P2.4).
+sub laneSetStyle(node as object, anchor as object, scale as float, tint as integer)
+    node.scaleRotateCenter = [anchor[0], anchor[1]]
+    node.scale = [scale, scale]
+    laneTintPosters(node, tint)
+end sub

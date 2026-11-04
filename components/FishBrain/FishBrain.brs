@@ -46,6 +46,7 @@ sub onConfigUri()
         else if rig = invalid then
             print "FishBrain ERROR: cannot read rig for species '"; s.species; "'"
         else
+            weaveAttach(s.state, m.world, s.species, rig.bounds, rig.mirror_center, seed + 7919 * (i + 1))
             m.items.push(brainBuildFish(prefix, i, s.species, rig.mirror_center, s.state))
         end if
     end for
@@ -62,24 +63,28 @@ sub onConfigUri()
     m.timer.control = "start"
 end sub
 
-' One Fish and its reused mover, created once per fish. Facing is set before species so
-' the spawn does not play a turn.
+' One Fish and its reused mover, created once per fish inside a holder Group. Facing is
+' set before species so the spawn does not play a turn. An interpolator finds its target
+' in the subtree of its Animation's parent, so the mover lives in the holder with the Fish
+' and both move together when a weaving fish (P2.4) changes lane Group.
 function brainBuildFish(prefix as string, i as integer, species as string, anchor as object, state as object) as object
-    node = m.fishLayer.createChild("Fish")
+    holder = m.fishLayer.createChild("Group")
+    holder.id = prefix + "holder" + i.toStr()
+    node = holder.createChild("Fish")
     node.id = prefix + "fish" + i.toStr()
     node.facing = state.facing
     node.swimSpeed = state.speed
     node.species = species
     laneStyleFish(node, anchor, m.top.fishScale, m.top.fishTint)
     node.translation = brainToTranslation(anchor, state.agent.x, state.agent.y)
-    anim = m.top.createChild("Animation")
+    anim = holder.createChild("Animation")
     anim.id = prefix + "move" + i.toStr()
     anim.repeat = false
     anim.easeFunction = "linear"
     interp = anim.createChild("Vector2DFieldInterpolator")
     interp.id = prefix + "moveInterp" + i.toStr()
     interp.fieldToInterp = [node.id + ".translation"]
-    return { index: i, species: species, anchor: anchor, state: state, node: node, anim: anim, interp: interp, dirty: false, speed: state.speed }
+    return { index: i, species: species, anchor: anchor, state: state, node: node, holder: holder, anim: anim, interp: interp, dirty: false, speed: state.speed }
 end function
 
 ' Rig JSON per species, read once.
@@ -107,6 +112,9 @@ sub brainAdvance(target as integer)
             if kind = "dart" then
                 m.top.dartCount = m.top.dartCount + 1
                 brainLogDart(item, now)
+            end if
+            if item.state.wv <> invalid then
+                if item.state.laneSwitch then brainSwitchLane(item, now)
             end if
         end for
     end for
@@ -177,10 +185,21 @@ sub brainPose(last as integer)
     for now = 0 to last
         for each item in m.items
             brainTickBehavior(item.state, m.cfg, m.world, now)
+            if item.state.wv <> invalid then
+                ' Only the lane at `last` is drawn; keep the switch flag for the pose below.
+                if item.state.laneSwitch then item.switched = true
+                item.state.laneSwitch = false
+            end if
         end for
     end for
     for each item in m.items
+        if item.switched <> invalid then item.state.laneSwitch = true
+    end for
+    for each item in m.items
         st = item.state
+        if st.wv <> invalid then
+            if st.laneSwitch then brainSwitchLane(item, last)
+        end if
         f = (last - st.startTick) / st.steps
         if st.dart then f = brainOutCubic(f)
         p = brainPolylineAt(st.points, f)
@@ -224,3 +243,24 @@ function brainCountNodes(node as object) as integer
     end for
     return n
 end function
+
+' P2.4: a weaving fish has switched lane while hidden behind an occluder. Moves its
+' holder (Fish and mover) into the new lane's Group and snaps the lane's scale and tint;
+' brainIssue restarts the mover from the hold segment.
+sub brainSwitchLane(item as object, now as integer)
+    st = item.state
+    st.laneSwitch = false
+    lane = m.world.weave.lanes[st.laneIdx]
+    camera = m.top.getParent().getParent()
+    group = invalid
+    if camera <> invalid then group = camera.findNode(lane.id)
+    if group = invalid then
+        print "FishBrain ERROR: no lane Group '"; lane.id; "'"
+        return
+    end if
+    item.holder.getParent().removeChild(item.holder)
+    group.appendChild(item.holder)
+    laneSetStyle(item.node, item.anchor, lane.scale, lane.tint)
+    item.dirty = true
+    print "WEAVE fish=" + item.index.toStr() + " species=" + item.species + " lane=" + lane.id + " t=" + Str(now * m.cfg.tick).trim()
+end sub

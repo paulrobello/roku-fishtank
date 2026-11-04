@@ -12,6 +12,9 @@
     top-level keys of the two configs (ReefTank passes the lane rect, ellipses, caves,
     rocks, band and population from config/scene.json); seedSalt separates the brains of
     one scene; fishScale and fishTint (RGBA, -1 = white) are the lane's depth styling.
+    Weaving (P2.4): behaviorOverride.weave (sceneCfgWeavePlan) lets listed species change lane
+    behind an occluder; each fish and its mover sit in a holder Group that moves to the new
+    lane's Group, and each switch prints WEAVE fish=<i> species=<s> lane=<id> t=<s>.
 -->
 <component name="FishBrain" extends="Group">
     <interface>
@@ -30,6 +33,7 @@
     <script type="text/brightscript" uri="pkg:/components/lib/steer.brs" />
     <script type="text/brightscript" uri="pkg:/components/lib/brain.brs" />
     <script type="text/brightscript" uri="pkg:/components/lib/tint.brs" />
+    <script type="text/brightscript" uri="pkg:/components/lib/weave.brs" />
     <children>
         <Group id="fishLayer" />
         <Timer id="brainTimer" duration="0.125" repeat="true" />

@@ -23,6 +23,7 @@ function testSuites() as object
         settingsTestSuite()
         bubblesTestSuite()
         nightTestSuite()
+        weaveTestSuite()
     ]
 end function
 
