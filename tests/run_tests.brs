@@ -15,6 +15,7 @@ function testSuites() as object
         steerTestSuite()
         solarTestSuite()
         daynightTestSuite()
+        brainTestSuite()
     ]
 end function
 

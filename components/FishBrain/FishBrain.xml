@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+    Fish brain (P2.3). Set configUri to a brain config (config/brain.json) to spawn its
+    fish and start the ~8 Hz brainTimer. Each fish gets one Fish node and one reused mover
+    Animation + Vector2DFieldInterpolator, all created once here; segments only rewrite
+    key, keyValue, duration and easeFunction. Logic lives in components/lib/brain.brs.
+    sceneTime is the brain clock in seconds (wall time x m.global.previewSpeed).
+-->
+<component name="FishBrain" extends="Group">
+    <interface>
+        <field id="configUri" type="string" onChange="onConfigUri" />
+        <field id="sceneTime" type="float" value="0.0" />
+        <field id="dartCount" type="integer" value="0" />
+    </interface>
+    <script type="text/brightscript" uri="FishBrain.brs" />
+    <script type="text/brightscript" uri="pkg:/components/lib/prng.brs" />
+    <script type="text/brightscript" uri="pkg:/components/lib/steer.brs" />
+    <script type="text/brightscript" uri="pkg:/components/lib/brain.brs" />
+    <children>
+        <Group id="fishLayer" />
+        <Timer id="brainTimer" duration="0.125" repeat="true" />
+    </children>
+</component>

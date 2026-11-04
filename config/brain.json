@@ -1,0 +1,33 @@
+{
+  "_notes": "FishBrain parameters (P2.3). Coordinates are scene pixels of the fish anchor (the rig mirror_center), times in seconds, speeds in px/s. The lane and ellipses are the BrainDemoScene layout until P1.1 moves lanes and avoidance ellipses into config/scene.json. Ellipse radii are padded for the anchor point, not the 240x113 body, so a body can still overlap an ellipse edge. nodeLogSeconds > 0 logs the scene node count every that many seconds of scene time (preview aid; 0 disables).",
+  "species": "royal_blue_tang",
+  "count": 25,
+  "tick": 0.125,
+  "segMinSec": 0.5,
+  "segMaxSec": 1.5,
+  "minSpeed": 35,
+  "maxSpeed": 110,
+  "wanderJitter": 3.0,
+  "wanderAccel": 80,
+  "avoidMargin": 0.5,
+  "avoidAccel": 300,
+  "laneBand": 80,
+  "laneAccel": 400,
+  "dartChance": 0.004,
+  "dartSpeed": 420,
+  "dartTurn": 1.2,
+  "dartSteps": 4,
+  "dartEase": "outCubic",
+  "facingDeadband": 6,
+  "speedBucket": 15,
+  "spawnMargin": 0.3,
+  "maxCatchUpTicks": 240,
+  "nodeLogSeconds": 60,
+  "lane": { "left": 160, "top": 200, "right": 1760, "bottom": 900 },
+  "ellipses": [
+    { "cx": 470, "cy": 640, "rx": 150, "ry": 110 },
+    { "cx": 900, "cy": 420, "rx": 120, "ry": 90 },
+    { "cx": 1300, "cy": 700, "rx": 180, "ry": 100 },
+    { "cx": 1560, "cy": 380, "rx": 90, "ry": 80 }
+  ]
+}

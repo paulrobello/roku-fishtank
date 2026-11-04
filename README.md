@@ -44,7 +44,7 @@ brs-engine with the SceneGraph extension on a 1920x1080 canvas scaled to the win
   | `scene` | `?scene=FidelityScene` | scene component to create (default `FishtankTest`) | used by `Main` only |
   | `seed` | `?seed=42` | `previewSeed` (integer) | plumbed and printed |
   | `time` | `?time=18:30` | `previewTime` (string) | plumbed and printed |
-  | `speed` | `?speed=4x` | `previewSpeed` (float) | plumbed and printed |
+  | `speed` | `?speed=4x` | `previewSpeed` (float) | scales the FishBrain clock and its mover durations; Fish tail/turn animations run at 1x |
   | `freeze` | `?freeze=10` | `previewFreeze` (seconds) | pauses all Animations at T and snaps them to their value at T, so reloads give the same frame |
 
 - **Console:** BrightScript `print` output goes to the browser console, and the page
@@ -58,6 +58,15 @@ brs-engine with the SceneGraph extension on a 1920x1080 canvas scaled to the win
   (`components/Fish/`) at display scale and 2x, turning every 3 s. Its first turn starts
   with the scene, so `?freeze=0.15` and `0.35` land mid-turn, and `1.25` and `1.75` land
   on the tail extremes.
+- **Fish brain demo:** `?scene=BrainDemoScene&seed=7` runs 25 tangs under `FishBrain`
+  (`components/FishBrain/`, logic in `components/lib/brain.brs`, parameters in
+  `config/brain.json`), with the lane rect and avoidance ellipses as faint dots. The
+  console logs `BRAIN nodes=<n> t=<s>` every 60 s of scene time and `BRAIN dart ...`
+  per dart. Under `?freeze=T` the brain runs its logic to T at once and poses the fish
+  without starting movers, so the frame depends only on seed and T. The interpreter tops
+  out near 5x scene time with 25 fish, so `?speed` above ~5 does not run faster.
+  `bun tools/preview_capture.ts` captures the log or a frame sequence from a running
+  `make dev`.
 
 `make test-visual` (part of `make checkall`) starts an isolated server on 8139, opens
 `?freeze=3` and compares the canvas to `tests/visual/__screenshots__/frozen-t3.png`.

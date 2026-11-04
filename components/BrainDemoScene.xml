@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+    Preview demo for the fish brain (P2.3): 25 royal blue tangs driven by FishBrain from
+    config/brain.json, with the lane rect and avoidance ellipses drawn as faint dot
+    markers (a preview aid). Open with ?scene=BrainDemoScene&seed=7. Not created by
+    RunScreenSaver.
+-->
+<component name="BrainDemoScene" extends="Scene">
+    <script type="text/brightscript" uri="BrainDemoScene.brs" />
+    <children>
+        <Rectangle id="water" color="0x062B45" />
+        <Group id="markers" />
+        <FishBrain id="brain" />
+    </children>
+</component>

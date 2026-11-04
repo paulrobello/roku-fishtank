@@ -23,3 +23,17 @@ test("frozen test-channel frame matches the baseline", async ({ page }) => {
   // toHaveScreenshot waits for two identical consecutive captures before comparing.
   await expect(page.locator("#display")).toHaveScreenshot("frozen-t3.png");
 });
+
+// FishBrain under ?freeze runs its logic to T at once and poses the fish without movers,
+// so the frame depends only on seed and T (3 loads compared pixel-identical, 2026-11-04).
+test("frozen brain demo at seed 7 matches the baseline", async ({ page }) => {
+  await page.goto("/?scene=BrainDemoScene&seed=7&freeze=5");
+  await page.waitForFunction(
+    () => ["frozen", "error"].includes((window as PreviewWindow).__preview?.status ?? ""),
+    null,
+    { timeout: 30_000 },
+  );
+  const preview = await page.evaluate(() => (window as PreviewWindow).__preview);
+  expect(preview?.status, preview?.log.join("\n")).toBe("frozen");
+  await expect(page.locator("#display")).toHaveScreenshot("brain-seed7-t5.png");
+});
