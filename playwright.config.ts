@@ -7,6 +7,8 @@ const gpuArgs: string[] =
   gpu === "metal"
     ? ["--use-angle=metal", "--enable-gpu", "--ignore-gpu-blocklist"]
     : ["--use-angle=swiftshader", "--enable-unsafe-swiftshader"];
+// PW_PORT moves the isolated server off 8139 when another worktree's gate holds it.
+const port: string = process.env.PW_PORT ?? "8139";
 
 export default defineConfig({
   testDir: "tests/visual",
@@ -21,7 +23,7 @@ export default defineConfig({
     toHaveScreenshot: { maxDiffPixelRatio: 0.001, threshold: 0.02 },
   },
   use: {
-    baseURL: "http://localhost:8139",
+    baseURL: `http://localhost:${port}`,
     channel: "chromium",
     headless: true,
     viewport: { width: 1920, height: 1080 },
@@ -29,8 +31,8 @@ export default defineConfig({
     launchOptions: { args: gpuArgs },
   },
   webServer: {
-    command: "bunx --bun vite --config preview/vite.config.ts --port 8139 --strictPort",
-    url: "http://localhost:8139/",
+    command: `bunx --bun vite --config preview/vite.config.ts --port ${port} --strictPort`,
+    url: `http://localhost:${port}/`,
     reuseExistingServer: false,
     timeout: 30_000,
   },
