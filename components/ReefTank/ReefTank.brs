@@ -30,6 +30,7 @@ sub init()
         poster.translation = [d.x, d.y]
     end for
     reefTankAddAmbient(camera)
+    if m.global.hasField("previewDebug") and m.global.previewDebug > 0 then reefTankDebugOverlay(camera)
     reefTankBuildDrift()
     print "REEFTANK ready: "; dr.width; "x"; dr.height; " layers="; m.sceneCfg.layers.count(); " decor="; decor.count()
     reefTankInitFish()
@@ -80,7 +81,10 @@ sub reefTankBuildFish(name as string)
         brain.fishScale = lane.scale
         brain.fishTint = lane.tint
         brain.configOverride = { lane: sceneCfgLaneRect(lane), ellipses: pop.ellipses }
-        brain.behaviorOverride = { population: entry.groups, caves: pop.caves, rocks: pop.rocks, band: pop.band }
+        behOver = { population: entry.groups, caves: pop.caves, rocks: pop.rocks, band: pop.band }
+        weave = sceneCfgWeavePlan(cfg, lane.id)
+        if weave <> invalid then behOver.weave = weave
+        brain.behaviorOverride = behOver
         brain.behaviorUri = pop.behaviorUri
         brain.configUri = pop.brainUri
         m.tankNodes.push(brain)
@@ -182,3 +186,43 @@ function reefTankLoadConfig(uri as string) as dynamic
     end for
     return invalid
 end function
+
+' Preview ?debug=1 (P1.8): translucent boxes over the occlusion data, drawn last in the
+' Group they belong to so they drift with it. Occluders (red) go in their decor layer,
+' the avoidance ellipses (yellow, as horizontal slices) and the mandarin band (green)
+' in the back lane, whose rect the brains share in design pixels.
+sub reefTankDebugOverlay(camera as object)
+    pop = m.sceneCfg.population
+    if pop = invalid then return
+    if sceneCfgIsObject(pop.occluders) then
+        for each layer in m.sceneCfg.layers
+            rects = pop.occluders[layer.id]
+            if rects <> invalid then
+                for each r in rects
+                    reefTankDebugRect(camera.findNode(layer.id), r.left, r.top, r.right - r.left, r.bottom - r.top, &hFF303070)
+                end for
+            end if
+        end for
+    end if
+    host = camera.findNode("backLane")
+    if host = invalid then return
+    for each e in pop.ellipses
+        n = 8
+        for k = 0 to n - 1
+            yc = -1 + (k + 0.5) * 2 / n
+            hw = e.rx * Sqr(1 - yc * yc)
+            reefTankDebugRect(host, e.cx - hw, e.cy - e.ry + k * 2 * e.ry / n, 2 * hw, 2 * e.ry / n, &hFFE03060)
+        end for
+    end for
+    b = pop.band
+    reefTankDebugRect(host, b.left, b.top, b.right - b.left, b.bottom - b.top, &h30FF3070)
+end sub
+
+sub reefTankDebugRect(parent as object, x as float, y as float, w as float, h as float, color as integer)
+    if parent = invalid then return
+    r = parent.createChild("Rectangle")
+    r.translation = [x, y]
+    r.width = w
+    r.height = h
+    r.color = color
+end sub

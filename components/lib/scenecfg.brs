@@ -100,7 +100,7 @@ function sceneCfgValidate(cfg as dynamic) as object
         end if
     end if
     sceneCfgValidateDrift(cfg, errors)
-    if cfg.population <> invalid then sceneCfgValidatePopulation(cfg.population, laneIds, errors)
+    if cfg.population <> invalid then sceneCfgValidatePopulation(cfg.population, ids, laneIds, errors)
     return errors
 end function
 
@@ -282,7 +282,7 @@ function sceneCfgDensityNames() as object
     return ["calm", "normal", "busy"]
 end function
 
-sub sceneCfgValidatePopulation(pop as dynamic, laneIds as object, errors as object)
+sub sceneCfgValidatePopulation(pop as dynamic, layerIds as object, laneIds as object, errors as object)
     if not sceneCfgIsObject(pop) then
         errors.push("population must be an object")
         return
@@ -340,7 +340,14 @@ sub sceneCfgValidatePopulation(pop as dynamic, laneIds as object, errors as obje
         errors.push("population.band needs a numeric rect {left, top, right, bottom}")
     else if b.right <= b.left or b.bottom <= b.top then
         errors.push("population.band is empty")
+    else
+        for each p in [[b.left, b.top], [b.right, b.top], [b.left, b.bottom], [b.right, b.bottom]]
+            if not sceneCfgOutsideAll(ellipses, p) then errors.push("population.band corner [" + Str(p[0]).trim() + ", " + Str(p[1]).trim() + "] is inside an ellipse")
+        end for
     end if
+
+    sceneCfgValidateOccluders(pop.occluders, layerIds, laneIds, errors)
+    sceneCfgValidateWeave(pop.weave, errors)
 
     if not sceneCfgIsObject(pop.densities) then
         errors.push("population.densities must be an object")
@@ -443,4 +450,111 @@ end function
 ' Lane rect as the { left, top, right, bottom } FishBrain and School expect.
 function sceneCfgLaneRect(lane as object) as object
     return { left: lane.left, top: lane.top, right: lane.right, bottom: lane.bottom }
+end function
+
+' ---------------------------------------------------------------------------
+' Occlusion and weaving data (P1.8, P2.4). population.occluders maps a decor
+' layer id to rects ({ left, top, right, bottom }, layer coordinates) where that
+' layer's art is solid enough to hide a fish. population.weave sets which species
+' change lanes and how (see components/lib/weave.brs).
+
+function sceneCfgIsRect(r as dynamic) as boolean
+    if not sceneCfgIsObject(r) then return false
+    if not sceneCfgIsNumber(r.left) or not sceneCfgIsNumber(r.top) or not sceneCfgIsNumber(r.right) or not sceneCfgIsNumber(r.bottom) then return false
+    return r.right > r.left and r.bottom > r.top
+end function
+
+sub sceneCfgValidateOccluders(occ as dynamic, layerIds as object, laneIds as object, errors as object)
+    if occ = invalid then return
+    if not sceneCfgIsObject(occ) then
+        errors.push("population.occluders must be an object keyed by layer id")
+        return
+    end if
+    for each id in occ
+        if not layerIds.doesExist(id) or laneIds.doesExist(id) then errors.push("population.occluders names " + id + ", which is not a decor layer")
+        rects = occ[id]
+        if not sceneCfgIsArray(rects) then
+            errors.push("population.occluders." + id + " must be an array")
+        else
+            for i = 0 to rects.count() - 1
+                if not sceneCfgIsRect(rects[i]) then errors.push("population.occluders." + id + "[" + i.toStr() + "] needs a non-empty rect {left, top, right, bottom}")
+            end for
+        end if
+    end for
+end sub
+
+sub sceneCfgValidateWeave(w as dynamic, errors as object)
+    if w = invalid then return
+    if not sceneCfgIsObject(w) then
+        errors.push("population.weave must be an object")
+        return
+    end if
+    if not sceneCfgIsArray(w.species) then errors.push("population.weave.species must be an array of species names")
+    if not sceneCfgIsNumber(w.chance) or w.chance < 0 or w.chance > 1 then errors.push("population.weave.chance must be 0..1")
+    for each key in ["seekSec", "seekSpeed", "holdSec", "cooldownSec"]
+        if not sceneCfgIsNumber(w[key]) or w[key] <= 0 then errors.push("population.weave." + key + " must be positive")
+    end for
+    if not sceneCfgIsNumber(w.slack) or w.slack < 0 then errors.push("population.weave.slack must be >= 0")
+end sub
+
+' What one lane's FishBrain needs for weaving, or invalid when population.weave is
+' absent: { home, lanes: [{ id, rect, scale, tint }] back to front, gaps, species
+' (name -> true), chance, seekSec, seekSpeed, holdSec, cooldownSec }. gaps[i] lists
+' the hide rects for a switch between lanes i and i + 1: the occluders of every decor
+' layer in front of lane i + 1, because only those hide the fish in both lanes (a
+' rect of the layer between the lanes stops hiding it the moment it joins the
+' nearer lane). Each rect is shrunk by the camera drift between its layer and either
+' lane (amplitude x |parallax difference|) plus weave.slack, so the fish stays
+' hidden at every drift phase and across the reparent.
+function sceneCfgWeavePlan(cfg as object, laneId as string) as dynamic
+    pop = cfg.population
+    if pop = invalid or not sceneCfgIsObject(pop.weave) then return invalid
+    w = pop.weave
+    lanes = sceneCfgLanes(cfg)
+    plan = { home: -1, lanes: [], gaps: [], species: {}, chance: w.chance, seekSec: w.seekSec, seekSpeed: w.seekSpeed, holdSec: w.holdSec, cooldownSec: w.cooldownSec }
+    for i = 0 to lanes.count() - 1
+        ln = lanes[i]
+        if ln.id = laneId then plan.home = i
+        plan.lanes.push({ id: ln.id, rect: sceneCfgLaneRect(ln), scale: ln.scale, tint: ln.tint })
+    end for
+    for each name in w.species
+        plan.species[name] = true
+    end for
+    ax = 0.0
+    ay = 0.0
+    if sceneCfgDriftEnabled(cfg) then
+        ax = cfg.drift.amplitude.x
+        ay = cfg.drift.amplitude.y
+    end if
+    occ = pop.occluders
+    for i = 0 to lanes.count() - 2
+        gap = []
+        pa = sceneCfgLayerParallax(cfg, lanes[i].id)
+        pb = sceneCfgLayerParallax(cfg, lanes[i + 1].id)
+        front = sceneCfgLayerIndex(cfg, lanes[i + 1].id)
+        if sceneCfgIsObject(occ) then
+            ' Layer order, not key order, so the list is the same on every platform.
+            for k = front + 1 to cfg.layers.count() - 1
+                layer = cfg.layers[k]
+                rects = occ[layer.id]
+                if rects <> invalid then
+                    dp = Abs(layer.parallax - pa)
+                    if Abs(layer.parallax - pb) > dp then dp = Abs(layer.parallax - pb)
+                    mx = ax * dp + w.slack
+                    my = ay * dp + w.slack
+                    for each r in rects
+                        gap.push({ left: r.left + mx, top: r.top + my, right: r.right - mx, bottom: r.bottom - my, layer: layer.id })
+                    end for
+                end if
+            end for
+        end if
+        plan.gaps.push(gap)
+    end for
+    return plan
+end function
+
+function sceneCfgLayerParallax(cfg as object, id as string) as float
+    i = sceneCfgLayerIndex(cfg, id)
+    if i < 0 then return 0.0
+    return cfg.layers[i].parallax
 end function
