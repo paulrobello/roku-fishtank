@@ -1,0 +1,10 @@
+{
+  "rootDir": ".",
+  "outDir": "dist",
+  "files": [
+    "manifest",
+    "source/**/*",
+    "components/**/*",
+    "images/**/*"
+  ]
+}
