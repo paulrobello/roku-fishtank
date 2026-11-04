@@ -50,9 +50,7 @@ sub Main(args as object)
 end sub
 
 function previewParseArgs(args as object) as object
-<<<<<<< HEAD
     params = { scene: "ReefTank", seed: 0, time: "", speed: 1.0, freeze: 0.0, species: "", density: "", night: "", debug: 0 }
->>>>>>> 3a31cba (P1.8 avoidance and occlusion data: re-measured ellipses, caves, rocks and band for the composed tank, per-layer occluder rects, ?debug=1 overlay)
     if args = invalid then return params
     if args.scene <> invalid and args.scene <> "" then params.scene = args.scene
     if args.seed <> invalid then params.seed = args.seed.toInt()
