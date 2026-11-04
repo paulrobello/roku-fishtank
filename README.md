@@ -7,8 +7,9 @@ replace Roku's "Aquatic Life" screensaver (removed December 1, 2026). See
 **Current state: test channel verified on device (2026-11-04).** The minimal
 channel answered the research's open question — a sideloaded dev screensaver
 appears in Settings > Theme > Screensavers (as "dev") and runs. It draws three
-placeholder fish swimming across a full-width pebble bottom. Next up: the real
-tank — proper species art, coral layers, tail wiggle, the slow side-to-side pan.
+placeholder fish swimming across a full-width pebble bottom. Next up: **Reef
+Tank**, the real screensaver. See `PRD.md` for scope and phases and `plans/` for
+the per-phase task plans.
 
 ## Layout
 
