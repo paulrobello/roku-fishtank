@@ -1,0 +1,422 @@
+BUBBLES pool= 40 sources= 2
+REEFTANK ready:  1920 x 1080  layers= 11 decor= 2
+BRAIN seed= 1800092416 fish= 9 speed= 1 
+BEHAVIOR fish=0 species=royal_gramma spawn->hover t=0
+BEHAVIOR fish=1 species=royal_gramma spawn->hover t=0
+BEHAVIOR fish=2 species=royal_gramma spawn->hover t=0
+BEHAVIOR fish=3 species=yellow_tang spawn->cruise t=0
+BEHAVIOR fish=4 species=yellow_tang spawn->cruise t=0
+BEHAVIOR fish=5 species=royal_blue_tang spawn->cruise t=0
+BEHAVIOR fish=6 species=royal_blue_tang spawn->cruise t=0
+BEHAVIOR fish=7 species=moorish_idol spawn->cruise t=0
+BEHAVIOR fish=8 species=emperor_angelfish spawn->cruise t=0
+BRAIN nodes=475 t=0
+BRAIN seed= 1801836805 fish= 9 speed= 1 
+BEHAVIOR fish=0 species=royal_blue_tang spawn->cruise t=0
+BEHAVIOR fish=1 species=royal_blue_tang spawn->cruise t=0
+BEHAVIOR fish=2 species=yellow_tang spawn->cruise t=0
+BEHAVIOR fish=3 species=yellow_tang spawn->cruise t=0
+BEHAVIOR fish=4 species=emperor_angelfish spawn->cruise t=0
+BEHAVIOR fish=5 species=lionfish spawn->drift t=0
+BEHAVIOR fish=8 species=moorish_idol spawn->cruise t=0
+BRAIN nodes=671 t=0
+BRAIN seed= 1803367381 fish= 11 speed= 1 
+BEHAVIOR fish=0 species=royal_blue_tang spawn->cruise t=0
+BEHAVIOR fish=1 species=royal_blue_tang spawn->cruise t=0
+BEHAVIOR fish=2 species=yellow_tang spawn->cruise t=0
+BEHAVIOR fish=3 species=yellow_tang spawn->cruise t=0
+BEHAVIOR fish=4 species=emperor_angelfish spawn->cruise t=0
+BEHAVIOR fish=7 species=mandarin_dragonet spawn->graze t=0
+BEHAVIOR fish=8 species=mandarin_dragonet spawn->graze t=0
+BEHAVIOR fish=9 species=moorish_idol spawn->cruise t=0
+BEHAVIOR fish=10 species=lionfish spawn->drift t=0
+BRAIN nodes=909 t=0
+SCHOOL seed= 1797066067 fish= 14 speed= 1 
+REEFTANK fish density=busy fish= 29 school= 14 brains= 3
+DEVICECHECK scene=ReefTank density=busy
+11-04 21:41:28.144 app  [sg.scene.bitmap.big] Warning! Loaded texture (2546 x 1080) larger than the UI resolution (1920 x 1080) - ReefTank/Poster:reefBackdrop pkg:/images/decor/reef_backdrop.png
+BRAIN dart fish=9 t=0.375 gap=1.8 from=558,866 to=654,741
+FPS  62
+BRAIN dart fish=6 t=1.5 gap=0.6 from=763,460 to=649,291
+BEHAVIOR fish=7 species=mandarin_dragonet graze->hop t=1.875
+BRAIN dart fish=7 t=2.125 gap=0.9 from=1349,640 to=1164,541
+FPS  59
+BRAIN dart fish=4 t=2.125 gap=1.1 from=1245,379 to=1123,209
+BRAIN dart fish=8 t=2.25 gap=1 from=1184,655 to=1312,488
+BRAIN dart fish=8 t=2.375 gap=1.6 from=1344,478 to=1181,611
+BEHAVIOR fish=8 species=mandarin_dragonet graze->hop t=3
+FPS  60
+BRAIN dart fish=1 t=3.375 gap=0.1 from=1025,492 to=823,548
+BEHAVIOR fish=7 species=mandarin_dragonet hop->graze t=3.875
+BRAIN dart fish=3 t=4.125 gap=0.4 from=887,428 to=782,437
+FPS  60
+FPS  60
+BEHAVIOR fish=8 species=mandarin_dragonet hop->graze t=5.5
+FPS  60
+BEHAVIOR fish=7 species=mandarin_dragonet graze->hop t=6.625
+BEHAVIOR fish=0 species=royal_gramma hover->retreat t=7.25
+FPS  60
+BRAIN dart fish=2 t=7.875 gap=1.6 from=833,534 to=997,551
+FPS  60
+BEHAVIOR fish=7 species=mandarin_dragonet hop->graze t=8.625
+BEHAVIOR fish=8 species=mandarin_dragonet graze->hop t=8.875
+FPS  60
+FPS  60
+BEHAVIOR fish=8 species=mandarin_dragonet hop->graze t=10.375
+BEHAVIOR fish=0 species=royal_gramma retreat->hide t=10.75
+FPS  60
+BEHAVIOR fish=1 species=royal_gramma hover->retreat t=11.875
+BEHAVIOR fish=2 species=royal_gramma hover->retreat t=11.875
+BEHAVIOR fish=8 species=mandarin_dragonet graze->hop t=12
+FPS  60
+BRAIN dart fish=3 t=12.625 gap=0.9 from=385,760 to=323,560
+BEHAVIOR fish=7 species=mandarin_dragonet graze->hop t=12.625
+FPS  60
+BEHAVIOR fish=8 species=mandarin_dragonet hop->graze t=13.5
+FPS  60
+BEHAVIOR fish=1 species=royal_gramma retreat->hide t=14.375
+BEHAVIOR fish=7 species=mandarin_dragonet hop->graze t=14.625
+BEHAVIOR fish=2 species=royal_gramma retreat->hide t=14.875
+BEHAVIOR fish=8 species=mandarin_dragonet graze->hop t=14.75
+FPS  60
+FPS  60
+BEHAVIOR fish=8 species=mandarin_dragonet hop->graze t=16.75
+BEHAVIOR fish=7 species=mandarin_dragonet graze->hop t=16.875
+FPS  60
+FPS  60
+BEHAVIOR fish=7 species=mandarin_dragonet hop->graze t=18.375
+BEHAVIOR fish=8 species=mandarin_dragonet graze->hop t=18.875
+BEHAVIOR fish=0 species=royal_gramma hide->emerge t=19.25
+FPS  59
+BEHAVIOR fish=2 species=royal_gramma hide->emerge t=19.5
+BRAIN dart fish=1 t=19.375 gap=0.2 from=333,819 to=227,951
+BEHAVIOR fish=1 species=royal_gramma hide->emerge t=20.125
+FPS  60
+BEHAVIOR fish=8 species=mandarin_dragonet hop->graze t=20.375
+FPS  60
+BRAIN dart fish=2 t=21.25 gap=0.6 from=1020,287 to=918,471
+BEHAVIOR fish=4 species=emperor_angelfish cruise->approach t=21.25
+BEHAVIOR fish=0 species=royal_gramma emerge->hover t=21.75
+BEHAVIOR fish=2 species=royal_gramma emerge->hover t=22
+BEHAVIOR fish=7 species=mandarin_dragonet graze->hop t=21.875
+BEHAVIOR fish=1 species=royal_gramma emerge->hover t=22.125
+FPS  60
+BRAIN dart fish=7 t=23 gap=0.3 from=485,369 to=500,221
+BRAIN dart fish=8 t=23.25 gap=0.2 from=1668,297 to=1659,455
+FPS  60
+BEHAVIOR fish=7 species=mandarin_dragonet hop->graze t=23.375
+BEHAVIOR fish=8 species=mandarin_dragonet graze->hop t=23.5
+FPS  60
+BEHAVIOR fish=7 species=moorish_idol cruise->approach t=24.375
+BEHAVIOR fish=8 species=moorish_idol cruise->approach t=24.875
+FPS  60
+BEHAVIOR fish=8 species=mandarin_dragonet hop->graze t=25.5
+BEHAVIOR fish=7 species=moorish_idol approach->graze t=25.875
+BEHAVIOR fish=4 species=emperor_angelfish approach->graze t=25.75
+BEHAVIOR fish=7 species=mandarin_dragonet graze->hop t=25.75
+FPS  60
+BEHAVIOR fish=8 species=mandarin_dragonet graze->hop t=27
+FPS  60
+BEHAVIOR fish=2 species=yellow_tang cruise->approach t=27.375
+BEHAVIOR fish=7 species=mandarin_dragonet hop->graze t=27.75
+BEHAVIOR fish=8 species=moorish_idol approach->graze t=27.875
+BEHAVIOR fish=1 species=royal_gramma hover->retreat t=28.125
+FPS  60
+BEHAVIOR fish=8 species=mandarin_dragonet hop->graze t=28.5
+BEHAVIOR fish=9 species=moorish_idol cruise->approach t=28.5
+BEHAVIOR fish=10 species=lionfish drift->hang t=28.625
+BEHAVIOR fish=6 species=royal_blue_tang cruise->approach t=29
+BEHAVIOR fish=5 species=lionfish drift->hang t=29.125
+FPS  60
+BRAIN dart fish=4 t=29.5 gap=0.4 from=1389,391 to=1277,569
+BEHAVIOR fish=1 species=royal_gramma retreat->hide t=30.125
+FPS  60
+BEHAVIOR fish=8 species=mandarin_dragonet graze->hop t=30.25
+BEHAVIOR fish=2 species=yellow_tang approach->graze t=30.375
+BEHAVIOR fish=6 species=royal_blue_tang approach->graze t=30.5
+BEHAVIOR fish=1 species=royal_blue_tang cruise->approach t=30.75
+BRAIN dart fish=0 t=31 gap=0.2 from=1220,674 to=1196,872
+BEHAVIOR fish=7 species=mandarin_dragonet graze->hop t=31
+FPS  60
+BRAIN dart fish=6 t=31.25 gap=0.3 from=291,356 to=420,199
+BEHAVIOR fish=0 species=royal_gramma hover->retreat t=31.875
+BEHAVIOR fish=2 species=royal_gramma hover->retreat t=32.125
+FPS  60
+BRAIN dart fish=6 t=32.25 gap=0.6 from=739,705 to=698,911
+BEHAVIOR fish=8 species=mandarin_dragonet hop->graze t=32.25
+BEHAVIOR fish=9 species=moorish_idol approach->graze t=32.5
+BEHAVIOR fish=7 species=mandarin_dragonet hop->graze t=33
+FPS  60
+BEHAVIOR fish=7 species=moorish_idol graze->cruise t=34.25
+FPS  60
+BEHAVIOR fish=0 species=royal_gramma retreat->hide t=34.375
+BEHAVIOR fish=8 species=mandarin_dragonet graze->hop t=34.25
+BRAIN dart fish=6 t=34.625 gap=1.2 from=581,818 to=435,958
+BEHAVIOR fish=1 species=royal_blue_tang approach->graze t=34.75
+BEHAVIOR fish=2 species=royal_gramma retreat->hide t=35.125
+BRAIN dart fish=6 t=35.125 gap=0.2 from=548,328 to=756,356
+FPS  60
+FPS  59
+BEHAVIOR fish=7 species=mandarin_dragonet graze->hop t=36.25
+BEHAVIOR fish=8 species=mandarin_dragonet hop->graze t=36.25
+BRAIN dart fish=0 t=36.375 gap=0.4 from=1419,457 to=1563,305
+BEHAVIOR fish=4 species=emperor_angelfish graze->cruise t=36.625
+BEHAVIOR fish=1 species=royal_gramma hide->emerge t=36.875
+FPS  60
+BEHAVIOR fish=5 species=lionfish hang->drift t=37.25
+BEHAVIOR fish=2 species=yellow_tang graze->cruise t=37.625
+BRAIN dart fish=7 t=37.75 gap=1 from=1678,299 to=1484,234
+BEHAVIOR fish=7 species=mandarin_dragonet hop->graze t=37.75
+FPS  60
+BEHAVIOR fish=8 species=emperor_angelfish cruise->approach t=38.5
+BRAIN dart fish=5 t=38.625 gap=0.6 from=444,542 to=602,513
+BEHAVIOR fish=1 species=royal_gramma emerge->hover t=38.875
+BEHAVIOR fish=8 species=mandarin_dragonet graze->hop t=38.75
+BEHAVIOR fish=4 species=yellow_tang cruise->approach t=39.125
+BEHAVIOR fish=3 species=yellow_tang cruise->approach t=39
+FPS  60
+BRAIN dart fish=3 t=39.625 gap=0.7 from=956,264 to=989,472
+BEHAVIOR fish=8 species=moorish_idol graze->cruise t=39.625
+BEHAVIOR fish=3 species=yellow_tang cruise->approach t=39.75
+BEHAVIOR fish=7 species=mandarin_dragonet graze->hop t=39.625
+BEHAVIOR fish=9 species=moorish_idol graze->cruise t=39.625
+FPS  60
+BRAIN dart fish=7 t=40.25 gap=0.1 from=1301,346 to=1204,533
+BEHAVIOR fish=2 species=royal_gramma hide->emerge t=40.375
+BEHAVIOR fish=8 species=mandarin_dragonet hop->graze t=40.25
+BEHAVIOR fish=4 species=yellow_tang approach->graze t=40.625
+BEHAVIOR fish=1 species=royal_blue_tang cruise->approach t=40.75
+BEHAVIOR fish=0 species=royal_gramma hide->emerge t=40.875
+BEHAVIOR fish=6 species=royal_blue_tang graze->cruise t=41
+FPS  60
+BRAIN dart fish=6 t=41.75 gap=0.4 from=1733,488 to=1550,385
+BEHAVIOR fish=7 species=mandarin_dragonet hop->graze t=41.625
+BRAIN dart fish=7 t=41.75 gap=0.4 from=1162,634 to=1258,675
+BEHAVIOR fish=8 species=mandarin_dragonet graze->hop t=42
+FPS  60
+BEHAVIOR fish=8 species=emperor_angelfish approach->graze t=42.5
+BEHAVIOR fish=2 species=royal_gramma emerge->hover t=42.875
+BRAIN dart fish=6 t=43 gap=1.4 from=1534,298 to=1742,322
+BEHAVIOR fish=3 species=yellow_tang approach->graze t=43.25
+FPS  60
+BEHAVIOR fish=1 species=royal_blue_tang approach->graze t=43.25
+BEHAVIOR fish=0 species=royal_gramma emerge->hover t=43.375
+BEHAVIOR fish=4 species=emperor_angelfish cruise->approach t=43.375
+BEHAVIOR fish=7 species=mandarin_dragonet graze->hop t=43.625
+BEHAVIOR fish=3 species=yellow_tang approach->graze t=44
+BEHAVIOR fish=8 species=mandarin_dragonet hop->graze t=44
+FPS  60
+BEHAVIOR fish=10 species=lionfish hang->drift t=44.125
+BRAIN dart fish=6 t=44.25 gap=1.3 from=1738,340 to=1589,202
+BRAIN dart fish=6 t=44.375 gap=0.4 from=1337,316 to=1149,409
+BEHAVIOR fish=1 species=royal_blue_tang graze->cruise t=44.875
+FPS  60
+BRAIN dart fish=0 t=45.25 gap=0.5 from=1069,289 to=988,204
+BEHAVIOR fish=7 species=mandarin_dragonet hop->graze t=45.625
+FPS  60
+BRAIN dart fish=3 t=46.25 gap=0.6 from=1185,792 to=1235,716
+BEHAVIOR fish=2 species=yellow_tang cruise->approach t=46.25
+BEHAVIOR fish=8 species=mandarin_dragonet graze->hop t=46.5
+BEHAVIOR fish=0 species=royal_blue_tang cruise->approach t=47.125
+FPS  60
+BEHAVIOR fish=4 species=emperor_angelfish approach->graze t=47.375
+BRAIN dart fish=9 t=47.875 gap=0.2 from=752,695 to=712,901
+FPS  60
+BEHAVIOR fish=7 species=mandarin_dragonet graze->hop t=48.5
+BEHAVIOR fish=8 species=mandarin_dragonet hop->graze t=48.5
+BEHAVIOR fish=0 species=royal_blue_tang cruise->approach t=49
+FPS  60
+BEHAVIOR fish=3 species=yellow_tang cruise->approach t=49.375
+BEHAVIOR fish=2 species=royal_gramma hover->retreat t=49.5
+BEHAVIOR fish=5 species=royal_blue_tang cruise->approach t=49.5
+BEHAVIOR fish=3 species=yellow_tang graze->cruise t=50.125
+BEHAVIOR fish=0 species=royal_blue_tang approach->graze t=50.125
+FPS  60
+BEHAVIOR fish=7 species=mandarin_dragonet hop->graze t=50.5
+BEHAVIOR fish=8 species=mandarin_dragonet graze->hop t=50.875
+FPS  60
+BEHAVIOR fish=3 species=yellow_tang approach->graze t=51.375
+BEHAVIOR fish=1 species=royal_gramma hover->retreat t=51.625
+BEHAVIOR fish=4 species=yellow_tang graze->cruise t=51.625
+BEHAVIOR fish=2 species=yellow_tang approach->graze t=51.75
+BEHAVIOR fish=1 species=royal_blue_tang graze->cruise t=51.875
+BEHAVIOR fish=5 species=royal_blue_tang approach->graze t=52
+BEHAVIOR fish=8 species=emperor_angelfish graze->cruise t=52
+FPS  59
+BEHAVIOR fish=2 species=royal_gramma retreat->hide t=52.5
+BEHAVIOR fish=0 species=royal_blue_tang approach->graze t=52.5
+BRAIN dart fish=5 t=52.625 gap=0.1 from=460,597 to=314,681
+BEHAVIOR fish=8 species=mandarin_dragonet hop->graze t=52.875
+FPS  60
+BEHAVIOR fish=0 species=royal_gramma hover->retreat t=53.5
+BEHAVIOR fish=7 species=mandarin_dragonet graze->hop t=53.625
+FPS  60
+BRAIN dart fish=9 t=54.125 gap=1.6 from=251,895 to=150,953
+BEHAVIOR fish=1 species=royal_gramma retreat->hide t=54.625
+BRAIN dart fish=4 t=54.75 gap=0.1 from=1645,442 to=1793,421
+BRAIN dart fish=8 t=54.875 gap=0.2 from=1172,699 to=1251,776
+FPS  60
+BEHAVIOR fish=3 species=yellow_tang graze->cruise t=55.375
+BEHAVIOR fish=7 species=moorish_idol cruise->approach t=55.75
+BEHAVIOR fish=7 species=mandarin_dragonet hop->graze t=55.625
+BEHAVIOR fish=0 species=royal_gramma retreat->hide t=56
+FPS  60
+BEHAVIOR fish=8 species=mandarin_dragonet graze->hop t=56.625
+BEHAVIOR fish=4 species=emperor_angelfish graze->cruise t=57.125
+FPS  60
+BEHAVIOR fish=7 species=moorish_idol approach->graze t=57.75
+FPS  60
+BEHAVIOR fish=8 species=mandarin_dragonet hop->graze t=58.125
+BEHAVIOR fish=2 species=royal_gramma hide->emerge t=58.5
+FPS  60
+BEHAVIOR fish=7 species=mandarin_dragonet graze->hop t=59.125
+BEHAVIOR fish=2 species=yellow_tang graze->cruise t=59.25
+BEHAVIOR fish=2 species=yellow_tang cruise->approach t=59.75
+BEHAVIOR fish=1 species=royal_gramma hide->emerge t=59.875
+BRAIN nodes=1211 t=60
+BEHAVIOR fish=3 species=yellow_tang graze->cruise t=60
+BRAIN nodes=1211 t=60
+BRAIN nodes=1211 t=60
+FPS  60
+BEHAVIOR fish=5 species=royal_blue_tang graze->cruise t=60.375
+BEHAVIOR fish=0 species=royal_blue_tang graze->cruise t=60.5
+BRAIN dart fish=1 t=60.625 gap=0.2 from=608,887 to=639,975
+BEHAVIOR fish=7 species=mandarin_dragonet hop->graze t=60.625
+BEHAVIOR fish=2 species=royal_gramma emerge->hover t=61
+BEHAVIOR fish=8 species=mandarin_dragonet graze->hop t=61
+FPS  60
+BRAIN dart fish=3 t=61.25 gap=0.6 from=1400,351 to=1434,200
+BEHAVIOR fish=0 species=royal_gramma hide->emerge t=61.375
+BEHAVIOR fish=1 species=royal_gramma emerge->hover t=61.875
+FPS  60
+BEHAVIOR fish=7 species=mandarin_dragonet graze->hop t=62.5
+BEHAVIOR fish=8 species=mandarin_dragonet hop->graze t=62.5
+BRAIN dart fish=7 t=62.875 gap=1.4 from=1726,441 to=1560,313
+FPS  60
+BEHAVIOR fish=2 species=yellow_tang approach->graze t=63.75
+BEHAVIOR fish=0 species=royal_gramma emerge->hover t=63.875
+FPS  60
+BRAIN dart fish=1 t=64.375 gap=0.3 from=776,749 to=815,861
+BEHAVIOR fish=8 species=mandarin_dragonet graze->hop t=64.375
+BEHAVIOR fish=7 species=mandarin_dragonet hop->graze t=64.5
+FPS  60
+BEHAVIOR fish=0 species=royal_blue_tang graze->cruise t=65.125
+BEHAVIOR fish=7 species=mandarin_dragonet graze->hop t=65.75
+BEHAVIOR fish=8 species=mandarin_dragonet hop->graze t=65.875
+FPS  60
+BRAIN dart fish=8 t=66.625 gap=0.3 from=1743,461 to=1657,464
+FPS  60
+BEHAVIOR fish=8 species=mandarin_dragonet graze->hop t=67.375
+BEHAVIOR fish=5 species=lionfish drift->hang t=67.625
+BRAIN dart fish=5 t=67.75 gap=0.2 from=532,302 to=740,306
+BEHAVIOR fish=2 species=royal_gramma hover->retreat t=67.875
+BEHAVIOR fish=7 species=mandarin_dragonet hop->graze t=67.75
+FPS  60
+BEHAVIOR fish=1 species=royal_gramma hover->retreat t=68.625
+BEHAVIOR fish=7 species=moorish_idol graze->cruise t=69.25
+FPS  59
+BEHAVIOR fish=8 species=mandarin_dragonet hop->graze t=69.375
+BEHAVIOR fish=7 species=mandarin_dragonet graze->hop t=69.5
+FPS  60
+BEHAVIOR fish=7 species=mandarin_dragonet hop->graze t=71
+BEHAVIOR fish=8 species=mandarin_dragonet graze->hop t=71
+FPS  60
+BRAIN dart fish=5 t=71.5 gap=0.2 from=448,564 to=576,525
+BEHAVIOR fish=2 species=royal_gramma retreat->hide t=71.875
+BEHAVIOR fish=6 species=royal_blue_tang cruise->approach t=71.875
+BEHAVIOR fish=3 species=yellow_tang cruise->approach t=72
+BEHAVIOR fish=1 species=royal_gramma retreat->hide t=72.125
+FPS  60
+BEHAVIOR fish=7 species=mandarin_dragonet graze->hop t=72.25
+BEHAVIOR fish=0 species=royal_gramma hover->retreat t=72.5
+BEHAVIOR fish=8 species=mandarin_dragonet hop->graze t=72.5
+BEHAVIOR fish=8 species=moorish_idol cruise->approach t=73
+FPS  60
+BEHAVIOR fish=4 species=emperor_angelfish cruise->approach t=73.25
+BEHAVIOR fish=2 species=yellow_tang graze->cruise t=73.5
+BRAIN dart fish=3 t=73.625 gap=0.2 from=1338,260 to=1439,444
+BEHAVIOR fish=7 species=mandarin_dragonet hop->graze t=73.75
+FPS  60
+BEHAVIOR fish=6 species=royal_blue_tang approach->graze t=74.375
+BEHAVIOR fish=3 species=yellow_tang approach->graze t=74.5
+BEHAVIOR fish=4 species=emperor_angelfish approach->graze t=74.75
+BEHAVIOR fish=8 species=mandarin_dragonet graze->hop t=74.75
+BEHAVIOR fish=8 species=moorish_idol approach->graze t=75
+FPS  60
+BEHAVIOR fish=0 species=royal_gramma retreat->hide t=75.5
+FPS  60
+BEHAVIOR fish=8 species=mandarin_dragonet hop->graze t=76.25
+BEHAVIOR fish=1 species=royal_gramma hide->emerge t=76.5
+BEHAVIOR fish=7 species=mandarin_dragonet graze->hop t=76.5
+BEHAVIOR fish=5 species=lionfish hang->drift t=77.125
+FPS  60
+BRAIN dart fish=4 t=77.25 gap=0.2 from=1375,349 to=1235,201
+BEHAVIOR fish=7 species=mandarin_dragonet hop->graze t=78
+BEHAVIOR fish=2 species=royal_gramma hide->emerge t=78.25
+FPS  60
+BEHAVIOR fish=1 species=royal_gramma emerge->hover t=78.5
+BEHAVIOR fish=8 species=mandarin_dragonet graze->hop t=78.75
+BRAIN dart fish=4 t=79.125 gap=0.2 from=1639,434 to=1790,428
+FPS  60
+FPS  60
+BEHAVIOR fish=8 species=mandarin_dragonet hop->graze t=80.25
+BEHAVIOR fish=2 species=royal_gramma emerge->hover t=80.75
+BRAIN dart fish=3 t=80.75 gap=0.5 from=1120,609 to=1004,434
+FPS  60
+BRAIN dart fish=0 t=81.125 gap=0.2 from=401,261 to=595,195
+BEHAVIOR fish=7 species=mandarin_dragonet graze->hop t=81.125
+BEHAVIOR fish=0 species=royal_gramma hide->emerge t=81.5
+FPS  60
+BEHAVIOR fish=6 species=royal_blue_tang graze->cruise t=83
+FPS  60
+BEHAVIOR fish=7 species=mandarin_dragonet hop->graze t=83.125
+BEHAVIOR fish=8 species=moorish_idol graze->cruise t=83.5
+BEHAVIOR fish=0 species=royal_gramma emerge->hover t=84
+FPS  60
+BEHAVIOR fish=8 species=mandarin_dragonet graze->hop t=84.125
+BEHAVIOR fish=0 species=royal_blue_tang cruise->approach t=84.625
+BEHAVIOR fish=7 species=mandarin_dragonet graze->hop t=84.75
+BEHAVIOR fish=3 species=yellow_tang graze->cruise t=85.125
+FPS  60
+BEHAVIOR fish=4 species=emperor_angelfish graze->cruise t=85.125
+BRAIN dart fish=3 t=85.75 gap=1.5 from=569,314 to=374,372
+BRAIN dart fish=3 t=85.875 gap=0.6 from=1448,385 to=1247,324
+FPS  59
+BEHAVIOR fish=8 species=mandarin_dragonet hop->graze t=86.125
+BEHAVIOR fish=1 species=royal_gramma hover->retreat t=86.375
+BEHAVIOR fish=7 species=mandarin_dragonet hop->graze t=86.25
+BRAIN dart fish=5 t=86.875 gap=0.3 from=1480,431 to=1418,490
+BEHAVIOR fish=9 species=moorish_idol cruise->approach t=86.875
+BEHAVIOR fish=0 species=royal_blue_tang approach->graze t=87.125
+FPS  60
+FPS  60
+BEHAVIOR fish=7 species=mandarin_dragonet graze->hop t=88.25
+BEHAVIOR fish=1 species=royal_gramma retreat->hide t=88.875
+FPS  60
+BEHAVIOR fish=8 species=mandarin_dragonet graze->hop t=89.375
+FPS  60
+BEHAVIOR fish=1 species=royal_blue_tang cruise->approach t=90.25
+BEHAVIOR fish=7 species=mandarin_dragonet hop->graze t=90.25
+BEHAVIOR fish=10 species=lionfish drift->hang t=90.75
+BEHAVIOR fish=2 species=royal_gramma hover->retreat t=91.25
+FPS  60
+BEHAVIOR fish=8 species=mandarin_dragonet hop->graze t=91.375
+BEHAVIOR fish=2 species=yellow_tang cruise->approach t=91.5
+BEHAVIOR fish=9 species=moorish_idol approach->graze t=91.875
+BRAIN dart fish=6 t=92 gap=1.5 from=892,359 to=1092,424
+BEHAVIOR fish=7 species=mandarin_dragonet graze->hop t=92
+FPS  60
+BEHAVIOR fish=8 species=emperor_angelfish cruise->approach t=92.375
+BRAIN dart fish=3 t=92.25 gap=0.1 from=970,299 to=1179,313
+BRAIN dart fish=7 t=92.375 gap=1.1 from=1644,292 to=1777,193
+BRAIN dart fish=6 t=92.5 gap=0.7 from=398,240 to=201,194
+BEHAVIOR fish=3 species=yellow_tang cruise->approach t=92.75
+BEHAVIOR fish=8 species=mandarin_dragonet graze->hop t=92.875
+FPS  60
+BEHAVIOR fish=7 species=mandarin_dragonet hop->graze t=93.5
+BEHAVIOR fish=8 species=emperor_angelfish approach->graze t=93.875
+FPS  60
+BEHAVIOR fish=2 species=yellow_tang approach->graze t=94.5
+BEHAVIOR fish=2 species=royal_gramma retreat->hide t=94.75
+BEHAVIOR fish=8 species=mandarin_dragonet hop->graze t=94.875
+BEHAVIOR fish=1 species=royal_gramma hide->emerge t=95.125
