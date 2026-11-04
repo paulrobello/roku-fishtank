@@ -24,6 +24,7 @@ sub onConfigUri()
     if over <> invalid then cfg = brainMerge(cfg, over)
     over = m.top.behaviorOverride
     if beh <> invalid and over <> invalid then beh = brainMerge(beh, over)
+    if cfg.pitch = invalid then print "FishBrain ERROR: config '"; m.top.configUri; "' has no pitch block; fish stay level"
     m.cfg = cfg
     m.world = brainNewWorld(cfg, beh)
     m.speed = brainPreviewSpeed()
@@ -80,7 +81,8 @@ end sub
 ' One Fish and its reused mover, created once per fish inside a holder Group. Facing is
 ' set before species so the spawn does not play a turn. An interpolator finds its target
 ' in the subtree of its Animation's parent, so the mover lives in the holder with the Fish
-' and both move together when a weaving fish (P2.4) changes lane Group.
+' and both move together when a weaving fish (P2.4) changes lane Group. The mover also
+' drives the Fish rotation (pitch) about the anchor, the same pivot as the lane scale.
 function brainBuildFish(prefix as string, i as integer, species as string, anchor as object, state as object) as object
     holder = m.fishLayer.createChild("Group")
     holder.id = prefix + "holder" + i.toStr()
@@ -91,6 +93,7 @@ function brainBuildFish(prefix as string, i as integer, species as string, ancho
     node.species = species
     laneStyleFish(node, anchor, m.top.fishScale, m.top.fishTint)
     node.translation = brainToTranslation(anchor, state.agent.x, state.agent.y)
+    node.scaleRotateCenter = [anchor[0], anchor[1]]
     anim = holder.createChild("Animation")
     anim.id = prefix + "move" + i.toStr()
     anim.repeat = false
@@ -98,7 +101,10 @@ function brainBuildFish(prefix as string, i as integer, species as string, ancho
     interp = anim.createChild("Vector2DFieldInterpolator")
     interp.id = prefix + "moveInterp" + i.toStr()
     interp.fieldToInterp = [node.id + ".translation"]
-    return { index: i, species: species, anchor: anchor, state: state, node: node, holder: holder, anim: anim, interp: interp, dirty: false, speed: state.speed }
+    pitchInterp = anim.createChild("FloatFieldInterpolator")
+    pitchInterp.id = prefix + "pitchInterp" + i.toStr()
+    pitchInterp.fieldToInterp = [node.id + ".rotation"]
+    return { index: i, species: species, anchor: anchor, state: state, node: node, holder: holder, anim: anim, interp: interp, pitchInterp: pitchInterp, dirty: false, speed: state.speed }
 end function
 
 ' Rig JSON per species, read once.
@@ -164,24 +170,34 @@ sub brainLogBehavior(item as object, now as integer)
     st.trTo = ""
 end sub
 
+' Pitch is keyed per tick of time rather than per point of path: under the dart ease the
+' path keys sit at eased fractions (pitchKeys = outCubic of the tick fraction), so the
+' tilt eases in over the dart's ticks instead of snapping with its first burst.
 sub brainIssue(item as object, now as integer)
     item.dirty = false
     st = item.state
     offset = now - st.startTick
     remain = st.steps - offset
-    keys = []
-    values = []
-    for k = 0 to remain
-        keys.push(k / remain)
-        p = st.points[offset + k]
-        values.push(brainToTranslation(item.anchor, p[0], p[1]))
-    end for
     ease = "linear"
     if st.dart and offset = 0 then ease = m.cfg.dartEase
+    keys = []
+    values = []
+    pitchKeys = []
+    pitches = []
+    for k = 0 to remain
+        f = k / remain
+        keys.push(f)
+        p = st.points[offset + k]
+        values.push(brainToTranslation(item.anchor, p[0], p[1]))
+        if ease = "linear" then pitchKeys.push(f) else pitchKeys.push(brainOutCubic(f))
+        pitches.push(brainPitchAtTick(st, now + k))
+    end for
     anim = item.anim
     anim.control = "stop"
     item.interp.key = keys
     item.interp.keyValue = values
+    item.pitchInterp.key = pitchKeys
+    item.pitchInterp.keyValue = pitches
     anim.duration = remain * m.cfg.tick / m.speed
     anim.easeFunction = ease
     anim.control = "start"
@@ -215,6 +231,7 @@ sub brainPose(last as integer)
             if st.laneSwitch then brainSwitchLane(item, last)
         end if
         f = (last - st.startTick) / st.steps
+        item.node.rotation = brainPitchAtTick(st, last)
         if st.dart then f = brainOutCubic(f)
         p = brainPolylineAt(st.points, f)
         item.node.translation = brainToTranslation(item.anchor, p[0], p[1])

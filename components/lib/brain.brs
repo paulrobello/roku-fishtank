@@ -18,11 +18,12 @@
 '   facing     1 (right) or -1 (left)
 '   lockFacing 0, or +/-1 to pin facing whatever the segment's direction
 '   speed      bucketed swim speed in px/s for the Fish tail beat
+'   pitches    rotation per point of the segment (brainPitchSeries), or invalid
 '
 ' Config fields used (see config/brain.json): tick, segMinSec, segMaxSec,
 ' minSpeed, maxSpeed, wanderJitter, wanderAccel, avoidMargin, avoidAccel,
 ' laneBand, laneAccel, dartChance, dartSpeed, dartTurn, dartSteps,
-' facingDeadband, speedBucket, spawnMargin.
+' facingDeadband, speedBucket, spawnMargin, pitch (optional; see brainPitchTarget).
 
 ' Returns a fish spawned at a random point inside lane and outside every
 ' ellipse inflated by cfg.spawnMargin (a fish spawned inside an ellipse could
@@ -181,6 +182,7 @@ function brainTickFish(fish as object, cfg as object, lane as object, ellipses a
 end function
 
 sub brainStartSegment(fish as object, cfg as object, now as integer, steps as integer, dart as boolean)
+    pitch = brainPitchAtTick(fish, now)
     fish.startTick = now
     fish.steps = steps
     fish.dart = dart
@@ -191,7 +193,64 @@ sub brainStartSegment(fish as object, cfg as object, now as integer, steps as in
         fish.facing = brainFacing(fish.facing, last[0] - fish.points[0][0], cfg.facingDeadband)
     end if
     fish.speed = brainBucket(brainPathSpeed(fish.points, cfg.tick), cfg.speedBucket)
+    fish.pitches = invalid
+    if cfg.pitch <> invalid then fish.pitches = brainPitchSeries(cfg.pitch, fish.points, pitch, fish.facing, cfg.tick)
 end sub
+
+' ---------------------------------------------------------------------------
+' Pitch: the Fish node's rotation (radians, counter-clockwise positive as in
+' SceneGraph) that tips the nose along the path. cfg.pitch (config/brain.json):
+'   maxDeg     largest tilt, reached at speedHi and above (darts)
+'   cruiseDeg  largest tilt at speedLo and below (cruise and drift stay near level)
+'   speedLo, speedHi  px/s over which the limit ramps from cruiseDeg to maxDeg
+'   follow     fraction of the gap to the target pitch closed per tick, so a
+'              fish eases into a dart's tilt and back out of it
+' Pitch is per point of the segment polyline (fish.pitches) and draws nothing
+' from the PRNG.
+
+' Target rotation for one step of (dx, dy) px taken in sec seconds by a fish
+' facing 1 (right) or -1 (left). The climb angle uses |dx|, so a step against
+' the facing (tail first) still tips the nose by its slope; screen y grows down,
+' so rising is -dy. Nose-up is counter-clockwise (positive) facing right and
+' clockwise (negative) facing left.
+function brainPitchTarget(p as object, dx as float, dy as float, sec as float, facing as integer) as float
+    if sec <= 0 or (dx = 0 and dy = 0) then return 0.0
+    adx = dx
+    if adx < 0 then adx = -adx
+    climb = brainAtan2(-dy, adx)
+    w = (Sqr(dx * dx + dy * dy) / sec - p.speedLo) / (p.speedHi - p.speedLo)
+    if w < 0 then w = 0
+    if w > 1 then w = 1
+    limit = (p.cruiseDeg + (p.maxDeg - p.cruiseDeg) * w) * 3.14159265 / 180.0
+    if climb > limit then climb = limit
+    if climb < -limit then climb = -limit
+    if facing < 0 then return -climb
+    return climb
+end function
+
+' Rotation at every point of `points` (one tick apart): start at points[0],
+' then each point closes `follow` of the gap to the target of the step into it.
+function brainPitchSeries(p as object, points as object, start as float, facing as integer, tickSec as float) as object
+    out = [start]
+    pitch = start
+    for i = 1 to points.count() - 1
+        target = brainPitchTarget(p, points[i][0] - points[i - 1][0], points[i][1] - points[i - 1][1], tickSec, facing)
+        pitch = pitch + (target - pitch) * p.follow
+        out.push(pitch)
+    end for
+    return out
+end function
+
+' The fish's rotation at tick `now` of its current segment (0 before any pitched segment).
+function brainPitchAtTick(fish as object, now as integer) as float
+    pitches = fish.pitches
+    if pitches = invalid then return 0.0
+    i = now - fish.startTick
+    if i < 0 then i = 0
+    if i > pitches.count() - 1 then i = pitches.count() - 1
+    return pitches[i]
+end function
+
 
 ' Point on the polyline at eased fraction f in [0, 1], keys spaced evenly.
 function brainPolylineAt(points as object, f as float) as object

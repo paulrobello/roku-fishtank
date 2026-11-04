@@ -25,6 +25,7 @@ function testSuites() as object
         nightTestSuite()
         weaveTestSuite()
         extrasTestSuite()
+        pitchTestSuite()
     ]
 end function
 

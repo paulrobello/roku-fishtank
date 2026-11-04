@@ -5,8 +5,10 @@
     the ~8 Hz brainTimer. Without behaviorUri every fish cruises as in P2.3; with it, the
     behaviour config's population and per-species state machines apply, and each mode
     change prints BEHAVIOR fish=<i> species=<s> <from>-><to> t=<s>. Each fish gets one
-    Fish node and one reused mover Animation + Vector2DFieldInterpolator, all created once
-    here; segments and mode changes only rewrite key, keyValue, duration and easeFunction. Logic lives in components/lib/brain.brs.
+    Fish node and one reused mover Animation + Vector2DFieldInterpolator (translation) and
+    FloatFieldInterpolator (rotation: the nose pitched along the path, config pitch), all
+    created once here; segments and mode changes only rewrite key, keyValue, duration and
+    easeFunction. Logic lives in components/lib/brain.brs.
     sceneTime is the brain clock in seconds (wall time x m.global.previewSpeed).
     Tank use (P2.7): configOverride and behaviorOverride (set before configUri) replace
     top-level keys of the two configs (ReefTank passes the lane rect, ellipses, caves,
