@@ -5,12 +5,15 @@ sub init()
     print "FishtankTest screensaver running: "; w; "x"; h
 
     water = m.top.findNode("water")
-    water.size = [w, h]
+    water.width = w
+    water.height = h
 
     pebbles = m.top.findNode("pebbles")
     pebbles.loadWidth = w
     pebbles.loadHeight = int(w * 160.0 / 1280.0)
-    pebbles.translation = [0, h - pebbles.loadHeight]
+    pebbles.width = w
+    pebbles.height = int(w * 160.0 / 1280.0)
+    pebbles.translation = [0, h - pebbles.height]
 
     ' Fish authored against hd (1280x720) coordinates, scaled to the design resolution.
     sx = w / 1280.0
@@ -20,18 +23,23 @@ sub init()
         { uri: "pkg:/images/fish_blue.png", y: 380, bob: 60, size: 0.8, dur: 30 },
         { uri: "pkg:/images/fish_orange.png", y: 540, bob: 30, size: 1.2, dur: 17 }
     ]
+    idx = 0
     for each f in fish
-        spawnFish(f, sx, sy, w)
+        spawnFish(f, sx, sy, w, idx)
+        idx = idx + 1
     end for
 end sub
 
-sub spawnFish(f as object, sx as float, sy as float, w as float)
+sub spawnFish(f as object, sx as float, sy as float, w as float, idx as integer)
     poster = createObject("roSGNode", "Poster")
+    poster.id = "fish" + idx.toStr()
     poster.uri = f.uri
     lw = int(240 * f.size * sx)
     lh = int(140 * f.size * sy)
     poster.loadWidth = lw
     poster.loadHeight = lh
+    poster.width = lw
+    poster.height = lh
 
     y0 = f.y * sy
     yMid = (f.y + f.bob) * sy
@@ -43,7 +51,7 @@ sub spawnFish(f as object, sx as float, sy as float, w as float)
     anim.easeFunction = "linear"
 
     interp = createObject("roSGNode", "Vector2DFieldInterpolator")
-    interp.fieldToInterp = poster.translation
+    interp.fieldToInterp = [poster.id + ".translation"]
     interp.key = [0.0, 0.5, 1.0]
     interp.keyValue = [[-lw, y0], [w * 0.55, yMid], [w + lw, y0]]
     anim.appendChild(interp)
