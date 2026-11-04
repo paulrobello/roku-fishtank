@@ -179,3 +179,7 @@ Acceptance:
 - Settings screen: yes, with 3 options. No clock overlay.
 - Name: "Reef Tank". All three Ultras; the 4800Xs join in P6.
 - `screensaver-ref.jpg` is a third-party watermarked photo. Reference only, never committed.
+
+## Decisions log (added during execution)
+
+- 2026-11-04 (Paul, standing instruction): the whole project ships **today, 2026-11-04**. The Nov 24 scope checkpoint and the Dec 1 date are void; **no scope cuts** were taken. Work runs in parallel sub-agent waves instead of the phase schedule.
