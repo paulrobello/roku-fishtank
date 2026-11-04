@@ -4,11 +4,15 @@ sub init()
     water.width = dr.width
     water.height = dr.height
 
+    ' ?species=<name> swaps the royal blue tang for another rigged species.
+    species = "royal_blue_tang"
+    if m.global.hasField("previewSpecies") and m.global.previewSpecies <> "" then species = m.global.previewSpecies
+
     ' The first turn starts with the scene, so ?freeze can seek it (preview.brs assumes
     ' running Animations started at scene start).
     m.fish = [m.top.findNode("tang1x"), m.top.findNode("tang2x")]
     for each fish in m.fish
-        fish.species = "royal_blue_tang"
+        fish.species = species
         fish.swimSpeed = 60.0
         fish.facing = -1
     end for

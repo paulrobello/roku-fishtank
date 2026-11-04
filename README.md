@@ -48,6 +48,7 @@ brs-engine with the SceneGraph extension on a 1920x1080 canvas scaled to the win
   | `time` | `?time=18:30` | `previewTime` (string) | plumbed and printed |
   | `speed` | `?speed=4x` | `previewSpeed` (float) | scales the FishBrain clock and its mover durations; Fish tail/turn animations run at 1x |
   | `freeze` | `?freeze=10` | `previewFreeze` (seconds) | pauses all Animations at T and snaps them to their value at T, so reloads give the same frame |
+  | `species` | `?species=lionfish` | `previewSpecies` (string) | species shown by `FishDemoScene` (default `royal_blue_tang`) |
 
 - **Console:** BrightScript `print` output goes to the browser console, and the page
   exposes `window.__preview` (`status`: loading, running, frozen or error, plus the log).
@@ -58,8 +59,10 @@ brs-engine with the SceneGraph extension on a 1920x1080 canvas scaled to the win
   brs-scenegraph takes the first `ui_resolutions` entry as the design resolution.
 - **Fish rig demo:** `?scene=FishDemoScene` shows the royal blue tang rig
   (`components/Fish/`) at display scale and 2x, turning every 3 s. Its first turn starts
-  with the scene, so `?freeze=0.15` and `0.35` land mid-turn, and `1.25` and `1.75` land
-  on the tail extremes.
+  with the scene, so `?freeze=0.15` and `0.35` land mid-turn, `1.25` and `1.75` land
+  on the tail extremes, and `2.0` and `2.5` on the pectoral-fin extremes.
+  `&species=lionfish` shows another species; rig `extra_layers` (the lionfish dorsal
+  spines) swing in phase with the pectoral fin.
 - **Fish brain demo:** `?scene=BrainDemoScene&seed=7` runs 25 tangs under `FishBrain`
   (`components/FishBrain/`, logic in `components/lib/brain.brs`, parameters in
   `config/brain.json`), with the lane rect and avoidance ellipses as faint dots. The

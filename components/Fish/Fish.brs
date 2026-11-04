@@ -15,6 +15,7 @@ sub init()
     serial = m.global.fishSerial + 1
     m.global.fishSerial = serial
     prefix = "fish" + serial.toStr() + "_"
+    m.prefix = prefix
     m.rig.id = prefix + "rig"
     m.body.id = prefix + "body"
     m.tail.id = prefix + "tail"
@@ -23,6 +24,7 @@ sub init()
     m.finInterp.fieldToInterp = [m.fin.id + ".rotation"]
     m.turnInterp.fieldToInterp = [m.rig.id + ".scale"]
 
+    m.extras = []
     m.turnSquash = 0.05
     m.artFacing = 1
     m.shownFacing = 1
@@ -52,6 +54,7 @@ sub onSpeciesChanged()
     m.shownFacing = fishSign(m.top.facing)
     m.rig.scale = [m.shownFacing * m.artFacing, 1.0]
     fishBuildSwimKeys(layers.tail.swing_deg, layers.fin.swing_deg)
+    fishBuildExtras(rig)
     m.loaded = true
     fishStartSwim()
 end sub
@@ -95,17 +98,56 @@ sub fishBuildSwimKeys(tailDeg as float, finDeg as float)
     toRad = 3.14159265 / 180.0
     keys = []
     tailValues = []
-    finValues = []
     for i = 0 to 8
         a = i * 6.2831853 / 8.0
         keys.push(i / 8.0)
         tailValues.push(tailDeg * toRad * sin(a))
-        finValues.push(-finDeg * toRad * cos(a))
     end for
     m.tailInterp.key = keys
     m.tailInterp.keyValue = tailValues
     m.finInterp.key = keys
-    m.finInterp.keyValue = finValues
+    m.finInterp.keyValue = fishFinValues(finDeg)
+end sub
+
+function fishFinValues(swingDeg as float) as object
+    toRad = 3.14159265 / 180.0
+    values = []
+    for i = 0 to 8
+        values.push(-swingDeg * toRad * cos(i * 6.2831853 / 8.0))
+    end for
+    return values
+end function
+
+' Extra swinging layers (rig extra_layers, e.g. lionfish dorsal spines): one Poster per
+' entry at its draw_order position in the rig, swinging in phase with the pectoral fin by
+' its own swing_deg (as tools/art/rig.py renders the rig check).
+sub fishBuildExtras(rig as object)
+    for each extra in m.extras
+        m.rig.removeChild(extra.poster)
+        m.swimAnim.removeChild(extra.interp)
+    end for
+    m.extras = []
+    if rig.extra_layers = invalid or rig.draw_order = invalid then return
+
+    byName = {}
+    for each layer in rig.extra_layers
+        byName[layer.name] = layer
+    end for
+    for i = 0 to rig.draw_order.count() - 1
+        layer = byName[rig.draw_order[i]]
+        if layer <> invalid then
+            poster = createObject("roSGNode", "Poster")
+            poster.id = m.prefix + layer.name
+            fishSetLayer(poster, layer)
+            m.rig.insertChild(poster, i)
+            interp = createObject("roSGNode", "FloatFieldInterpolator")
+            interp.fieldToInterp = [poster.id + ".rotation"]
+            interp.key = m.finInterp.key
+            interp.keyValue = fishFinValues(layer.swing_deg)
+            m.swimAnim.appendChild(interp)
+            m.extras.push({ poster: poster, interp: interp })
+        end if
+    end for
 end sub
 
 ' Beat period is 1 s at 60 px/s and scales inversely with speed, clamped to 0.35-3 s.

@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <!--
     Preview demo for the Fish rig (P2.2): the royal blue tang at display scale and at
-    2x, swimming in place and turning every 3 s. Open with ?scene=FishDemoScene.
+    2x, swimming in place and turning every 3 s. Open with ?scene=FishDemoScene;
+    &species=<name> (e.g. lionfish) shows another rigged species instead.
     Not created by RunScreenSaver.
 -->
 <component name="FishDemoScene" extends="Scene">
