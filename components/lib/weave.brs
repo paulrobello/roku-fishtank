@@ -102,7 +102,7 @@ function weaveSeekSegment(fish as object, cfg as object, world as object, now as
     r = fish.wv.region
     tx = weaveClamp(fish.agent.x, r.left + 2, r.right - 2)
     ty = weaveClamp(fish.agent.y, r.top + 2, r.bottom - 2)
-    fish.points = brainPlanArrive(fish, world, tx, ty, world.weave.seekSpeed, 4, cfg.tick)
+    fish.points = brainPlanArrive(fish, world, tx, ty, world.weave.seekSpeed, 4, cfg.tick, false)
     brainStartSegment(fish, cfg, now, 4, false)
     return "segment"
 end function

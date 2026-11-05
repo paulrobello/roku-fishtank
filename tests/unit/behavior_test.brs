@@ -16,6 +16,7 @@ function behaviorTestSuite() as object
             { name: "mandarinStaysInBand", fn: behaviorTest_mandarinStaysInBand }
             { name: "lionfishSlowNoDarts", fn: behaviorTest_lionfishSlowNoDarts }
             { name: "grazerCycleAndSlowPecks", fn: behaviorTest_grazerCycleAndSlowPecks }
+            { name: "grazerApproachReachesBlockedRock", fn: behaviorTest_grazerApproachReachesBlockedRock }
             { name: "seed1EveryBehaviorWithin300s", fn: behaviorTest_seed1EveryBehaviorWithin300s }
             { name: "guardHoldsLongRuns", fn: behaviorTest_guardHoldsLongRuns }
             { name: "sameSeedSameTransitions", fn: behaviorTest_sameSeedSameTransitions }
@@ -319,6 +320,35 @@ sub behaviorTest_lionfishSlowNoDarts(t as object)
         assertTrue(t, behaviorTest_hasTrans(r.trans, "drift", "hang"), "drift->hang")
         assertTrue(t, behaviorTest_hasTrans(r.trans, "hang", "drift"), "hang->drift")
     end for
+end sub
+
+' A grazer with the ellipse between it and the rock used to hover at the
+' outline until approachSec expired and gave up (approach->cruise). The
+' approach now detours around the ellipse and reaches the graze point.
+sub behaviorTest_grazerApproachReachesBlockedRock(t as object)
+    cfg = behaviorTest_cfg()
+    beh = behaviorTest_beh()
+    beh.rocks = [[560, 365]]
+    world = brainNewWorld(cfg, beh)
+    world.ellipses = [{ cx: 440, cy: 440, rx: 260, ry: 60 }]
+    fish = brainNewBehaviorFish(cfg, beh, world, "royal_blue_tang", 1, 0)
+    ' Spawn across the ellipse from the rock, so the direct line crosses it.
+    fish.agent.x = 560.0
+    fish.agent.y = 520.0
+    fish.agent.vx = 0.0
+    fish.agent.vy = 0.0
+    fish.mode = "approach"
+    fish.target = beh.rocks[0]
+    fish.modeEnd = 240
+    sawGraze = false
+    reached = false
+    for now = 0 to 119
+        brainTickBehavior(fish, cfg, world, now)
+        if fish.trTo = "graze" then sawGraze = true
+        if brainDist(fish.agent, fish.target) <= beh.kinds.grazer.arriveRadius then reached = true
+    end for
+    assertTrue(t, sawGraze, "approach -> graze within approachSec")
+    assertTrue(t, reached, "reached the graze point")
 end sub
 
 sub behaviorTest_grazerCycleAndSlowPecks(t as object)

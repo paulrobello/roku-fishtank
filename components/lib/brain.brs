@@ -473,7 +473,7 @@ function brainTickGrazer(fish as object, cfg as object, world as object, now as 
     if fish.mode = "cruise" then return brainTickFish(fish, fish.motion, world.lane, world.ellipses, now)
     steps = 4
     if fish.mode = "approach" then
-        fish.points = brainPlanArrive(fish, world, fish.target[0], fish.target[1], b.approachSpeed, steps, tick)
+        fish.points = brainPlanArrive(fish, world, fish.target[0], fish.target[1], b.approachSpeed, steps, tick, true)
     else
         ' graze: a slow peck to a point near the rock, then a pause, alternating
         fish.peck = not fish.peck
@@ -481,7 +481,7 @@ function brainTickGrazer(fish as object, cfg as object, world as object, now as 
             steps = brainSecTicks(fish.rng, b.peckSec, tick)
             tx = fish.target[0] + prngRange(fish.rng, -b.peckRadius, b.peckRadius)
             ty = fish.target[1] + prngRange(fish.rng, -b.peckRadius, b.peckRadius)
-            fish.points = brainPlanArrive(fish, world, tx, ty, b.peckSpeed, steps, tick)
+            fish.points = brainPlanArrive(fish, world, tx, ty, b.peckSpeed, steps, tick, false)
         else
             steps = brainSecTicks(fish.rng, b.pauseSec, tick)
             fish.points = brainPlanHold(fish, world.ellipses, steps, tick)
@@ -513,14 +513,14 @@ function brainTickCave(fish as object, cfg as object, world as object, now as in
         steps = brainSecTicks(fish.rng, b.hoverSegSec, tick)
         tx = cave.mouth[0] + prngRange(fish.rng, -b.hoverRadius, b.hoverRadius)
         ty = cave.mouth[1] + prngRange(fish.rng, -b.hoverRadius, b.hoverRadius)
-        fish.points = brainPlanArrive(fish, world, tx, ty, b.hoverSpeed, steps, tick)
+        fish.points = brainPlanArrive(fish, world, tx, ty, b.hoverSpeed, steps, tick, false)
     else if fish.mode = "retreat" then
-        fish.points = brainPlanArrive(fish, world, cave.den[0], cave.den[1], b.backSpeed, steps, tick)
+        fish.points = brainPlanArrive(fish, world, cave.den[0], cave.den[1], b.backSpeed, steps, tick, false)
     else if fish.mode = "hide" then
         steps = brainAtLeastOne(fish.modeEnd - now)
         fish.points = brainPlanHold(fish, world.ellipses, steps, tick)
     else
-        fish.points = brainPlanArrive(fish, world, cave.mouth[0], cave.mouth[1], b.emergeSpeed, steps, tick)
+        fish.points = brainPlanArrive(fish, world, cave.mouth[0], cave.mouth[1], b.emergeSpeed, steps, tick, false)
     end if
     brainStartSegment(fish, cfg, now, steps, false)
     return "segment"
@@ -551,7 +551,7 @@ function brainTickBottom(fish as object, cfg as object, world as object, now as 
 
     steps = 4
     if fish.mode = "hop" then
-        fish.points = brainPlanArrive(fish, world, fish.target[0], fish.target[1], b.hopSpeed, steps, tick)
+        fish.points = brainPlanArrive(fish, world, fish.target[0], fish.target[1], b.hopSpeed, steps, tick, false)
     else
         steps = brainAtLeastOne(fish.modeEnd - now)
         fish.points = brainPlanHold(fish, world.ellipses, steps, tick)
@@ -615,17 +615,80 @@ sub brainKeepInRect(agent as object, r as object, dt as float)
 end sub
 
 ' Plans `steps` arrive sub-steps toward (tx, ty), each ending in steerMove.
-' Bottom fish are also held inside the band.
-function brainPlanArrive(fish as object, world as object, tx as float, ty as float, maxSpeed as float, steps as integer, dt as float) as object
+' Bottom fish are also held inside the band. With detour, a blocked line to
+' the target aims at a tangent waypoint around the ellipse instead, so an
+' approach crosses no ellipse and still closes on the graze point.
+function brainPlanArrive(fish as object, world as object, tx as float, ty as float, maxSpeed as float, steps as integer, dt as float, detour as boolean) as object
     agent = fish.agent
     points = [[agent.x, agent.y]]
     for i = 1 to steps
-        brainArrive(agent, world, tx, ty, maxSpeed, dt)
+        ax = tx
+        ay = ty
+        if detour then
+            wp = brainDetour(world.ellipses, agent.x, agent.y, tx, ty)
+            if wp <> invalid then
+                ax = wp[0]
+                ay = wp[1]
+            end if
+        end if
+        brainArrive(agent, world, ax, ay, maxSpeed, dt)
         if fish.kind = "bottom" then brainKeepInRect(agent, world.band, dt)
         steerMove(agent, world.ellipses, dt)
         points.push([agent.x, agent.y])
     end for
     return points
+end function
+
+' Waypoint that routes a blocked arrive around an ellipse: the tangent point
+' of the first ellipse the straight line to (tx, ty) crosses, for the shorter
+' two-leg detour, pushed just outside the outline so the ellipse guard slides
+' the fish around instead of holding it at the tangent. The tangent geometry
+' runs in the ellipse's normalized space (a unit circle); the map is affine,
+' so straight lines stay straight in scene pixels. Returns invalid when the
+' line is clear. A target inside the outline is clamped to its radial
+' boundary point, which the fish can reach along the outline.
+function brainDetour(ellipses as object, x as float, y as float, tx as float, ty as float) as object
+    hi = steerFirstHit(ellipses, x, y, tx, ty)
+    if hi < 0 then return invalid
+    e = ellipses[hi]
+    px = (x - e.cx) / e.rx
+    py = (y - e.cy) / e.ry
+    qx = (tx - e.cx) / e.rx
+    qy = (ty - e.cy) / e.ry
+    p2 = px * px + py * py
+    if p2 <= 1.0 then return invalid
+    q2 = qx * qx + qy * qy
+    if q2 < 1.0 then
+        ql = Sqr(q2)
+        qx = qx / ql
+        qy = qy / ql
+    end if
+    den = p2
+    h = Sqr(den - 1.0)
+    ' Tangent points of the unit circle from p: (p +/- perp(p) * h) / |p|^2.
+    u1x = (px + py * h) / den
+    u1y = (py - px * h) / den
+    u2x = (px - py * h) / den
+    u2y = (py + px * h) / den
+    d1 = brainDetourLen(px, py, qx, qy, u1x, u1y)
+    d2 = brainDetourLen(px, py, qx, qy, u2x, u2y)
+    ux = u1x
+    uy = u1y
+    if d2 < d1 then
+        ux = u2x
+        uy = u2y
+    end if
+    s = 1.05
+    return [e.cx + ux * e.rx * s, e.cy + uy * e.ry * s]
+end function
+
+' Length of the two-leg detour through tangent point (ux, uy).
+function brainDetourLen(px as float, py as float, qx as float, qy as float, ux as float, uy as float) as float
+    dx = px - ux
+    dy = py - uy
+    ex = qx - ux
+    ey = qy - uy
+    return Sqr(dx * dx + dy * dy) + Sqr(ex * ex + ey * ey)
 end function
 
 ' Plans `steps` still sub-steps: zero velocity, still through steerMove.

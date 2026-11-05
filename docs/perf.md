@@ -75,3 +75,10 @@ Notes:
 - The console replays only its last ~200 lines on connect. Capture from the start of a run.
 
 Raw data: `docs/perf/raw/probe-20261104-114800-*` (run 1, combined ramp) and `probe-20261104-115624-*` (run 2, separate ramps), plus `r2d2-140fish-8layers-1147.txt` (full bitmap list).
+
+## Measuring the channel
+
+`tools/perf/run_channel.sh <day|night|auto>` measures the real Reef Tank, not the probe. It writes a temporary, gitignored `config/perf.json`, packages `dist/perf.zip`, sideloads it, waits for the screensaver to start (idle timeout, or Settings > Theme > Screensavers > dev > Preview), then captures the 8087 console and an `r2d2_bitmaps` sample into `docs/perf/raw/channel-<stamp>-<mode>-*`.
+
+`reefTankPerf` in `components/ReefTank/ReefTank.brs` reads `pkg:/config/perf.json` only when the file exists, so the shipped channel carries no counter. Keys: `fpsLog` prints `PERF t= fps=` once a second (rendered frames, counted with an interpolator-driven field as in the probe), `forceMode` pins `day` or `night`, `toggleSec` flips between them to time the crossfade. `PERF_SECONDS` sets the capture length (default 120) and `PERF_TOGGLE` enables the toggle. The summary skips the first 10 seconds. After a run, redeploy the normal build with `make deploy`.
+

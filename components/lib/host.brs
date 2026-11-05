@@ -51,7 +51,7 @@ function hostTick(fish as object, cfg as object, world as object, now as integer
 
     steps = 4
     if fish.hostMode = "approach" then
-        fish.points = brainPlanArrive(fish, world, h.x, h.y, h.roamSpeed, steps, tick)
+        fish.points = brainPlanArrive(fish, world, h.x, h.y, h.roamSpeed, steps, tick, false)
     else
         steps = brainSecTicks(fish.rng, h.segSec, tick)
         rMin = 0.0
@@ -63,7 +63,7 @@ function hostTick(fish as object, cfg as object, world as object, now as integer
             speed = h.roamSpeed
         end if
         p = hostPick(fish, world, rMin, rMax)
-        fish.points = brainPlanArrive(fish, world, p[0], p[1], speed, steps, tick)
+        fish.points = brainPlanArrive(fish, world, p[0], p[1], speed, steps, tick, false)
     end if
     brainStartSegment(fish, cfg, now, steps, false)
     return "segment"

@@ -37,6 +37,159 @@ sub init()
     reefTankAddArch()
     m.top.findNode("night").callFunc("nightStart", { camera: camera, fill: fill, scene: m.sceneCfg })
     reefTankAddExtras()
+    reefTankPerf()
+end sub
+
+' Device perf runs (docs/perf.md "Measuring the channel"): pkg:/config/perf.json exists
+' only in a perf build (gitignored, never committed). fpsLog prints the rendered frames
+' of each second to the 8087 console; forceMode ("day" or "night") overrides the setting;
+' toggleSec flips the forced mode every toggleSec seconds, to measure the crossfade;
+' ablate (array of layer ids, "@night" for every night* overlay) with ablateSec hides one
+' target at a time, each for ablateSec seconds after a baseline segment, and tags the PERF
+' lines with cut=<id>, to find what the frame rate costs. A target starting with "+" is
+' cumulative (it stays hidden for the rest of the run), "#anim" pauses every Animation
+' under the camera, "$Subtype" hides every node of that SceneGraph subtype (Seaweed, Bubbles,
+' FishBrain, School, ...), "~prefix" hides every node whose id starts with prefix, and
+' "#anim:Subtype" pauses only the Animations under nodes of that subtype ("#anim:~prefix"
+' by id prefix).
+sub reefTankPerf()
+    ' roFileSystem cannot be created on the render thread; ReadAsciiFile returns "" for
+    ' a missing file, which ParseJson turns into invalid.
+    cfg = ParseJson(ReadAsciiFile("pkg:/config/perf.json"))
+    if cfg = invalid then return
+    if cfg.forceMode <> invalid then m.top.nightMode = cfg.forceMode
+    if cfg.toggleSec <> invalid and cfg.toggleSec > 0 then
+        flip = m.top.createChild("Timer")
+        flip.duration = cfg.toggleSec
+        flip.repeat = true
+        flip.observeField("fire", "onPerfFlip")
+        flip.control = "start"
+    end if
+    m.perfLabel = "none"
+    if cfg.ablate <> invalid and cfg.ablateSec <> invalid and cfg.ablateSec > 0 then
+        m.ablateList = cfg.ablate
+        m.ablateIdx = -1
+        cut = m.top.createChild("Timer")
+        cut.duration = cfg.ablateSec
+        cut.repeat = true
+        cut.observeField("fire", "onPerfAblate")
+        cut.control = "start"
+    end if
+    if cfg.fpsLog <> true then return
+    ' One interpolator changes ticker.opacity every rendered frame; each change is a frame.
+    ticker = m.top.createChild("Rectangle")
+    ticker.id = "perfTicker"
+    ticker.width = 1
+    ticker.height = 1
+    ticker.color = &h00000000
+    ticker.observeField("opacity", "onPerfFrame")
+    anim = m.top.createChild("Animation")
+    anim.duration = 1.0
+    anim.repeat = true
+    anim.easeFunction = "linear"
+    interp = anim.createChild("FloatFieldInterpolator")
+    interp.fieldToInterp = ["perfTicker.opacity"]
+    interp.key = [0.0, 1.0]
+    interp.keyValue = [0.0, 1.0]
+    anim.control = "start"
+    m.perfFrames = 0
+    m.perfSeconds = 0
+    timer = m.top.createChild("Timer")
+    timer.duration = 1.0
+    timer.repeat = true
+    timer.observeField("fire", "onPerfSecond")
+    timer.control = "start"
+end sub
+
+sub perfSetCut(target as string, visible as boolean)
+    camera = m.top.findNode("camera")
+    if target = "#anim" then
+        perfPauseAnims(camera, visible)
+    else if Left(target, 6) = "#anim:" then
+        perfEach(camera, Mid(target, 7), "pause", visible)
+    else if Left(target, 1) = "$" or Left(target, 1) = "~" then
+        perfEach(camera, target, "hide", visible)
+    else if Left(target, 1) = "@" then
+        for i = 0 to camera.getChildCount() - 1
+            layer = camera.getChild(i)
+            for j = 0 to layer.getChildCount() - 1
+                if Left(layer.getChild(j).id, 5) = "night" then layer.getChild(j).visible = visible
+            end for
+        end for
+    else
+        node = camera.findNode(target)
+        if node <> invalid then node.visible = visible
+    end if
+end sub
+
+' Applies action ("hide" sets visible, "pause" pauses or resumes the Animations below) to
+' every node matching spec ("$Subtype" or "~idprefix") under node. A match is not descended into.
+sub perfEach(node as object, spec as string, action as string, on as boolean)
+    for i = 0 to node.getChildCount() - 1
+        child = node.getChild(i)
+        hit = false
+        if Left(spec, 1) = "$" and child.subtype() = Mid(spec, 2) then hit = true
+        if Left(spec, 1) = "~" and Left(child.id, Len(spec) - 1) = Mid(spec, 2) then hit = true
+        if hit then
+            if action = "hide" then
+                child.visible = on
+            else
+                perfPauseAnims(child, on)
+            end if
+        else
+            perfEach(child, spec, action, on)
+        end if
+    end for
+end sub
+
+sub perfPauseAnims(node as object, playing as boolean)
+    if node.subtype() = "Animation" then
+        if playing then
+            node.control = "resume"
+        else
+            node.control = "pause"
+        end if
+    end if
+    for i = 0 to node.getChildCount() - 1
+        perfPauseAnims(node.getChild(i), playing)
+    end for
+end sub
+
+' Each tick restores the previous cut and applies the next; past the last, back to baseline.
+sub onPerfAblate()
+    if m.ablateIdx >= 0 and m.ablateIdx < m.ablateList.count() then
+        prev = m.ablateList[m.ablateIdx]
+        if Left(prev, 1) <> "+" then perfSetCut(prev, true)
+    end if
+    m.ablateIdx = m.ablateIdx + 1
+    if m.ablateIdx < m.ablateList.count() then
+        m.perfLabel = m.ablateList[m.ablateIdx]
+        cutId = m.perfLabel
+        if Left(cutId, 1) = "+" then cutId = Mid(cutId, 2)
+        perfSetCut(cutId, false)
+    else
+        m.perfLabel = "none"
+    end if
+    print "PERF cut="; m.perfLabel
+end sub
+
+sub onPerfFlip()
+    if m.top.nightMode = "night" then
+        m.top.nightMode = "day"
+    else
+        m.top.nightMode = "night"
+    end if
+    print "PERF flip mode="; m.top.nightMode
+end sub
+
+sub onPerfFrame()
+    m.perfFrames = m.perfFrames + 1
+end sub
+
+sub onPerfSecond()
+    m.perfSeconds = m.perfSeconds + 1
+    print "PERF t="; m.perfSeconds; " fps="; m.perfFrames; " mode="; m.top.nightMode; " blend="; m.top.nightBlend; " cut="; m.perfLabel
+    m.perfFrames = 0
 end sub
 
 ' P4 reef extras (components/Extras, config/extras.json). Built after the fish, so the

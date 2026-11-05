@@ -1,0 +1,84 @@
+SETTINGS applied density=busy drift=true nightMode=auto
+BUBBLES pool= 40 sources= 2
+REEFTANK ready:  1920 x 1080  layers= 11 decor= 49
+BRAIN seed= 1797872844 fish= 9 speed= 1 
+BEHAVIOR fish=0 species=royal_gramma spawn->hover t=0
+BEHAVIOR fish=1 species=royal_gramma spawn->hover t=0
+BEHAVIOR fish=2 species=royal_gramma spawn->hover t=0
+BEHAVIOR fish=3 species=yellow_tang spawn->cruise t=0
+BEHAVIOR fish=4 species=yellow_tang spawn->cruise t=0
+BEHAVIOR fish=5 species=royal_blue_tang spawn->cruise t=0
+BEHAVIOR fish=6 species=royal_blue_tang spawn->cruise t=0
+BEHAVIOR fish=7 species=moorish_idol spawn->cruise t=0
+BEHAVIOR fish=8 species=emperor_angelfish spawn->cruise t=0
+BRAIN nodes=639 t=0
+BRAIN seed= 1799498448 fish= 9 speed= 1 
+BEHAVIOR fish=0 species=royal_blue_tang spawn->cruise t=0
+BEHAVIOR fish=1 species=royal_blue_tang spawn->cruise t=0
+BEHAVIOR fish=2 species=yellow_tang spawn->cruise t=0
+BEHAVIOR fish=3 species=yellow_tang spawn->cruise t=0
+BEHAVIOR fish=4 species=emperor_angelfish spawn->cruise t=0
+BEHAVIOR fish=5 species=lionfish spawn->drift t=0
+BEHAVIOR fish=8 species=moorish_idol spawn->cruise t=0
+BRAIN nodes=889 t=0
+BRAIN seed= 1801361622 fish= 11 speed= 1 
+BEHAVIOR fish=0 species=royal_blue_tang spawn->cruise t=0
+BEHAVIOR fish=1 species=royal_blue_tang spawn->cruise t=0
+BEHAVIOR fish=2 species=yellow_tang spawn->cruise t=0
+BEHAVIOR fish=3 species=yellow_tang spawn->cruise t=0
+BEHAVIOR fish=4 species=emperor_angelfish spawn->cruise t=0
+BEHAVIOR fish=7 species=mandarin_dragonet spawn->graze t=0
+BEHAVIOR fish=8 species=mandarin_dragonet spawn->graze t=0
+BEHAVIOR fish=9 species=moorish_idol spawn->cruise t=0
+BEHAVIOR fish=10 species=lionfish spawn->drift t=0
+BRAIN nodes=1193 t=0
+SCHOOL seed= 1803106011 fish= 14 speed= 1 
+SCHOOL seed= 1804929590 fish= 6 speed= 1 
+REEFTANK fish density=busy fish= 29 school= 14 night= 6 brains= 3
+ARCH ready seed= 1801317609 passages= 6 loop= 340.602  first= 11.1586 
+NIGHT glow posters= 24 of  45
+NIGHT sparkle pool= 30
+NIGHT ready: layers= 11 glow= 12 mode=auto phase=night blend= 1 
+EXTRAS ready seed= 1794641893 chains= 2 tentacles= 7
+BRIGHTSCRIPT: ERROR: roFilesystem: creating MAIN|TASK-only component failed on RENDER thread: pkg:/components/ReefTank/ReefTank.brs(48)
+
+BrightScript Micro Debugger.
+Enter any BrightScript statement, debug commands, or HELP.
+
+Suspending threads...
+Thread selected:  1*   ...ponents/ReefTank/ReefTank.brs(49)       if not fs.Exists("pkg:/config/perf.json") then return
+
+Current Function:
+047:  sub reefTankPerf()
+048:      fs = CreateObject("roFileSystem")
+049:*     if not fs.Exists("pkg:/config/perf.json") then return
+050:      cfg = ParseJson(ReadAsciiFile("pkg:/config/perf.json"))
+051:      if cfg = invalid then return
+052:      if cfg.forceMode <> invalid then m.top.nightMode = cfg.forceMode
+053:      if cfg.toggleSec <> invalid and cfg.toggleSec > 0 then
+Source Digest(s): 
+pkg: dev 0.2.1 573e19f6 
+
+'Dot' Operator attempted with invalid BrightScript Component or interface reference. (runtime error &hec) in pkg:/components/ReefTank/ReefTank.brs(49)
+Backtrace:
+#1  Function reeftankperf() As Void
+   file/line: pkg:/components/ReefTank/ReefTank.brs(49)
+#0  Function init() As Void
+   file/line: pkg:/components/ReefTank/ReefTank.brs(40)
+Local Variables:
+global           Interface:ifGlobal
+m                roAssociativeArray refcnt=3 count:6
+fs               Invalid
+cfg              <uninitialized>
+flip             <uninitialized>
+ticker           <uninitialized>
+anim             <uninitialized>
+interp           <uninitialized>
+timer            <uninitialized>
+Threads:
+ID    Location                                Source Code
+ 0    pkg:/source/main.brs(6)                    screen.show()
+ 1*   ...ponents/ReefTank/ReefTank.brs(49)       if not fs.Exists("pkg:/config/perf.json") then return
+  *selected
+
+Brightscript Debugger> 
