@@ -274,7 +274,7 @@ def rects(night: bool, dx: float, parallax: dict[str, float]) -> list[tuple[str,
             out.append((k, round(v["x"] + off), v["y"], v["segments"][0]["width"], v["height"]))
         elif "width" in v:
             out.append((k, round(v["x"] + off), v["y"], round(v["width"] * sc), round(v["height"] * sc)))
-    shafts = (("moon_a", 520, 256), ("moon_b", 1300, 256)) if night else (("day_a", 360, 256), ("day_b", 1160, 256))
+    shafts = (("moon_a", 424, 448), ("moon_b", 1204, 448)) if night else (("day_a", 264, 448), ("day_b", 1064, 448))
     for name, x, w in shafts:
         out.append((name, round(x + dx * parallax["lightShafts"]), 0, w, 1088))
     out += [("caustic_a", 0, 920, W, 160), ("caustic_b", 0, 920, W, 160), ("ripple", 0, 0, W, 128)]

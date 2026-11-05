@@ -128,24 +128,33 @@ def ripple() -> Float:
 
 
 def shaft(w: int, h: int, seed: int, top_x: float, bottom_x: float, w_top: float, w_bot: float, peak: float) -> Float:
-    """A slanted soft beam with streaks; alpha is 0 on every border."""
+    """A slanted diffuse beam: gaussian across, gentle bands, fading out with depth.
+
+    Soft on both edges (no visible outline) and strongest at the surface, tapering to
+    nothing well before the bottom, like light scattering out of the water. Alpha is 0
+    on every border.
+    """
     rng = np.random.default_rng(seed)
     ys, xs = np.mgrid[0:h, 0:w].astype(np.float32)
     t = ys / (h - 1)
     cx = top_x + (bottom_x - top_x) * t
     half = 0.5 * (w_top + (w_bot - w_top) * t)
-    u = (xs - cx) / half  # -1..1 across the beam
-    cross = np.clip(1.0 - u * u, 0.0, 1.0) ** 1.5
-    # Streaks: a few thin sub-rays fixed in beam coordinates.
+    u = (xs - cx) / half  # -1..1 across the nominal beam
+    cross = np.exp(-((u / 0.62) ** 2))
+    # Gentle bands: wide, low-contrast sub-rays fixed in beam coordinates.
     streak = np.ones_like(u)
-    for _ in range(5):
-        c0 = rng.uniform(-0.7, 0.7)
-        wd = rng.uniform(0.06, 0.18)
-        streak += rng.uniform(0.3, 0.8) * np.exp(-(((u - c0) / wd) ** 2))
+    for _ in range(4):
+        c0 = rng.uniform(-0.6, 0.6)
+        wd = rng.uniform(0.25, 0.5)
+        streak += rng.uniform(0.15, 0.35) * np.exp(-(((u - c0) / wd) ** 2))
     streak /= streak.max()
-    along = np.clip(t / 0.06, 0, 1) * np.clip((1.0 - t) / 0.55, 0, 1) ** 1.3
-    alpha = peak * cross * (0.55 + 0.45 * streak) * along
-    # Hard guarantee: zero border.
+    fade_in = np.clip(t / 0.05, 0, 1)
+    fade_in = fade_in * fade_in * (3.0 - 2.0 * fade_in)
+    along = fade_in * np.exp(-2.4 * t) * np.clip(1.0 - t, 0.0, 1.0)
+    alpha = peak * cross * (0.7 + 0.3 * streak) * along
+    # Hard guarantee: zero border, eased so the sprite edge never shows.
+    edge = np.clip(np.minimum(xs, w - 1 - xs) / 24.0, 0, 1)
+    alpha *= edge * edge * (3.0 - 2.0 * edge)
     alpha[0, :] = alpha[-1, :] = 0.0
     alpha[:, 0] = alpha[:, -1] = 0.0
     return alpha.astype(np.float32)
@@ -231,10 +240,10 @@ def main() -> int:
     save_png(white_alpha(rp), FX / "ripple.png")
     print(f"ripple: seam ratio x {seam_ratio(np.rint(rp * 255.0), 1):.3f}")
 
-    save_png(white_alpha(shaft(256, 1088, 11, 90, 160, 60, 180, 0.42)), FX / "shaft_day_a.png")
-    save_png(white_alpha(shaft(256, 1088, 12, 165, 95, 50, 160, 0.36)), FX / "shaft_day_b.png")
-    save_png(white_alpha(shaft(256, 1088, 21, 100, 150, 40, 150, 0.30)), NIGHT / "moon_shaft_a.png")
-    save_png(white_alpha(shaft(256, 1088, 22, 150, 96, 30, 120, 0.26)), NIGHT / "moon_shaft_b.png")
+    save_png(white_alpha(shaft(256, 1088, 11, 100, 150, 90, 236, 0.80)), FX / "shaft_day_a.png")
+    save_png(white_alpha(shaft(256, 1088, 12, 150, 105, 80, 224, 0.72)), FX / "shaft_day_b.png")
+    save_png(white_alpha(shaft(256, 1088, 21, 110, 150, 70, 200, 0.62)), NIGHT / "moon_shaft_a.png")
+    save_png(white_alpha(shaft(256, 1088, 22, 150, 106, 60, 190, 0.56)), NIGHT / "moon_shaft_b.png")
     save_png(white_alpha(sparkle()), NIGHT / "sparkle.png")
     save_png(organ_glow(), NIGHT / "fish_organ_glow.png")
     return 0

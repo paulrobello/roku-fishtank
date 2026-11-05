@@ -179,6 +179,15 @@ sub fishApplyNight()
     m.top.opacity = show.opacity
 end sub
 
+sub onPausedChanged()
+    if not m.loaded then return
+    if m.top.paused then
+        m.swimAnim.control = "pause"
+    else
+        m.swimAnim.control = "resume"
+    end if
+end sub
+
 sub onSwimSpeedChanged()
     if m.loaded then fishStartSwim()
 end sub

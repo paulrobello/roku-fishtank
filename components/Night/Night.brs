@@ -210,6 +210,9 @@ sub nightApply()
     ' The reef extras (caustics, ripple) are built after nightStart, so look the node up lazily.
     if m.extras = invalid then m.extras = m.top.getParent().findNode("reefExtras")
     if m.extras <> invalid then m.extras.nightLevel = nightLevel
+    ' The arch swimmer is built before nightStart, so it is found at once.
+    if m.arch = invalid then m.arch = m.top.getParent().findNode("archSwimmer")
+    if m.arch <> invalid then m.arch.nightLevel = nightLevel
     ' Night-only fish (flashlight fish, components/Fish) observe this.
     if not m.global.hasField("nightLevel") then m.global.addFields({ nightLevel: 0.0 })
     if m.global.nightLevel <> nightLevel then m.global.nightLevel = nightLevel

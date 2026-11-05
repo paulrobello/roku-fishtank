@@ -9,10 +9,13 @@
     clipped Group with the two Fish (facing right and left, so no turn plays), one
     repeating Animation that moves them, and the arch overlay Poster on top. The
     Animation starts with the scene, so ?freeze seeks it like any other loop.
+    nightLevel (0 day .. 1 night, pushed by Night) fades the whole group out and, at 1,
+    hides it and pauses its Animation and both fish, so no night frame pays for it.
 -->
 <component name="ArchSwimmer" extends="Group">
     <interface>
         <field id="configUri" type="string" onChange="onConfigUri" />
+        <field id="nightLevel" type="float" value="0.0" onChange="onNightLevel" />
     </interface>
     <script type="text/brightscript" uri="ArchSwimmer.brs" />
     <script type="text/brightscript" uri="pkg:/components/lib/prng.brs" />

@@ -31,23 +31,23 @@
     "items": [
       {
         "uri": "pkg:/images/fx/shaft_day_a.png",
-        "x": 360,
+        "x": 264,
         "y": -4,
-        "width": 256,
+        "width": 448,
         "height": 1088,
-        "opacityMin": 0.2,
-        "opacityMax": 0.32,
+        "opacityMin": 0.36,
+        "opacityMax": 0.54,
         "period": 9.0,
         "phaseDeg": 0
       },
       {
         "uri": "pkg:/images/fx/shaft_day_b.png",
-        "x": 1160,
+        "x": 1064,
         "y": -4,
-        "width": 256,
+        "width": 448,
         "height": 1088,
-        "opacityMin": 0.18,
-        "opacityMax": 0.28,
+        "opacityMin": 0.32,
+        "opacityMax": 0.5,
         "period": 11.0,
         "phaseDeg": 140
       }
@@ -69,23 +69,23 @@
     "items": [
       {
         "uri": "pkg:/images/night/moon_shaft_a.png",
-        "x": 520,
+        "x": 424,
         "y": -4,
-        "width": 256,
+        "width": 448,
         "height": 1088,
-        "opacityMin": 0.15,
-        "opacityMax": 0.22,
+        "opacityMin": 0.22,
+        "opacityMax": 0.32,
         "period": 10.0,
         "phaseDeg": 60
       },
       {
         "uri": "pkg:/images/night/moon_shaft_b.png",
-        "x": 1300,
+        "x": 1204,
         "y": -4,
-        "width": 256,
+        "width": 448,
         "height": 1088,
-        "opacityMin": 0.12,
-        "opacityMax": 0.18,
+        "opacityMin": 0.18,
+        "opacityMax": 0.27,
         "period": 13.0,
         "phaseDeg": 220
       }

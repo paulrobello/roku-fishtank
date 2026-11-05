@@ -65,10 +65,10 @@ async function edgeStats(page: import("@playwright/test").Page, png: Buffer): Pr
 const BAND = { top: 0, bottom: 120 };
 const BUBBLE_SOURCES_X: readonly number[] = [1176, 1590];
 const SHAFT_SPANS: readonly (readonly [number, number])[] = [
-  [360, 256],
-  [1160, 256],
-  [520, 256],
-  [1300, 256],
+  [264, 448],
+  [1064, 448],
+  [424, 448],
+  [1204, 448],
 ];
 
 async function bandMaxDiff(page: import("@playwright/test").Page, a: Buffer, b: Buffer): Promise<number> {

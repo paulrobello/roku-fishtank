@@ -6,7 +6,7 @@
     mirror_center while it pitches nose-up and rises a little, crossfades to the rig's
     pre-mirrored art at the narrowest point, then widens nose-down with a slight
     overshoot. The tail lags the body both ways, so the head leads the turn. turnDelay
-    (seconds) holds a turn back, which staggers a school; turning is true while it runs. The Fish origin is the body Poster's
+    (seconds) holds a turn back, which staggers a school; turning is true while it runs. paused holds the tail and fin beat (swimAnim) while true. The Fish origin is the body Poster's
     top-left corner.
     Night light organ (species json "night" block, flashlight fish): each set gets a glow
     Poster (id starting with "night", so Night and the lane tint leave it untinted) at the
@@ -23,6 +23,7 @@
         <field id="turning" type="boolean" value="false" />
         <field id="turnDelay" type="float" value="0.0" />
         <field id="blinkSeed" type="integer" value="0" />
+        <field id="paused" type="boolean" value="false" onChange="onPausedChanged" />
     </interface>
     <script type="text/brightscript" uri="Fish.brs" />
     <script type="text/brightscript" uri="pkg:/components/lib/prng.brs" />

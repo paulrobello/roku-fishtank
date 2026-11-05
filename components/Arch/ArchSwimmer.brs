@@ -16,10 +16,12 @@ sub onConfigUri()
         return
     end if
     m.built = true
+    m.freeze = 0.0
     speed = 1.0
     if m.global.hasField("previewSpeed") and m.global.previewSpeed > 0 then speed = m.global.previewSpeed
     freeze = 0.0
     if m.global.hasField("previewFreeze") then freeze = m.global.previewFreeze
+    m.freeze = freeze
     previewSeed = 0
     if m.global.hasField("previewSeed") then previewSeed = m.global.previewSeed
     now = CreateObject("roDateTime")
@@ -62,6 +64,12 @@ sub onConfigUri()
     overlay.height = o.height
     overlay.translation = [o.x, o.y]
     anim.control = "start"
+    m.root = root
+    m.anim = anim
+    m.running = true
+    m.fish = [clip.findNode("archFish0"), clip.findNode("archFish1")]
+    if m.global.hasField("nightLevel") then m.top.nightLevel = m.global.nightLevel
+    onNightLevel()
     print "ARCH ready seed="; seed; " passages="; plan.passages.count(); " loop="; plan.duration; " first="; plan.passages[0].start
 end sub
 
@@ -70,4 +78,27 @@ sub archInterp(anim as object, kind as string, target as string, keys as object,
     interp.fieldToInterp = [target]
     interp.key = keys
     interp.keyValue = values
+end sub
+
+' Fades with the night level and, once fully night, stops: a hidden group keeps its
+' Animations running, and the arch is not worth its frame time in the dark. Under
+' ?freeze nothing runs, so only the fade is applied.
+sub onNightLevel()
+    if not m.built or m.root = invalid then return
+    n = m.top.nightLevel
+    m.root.opacity = 1.0 - n
+    m.root.visible = n < 1.0
+    if m.freeze > 0 then return
+    shouldRun = n < 1.0
+    if m.running <> shouldRun then
+        m.running = shouldRun
+        if shouldRun then
+            m.anim.control = "resume"
+        else
+            m.anim.control = "pause"
+        end if
+        for each f in m.fish
+            f.paused = not shouldRun
+        end for
+    end if
 end sub

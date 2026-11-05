@@ -939,11 +939,11 @@
         },
         "school": {
           "lane": "midLane",
-          "count": 10
+          "count": 5
         },
         "nightSchool": {
           "lane": "backLane",
-          "count": 6
+          "count": 3
         }
       },
       "busy": {
