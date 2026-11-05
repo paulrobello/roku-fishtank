@@ -34,7 +34,12 @@ sub onConfigUri()
     extrasBuildAnemone(cfg.anemone)
     extrasBuildRipple(cfg.ripple)
     extrasBuildCaustics(cfg.caustics)
+    ' Night (components/Night) may have started first and only pushes nightLevel on its
+    ' next evaluation, so start from the level it already published.
+    if m.global.hasField("nightLevel") then m.top.nightLevel = m.global.nightLevel
     onNightLevel()
+    ' Likewise ask Night to moonlight-tint the critters and plants just built.
+    if m.global.hasField("nightRetint") then m.global.nightRetint = true
     print "EXTRAS ready seed="; m.seed; " chains="; cfg.chains.count(); " tentacles="; cfg.anemone.tentacles.count()
 end sub
 
