@@ -14,7 +14,7 @@
   "laneBand": 80,
   "laneAccel": 400,
   "dartChance": 0.004,
-  "dartSpeed": 420,
+  "dartSpeed": 336,
   "dartTurn": 1.2,
   "dartSteps": 4,
   "dartEase": "outCubic",

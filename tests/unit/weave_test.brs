@@ -12,6 +12,9 @@ function weaveTestSuite() as object
             { name: "switchOnlyWhenHidden", fn: weaveTest_switchOnlyWhenHidden }
             { name: "sameSeedSameSwitches", fn: weaveTest_sameSeedSameSwitches }
             { name: "noRegionNoSwitch", fn: weaveTest_noRegionNoSwitch }
+            { name: "offscreenWidensLanesKeepsSpawn", fn: weaveTest_offscreenWidensLanesKeepsSpawn }
+            { name: "offscreenGapsPastBothEdges", fn: weaveTest_offscreenGapsPastBothEdges }
+            { name: "offscreenSpawnStaysOnScreen", fn: weaveTest_offscreenSpawnStaysOnScreen }
         ]
     }
 end function
@@ -156,4 +159,50 @@ sub weaveTest_noRegionNoSwitch(t as object)
     env.plan.gaps[0] = [{ left: 1000, top: 500, right: 1100, bottom: 560 }]
     sw = weaveTest_switches(env, [3, 5, 8], 1600)
     assertEqual(t, sw.count(), 0, "no lane switch without a hide region")
+end sub
+
+function weaveTest_offscreenCfg() as object
+    cfg = weaveTest_cfg()
+    cfg.population.offscreenPx = 480
+    return cfg
+end function
+
+sub weaveTest_offscreenWidensLanesKeepsSpawn(t as object)
+    plan = sceneCfgWeavePlan(weaveTest_offscreenCfg(), "mid")
+    r = plan.lanes[1].rect
+    assertNear(t, r.left, -320.0, 0.001, "160 - 480")
+    assertNear(t, r.right, 2240.0, 0.001, "1760 + 480")
+    assertNear(t, r.spawnLeft, 160.0, 0.001, "spawns keep the rect")
+    assertNear(t, r.spawnRight, 1760.0, 0.001)
+    plain = sceneCfgWeavePlan(weaveTest_cfg(), "mid").lanes[1].rect
+    assertNear(t, plain.left, 160.0, 0.001, "no offscreenPx, no widening")
+    assertNear(t, plain.spawnLeft, 160.0, 0.001, "spawn span is the rect itself")
+end sub
+
+sub weaveTest_offscreenGapsPastBothEdges(t as object)
+    plan = sceneCfgWeavePlan(weaveTest_offscreenCfg(), "mid")
+    assertEqual(t, plan.gaps[1].count(), 2, "mid-front now swaps off screen")
+    l = plan.gaps[1][0]
+    r = plan.gaps[1][1]
+    assertEqual(t, l.layer, "offscreen")
+    ' mid 0.7, front 0.9: the edge sits 80 * 0.9 + 4 = 76 px past the screen.
+    assertNear(t, l.right, -76.0, 0.001)
+    assertNear(t, r.left, 1996.0, 0.001)
+    assertNear(t, l.top, 220.0, 0.001, "top of both lanes")
+    assertNear(t, l.bottom, 840.0, 0.001, "bottom of both lanes")
+    assertEqual(t, plan.gaps[0].count(), 3, "back-mid keeps frontDecor and adds both edges")
+    ' A front-lane angelfish (half width 140) can reach the left region inside its widened lane.
+    fish = { laneIdx: 2, box: { hw: 140, hh: 77 }, agent: { x: 300, y: 600 } }
+    region = weaveRegion(fish, plan, 1)
+    assertTrue(t, region <> invalid, "region exists")
+    assertTrue(t, region.right < -200 and region.right > plan.lanes[2].rect.left + 80, "reachable, outside the lane-keep band")
+end sub
+
+sub weaveTest_offscreenSpawnStaysOnScreen(t as object)
+    cfg = { spawnMargin: 0.3, minSpeed: 30, maxSpeed: 60, speedBucket: 10 }
+    lane = { left: -320, top: 220, right: 2240, bottom: 840, spawnLeft: 160, spawnRight: 1760 }
+    for seed = 1 to 40
+        f = brainNewFish(cfg, seed, lane, [])
+        assertTrue(t, f.agent.x >= 160 and f.agent.x <= 1760, "seed " + seed.toStr() + " spawns on screen")
+    end for
 end sub

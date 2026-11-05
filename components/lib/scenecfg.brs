@@ -149,18 +149,24 @@ function sceneCfgLayerIndex(cfg as object, id as string) as integer
     return -1
 end function
 
-' Lanes back to front as { id, left, top, right, bottom, scale, tint } with tint parsed.
+' Lanes back to front as { id, left, top, right, bottom, spawnLeft, spawnRight, scale, tint }
+' with tint parsed. population.offscreenPx widens every lane that far past both sides of its
+' rect, so fish swim off the screen edges before lane-keeping turns them; spawnLeft and
+' spawnRight keep the rect's own span, so fish still start on screen.
 function sceneCfgLanes(cfg as object) as object
     lanes = []
+    roam = sceneCfgOffscreenPx(cfg)
     for each layer in cfg.layers
         if layer.lane <> invalid then
             r = layer.lane.rect
             lanes.push({
                 id: layer.id
-                left: r.left
+                left: r.left - roam
                 top: r.top
-                right: r.right
+                right: r.right + roam
                 bottom: r.bottom
+                spawnLeft: r.left
+                spawnRight: r.right
                 scale: layer.lane.scale
                 tint: sceneCfgParseColor(layer.lane.tint)
             })
@@ -458,7 +464,18 @@ end function
 
 ' Lane rect as the { left, top, right, bottom } FishBrain and School expect.
 function sceneCfgLaneRect(lane as object) as object
-    return { left: lane.left, top: lane.top, right: lane.right, bottom: lane.bottom }
+    r = { left: lane.left, top: lane.top, right: lane.right, bottom: lane.bottom }
+    if lane.spawnLeft <> invalid then
+        r.spawnLeft = lane.spawnLeft
+        r.spawnRight = lane.spawnRight
+    end if
+    return r
+end function
+
+function sceneCfgOffscreenPx(cfg as object) as float
+    pop = cfg.population
+    if sceneCfgIsObject(pop) and sceneCfgIsNumber(pop.offscreenPx) and pop.offscreenPx > 0 then return pop.offscreenPx
+    return 0.0
 end function
 
 ' ---------------------------------------------------------------------------
@@ -556,6 +573,20 @@ function sceneCfgWeavePlan(cfg as object, laneId as string) as dynamic
                     end for
                 end if
             end for
+        end if
+        ' Off screen: past either edge (allowing for the drift of the farther-drifting lane)
+        ' the whole fish is hidden in both lanes, so any pair may swap there. The outer side
+        ' runs far past the lane, since weaveRegion shrinks it by the fish's half width too.
+        if sceneCfgOffscreenPx(cfg) > 0 and sceneCfgIsObject(cfg.design) then
+            pmax = pa
+            if pb > pmax then pmax = pb
+            edge = ax * pmax + w.slack
+            top = lanes[i].top
+            if lanes[i + 1].top > top then top = lanes[i + 1].top
+            bottom = lanes[i].bottom
+            if lanes[i + 1].bottom < bottom then bottom = lanes[i + 1].bottom
+            gap.push({ left: -100000.0, top: top, right: -edge, bottom: bottom, layer: "offscreen" })
+            gap.push({ left: cfg.design.width + edge, top: top, right: 100000.0, bottom: bottom, layer: "offscreen" })
         end if
         plan.gaps.push(gap)
     end for

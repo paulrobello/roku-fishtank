@@ -50,11 +50,11 @@ The ceiling for our own resident textures is **100 MB**. Keeping 25% margin leav
 | Fish rigs: 8 species plus chromis, right and left facing | 6 MB total, each layer at most 512x320 | 6.0 | 1.3 (right only), plus the night-only flashlight fish 0.07 (both facings, 73,728 padded bytes) |
 | Day light shafts | 2 x 512x1088 | 4.5 | 2.2 (2 x 256x1088) |
 | Night: moon shafts, coral glow masks | 2 x 512x1088 + 6 MB of masks at half resolution | 10.5 | 4.0: moon shafts 2.2, glow masks 1.8 (P1.8 retired the acropora glow mask), flashlight fish organ glow 0.02 (64x64, 16,384 bytes) |
-| Caustic and ripple tiles | 2 x 512x512 + 1920x128 | 3.1 | 3.1 |
+| Caustic and ripple tiles | 2 x 512x512 + 1920x128 | 3.1 | 2.1: caustic tiles only (surface ripple removed 2026-11-04) |
 | Bubbles, sparkles | 0.5 MB total, each at most 64x64 | 0.5 | none |
 | Settings screen panel | 1 x 1280x704 (backdrop shared) | 3.6 | none |
 | Launch splash (resident at start) | 1920x1088 | 8.4 | `splash_fhd.png` 8.4 |
-| **Total** | | **68.8** | **44.5** |
+| **Total** | | **68.8** | **43.5** |
 
 68.5 MB leaves 6.5 MB of the 75 MB unallocated. P1.7 moved 0.3 MB of that reserve to the foreground row, for the algae tufts above the sand band, which leaves 6.2 MB. The P1.7, P3.7 and P4.6 figures above are printed by `uv run tools/art/reef_review.py`. An art card that needs more takes it from that reserve or from another row, and records the move in this table.
 

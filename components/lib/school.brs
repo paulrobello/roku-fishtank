@@ -47,8 +47,10 @@ function schoolNew(cfg as object, seed as integer, lane as object, ellipses as o
     leaderEllipses = schoolPadEllipses(ellipses, cfg.leaderPad)
     leader = invalid
     heading = 0.0
+    spawnLane = leaderLane
+    if lane.spawnLeft <> invalid then spawnLane = schoolInsetLane({ left: lane.spawnLeft, top: lane.top, right: lane.spawnRight, bottom: lane.bottom }, cfg.leaderInset)
     for tries = 1 to 1000
-        x = prngRange(rng, leaderLane.left, leaderLane.right)
+        x = prngRange(rng, spawnLane.left, spawnLane.right)
         y = prngRange(rng, leaderLane.top, leaderLane.bottom)
         if schoolClearOf(leaderEllipses, x, y, 1.0) then
             if prngNextFloat(rng) < 0.5 then heading = 3.14159265

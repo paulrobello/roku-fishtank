@@ -31,8 +31,14 @@
 function brainNewFish(cfg as object, seed as integer, lane as object, ellipses as object) as object
     rng = prngNew(seed)
     grow = 1 + cfg.spawnMargin
+    left = lane.left
+    right = lane.right
+    if lane.spawnLeft <> invalid then
+        left = lane.spawnLeft
+        right = lane.spawnRight
+    end if
     for tries = 1 to 1000
-        x = prngRange(rng, lane.left, lane.right)
+        x = prngRange(rng, left, right)
         y = prngRange(rng, lane.top, lane.bottom)
         if brainClearOf(ellipses, x, y, grow * grow) then
             heading = 0.0

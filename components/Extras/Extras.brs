@@ -364,6 +364,7 @@ sub onNightLevel()
         c.node.visible = o > 0
     end for
     r = m.cfg.ripple
+    if r = invalid then return
     tint = extrasLerpColor(sceneCfgParseColor(r.dayTint), sceneCfgParseColor(r.nightTint), n)
     opacity = r.dayOpacity + (r.nightOpacity - r.dayOpacity) * n
     for each p in m.ripples
