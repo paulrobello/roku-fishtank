@@ -107,3 +107,16 @@ Ruled out on the device: render resolution (declaring `ui_resolutions=hd` only c
 
 Reaching 60 fps would mean removing about 6 ms of 22.7 ms. The measured levers are all visible: halving the school (+2 fps), 9 to 6 main fish (+3), 40 to 20 bubbles (+1.5), simplified fish rigs or fewer sway segments (+1 to +4). Together they reach about 50, not 60, so 60 fps is out of reach without thinning the tank substantially.
 
+
+### Density correction and Normal-density result (2026-11-05)
+
+Every run above, including the 43 to 45 fps (day) and 39 fps (night) figures, was at **busy** density (29 fish, school of 14): the device registry kept the density last saved from the settings screen, and the perf hook did not override it. `forceDensity` (perf.json) and `PERF_DENSITY` (tools/perf/run_channel.sh) now do.
+
+At **normal** (the default: 15 fish, school of 5, night school of 3; school halved from 10 and 6 in f9f1f76, arch swimmer faded out and stopped at night), Primary 4850X, 300 s with a 75 s day/night toggle (`channel-20261105-081043-auto-*`):
+
+| Mode | Samples | Min | Median | Max | At 58 or above |
+|---|---|---|---|---|---|
+| Day | 80 | 54 | 60 | 62 | 96% |
+| Night | 150 | 52 | 56 | 60 | 19% |
+
+Busy with the same build (`channel-20261105-070533-auto-*`): day 44, night 39. Night at normal is about 4 fps short of 60.

@@ -1,0 +1,870 @@
+SETTINGS applied density=busy drift=true nightMode=auto
+BUBBLES pool= 40 sources= 2
+REEFTANK ready:  1920 x 1080  layers= 11 decor= 49
+BRAIN seed= 1801656024 fish= 9 speed= 1 
+BEHAVIOR fish=0 species=royal_gramma spawn->hover t=0
+BEHAVIOR fish=1 species=royal_gramma spawn->hover t=0
+BEHAVIOR fish=2 species=royal_gramma spawn->hover t=0
+BEHAVIOR fish=3 species=yellow_tang spawn->cruise t=0
+BEHAVIOR fish=4 species=yellow_tang spawn->cruise t=0
+BEHAVIOR fish=5 species=royal_blue_tang spawn->cruise t=0
+BEHAVIOR fish=6 species=royal_blue_tang spawn->cruise t=0
+BEHAVIOR fish=7 species=moorish_idol spawn->cruise t=0
+BEHAVIOR fish=8 species=emperor_angelfish spawn->cruise t=0
+BRAIN nodes=639 t=0
+BRAIN seed= 1795386386 fish= 9 speed= 1 
+BEHAVIOR fish=0 species=royal_blue_tang spawn->cruise t=0
+BEHAVIOR fish=1 species=royal_blue_tang spawn->cruise t=0
+BEHAVIOR fish=2 species=yellow_tang spawn->cruise t=0
+BEHAVIOR fish=3 species=yellow_tang spawn->cruise t=0
+BEHAVIOR fish=4 species=emperor_angelfish spawn->cruise t=0
+BEHAVIOR fish=5 species=lionfish spawn->drift t=0
+BEHAVIOR fish=8 species=moorish_idol spawn->cruise t=0
+BRAIN nodes=889 t=0
+BRAIN seed= 1797265398 fish= 11 speed= 1 
+BEHAVIOR fish=0 species=royal_blue_tang spawn->cruise t=0
+BEHAVIOR fish=1 species=royal_blue_tang spawn->cruise t=0
+BEHAVIOR fish=2 species=yellow_tang spawn->cruise t=0
+BEHAVIOR fish=3 species=yellow_tang spawn->cruise t=0
+BEHAVIOR fish=4 species=emperor_angelfish spawn->cruise t=0
+BEHAVIOR fish=7 species=mandarin_dragonet spawn->graze t=0
+BEHAVIOR fish=8 species=mandarin_dragonet spawn->graze t=0
+BEHAVIOR fish=9 species=moorish_idol spawn->cruise t=0
+BEHAVIOR fish=10 species=lionfish spawn->drift t=0
+BRAIN nodes=1193 t=0
+SCHOOL seed= 1799041463 fish= 14 speed= 1 
+SCHOOL seed= 1800849204 fish= 6 speed= 1 
+REEFTANK fish density=busy fish= 29 school= 14 night= 6 brains= 3
+ARCH ready seed= 1797253061 passages= 6 loop= 292.604  first= 18.3614 
+NIGHT glow posters= 24 of  45
+NIGHT sparkle pool= 30
+NIGHT ready: layers= 11 glow= 12 mode=auto phase=day blend= 0 
+EXTRAS ready seed= 1798535939 chains= 2 tentacles= 7
+BRAIN seed= 1799462462 fish= 5 speed= 1 
+BEHAVIOR fish=0 species=royal_gramma spawn->hover t=0
+BEHAVIOR fish=1 species=royal_gramma spawn->hover t=0
+BEHAVIOR fish=2 species=yellow_tang spawn->cruise t=0
+BEHAVIOR fish=3 species=royal_blue_tang spawn->cruise t=0
+BEHAVIOR fish=4 species=moorish_idol spawn->cruise t=0
+BRAIN nodes=1012 t=0
+BRAIN seed= 1800842577 fish= 5 speed= 1 
+BEHAVIOR fish=0 species=royal_blue_tang spawn->cruise t=0
+BEHAVIOR fish=1 species=yellow_tang spawn->cruise t=0
+BEHAVIOR fish=2 species=emperor_angelfish spawn->cruise t=0
+BEHAVIOR fish=3 species=lionfish spawn->drift t=0
+BRAIN nodes=1154 t=0
+BRAIN seed= 1802301882 fish= 5 speed= 1 
+BEHAVIOR fish=0 species=royal_blue_tang spawn->cruise t=0
+BEHAVIOR fish=1 species=yellow_tang spawn->cruise t=0
+BEHAVIOR fish=3 species=moorish_idol spawn->cruise t=0
+BEHAVIOR fish=4 species=mandarin_dragonet spawn->graze t=0
+BRAIN nodes=1292 t=0
+SCHOOL seed= 1803689916 fish= 5 speed= 1 
+SCHOOL seed= 1804990841 fish= 3 speed= 1 
+REEFTANK fish density=normal fish= 15 school= 5 night= 3 brains= 3
+11-05 16:16:45.930 app  [sg.scene.bitmap.big] Warning! Loaded texture (2560 x 128) larger than the UI resolution (1920 x 1080) - ReefTank/Poster:sand_lip pkg:/images/decor/sand_lip.png
+11-05 16:16:45.931 app  [sg.scene.bitmap.big] Warning! Loaded texture (2546 x 1080) larger than the UI resolution (1920 x 1080) - ReefTank/Poster:reefBackdrop pkg:/images/decor/reef_backdrop.png
+11-05 16:16:46.469 app  [sg.scene.bitmap.big] Warning! Loaded texture (256 x 1088) larger than the UI resolution (1920 x 1080) - ReefTank/Poster:nightMoonShaftRay1 pkg:/images/night/moon_shaft_b.png
+11-05 16:16:46.486 app  [sg.scene.bitmap.big] Warning! Loaded texture (256 x 1088) larger than the UI resolution (1920 x 1080) - ReefTank/Poster:nightMoonShaftRay0 pkg:/images/night/moon_shaft_a.png
+11-05 16:16:46.503 app  [sg.scene.bitmap.big] Warning! Loaded texture (256 x 1088) larger than the UI resolution (1920 x 1080) - ReefTank/Poster:nightDayShaftRay1 pkg:/images/fx/shaft_day_b.png
+11-05 16:16:46.537 app  [sg.scene.bitmap.big] Warning! Loaded texture (256 x 1088) larger than the UI resolution (1920 x 1080) - ReefTank/Poster:nightDayShaftRay0 pkg:/images/fx/shaft_day_a.png
+PERF t= 1 fps= 55 mode=auto blend= 0  cut=none
+BRAIN dart fish=1 t=1.5 gap=0.5 from=647,745 to=548,654
+PERF t= 2 fps= 60 mode=auto blend= 0  cut=none
+PERF t= 3 fps= 60 mode=auto blend= 0  cut=none
+BRAIN dart fish=4 t=3.25 gap=1 from=856,654 to=980,707
+BEHAVIOR fish=4 species=mandarin_dragonet graze->hop t=3.875
+PERF t= 4 fps= 60 mode=auto blend= 0  cut=none
+WEAVE fish=4 species=moorish_idol lane=midLane t=5.125
+PERF t= 5 fps= 60 mode=auto blend= 0  cut=none
+BEHAVIOR fish=4 species=mandarin_dragonet hop->graze t=5.875
+BRAIN dart fish=2 t=6.125 gap=1.1 from=1114,611 to=1129,745
+PERF t= 6 fps= 56 mode=auto blend= 0  cut=none
+PERF t= 7 fps= 60 mode=auto blend= 0  cut=none
+PERF t= 8 fps= 61 mode=auto blend= 0  cut=none
+BRAIN dart fish=2 t=8.5 gap=0.1 from=1207,721 to=1337,686
+BEHAVIOR fish=4 species=mandarin_dragonet graze->hop t=8.5
+PERF t= 9 fps= 59 mode=auto blend= 0  cut=none
+PERF t= 10 fps= 60 mode=auto blend= 0  cut=none
+WEAVE fish=0 species=royal_blue_tang lane=midLane t=10.125
+WEAVE fish=3 species=royal_blue_tang lane=midLane t=10.375
+BEHAVIOR fish=4 species=mandarin_dragonet hop->graze t=10.5
+PERF t= 11 fps= 56 mode=auto blend= 0  cut=none
+BRAIN dart fish=3 t=12 gap=0.1 from=485,796 to=506,663
+PERF t= 12 fps= 60 mode=auto blend= 0  cut=none
+BEHAVIOR fish=0 species=royal_gramma hover->retreat t=12.625
+PERF t= 13 fps= 61 mode=auto blend= 0  cut=none
+BEHAVIOR fish=1 species=royal_gramma hover->retreat t=13.25
+BEHAVIOR fish=4 species=mandarin_dragonet graze->hop t=13.75
+PERF t= 14 fps= 59 mode=auto blend= 0  cut=none
+WEAVE fish=0 species=royal_blue_tang lane=frontLane t=14.875
+PERF t= 15 fps= 59 mode=auto blend= 0  cut=none
+BEHAVIOR fish=4 species=mandarin_dragonet hop->graze t=15.75
+BRAIN dart fish=3 t=16 gap=1.1 from=366,580 to=253,607
+PERF t= 16 fps= 60 mode=auto blend= 0  cut=none
+PERF t= 17 fps= 61 mode=auto blend= 0  cut=none
+PERF t= 18 fps= 60 mode=auto blend= 0  cut=none
+BEHAVIOR fish=1 species=royal_gramma retreat->hide t=18.25
+BEHAVIOR fish=4 species=mandarin_dragonet graze->hop t=18.5
+BEHAVIOR fish=0 species=royal_gramma retreat->hide t=19.125
+PERF t= 19 fps= 58 mode=auto blend= 0  cut=none
+PERF t= 20 fps= 60 mode=auto blend= 0  cut=none
+BEHAVIOR fish=4 species=mandarin_dragonet hop->graze t=20.5
+PERF t= 21 fps= 59 mode=auto blend= 0  cut=none
+BEHAVIOR fish=4 species=mandarin_dragonet graze->hop t=21.875
+PERF t= 22 fps= 61 mode=auto blend= 0  cut=none
+BRAIN dart fish=2 t=22.25 gap=0.9 from=1594,331 to=1517,441
+PERF t= 23 fps= 59 mode=auto blend= 0  cut=none
+BEHAVIOR fish=4 species=mandarin_dragonet hop->graze t=23.875
+PERF t= 24 fps= 60 mode=auto blend= 0  cut=none
+BEHAVIOR fish=0 species=royal_gramma hide->emerge t=24.875
+PERF t= 25 fps= 61 mode=auto blend= 0  cut=none
+BEHAVIOR fish=1 species=royal_gramma hide->emerge t=26
+PERF t= 26 fps= 60 mode=auto blend= 0  cut=none
+BEHAVIOR fish=4 species=mandarin_dragonet graze->hop t=26.625
+PERF t= 27 fps= 59 mode=auto blend= 0  cut=none
+BRAIN dart fish=0 t=27.625 gap=0.1 from=2189,759 to=2202,631
+PERF t= 28 fps= 59 mode=auto blend= 0  cut=none
+BEHAVIOR fish=4 species=mandarin_dragonet hop->graze t=28.625
+BRAIN dart fish=0 t=29 gap=1.1 from=1186,800 to=1265,837
+PERF t= 29 fps= 60 mode=auto blend= 0  cut=none
+BEHAVIOR fish=1 species=royal_gramma emerge->hover t=30
+PERF t= 30 fps= 60 mode=auto blend= 0  cut=none
+BEHAVIOR fish=4 species=mandarin_dragonet graze->hop t=30.125
+BEHAVIOR fish=0 species=royal_gramma emerge->hover t=30.375
+PERF t= 31 fps= 60 mode=auto blend= 0  cut=none
+BEHAVIOR fish=4 species=mandarin_dragonet hop->graze t=31.625
+PERF t= 32 fps= 61 mode=auto blend= 0  cut=none
+BEHAVIOR fish=3 species=lionfish drift->hang t=32.875
+PERF t= 33 fps= 59 mode=auto blend= 0  cut=none
+BEHAVIOR fish=4 species=mandarin_dragonet graze->hop t=34
+PERF t= 34 fps= 60 mode=auto blend= 0  cut=none
+BRAIN dart fish=3 t=34.375 gap=0.4 from=1242,725 to=1357,657
+PERF t= 35 fps= 60 mode=auto blend= 0  cut=none
+BEHAVIOR fish=4 species=mandarin_dragonet hop->graze t=36
+PERF t= 36 fps= 60 mode=auto blend= 0  cut=none
+BRAIN dart fish=0 t=36.125 gap=0.2 from=2076,266 to=2109,177
+BEHAVIOR fish=2 species=yellow_tang cruise->approach t=36.375
+BEHAVIOR fish=2 species=emperor_angelfish cruise->approach t=36.5
+BEHAVIOR fish=1 species=royal_gramma hover->retreat t=36.875
+PERF t= 37 fps= 60 mode=auto blend= 0  cut=none
+BEHAVIOR fish=3 species=moorish_idol cruise->approach t=37.125
+PERF t= 38 fps= 60 mode=auto blend= 0  cut=none
+BEHAVIOR fish=3 species=moorish_idol approach->graze t=38.625
+BEHAVIOR fish=2 species=yellow_tang approach->graze t=38.875
+PERF t= 39 fps= 60 mode=auto blend= 0  cut=none
+WEAVE fish=0 species=royal_blue_tang lane=midLane t=39.125
+BEHAVIOR fish=4 species=mandarin_dragonet graze->hop t=39.375
+BEHAVIOR fish=0 species=royal_gramma hover->retreat t=39.5
+BEHAVIOR fish=2 species=emperor_angelfish approach->graze t=40
+PERF t= 40 fps= 60 mode=auto blend= 0  cut=none
+BEHAVIOR fish=0 species=royal_blue_tang cruise->approach t=40.625
+PERF t= 41 fps= 60 mode=auto blend= 0  cut=none
+BEHAVIOR fish=1 species=yellow_tang cruise->approach t=41.25
+BEHAVIOR fish=4 species=mandarin_dragonet hop->graze t=41.375
+WEAVE fish=4 species=moorish_idol lane=frontLane t=42
+PERF t= 42 fps= 59 mode=auto blend= 0  cut=none
+BEHAVIOR fish=1 species=royal_gramma retreat->hide t=42.375
+PERF t= 43 fps= 60 mode=auto blend= 0  cut=none
+BEHAVIOR fish=4 species=moorish_idol cruise->approach t=43.5
+PERF t= 44 fps= 60 mode=auto blend= 0  cut=none
+BEHAVIOR fish=4 species=mandarin_dragonet graze->hop t=45
+PERF t= 45 fps= 60 mode=auto blend= 0  cut=none
+BEHAVIOR fish=3 species=moorish_idol graze->cruise t=45.5
+WEAVE fish=3 species=royal_blue_tang lane=frontLane t=45.625
+PERF t= 46 fps= 59 mode=auto blend= 0  cut=none
+BEHAVIOR fish=1 species=yellow_tang cruise->approach t=46.25
+BEHAVIOR fish=3 species=lionfish hang->drift t=46.375
+BEHAVIOR fish=1 species=royal_gramma hide->emerge t=46.5
+BEHAVIOR fish=0 species=royal_gramma retreat->hide t=47
+BEHAVIOR fish=4 species=mandarin_dragonet hop->graze t=47
+BEHAVIOR fish=3 species=royal_blue_tang cruise->approach t=47.125
+PERF t= 47 fps= 60 mode=auto blend= 0  cut=none
+BRAIN dart fish=3 t=47.875 gap=1.6 from=1475,784 to=1480,917
+PERF t= 48 fps= 61 mode=auto blend= 0  cut=none
+BEHAVIOR fish=0 species=royal_blue_tang cruise->approach t=48.5
+BEHAVIOR fish=0 species=royal_blue_tang approach->graze t=48.625
+BEHAVIOR fish=4 species=mandarin_dragonet graze->hop t=48.75
+BEHAVIOR fish=2 species=yellow_tang graze->cruise t=48.875
+PERF t= 49 fps= 59 mode=auto blend= 0  cut=none
+BEHAVIOR fish=2 species=emperor_angelfish graze->cruise t=50
+PERF t= 50 fps= 60 mode=auto blend= 0  cut=none
+BEHAVIOR fish=1 species=royal_gramma emerge->hover t=50.5
+PERF t= 51 fps= 59 mode=auto blend= 0  cut=none
+BEHAVIOR fish=4 species=mandarin_dragonet hop->graze t=51.25
+BEHAVIOR fish=0 species=royal_gramma hide->emerge t=51.625
+BEHAVIOR fish=1 species=yellow_tang approach->graze t=51.75
+PERF t= 52 fps= 61 mode=auto blend= 0  cut=none
+BEHAVIOR fish=0 species=royal_blue_tang approach->graze t=52.5
+BEHAVIOR fish=4 species=moorish_idol approach->graze t=53
+PERF t= 53 fps= 60 mode=auto blend= 0  cut=none
+PERF t= 54 fps= 60 mode=auto blend= 0  cut=none
+PERF t= 55 fps= 60 mode=auto blend= 0  cut=none
+BEHAVIOR fish=4 species=mandarin_dragonet graze->hop t=55.125
+BEHAVIOR fish=3 species=royal_blue_tang approach->graze t=56.125
+PERF t= 56 fps= 60 mode=auto blend= 0  cut=none
+BEHAVIOR fish=1 species=yellow_tang approach->cruise t=56.25
+BEHAVIOR fish=0 species=royal_gramma emerge->hover t=57.125
+PERF t= 57 fps= 58 mode=auto blend= 0  cut=none
+BEHAVIOR fish=4 species=mandarin_dragonet hop->graze t=57.125
+BRAIN dart fish=2 t=58 gap=0.7 from=1299,763 to=1282,630
+PERF t= 58 fps= 60 mode=auto blend= 0  cut=none
+BEHAVIOR fish=1 species=royal_gramma hover->retreat t=58.25
+BEHAVIOR fish=0 species=royal_blue_tang graze->cruise t=58.375
+BEHAVIOR fish=4 species=mandarin_dragonet graze->hop t=59
+PERF t= 59 fps= 61 mode=auto blend= 0  cut=none
+BEHAVIOR fish=4 species=moorish_idol graze->cruise t=59.875
+BRAIN nodes=1518 t=60
+BRAIN nodes=1518 t=60
+BRAIN nodes=1518 t=60
+PERF t= 60 fps= 57 mode=auto blend= 0  cut=none
+BEHAVIOR fish=4 species=mandarin_dragonet hop->graze t=61
+PERF t= 61 fps= 59 mode=auto blend= 0  cut=none
+PERF t= 62 fps= 60 mode=auto blend= 0  cut=none
+BEHAVIOR fish=1 species=yellow_tang graze->cruise t=62.125
+BEHAVIOR fish=4 species=mandarin_dragonet graze->hop t=62.5
+BEHAVIOR fish=0 species=royal_blue_tang graze->cruise t=62.75
+PERF t= 63 fps= 60 mode=auto blend= 0  cut=none
+BRAIN dart fish=1 t=63.25 gap=0.7 from=1619,350 to=1628,222
+BEHAVIOR fish=0 species=royal_gramma hover->retreat t=63.375
+WEAVE fish=2 species=emperor_angelfish lane=frontLane t=63.5
+PERF t= 64 fps= 59 mode=auto blend= 0  cut=none
+BEHAVIOR fish=1 species=royal_gramma retreat->hide t=64.25
+BEHAVIOR fish=4 species=mandarin_dragonet hop->graze t=64.5
+PERF t= 65 fps= 61 mode=auto blend= 0  cut=none
+PERF t= 66 fps= 59 mode=auto blend= 0  cut=none
+BEHAVIOR fish=4 species=mandarin_dragonet graze->hop t=66.5
+BEHAVIOR fish=3 species=royal_blue_tang graze->cruise t=67.125
+PERF t= 67 fps= 60 mode=auto blend= 0  cut=none
+BRAIN dart fish=1 t=67.625 gap=0 from=1663,280 to=1580,386
+PERF t= 68 fps= 61 mode=auto blend= 0  cut=none
+BEHAVIOR fish=4 species=mandarin_dragonet hop->graze t=68.5
+PERF t= 69 fps= 59 mode=auto blend= 0  cut=none
+BRAIN dart fish=3 t=69.5 gap=0.8 from=1148,785 to=1149,917
+BEHAVIOR fish=1 species=royal_gramma hide->emerge t=69.75
+PERF t= 70 fps= 60 mode=auto blend= 0  cut=none
+BEHAVIOR fish=0 species=royal_gramma retreat->hide t=70.375
+PERF t= 71 fps= 60 mode=auto blend= 0  cut=none
+BEHAVIOR fish=4 species=mandarin_dragonet graze->hop t=71.5
+PERF t= 72 fps= 60 mode=auto blend= 0  cut=none
+PERF t= 73 fps= 60 mode=auto blend= 0  cut=none
+BEHAVIOR fish=4 species=mandarin_dragonet hop->graze t=73.5
+BEHAVIOR fish=1 species=royal_gramma emerge->hover t=73.75
+PERF t= 74 fps= 60 mode=auto blend= 0  cut=none
+BEHAVIOR fish=2 species=emperor_angelfish cruise->approach t=74.5
+BEHAVIOR fish=4 species=mandarin_dragonet graze->hop t=74.75
+PERF flip mode=night
+PERF t= 75 fps= 60 mode=night blend= 1  cut=none
+BRAIN dart fish=4 t=75.875 gap=1.2 from=-187,475 to=-271,371
+PERF t= 76 fps= 57 mode=night blend= 1  cut=none
+BEHAVIOR fish=4 species=mandarin_dragonet hop->graze t=76.75
+BEHAVIOR fish=0 species=royal_gramma hide->emerge t=77
+PERF t= 77 fps= 59 mode=night blend= 1  cut=none
+BEHAVIOR fish=3 species=lionfish drift->hang t=77.75
+BEHAVIOR fish=2 species=emperor_angelfish approach->graze t=78
+PERF t= 78 fps= 58 mode=night blend= 1  cut=none
+BRAIN dart fish=1 t=78.875 gap=0.3 from=1301,528 to=1204,435
+PERF t= 79 fps= 57 mode=night blend= 1  cut=none
+BEHAVIOR fish=1 species=royal_gramma hover->retreat t=79.875
+PERF t= 80 fps= 56 mode=night blend= 1  cut=none
+BEHAVIOR fish=4 species=mandarin_dragonet graze->hop t=80.25
+PERF t= 81 fps= 56 mode=night blend= 1  cut=none
+BEHAVIOR fish=4 species=mandarin_dragonet hop->graze t=81.75
+BEHAVIOR fish=0 species=royal_blue_tang cruise->approach t=81.875
+PERF t= 82 fps= 56 mode=night blend= 1  cut=none
+BRAIN dart fish=1 t=82.125 gap=0.3 from=1912,708 to=1779,691
+BEHAVIOR fish=0 species=royal_gramma emerge->hover t=82.5
+PERF t= 83 fps= 57 mode=night blend= 1  cut=none
+PERF t= 84 fps= 57 mode=night blend= 1  cut=none
+BEHAVIOR fish=1 species=royal_gramma retreat->hide t=84.375
+BEHAVIOR fish=4 species=mandarin_dragonet graze->hop t=84.375
+BEHAVIOR fish=0 species=royal_blue_tang approach->graze t=84.875
+BEHAVIOR fish=3 species=moorish_idol cruise->approach t=84.875
+BRAIN dart fish=4 t=85 gap=0.3 from=-267,299 to=-318,326
+PERF t= 85 fps= 55 mode=night blend= 1  cut=none
+BEHAVIOR fish=2 species=yellow_tang cruise->approach t=85.75
+PERF t= 86 fps= 57 mode=night blend= 1  cut=none
+BEHAVIOR fish=2 species=yellow_tang approach->graze t=86.75
+BEHAVIOR fish=4 species=mandarin_dragonet hop->graze t=86.875
+PERF t= 87 fps= 57 mode=night blend= 1  cut=none
+PERF t= 88 fps= 56 mode=night blend= 1  cut=none
+BEHAVIOR fish=2 species=emperor_angelfish graze->cruise t=88.25
+BEHAVIOR fish=0 species=royal_gramma hover->retreat t=89.125
+PERF t= 89 fps= 58 mode=night blend= 1  cut=none
+BEHAVIOR fish=3 species=lionfish hang->drift t=89.125
+WEAVE fish=0 species=royal_blue_tang lane=backLane t=89.25
+WEAVE fish=4 species=moorish_idol lane=midLane t=89.625
+PERF t= 90 fps= 53 mode=night blend= 1  cut=none
+BEHAVIOR fish=4 species=mandarin_dragonet graze->hop t=90.25
+BEHAVIOR fish=1 species=royal_gramma hide->emerge t=91
+PERF t= 91 fps= 57 mode=night blend= 1  cut=none
+BRAIN dart fish=2 t=91.25 gap=0.7 from=1361,358 to=1235,405
+BEHAVIOR fish=4 species=mandarin_dragonet hop->graze t=91.75
+PERF t= 92 fps= 56 mode=night blend= 1  cut=none
+BEHAVIOR fish=3 species=moorish_idol approach->graze t=92.875
+PERF t= 93 fps= 56 mode=night blend= 1  cut=none
+PERF t= 94 fps= 56 mode=night blend= 1  cut=none
+BEHAVIOR fish=0 species=royal_blue_tang graze->cruise t=94.875
+BEHAVIOR fish=1 species=royal_gramma emerge->hover t=95
+PERF t= 95 fps= 57 mode=night blend= 1  cut=none
+BEHAVIOR fish=4 species=mandarin_dragonet graze->hop t=95.25
+BEHAVIOR fish=0 species=royal_gramma retreat->hide t=96.125
+BEHAVIOR fish=4 species=moorish_idol cruise->approach t=96.125
+PERF t= 96 fps= 55 mode=night blend= 1  cut=none
+BEHAVIOR fish=4 species=mandarin_dragonet hop->graze t=96.75
+PERF t= 97 fps= 54 mode=night blend= 1  cut=none
+BEHAVIOR fish=2 species=yellow_tang graze->cruise t=97.375
+BRAIN dart fish=3 t=97.625 gap=1.3 from=1369,269 to=1474,196
+PERF t= 98 fps= 54 mode=night blend= 1  cut=none
+BRAIN dart fish=2 t=98.25 gap=1.1 from=620,321 to=737,281
+BRAIN dart fish=0 t=98.5 gap=1 from=1780,329 to=1897,265
+BEHAVIOR fish=1 species=yellow_tang cruise->approach t=98.75
+PERF t= 99 fps= 53 mode=night blend= 1  cut=none
+BEHAVIOR fish=4 species=mandarin_dragonet graze->hop t=99.25
+BRAIN dart fish=0 t=99.5 gap=1 from=999,691 to=1090,592
+PERF t= 100 fps= 55 mode=night blend= 1  cut=none
+BEHAVIOR fish=4 species=mandarin_dragonet hop->graze t=100.75
+PERF t= 101 fps= 56 mode=night blend= 1  cut=none
+BEHAVIOR fish=1 species=royal_gramma hover->retreat t=101.5
+PERF t= 102 fps= 57 mode=night blend= 1  cut=none
+BEHAVIOR fish=3 species=moorish_idol graze->cruise t=102.375
+BEHAVIOR fish=4 species=moorish_idol approach->graze t=103.125
+PERF t= 103 fps= 57 mode=night blend= 1  cut=none
+BEHAVIOR fish=1 species=yellow_tang approach->graze t=103.25
+PERF t= 104 fps= 57 mode=night blend= 1  cut=none
+WEAVE fish=1 species=yellow_tang lane=frontLane t=104.125
+BEHAVIOR fish=4 species=mandarin_dragonet graze->hop t=104.5
+BEHAVIOR fish=0 species=royal_gramma hide->emerge t=105.125
+PERF t= 105 fps= 55 mode=night blend= 1  cut=none
+PERF t= 106 fps= 56 mode=night blend= 1  cut=none
+BEHAVIOR fish=1 species=royal_gramma retreat->hide t=106.5
+BEHAVIOR fish=4 species=mandarin_dragonet hop->graze t=106.5
+PERF t= 107 fps= 56 mode=night blend= 1  cut=none
+BEHAVIOR fish=1 species=yellow_tang cruise->approach t=107.375
+BEHAVIOR fish=0 species=royal_blue_tang cruise->approach t=107.5
+BEHAVIOR fish=3 species=royal_blue_tang cruise->approach t=107.625
+BEHAVIOR fish=4 species=mandarin_dragonet graze->hop t=108
+PERF t= 108 fps= 56 mode=night blend= 1  cut=none
+PERF t= 109 fps= 57 mode=night blend= 1  cut=none
+BEHAVIOR fish=0 species=royal_blue_tang approach->graze t=110
+BEHAVIOR fish=4 species=mandarin_dragonet hop->graze t=110
+PERF t= 110 fps= 57 mode=night blend= 1  cut=none
+BEHAVIOR fish=0 species=royal_gramma emerge->hover t=110.625
+PERF t= 111 fps= 56 mode=night blend= 1  cut=none
+BEHAVIOR fish=4 species=moorish_idol graze->cruise t=111.625
+BRAIN dart fish=2 t=111.875 gap=0.3 from=2017,354 to=2113,448
+BEHAVIOR fish=1 species=yellow_tang graze->cruise t=112
+PERF t= 112 fps= 56 mode=night blend= 1  cut=none
+BEHAVIOR fish=1 species=royal_gramma hide->emerge t=112.625
+PERF t= 113 fps= 54 mode=night blend= 1  cut=none
+BEHAVIOR fish=4 species=mandarin_dragonet graze->hop t=113.5
+BEHAVIOR fish=2 species=emperor_angelfish cruise->approach t=114
+BRAIN dart fish=4 t=114.125 gap=1.2 from=119,278 to=30,211
+PERF t= 114 fps= 54 mode=night blend= 1  cut=none
+BEHAVIOR fish=4 species=mandarin_dragonet hop->graze t=115
+BEHAVIOR fish=3 species=royal_blue_tang approach->graze t=115.125
+PERF t= 115 fps= 53 mode=night blend= 1  cut=none
+BEHAVIOR fish=2 species=emperor_angelfish approach->graze t=116
+BEHAVIOR fish=4 species=mandarin_dragonet graze->hop t=116
+PERF t= 116 fps= 54 mode=night blend= 1  cut=none
+BEHAVIOR fish=1 species=yellow_tang approach->graze t=116.375
+WEAVE fish=0 species=royal_blue_tang lane=backLane t=116.5
+BEHAVIOR fish=1 species=royal_gramma emerge->hover t=116.625
+PERF t= 117 fps= 54 mode=night blend= 1  cut=none
+BEHAVIOR fish=4 species=mandarin_dragonet hop->graze t=117.5
+WEAVE fish=3 species=moorish_idol lane=midLane t=117.625
+PERF t= 118 fps= 54 mode=night blend= 1  cut=none
+BEHAVIOR fish=0 species=royal_gramma hover->retreat t=118.5
+PERF t= 119 fps= 57 mode=night blend= 1  cut=none
+BEHAVIOR fish=0 species=royal_blue_tang graze->cruise t=119.125
+BEHAVIOR fish=3 species=lionfish drift->hang t=119.625
+BRAIN nodes=1518 t=120
+BRAIN nodes=1518 t=120
+BRAIN nodes=1518 t=120
+PERF t= 120 fps= 55 mode=night blend= 1  cut=none
+BEHAVIOR fish=4 species=mandarin_dragonet graze->hop t=120.625
+PERF t= 121 fps= 58 mode=night blend= 1  cut=none
+BEHAVIOR fish=3 species=royal_blue_tang graze->cruise t=121.375
+PERF t= 122 fps= 54 mode=night blend= 1  cut=none
+BEHAVIOR fish=4 species=mandarin_dragonet hop->graze t=122.625
+PERF t= 123 fps= 55 mode=night blend= 1  cut=none
+BEHAVIOR fish=1 species=yellow_tang graze->cruise t=123.5
+PERF t= 124 fps= 56 mode=night blend= 1  cut=none
+PERF t= 125 fps= 58 mode=night blend= 1  cut=none
+BEHAVIOR fish=0 species=royal_blue_tang cruise->approach t=125.5
+BEHAVIOR fish=0 species=royal_gramma retreat->hide t=126
+BEHAVIOR fish=1 species=royal_gramma hover->retreat t=126
+PERF t= 126 fps= 58 mode=night blend= 1  cut=none
+BEHAVIOR fish=4 species=mandarin_dragonet graze->hop t=126.125
+BRAIN dart fish=0 t=126.625 gap=0 from=1661,462 to=1544,473
+PERF t= 127 fps= 57 mode=night blend= 1  cut=none
+BEHAVIOR fish=2 species=emperor_angelfish graze->cruise t=127.5
+PERF t= 128 fps= 58 mode=night blend= 1  cut=none
+BEHAVIOR fish=4 species=mandarin_dragonet hop->graze t=128.125
+BEHAVIOR fish=3 species=moorish_idol cruise->approach t=128.25
+BEHAVIOR fish=3 species=lionfish hang->drift t=128.625
+PERF t= 129 fps= 56 mode=night blend= 1  cut=none
+BEHAVIOR fish=0 species=royal_blue_tang approach->graze t=129.5
+PERF t= 130 fps= 58 mode=night blend= 1  cut=none
+BEHAVIOR fish=0 species=royal_gramma hide->emerge t=130.375
+BEHAVIOR fish=1 species=royal_gramma retreat->hide t=130.5
+BEHAVIOR fish=3 species=moorish_idol approach->graze t=130.75
+PERF t= 131 fps= 56 mode=night blend= 1  cut=none
+BEHAVIOR fish=4 species=mandarin_dragonet graze->hop t=131.125
+BRAIN dart fish=0 t=131.5 gap=0.1 from=1605,699 to=1580,823
+PERF t= 132 fps= 58 mode=night blend= 1  cut=none
+BRAIN dart fish=0 t=132.25 gap=0.2 from=1587,826 to=1661,714
+BEHAVIOR fish=4 species=mandarin_dragonet hop->graze t=132.625
+WEAVE fish=0 species=royal_blue_tang lane=midLane t=132.75
+PERF t= 133 fps= 54 mode=night blend= 1  cut=none
+BEHAVIOR fish=2 species=yellow_tang cruise->approach t=133.375
+BEHAVIOR fish=4 species=mandarin_dragonet graze->hop t=133.625
+PERF t= 134 fps= 57 mode=night blend= 1  cut=none
+PERF t= 135 fps= 56 mode=night blend= 1  cut=none
+BRAIN dart fish=2 t=135.25 gap=0.2 from=1761,402 to=1726,272
+BEHAVIOR fish=4 species=mandarin_dragonet hop->graze t=135.625
+BEHAVIOR fish=0 species=royal_gramma emerge->hover t=135.875
+PERF t= 136 fps= 56 mode=night blend= 1  cut=none
+BEHAVIOR fish=1 species=royal_gramma hide->emerge t=136.875
+PERF t= 137 fps= 57 mode=night blend= 1  cut=none
+BEHAVIOR fish=2 species=yellow_tang approach->graze t=137.375
+PERF t= 138 fps= 56 mode=night blend= 1  cut=none
+PERF t= 139 fps= 56 mode=night blend= 1  cut=none
+BEHAVIOR fish=4 species=mandarin_dragonet graze->hop t=139.375
+PERF t= 140 fps= 56 mode=night blend= 1  cut=none
+WEAVE fish=4 species=moorish_idol lane=backLane t=140.375
+BEHAVIOR fish=3 species=moorish_idol graze->cruise t=140.375
+BEHAVIOR fish=1 species=royal_gramma emerge->hover t=140.875
+PERF t= 141 fps= 54 mode=night blend= 1  cut=none
+BEHAVIOR fish=4 species=mandarin_dragonet hop->graze t=141.375
+BEHAVIOR fish=0 species=royal_blue_tang graze->cruise t=141.875
+PERF t= 142 fps= 57 mode=night blend= 1  cut=none
+BRAIN dart fish=4 t=142.75 gap=0.1 from=1625,768 to=1653,636
+WEAVE fish=2 species=emperor_angelfish lane=midLane t=142.75
+PERF t= 143 fps= 55 mode=night blend= 1  cut=none
+BEHAVIOR fish=4 species=mandarin_dragonet graze->hop t=143.25
+PERF t= 144 fps= 56 mode=night blend= 1  cut=none
+BEHAVIOR fish=4 species=mandarin_dragonet hop->graze t=144.75
+BEHAVIOR fish=0 species=royal_gramma hover->retreat t=145
+PERF t= 145 fps= 56 mode=night blend= 1  cut=none
+PERF t= 146 fps= 56 mode=night blend= 1  cut=none
+BRAIN dart fish=1 t=146.75 gap=0.8 from=2141,720 to=2148,854
+PERF t= 147 fps= 55 mode=night blend= 1  cut=none
+BEHAVIOR fish=2 species=yellow_tang graze->cruise t=147.75
+BEHAVIOR fish=3 species=royal_blue_tang cruise->approach t=148
+BEHAVIOR fish=4 species=mandarin_dragonet graze->hop t=148
+PERF t= 148 fps= 56 mode=night blend= 1  cut=none
+WEAVE fish=0 species=royal_blue_tang lane=midLane t=149
+PERF t= 149 fps= 56 mode=night blend= 1  cut=none
+BEHAVIOR fish=1 species=yellow_tang cruise->approach t=149.75
+BEHAVIOR fish=4 species=mandarin_dragonet hop->graze t=150
+PERF flip mode=day
+PERF t= 150 fps= 54 mode=day blend= 0  cut=none
+BEHAVIOR fish=4 species=mandarin_dragonet graze->hop t=151
+PERF t= 151 fps= 55 mode=day blend= 0  cut=none
+BRAIN dart fish=3 t=151.25 gap=0 from=1232,779 to=1366,776
+WEAVE fish=2 species=yellow_tang lane=midLane t=152.125
+PERF t= 152 fps= 60 mode=day blend= 0  cut=none
+BEHAVIOR fish=0 species=royal_gramma retreat->hide t=152.5
+BRAIN dart fish=2 t=153 gap=0 from=1390,849 to=1269,795
+BEHAVIOR fish=4 species=mandarin_dragonet hop->graze t=153
+PERF t= 153 fps= 61 mode=day blend= 0  cut=none
+BEHAVIOR fish=0 species=royal_blue_tang cruise->approach t=153.375
+BEHAVIOR fish=2 species=emperor_angelfish cruise->approach t=153.625
+PERF t= 154 fps= 59 mode=day blend= 0  cut=none
+WEAVE fish=3 species=moorish_idol lane=backLane t=154.25
+BEHAVIOR fish=1 species=royal_gramma hover->retreat t=154.5
+PERF t= 155 fps= 59 mode=day blend= 0  cut=none
+BRAIN dart fish=3 t=155.375 gap=0 from=1369,862 to=1447,824
+WEAVE fish=1 species=yellow_tang lane=midLane t=155.625
+BEHAVIOR fish=2 species=emperor_angelfish approach->graze t=155.625
+BEHAVIOR fish=3 species=royal_blue_tang approach->graze t=156
+PERF t= 156 fps= 58 mode=day blend= 0  cut=none
+BEHAVIOR fish=0 species=royal_gramma hide->emerge t=156.5
+BEHAVIOR fish=4 species=mandarin_dragonet graze->hop t=156.75
+BEHAVIOR fish=0 species=royal_blue_tang approach->graze t=156.875
+PERF t= 157 fps= 61 mode=day blend= 0  cut=none
+BEHAVIOR fish=1 species=yellow_tang cruise->approach t=157.125
+BRAIN dart fish=4 t=157.375 gap=0.8 from=2147,613 to=2114,744
+PERF t= 158 fps= 59 mode=day blend= 0  cut=none
+BEHAVIOR fish=4 species=mandarin_dragonet hop->graze t=158.75
+PERF t= 159 fps= 61 mode=day blend= 0  cut=none
+BEHAVIOR fish=1 species=royal_gramma retreat->hide t=159.5
+PERF t= 160 fps= 60 mode=day blend= 0  cut=none
+BEHAVIOR fish=3 species=lionfish drift->hang t=160.75
+BEHAVIOR fish=4 species=moorish_idol cruise->approach t=161
+PERF t= 161 fps= 60 mode=day blend= 0  cut=none
+BEHAVIOR fish=0 species=royal_gramma emerge->hover t=162
+PERF t= 162 fps= 60 mode=day blend= 0  cut=none
+BEHAVIOR fish=4 species=mandarin_dragonet graze->hop t=162.5
+PERF t= 163 fps= 60 mode=day blend= 0  cut=none
+BEHAVIOR fish=4 species=mandarin_dragonet hop->graze t=164
+PERF t= 164 fps= 60 mode=day blend= 0  cut=none
+BEHAVIOR fish=2 species=emperor_angelfish graze->cruise t=164.125
+BEHAVIOR fish=0 species=royal_blue_tang graze->cruise t=164.25
+BEHAVIOR fish=1 species=yellow_tang approach->graze t=164.625
+BEHAVIOR fish=1 species=yellow_tang approach->cruise t=164.75
+PERF t= 165 fps= 60 mode=day blend= 0  cut=none
+PERF t= 166 fps= 59 mode=day blend= 0  cut=none
+BEHAVIOR fish=4 species=mandarin_dragonet graze->hop t=166.125
+BEHAVIOR fish=1 species=royal_gramma hide->emerge t=166.75
+PERF t= 167 fps= 61 mode=day blend= 0  cut=none
+BEHAVIOR fish=4 species=mandarin_dragonet hop->graze t=167.625
+BEHAVIOR fish=3 species=royal_blue_tang graze->cruise t=168.125
+PERF t= 168 fps= 60 mode=day blend= 0  cut=none
+BRAIN dart fish=3 t=168.25 gap=0.3 from=1556,607 to=1453,520
+PERF t= 169 fps= 60 mode=day blend= 0  cut=none
+PERF t= 170 fps= 59 mode=day blend= 0  cut=none
+BEHAVIOR fish=4 species=mandarin_dragonet graze->hop t=170.25
+BEHAVIOR fish=1 species=royal_gramma emerge->hover t=170.75
+PERF t= 171 fps= 60 mode=day blend= 0  cut=none
+BEHAVIOR fish=1 species=yellow_tang graze->cruise t=171.25
+BEHAVIOR fish=4 species=mandarin_dragonet hop->graze t=171.75
+PERF t= 172 fps= 60 mode=day blend= 0  cut=none
+BEHAVIOR fish=0 species=royal_gramma hover->retreat t=173.125
+PERF t= 173 fps= 60 mode=day blend= 0  cut=none
+BEHAVIOR fish=2 species=yellow_tang cruise->approach t=173.5
+BEHAVIOR fish=3 species=lionfish hang->drift t=173.875
+PERF t= 174 fps= 60 mode=day blend= 0  cut=none
+PERF t= 175 fps= 59 mode=day blend= 0  cut=none
+BEHAVIOR fish=4 species=mandarin_dragonet graze->hop t=175.75
+BEHAVIOR fish=4 species=moorish_idol approach->cruise t=176
+PERF t= 176 fps= 60 mode=day blend= 0  cut=none
+PERF t= 177 fps= 60 mode=day blend= 0  cut=none
+WEAVE fish=2 species=emperor_angelfish lane=frontLane t=177.5
+BEHAVIOR fish=4 species=mandarin_dragonet hop->graze t=177.75
+PERF t= 178 fps= 60 mode=day blend= 0  cut=none
+WEAVE fish=0 species=royal_blue_tang lane=backLane t=178.5
+BEHAVIOR fish=2 species=yellow_tang approach->graze t=179
+BEHAVIOR fish=0 species=royal_gramma retreat->hide t=179.125
+PERF t= 179 fps= 58 mode=day blend= 0  cut=none
+BRAIN nodes=1518 t=180
+BRAIN nodes=1518 t=180
+BRAIN nodes=1518 t=180
+PERF t= 180 fps= 60 mode=day blend= 0  cut=none
+BEHAVIOR fish=1 species=royal_gramma hover->retreat t=180.75
+BEHAVIOR fish=4 species=mandarin_dragonet graze->hop t=181
+PERF t= 181 fps= 61 mode=day blend= 0  cut=none
+PERF t= 182 fps= 60 mode=day blend= 0  cut=none
+WEAVE fish=3 species=moorish_idol lane=midLane t=182.125
+BEHAVIOR fish=4 species=mandarin_dragonet hop->graze t=183
+PERF t= 183 fps= 60 mode=day blend= 0  cut=none
+BEHAVIOR fish=0 species=royal_gramma hide->emerge t=183.625
+BEHAVIOR fish=3 species=moorish_idol cruise->approach t=183.625
+PERF t= 184 fps= 60 mode=day blend= 0  cut=none
+BEHAVIOR fish=4 species=mandarin_dragonet graze->hop t=184.875
+PERF t= 185 fps= 59 mode=day blend= 0  cut=none
+BRAIN dart fish=1 t=185.25 gap=0.1 from=1265,851 to=1171,755
+PERF t= 186 fps= 60 mode=day blend= 0  cut=none
+BEHAVIOR fish=1 species=royal_gramma retreat->hide t=186.25
+BEHAVIOR fish=4 species=mandarin_dragonet hop->graze t=186.875
+PERF t= 187 fps= 60 mode=day blend= 0  cut=none
+WEAVE fish=4 species=moorish_idol lane=midLane t=187.375
+BRAIN dart fish=2 t=187.5 gap=0.1 from=2220,324 to=2115,240
+BEHAVIOR fish=2 species=yellow_tang graze->cruise t=187.875
+PERF t= 188 fps= 59 mode=day blend= 0  cut=none
+BEHAVIOR fish=4 species=mandarin_dragonet graze->hop t=188.375
+BRAIN dart fish=2 t=188.625 gap=0.7 from=769,353 to=828,236
+BEHAVIOR fish=0 species=royal_gramma emerge->hover t=189.125
+PERF t= 189 fps= 60 mode=day blend= 0  cut=none
+PERF t= 190 fps= 60 mode=day blend= 0  cut=none
+BEHAVIOR fish=4 species=mandarin_dragonet hop->graze t=190.375
+BEHAVIOR fish=1 species=royal_gramma hide->emerge t=190.625
+BEHAVIOR fish=3 species=moorish_idol approach->graze t=190.625
+PERF t= 191 fps= 60 mode=day blend= 0  cut=none
+BEHAVIOR fish=0 species=royal_blue_tang cruise->approach t=191.125
+PERF t= 192 fps= 60 mode=day blend= 0  cut=none
+PERF t= 193 fps= 60 mode=day blend= 0  cut=none
+BEHAVIOR fish=4 species=mandarin_dragonet graze->hop t=193.125
+PERF t= 194 fps= 60 mode=day blend= 0  cut=none
+BEHAVIOR fish=1 species=royal_gramma emerge->hover t=194.625
+PERF t= 195 fps= 60 mode=day blend= 0  cut=none
+BEHAVIOR fish=4 species=mandarin_dragonet hop->graze t=195.125
+PERF t= 196 fps= 59 mode=day blend= 0  cut=none
+BRAIN dart fish=3 t=196.5 gap=0.1 from=427,379 to=299,341
+PERF t= 197 fps= 60 mode=day blend= 0  cut=none
+BEHAVIOR fish=4 species=mandarin_dragonet graze->hop t=197.75
+PERF t= 198 fps= 59 mode=day blend= 0  cut=none
+PERF t= 199 fps= 61 mode=day blend= 0  cut=none
+BEHAVIOR fish=0 species=royal_gramma hover->retreat t=199.625
+BEHAVIOR fish=4 species=mandarin_dragonet hop->graze t=199.75
+PERF t= 200 fps= 60 mode=day blend= 0  cut=none
+BRAIN dart fish=2 t=201 gap=0.3 from=1294,385 to=1372,275
+BEHAVIOR fish=3 species=moorish_idol graze->cruise t=201
+PERF t= 201 fps= 60 mode=day blend= 0  cut=none
+PERF t= 202 fps= 61 mode=day blend= 0  cut=none
+BEHAVIOR fish=4 species=mandarin_dragonet graze->hop t=203
+PERF t= 203 fps= 59 mode=day blend= 0  cut=none
+BEHAVIOR fish=0 species=royal_blue_tang cruise->approach t=203.125
+BEHAVIOR fish=3 species=royal_blue_tang cruise->approach t=203.5
+PERF t= 204 fps= 59 mode=day blend= 0  cut=none
+BEHAVIOR fish=1 species=royal_gramma hover->retreat t=204.25
+BEHAVIOR fish=4 species=mandarin_dragonet hop->graze t=205
+PERF t= 205 fps= 60 mode=day blend= 0  cut=none
+BRAIN dart fish=1 t=205.125 gap=0.8 from=247,337 to=374,375
+BEHAVIOR fish=0 species=royal_gramma retreat->hide t=206.125
+PERF t= 206 fps= 60 mode=day blend= 0  cut=none
+BEHAVIOR fish=0 species=royal_blue_tang approach->cruise t=206.125
+PERF t= 207 fps= 59 mode=day blend= 0  cut=none
+BEHAVIOR fish=0 species=royal_blue_tang approach->graze t=207.125
+WEAVE fish=1 species=yellow_tang lane=midLane t=207.25
+PERF t= 208 fps= 60 mode=day blend= 0  cut=none
+BRAIN dart fish=3 t=208.875 gap=0.2 from=1569,618 to=1701,638
+BEHAVIOR fish=4 species=mandarin_dragonet graze->hop t=208.875
+PERF t= 209 fps= 60 mode=day blend= 0  cut=none
+BEHAVIOR fish=3 species=lionfish drift->hang t=209.25
+BEHAVIOR fish=1 species=royal_gramma retreat->hide t=209.75
+PERF t= 210 fps= 59 mode=day blend= 0  cut=none
+BEHAVIOR fish=4 species=mandarin_dragonet hop->graze t=210.875
+BEHAVIOR fish=3 species=royal_blue_tang approach->graze t=211
+PERF t= 211 fps= 60 mode=day blend= 0  cut=none
+BEHAVIOR fish=4 species=moorish_idol cruise->approach t=211.75
+WEAVE fish=3 species=moorish_idol lane=backLane t=211.875
+PERF t= 212 fps= 58 mode=day blend= 0  cut=none
+BEHAVIOR fish=1 species=yellow_tang cruise->approach t=212.25
+PERF t= 213 fps= 62 mode=day blend= 0  cut=none
+BEHAVIOR fish=4 species=mandarin_dragonet graze->hop t=213.375
+WEAVE fish=2 species=emperor_angelfish lane=midLane t=213.5
+PERF t= 214 fps= 58 mode=day blend= 0  cut=none
+BRAIN dart fish=2 t=214.125 gap=0 from=2136,298 to=2186,423
+BRAIN dart fish=4 t=214.125 gap=0.1 from=-299,321 to=-201,414
+BEHAVIOR fish=0 species=royal_gramma hide->emerge t=214.5
+BEHAVIOR fish=2 species=emperor_angelfish cruise->approach t=214.625
+PERF t= 215 fps= 61 mode=day blend= 0  cut=none
+BEHAVIOR fish=4 species=mandarin_dragonet hop->graze t=215.375
+PERF t= 216 fps= 60 mode=day blend= 0  cut=none
+PERF t= 217 fps= 59 mode=day blend= 0  cut=none
+BEHAVIOR fish=1 species=yellow_tang cruise->approach t=217.625
+BEHAVIOR fish=4 species=moorish_idol approach->graze t=217.75
+BEHAVIOR fish=4 species=mandarin_dragonet graze->hop t=217.75
+BEHAVIOR fish=3 species=lionfish hang->drift t=217.875
+PERF t= 218 fps= 61 mode=day blend= 0  cut=none
+BEHAVIOR fish=1 species=yellow_tang approach->graze t=218.25
+BEHAVIOR fish=1 species=royal_gramma hide->emerge t=218.5
+PERF t= 219 fps= 59 mode=day blend= 0  cut=none
+BEHAVIOR fish=0 species=royal_blue_tang graze->cruise t=219.25
+BEHAVIOR fish=1 species=yellow_tang approach->graze t=219.625
+BEHAVIOR fish=4 species=mandarin_dragonet hop->graze t=219.75
+BEHAVIOR fish=0 species=royal_gramma emerge->hover t=220
+PERF t= 220 fps= 59 mode=day blend= 0  cut=none
+PERF t= 221 fps= 59 mode=day blend= 0  cut=none
+PERF t= 222 fps= 60 mode=day blend= 0  cut=none
+BEHAVIOR fish=4 species=mandarin_dragonet graze->hop t=222.375
+BEHAVIOR fish=1 species=royal_gramma emerge->hover t=222.5
+BEHAVIOR fish=3 species=royal_blue_tang graze->cruise t=222.625
+PERF t= 223 fps= 60 mode=day blend= 0  cut=none
+BEHAVIOR fish=2 species=emperor_angelfish approach->graze t=223.625
+PERF t= 224 fps= 60 mode=day blend= 0  cut=none
+BEHAVIOR fish=4 species=mandarin_dragonet hop->graze t=224.375
+BEHAVIOR fish=4 species=moorish_idol graze->cruise t=225
+PERF flip mode=night
+PERF t= 225 fps= 60 mode=night blend= 1  cut=none
+PERF t= 226 fps= 53 mode=night blend= 1  cut=none
+PERF t= 227 fps= 55 mode=night blend= 1  cut=none
+BEHAVIOR fish=1 species=yellow_tang graze->cruise t=227.875
+PERF t= 228 fps= 53 mode=night blend= 1  cut=none
+BEHAVIOR fish=4 species=mandarin_dragonet graze->hop t=228.125
+PERF t= 229 fps= 54 mode=night blend= 1  cut=none
+WEAVE fish=0 species=royal_blue_tang lane=midLane t=229.625
+PERF t= 230 fps= 53 mode=night blend= 1  cut=none
+BEHAVIOR fish=4 species=mandarin_dragonet hop->graze t=230.125
+BEHAVIOR fish=1 species=royal_gramma hover->retreat t=230.25
+BEHAVIOR fish=0 species=royal_gramma hover->retreat t=231.125
+PERF t= 231 fps= 56 mode=night blend= 1  cut=none
+BEHAVIOR fish=1 species=yellow_tang graze->cruise t=231.25
+BEHAVIOR fish=4 species=mandarin_dragonet graze->hop t=231.875
+PERF t= 232 fps= 54 mode=night blend= 1  cut=none
+PERF t= 233 fps= 56 mode=night blend= 1  cut=none
+BEHAVIOR fish=4 species=mandarin_dragonet hop->graze t=233.875
+PERF t= 234 fps= 57 mode=night blend= 1  cut=none
+BRAIN dart fish=4 t=234.5 gap=0.2 from=1413,237 to=1517,321
+PERF t= 235 fps= 56 mode=night blend= 1  cut=none
+BEHAVIOR fish=1 species=royal_gramma retreat->hide t=235.25
+BRAIN dart fish=0 t=235.25 gap=0.2 from=11,289 to=-95,230
+BEHAVIOR fish=4 species=mandarin_dragonet graze->hop t=235.375
+BEHAVIOR fish=2 species=emperor_angelfish graze->cruise t=235.5
+PERF t= 236 fps= 57 mode=night blend= 1  cut=none
+BRAIN dart fish=0 t=236.875 gap=0.6 from=-167,262 to=-239,376
+PERF t= 237 fps= 57 mode=night blend= 1  cut=none
+WEAVE fish=0 species=royal_blue_tang lane=frontLane t=237.375
+BEHAVIOR fish=4 species=mandarin_dragonet hop->graze t=237.375
+WEAVE fish=1 species=yellow_tang lane=frontLane t=237.625
+BEHAVIOR fish=0 species=royal_gramma retreat->hide t=238.125
+PERF t= 238 fps= 52 mode=night blend= 1  cut=none
+PERF t= 239 fps= 55 mode=night blend= 1  cut=none
+WEAVE fish=2 species=yellow_tang lane=backLane t=239.375
+BEHAVIOR fish=1 species=royal_gramma hide->emerge t=239.875
+BRAIN nodes=1518 t=240
+BRAIN nodes=1518 t=240
+BRAIN nodes=1518 t=240
+PERF t= 240 fps= 52 mode=night blend= 1  cut=none
+BEHAVIOR fish=4 species=mandarin_dragonet graze->hop t=240.5
+BEHAVIOR fish=2 species=yellow_tang cruise->approach t=240.875
+BRAIN dart fish=3 t=241 gap=0.3 from=-234,374 to=-190,247
+PERF t= 241 fps= 54 mode=night blend= 1  cut=none
+BEHAVIOR fish=4 species=mandarin_dragonet hop->graze t=242
+PERF t= 242 fps= 55 mode=night blend= 1  cut=none
+PERF t= 243 fps= 54 mode=night blend= 1  cut=none
+BEHAVIOR fish=4 species=mandarin_dragonet graze->hop t=243.75
+BEHAVIOR fish=1 species=royal_gramma emerge->hover t=243.875
+PERF t= 244 fps= 55 mode=night blend= 1  cut=none
+BRAIN dart fish=3 t=244.25 gap=0.4 from=-5,333 to=103,253
+WEAVE fish=3 species=moorish_idol lane=midLane t=244.625
+PERF t= 245 fps= 53 mode=night blend= 1  cut=none
+BEHAVIOR fish=4 species=mandarin_dragonet hop->graze t=245.75
+BEHAVIOR fish=0 species=royal_blue_tang cruise->approach t=246
+PERF t= 246 fps= 55 mode=night blend= 1  cut=none
+BEHAVIOR fish=3 species=moorish_idol cruise->approach t=246.125
+BEHAVIOR fish=0 species=royal_gramma hide->emerge t=246.75
+PERF t= 247 fps= 53 mode=night blend= 1  cut=none
+BEHAVIOR fish=2 species=yellow_tang approach->graze t=247.875
+BEHAVIOR fish=4 species=mandarin_dragonet graze->hop t=248
+BEHAVIOR fish=3 species=royal_blue_tang cruise->approach t=248.125
+PERF t= 248 fps= 54 mode=night blend= 1  cut=none
+BEHAVIOR fish=3 species=moorish_idol approach->graze t=248.125
+PERF t= 249 fps= 55 mode=night blend= 1  cut=none
+BEHAVIOR fish=4 species=mandarin_dragonet hop->graze t=250
+BEHAVIOR fish=3 species=royal_blue_tang approach->graze t=250.125
+PERF t= 250 fps= 56 mode=night blend= 1  cut=none
+PERF t= 251 fps= 55 mode=night blend= 1  cut=none
+BEHAVIOR fish=4 species=mandarin_dragonet graze->hop t=252
+PERF t= 252 fps= 56 mode=night blend= 1  cut=none
+BEHAVIOR fish=0 species=royal_gramma emerge->hover t=252.25
+BEHAVIOR fish=0 species=royal_blue_tang cruise->approach t=252.5
+BEHAVIOR fish=0 species=royal_blue_tang approach->graze t=253
+PERF t= 253 fps= 57 mode=night blend= 1  cut=none
+BEHAVIOR fish=4 species=mandarin_dragonet hop->graze t=254
+PERF t= 254 fps= 55 mode=night blend= 1  cut=none
+PERF t= 255 fps= 55 mode=night blend= 1  cut=none
+BEHAVIOR fish=1 species=royal_gramma hover->retreat t=255.875
+BEHAVIOR fish=0 species=royal_blue_tang approach->graze t=256
+PERF t= 256 fps= 55 mode=night blend= 1  cut=none
+BEHAVIOR fish=4 species=mandarin_dragonet graze->hop t=256.375
+PERF t= 257 fps= 56 mode=night blend= 1  cut=none
+BEHAVIOR fish=4 species=mandarin_dragonet hop->graze t=257.875
+BEHAVIOR fish=3 species=royal_blue_tang graze->cruise t=258.125
+PERF t= 258 fps= 56 mode=night blend= 1  cut=none
+BEHAVIOR fish=2 species=yellow_tang graze->cruise t=258.5
+WEAVE fish=4 species=moorish_idol lane=backLane t=258.625
+BEHAVIOR fish=1 species=yellow_tang cruise->approach t=258.625
+PERF t= 259 fps= 54 mode=night blend= 1  cut=none
+BEHAVIOR fish=3 species=moorish_idol graze->cruise t=259.875
+BEHAVIOR fish=4 species=moorish_idol cruise->approach t=260.125
+PERF t= 260 fps= 56 mode=night blend= 1  cut=none
+BEHAVIOR fish=1 species=yellow_tang approach->graze t=260.625
+BEHAVIOR fish=1 species=royal_gramma retreat->hide t=260.875
+PERF t= 261 fps= 56 mode=night blend= 1  cut=none
+BEHAVIOR fish=4 species=mandarin_dragonet graze->hop t=261.75
+PERF t= 262 fps= 55 mode=night blend= 1  cut=none
+PERF t= 263 fps= 52 mode=night blend= 1  cut=none
+BEHAVIOR fish=4 species=mandarin_dragonet hop->graze t=263.25
+PERF t= 264 fps= 56 mode=night blend= 1  cut=none
+BEHAVIOR fish=0 species=royal_blue_tang graze->cruise t=264.125
+BEHAVIOR fish=3 species=lionfish drift->hang t=264.5
+BEHAVIOR fish=0 species=royal_gramma hover->retreat t=265
+BRAIN dart fish=2 t=265.125 gap=0.1 from=1578,575 to=1688,642
+PERF t= 265 fps= 54 mode=night blend= 1  cut=none
+PERF t= 266 fps= 56 mode=night blend= 1  cut=none
+BEHAVIOR fish=4 species=mandarin_dragonet graze->hop t=266.5
+WEAVE fish=1 species=yellow_tang lane=midLane t=267
+PERF t= 267 fps= 56 mode=night blend= 1  cut=none
+WEAVE fish=2 species=yellow_tang lane=midLane t=267.625
+BEHAVIOR fish=4 species=moorish_idol approach->graze t=267.625
+BEHAVIOR fish=0 species=royal_blue_tang graze->cruise t=267.75
+PERF t= 268 fps= 54 mode=night blend= 1  cut=none
+BEHAVIOR fish=4 species=mandarin_dragonet hop->graze t=268.5
+PERF t= 269 fps= 59 mode=night blend= 1  cut=none
+BRAIN dart fish=3 t=269.375 gap=0 from=1602,236 to=1635,367
+BEHAVIOR fish=1 species=royal_gramma hide->emerge t=269.5
+BEHAVIOR fish=4 species=mandarin_dragonet graze->hop t=269.5
+PERF t= 270 fps= 58 mode=night blend= 1  cut=none
+BEHAVIOR fish=1 species=yellow_tang graze->cruise t=270.5
+BEHAVIOR fish=0 species=royal_gramma retreat->hide t=271
+PERF t= 271 fps= 56 mode=night blend= 1  cut=none
+BRAIN dart fish=2 t=271.25 gap=0.4 from=1845,802 to=1928,696
+BEHAVIOR fish=4 species=mandarin_dragonet hop->graze t=271.5
+PERF t= 272 fps= 57 mode=night blend= 1  cut=none
+BEHAVIOR fish=1 species=yellow_tang cruise->approach t=272.875
+PERF t= 273 fps= 57 mode=night blend= 1  cut=none
+BEHAVIOR fish=1 species=royal_gramma emerge->hover t=273.5
+PERF t= 274 fps= 58 mode=night blend= 1  cut=none
+BEHAVIOR fish=4 species=mandarin_dragonet graze->hop t=274.75
+WEAVE fish=0 species=royal_blue_tang lane=backLane t=275
+PERF t= 275 fps= 58 mode=night blend= 1  cut=none
+PERF t= 276 fps= 55 mode=night blend= 1  cut=none
+BEHAVIOR fish=4 species=mandarin_dragonet hop->graze t=276.25
+PERF t= 277 fps= 59 mode=night blend= 1  cut=none
+BEHAVIOR fish=3 species=lionfish hang->drift t=277.75
+PERF t= 278 fps= 57 mode=night blend= 1  cut=none
+BEHAVIOR fish=1 species=yellow_tang approach->graze t=278.875
+PERF t= 279 fps= 58 mode=night blend= 1  cut=none
+BEHAVIOR fish=4 species=moorish_idol graze->cruise t=279.25
+BEHAVIOR fish=0 species=royal_gramma hide->emerge t=279.625
+PERF t= 280 fps= 59 mode=night blend= 1  cut=none
+BEHAVIOR fish=4 species=mandarin_dragonet graze->hop t=280.125
+BEHAVIOR fish=1 species=royal_gramma hover->retreat t=280.5
+PERF t= 281 fps= 59 mode=night blend= 1  cut=none
+BEHAVIOR fish=4 species=mandarin_dragonet hop->graze t=281.625
+BRAIN dart fish=0 t=282 gap=0.4 from=-89,902 to=7,808
+BEHAVIOR fish=2 species=emperor_angelfish cruise->approach t=282
+PERF t= 282 fps= 59 mode=night blend= 1  cut=none
+PERF t= 283 fps= 57 mode=night blend= 1  cut=none
+BEHAVIOR fish=4 species=mandarin_dragonet graze->hop t=283.5
+PERF t= 284 fps= 56 mode=night blend= 1  cut=none
+BEHAVIOR fish=2 species=emperor_angelfish approach->graze t=285
+BEHAVIOR fish=0 species=royal_gramma emerge->hover t=285.125
+PERF t= 285 fps= 58 mode=night blend= 1  cut=none
+BEHAVIOR fish=1 species=royal_gramma retreat->hide t=285.5
+BEHAVIOR fish=3 species=moorish_idol cruise->approach t=285.5
+BEHAVIOR fish=4 species=mandarin_dragonet hop->graze t=285.5
+PERF t= 286 fps= 59 mode=night blend= 1  cut=none
+WEAVE fish=4 species=moorish_idol lane=midLane t=286.5
+BEHAVIOR fish=3 species=moorish_idol approach->graze t=287
+PERF t= 287 fps= 56 mode=night blend= 1  cut=none
+BEHAVIOR fish=4 species=mandarin_dragonet graze->hop t=287.25
+PERF t= 288 fps= 58 mode=night blend= 1  cut=none
+BEHAVIOR fish=0 species=royal_blue_tang cruise->approach t=288.25
+BEHAVIOR fish=1 species=yellow_tang graze->cruise t=289
+PERF t= 289 fps= 59 mode=night blend= 1  cut=none
+BEHAVIOR fish=4 species=mandarin_dragonet hop->graze t=289.25
+BEHAVIOR fish=2 species=yellow_tang cruise->approach t=290
+PERF t= 290 fps= 59 mode=night blend= 1  cut=none
+BEHAVIOR fish=3 species=royal_blue_tang cruise->approach t=290.375
+PERF t= 291 fps= 58 mode=night blend= 1  cut=none
+BEHAVIOR fish=1 species=yellow_tang cruise->approach t=291.25
+PERF t= 292 fps= 58 mode=night blend= 1  cut=none
+BEHAVIOR fish=1 species=royal_gramma hide->emerge t=292.25
+BEHAVIOR fish=2 species=emperor_angelfish graze->cruise t=293
+BEHAVIOR fish=4 species=mandarin_dragonet graze->hop t=293
+PERF t= 293 fps= 57 mode=night blend= 1  cut=none
+BEHAVIOR fish=3 species=moorish_idol graze->cruise t=294
+PERF t= 294 fps= 58 mode=night blend= 1  cut=none
+BEHAVIOR fish=4 species=mandarin_dragonet hop->graze t=294.5
+PERF t= 295 fps= 58 mode=night blend= 1  cut=none
+BEHAVIOR fish=2 species=yellow_tang approach->graze t=295.5
+BEHAVIOR fish=4 species=mandarin_dragonet graze->hop t=296
+PERF t= 296 fps= 57 mode=night blend= 1  cut=none
+BEHAVIOR fish=1 species=royal_gramma emerge->hover t=296.25
+BEHAVIOR fish=0 species=royal_gramma hover->retreat t=296.5
+PERF t= 297 fps= 56 mode=night blend= 1  cut=none
+BEHAVIOR fish=4 species=mandarin_dragonet hop->graze t=297.5
+PERF t= 298 fps= 56 mode=night blend= 1  cut=none
+PERF t= 299 fps= 57 mode=night blend= 1  cut=none
+BRAIN nodes=1518 t=300
+BRAIN nodes=1518 t=300
+BRAIN nodes=1518 t=300
+PERF flip mode=day
+PERF t= 300 fps= 55 mode=day blend= 0  cut=none
+BEHAVIOR fish=1 species=yellow_tang approach->graze t=300.25
+BEHAVIOR fish=3 species=royal_blue_tang approach->graze t=300.375
+PERF t= 301 fps= 60 mode=day blend= 0  cut=none
+BEHAVIOR fish=4 species=mandarin_dragonet graze->hop t=301.125
+PERF t= 302 fps= 60 mode=day blend= 0  cut=none
+BEHAVIOR fish=4 species=mandarin_dragonet hop->graze t=302.625
+PERF t= 303 fps= 59 mode=day blend= 0  cut=none
+BEHAVIOR fish=0 species=royal_blue_tang approach->cruise t=303.25
+WEAVE fish=1 species=yellow_tang lane=frontLane t=303.375
+BEHAVIOR fish=0 species=royal_gramma retreat->hide t=303.5
+BEHAVIOR fish=2 species=yellow_tang graze->cruise t=303.875
+BEHAVIOR fish=4 species=mandarin_dragonet graze->hop t=303.875
+PERF t= 304 fps= 59 mode=day blend= 0  cut=none
