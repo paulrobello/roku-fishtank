@@ -1,7 +1,9 @@
 ' Lane scale and tint for rigged fish (P2.7). SceneGraph Groups have no blendColor,
 ' so the tint is multiplied into every Poster under the Fish. Call it after species
-' is set: Fish creates its extra layer Posters when the species loads.
+' is set: Fish creates its extra layer Posters when the species loads. Nodes whose id
+' starts with "night" (a light organ's glow) keep their own colour, as under Night.
 sub laneTintPosters(node as object, color as integer)
+    if Left(node.id, 5) = "night" then return
     if node.subtype() = "Poster" then node.blendColor = color
     for i = 0 to node.getChildCount() - 1
         laneTintPosters(node.getChild(i), color)

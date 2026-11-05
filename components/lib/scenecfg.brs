@@ -358,6 +358,10 @@ sub sceneCfgValidatePopulation(pop as dynamic, layerIds as object, laneIds as ob
     end for
     for each name in pop.densities
         sceneCfgValidateDensity("density " + name, pop.densities[name], laneIds, errors)
+        d = pop.densities[name]
+        if sceneCfgIsObject(d) and d.nightSchool <> invalid then
+            if not sceneCfgIsString(pop.nightSchoolUri) or pop.nightSchoolUri = "" then errors.push("density " + name + " has a nightSchool but population has no nightSchoolUri")
+        end if
     end for
 end sub
 
@@ -381,14 +385,17 @@ sub sceneCfgValidateDensity(where as string, d as dynamic, laneIds as object, er
             end for
         end if
     end for
-    s = d.school
-    if s <> invalid then
-        if not sceneCfgIsObject(s) or not sceneCfgIsString(s.lane) or not laneIds.doesExist(s.lane) then
-            errors.push(where + " school needs a lane id")
-        else if not sceneCfgIsNumber(s.count) or s.count < 0 or s.count <> Int(s.count) then
-            errors.push(where + " school count must be a whole number >= 0")
+    for each entry in [{ key: "school", s: d.school }, { key: "nightSchool", s: d.nightSchool }]
+        key = entry.key
+        s = entry.s
+        if s <> invalid then
+            if not sceneCfgIsObject(s) or not sceneCfgIsString(s.lane) or not laneIds.doesExist(s.lane) then
+                errors.push(where + " " + key + " needs a lane id")
+            else if not sceneCfgIsNumber(s.count) or s.count < 0 or s.count <> Int(s.count) then
+                errors.push(where + " " + key + " count must be a whole number >= 0")
+            end if
         end if
-    end if
+    end for
 end sub
 
 function sceneCfgIsPoint(p as dynamic) as boolean
@@ -413,10 +420,11 @@ end function
 
 ' What ReefTank builds for a density: { lanes: [{ lane, groups }], school }. lanes
 ' run back to front and skip lanes with no fish; lane is a sceneCfgLanes entry and
-' groups the [{ species, count }] list. school is { lane, count } or invalid.
+' groups the [{ species, count }] list. school is { lane, count } or invalid, and so
+' is nightSchool (the night-only flashlight fish group, built from nightSchoolUri).
 function sceneCfgDensityPlan(cfg as object, name as string) as object
     d = cfg.population.densities[sceneCfgDensityName(cfg, name)]
-    plan = { lanes: [], school: invalid }
+    plan = { lanes: [], school: invalid, nightSchool: invalid }
     for each lane in sceneCfgLanes(cfg)
         groups = d.lanes[lane.id]
         if groups <> invalid then
@@ -427,6 +435,7 @@ function sceneCfgDensityPlan(cfg as object, name as string) as object
             if n > 0 then plan.lanes.push({ lane: lane, groups: groups })
         end if
         if d.school <> invalid and d.school.count > 0 and d.school.lane = lane.id then plan.school = { lane: lane, count: d.school.count }
+        if d.nightSchool <> invalid and d.nightSchool.count > 0 and d.nightSchool.lane = lane.id then plan.nightSchool = { lane: lane, count: d.nightSchool.count }
     end for
     return plan
 end function

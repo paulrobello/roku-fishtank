@@ -36,6 +36,7 @@ sub onConfigUri()
     m.global.brainSerial = m.global.brainSerial + 1
     prefix = "brain" + m.global.brainSerial.toStr() + "_"
     seed = brainSeed() + m.top.seedSalt * 1000003
+    m.seed = seed
     spawned = brainSpawnAll(cfg, beh, m.world, seed)
     brainAttachHosts(spawned)
     print "BRAIN seed="; seed; " fish="; spawned.count(); " speed="; m.speed
@@ -90,6 +91,7 @@ function brainBuildFish(prefix as string, i as integer, species as string, ancho
     node.id = prefix + "fish" + i.toStr()
     node.facing = state.facing
     node.swimSpeed = state.speed
+    node.blinkSeed = m.seed + 7919 * (i + 1)
     node.species = species
     laneStyleFish(node, anchor, m.top.fishScale, m.top.fishTint)
     node.translation = brainToTranslation(anchor, state.agent.x, state.agent.y)

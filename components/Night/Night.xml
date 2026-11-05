@@ -11,6 +11,8 @@
       blend   (ReefTank.nightBlend) 0 = day .. 1 = night, as shown (eased).
       isNight (ReefTank.isNight)    true from blend 0.5, where the night overlays start to
                                     fade in. Caustics hide while it is true.
+    m.global.nightLevel (0 day .. 1 night, 2 x blend - 1) is set on every evaluation for
+    nightOnly fish (components/Fish).
     Preview: m.global.previewTime (?time=HH:MM or YYYY-MM-DDTHH:MM) sets the clock and
     ?speed runs it faster; under ?freeze the clock is read once (12:00 when ?time is
     absent) and nothing changes after init.

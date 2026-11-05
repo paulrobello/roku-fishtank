@@ -116,7 +116,22 @@ sub reefTankBuildFish(name as string)
         m.tankNodes.push(school)
         schoolCount = plan.school.count
     end if
-    print "REEFTANK fish density="; sceneCfgDensityName(cfg, name); " fish="; total; " school="; schoolCount; " brains="; plan.lanes.count()
+    ' The night-only flashlight fish go last, so every day fish keeps its seed and
+    ' creation serial (Fish turn timing) whatever the night group holds.
+    nightCount = 0
+    if plan.nightSchool <> invalid then
+        lane = plan.nightSchool.lane
+        school = camera.findNode(lane.id).createChild("School")
+        school.id = lane.id + "NightSchool"
+        school.seedSalt = salt + 1
+        school.fishScale = lane.scale
+        school.fishTint = lane.tint
+        school.configOverride = { lane: sceneCfgLaneRect(lane), ellipses: pop.ellipses, count: plan.nightSchool.count }
+        school.configUri = pop.nightSchoolUri
+        m.tankNodes.push(school)
+        nightCount = plan.nightSchool.count
+    end if
+    print "REEFTANK fish density="; sceneCfgDensityName(cfg, name); " fish="; total; " school="; schoolCount; " night="; nightCount; " brains="; plan.lanes.count()
 end sub
 
 ' ---- Camera drift (P1.2) ----

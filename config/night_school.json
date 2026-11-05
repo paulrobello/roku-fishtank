@@ -1,0 +1,67 @@
+{
+  "_notes": "Flashlight fish night group (Anomalops katoptron), a second components/School built by ReefTank from config/scene.json population.nightSchoolUri and each density's nightSchool { lane, count }. Same parameters and meaning as config/school.json (read its _notes), tuned looser and slower: the fish cruise as a scattered group (wider sepRadius and minDist, weaker cohesion and alignment, larger boundRadius) rather than a tight school. The species is nightOnly (config/species/flashlight_fish.json night block), so the members are invisible by day and fade in with the night level; the school logic runs either way so the group never jumps. ReefTank replaces lane, ellipses and count.",
+  "species": "flashlight_fish",
+  "count": 6,
+  "tick": 0.125,
+  "segSteps": 8,
+  "minSpeed": 24,
+  "maxSpeed": 80,
+  "viewRadius": 260,
+  "sepRadius": 110,
+  "sepAccel": 800,
+  "minDist": 64,
+  "alignRate": 0.6,
+  "cohesionAccel": 22,
+  "followAccel": 60,
+  "followRange": 260,
+  "avoidMargin": 0.4,
+  "avoidAccel": 300,
+  "laneBand": 60,
+  "laneAccel": 400,
+  "leaderMinSpeed": 28,
+  "leaderMaxSpeed": 55,
+  "leaderJitter": 2.5,
+  "leaderAccel": 60,
+  "leaderPad": 70,
+  "leaderInset": 110,
+  "leaderLeash": 120,
+  "leaderLeashAccel": 80,
+  "spawnRadius": 200,
+  "spawnMargin": 0.3,
+  "facingDeadband": 6,
+  "speedBucket": 15,
+  "boundRadius": 340,
+  "maxCatchUpTicks": 16,
+  "lane": {
+    "left": 160,
+    "top": 200,
+    "right": 1760,
+    "bottom": 900
+  },
+  "ellipses": [
+    {
+      "cx": 470,
+      "cy": 640,
+      "rx": 150,
+      "ry": 110
+    },
+    {
+      "cx": 900,
+      "cy": 420,
+      "rx": 120,
+      "ry": 90
+    },
+    {
+      "cx": 1300,
+      "cy": 700,
+      "rx": 180,
+      "ry": 100
+    },
+    {
+      "cx": 1560,
+      "cy": 380,
+      "rx": 90,
+      "ry": 80
+    }
+  ]
+}

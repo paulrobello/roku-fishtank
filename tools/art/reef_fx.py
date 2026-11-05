@@ -13,6 +13,8 @@ Outputs (white RGB, the shape lives in alpha, so ``blendColor`` sets the tint):
   - images/fx/shaft_day_a.png, shaft_day_b.png      256x1088 light shafts
   - images/night/moon_shaft_a.png, moon_shaft_b.png 256x1088 narrower moon shafts
   - images/night/sparkle.png                32x32 bioluminescent sparkle
+  - images/night/fish_organ_glow.png        64x64 flashlight fish light organ (colour baked in:
+                                            whitish-cyan core, cyan halo; drawn untinted)
   - docs/art/caustic-wrap-test.png          offset-wrap proof for both caustic tiles
 
 Caustics are a cellular (Voronoi F2-F1) net computed with wrapped distances on a
@@ -159,6 +161,31 @@ def sparkle() -> Float:
     return alpha.astype(np.float32)
 
 
+def organ_glow() -> Image.Image:
+    """Flashlight fish organ: a bright, slightly wide kidney-ish core and a faint halo.
+
+    The colour is baked in (core #E6FFF9 fading to halo #9FFFF0) because components/Fish
+    leaves the Poster's blendColor white; Night skips its night* id, so it stays bright.
+    """
+    n = 64
+    ys, xs = np.mgrid[0:n, 0:n].astype(np.float32)
+    cx = cy = (n - 1) / 2
+    # Core ellipse about 9 x 7.5 px radius (the organ at 40 px display size), soft edge.
+    rc = np.hypot((xs - cx) / 9.0, (ys - cy) / 7.5)
+    core = np.clip((1.15 - rc) / 0.35, 0, 1)
+    halo = 0.55 * np.exp(-((np.hypot((xs - cx) / 17.0, (ys - cy) / 14.5)) ** 2))
+    edge = np.clip((31.5 - np.hypot(xs - cx, ys - cy)) / 4.0, 0, 1)
+    alpha = np.clip(core + halo * (1 - core), 0, 1) * edge
+    # Premultiplied mix of the two colours, so the core reads white-hot and the halo cyan.
+    c_core = np.array([230, 255, 249], dtype=np.float32)
+    c_halo = np.array([159, 255, 240], dtype=np.float32)
+    w = np.where(alpha > 0, core / np.maximum(alpha, 1e-6), 0)[..., None]
+    w = np.clip(w, 0, 1)
+    rgb = c_core * w + c_halo * (1 - w)
+    a = np.clip(np.rint(alpha * 255.0), 0, 255).astype(np.uint8)
+    return Image.fromarray(np.dstack([np.rint(rgb).astype(np.uint8), a]))
+
+
 def checker(w: int, h: int, cell: int = 16) -> Image.Image:
     ys, xs = np.mgrid[0:h, 0:w]
     c = (((xs // cell) + (ys // cell)) % 2).astype(np.uint8)
@@ -209,6 +236,7 @@ def main() -> int:
     save_png(white_alpha(shaft(256, 1088, 21, 100, 150, 40, 150, 0.30)), NIGHT / "moon_shaft_a.png")
     save_png(white_alpha(shaft(256, 1088, 22, 150, 96, 30, 120, 0.26)), NIGHT / "moon_shaft_b.png")
     save_png(white_alpha(sparkle()), NIGHT / "sparkle.png")
+    save_png(organ_glow(), NIGHT / "fish_organ_glow.png")
     return 0
 
 

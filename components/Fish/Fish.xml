@@ -8,6 +8,12 @@
     overshoot. The tail lags the body both ways, so the head leads the turn. turnDelay
     (seconds) holds a turn back, which staggers a school; turning is true while it runs. The Fish origin is the body Poster's
     top-left corner.
+    Night light organ (species json "night" block, flashlight fish): each set gets a glow
+    Poster (id starting with "night", so Night and the lane tint leave it untinted) at the
+    rig's glow.center, blinking on one repeating Animation drawn from blinkSeed (set it
+    before species; 0 falls back to the creation order). Under ?freeze the blink is posed,
+    not run. A nightOnly species follows m.global.nightLevel (set by components/Night):
+    hidden at 0, opacity = level above it.
 -->
 <component name="Fish" extends="Group">
     <interface>
@@ -16,8 +22,11 @@
         <field id="facing" type="integer" value="1" onChange="onFacingChanged" />
         <field id="turning" type="boolean" value="false" />
         <field id="turnDelay" type="float" value="0.0" />
+        <field id="blinkSeed" type="integer" value="0" />
     </interface>
     <script type="text/brightscript" uri="Fish.brs" />
+    <script type="text/brightscript" uri="pkg:/components/lib/prng.brs" />
+    <script type="text/brightscript" uri="pkg:/components/lib/glow.brs" />
     <children>
         <Group id="rig">
             <Group id="base">

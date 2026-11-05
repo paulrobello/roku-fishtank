@@ -1,0 +1,34 @@
+{
+  "species": "flashlight_fish",
+  "source": "assets/source/species/flashlight_fish/flashlight_fish_a1.png",
+  "facing": "right",
+  "display_length_px": 96,
+  "tail": {
+    "cut_x_px": 238,
+    "feather_px": 9,
+    "overlap_px": 21,
+    "swing_deg": 20
+  },
+  "fin": {
+    "polygon": [
+      [442, 250], [470, 252], [500, 260], [522, 271], [533, 285],
+      [530, 302], [520, 311], [500, 309], [480, 297], [460, 280],
+      [446, 264]
+    ],
+    "pivot": [527, 290],
+    "feather_px": 3,
+    "swing_deg": 14
+  },
+  "night": {
+    "nightOnly": true,
+    "organ_px": [601, 270],
+    "darken_px": [50, 41],
+    "uri": "pkg:/images/night/fish_organ_glow.png",
+    "size": [40, 40],
+    "blinkLoopSec": [9, 14],
+    "blinkOnSec": [1.6, 5.0],
+    "blinkOffSec": [0.12, 0.35],
+    "blinkFadeSec": 0.06
+  },
+  "_notes": "Untrimmed source pixels of flashlight_fish_a1.png (768x512, local MOSS-Image cutout, so feather and overlap are about a third of the 2048-source species values). Peduncle alpha>128 profile: 47-49 px over x=232-256 (y 227-275); the caudal fin flares left of x=228 and the dorsal and anal fins start at x=264. The cut sits in that plain stalk. Fin polygon traces the dark pectoral fin; pivot is its root at the operculum. night (Anomalops katoptron, nightOnly): organ_px is the centre of the kidney-shaped light organ under the eye. tools/art/rig.py darkens the painted organ in the body layer inside an ellipse of radii darken_px (source px), so the organ reads as shut when the glow Poster is off, and writes glow.center (body-local display px, both facings) into the rig. components/Fish draws the glow Poster (uri at size display px, centred on glow.center, id starting with night so components/Night does not moonlight-tint it) and blinks it on one repeating Animation of blinkLoopSec seconds: lit spans of blinkOnSec, shut spans of blinkOffSec, fade blinkFadeSec, all drawn per fish from its blinkSeed (components/lib/glow.brs). nightOnly fish are invisible by day and fade in with the night level (m.global.nightLevel, set by components/Night)."
+}

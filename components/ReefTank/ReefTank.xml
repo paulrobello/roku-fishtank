@@ -5,7 +5,8 @@
     places the decor Posters into their layers. Later phases find layers by id.
     Fish (P2.7): density ("calm", "normal" or "busy"; unknown names build normal) picks
     the scene.json population. Each lane with fish gets a FishBrain inside its Group and
-    the chromis School goes in its configured lane; setting density rebuilds them.
+    the chromis School goes in its configured lane, then the night-only flashlight fish
+    School (density nightSchool) in its lane; setting density rebuilds them.
     m.global.previewDensity (preview ?density=) overrides the default at init.
 -->
 <component name="ReefTank" extends="Scene">

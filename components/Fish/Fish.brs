@@ -44,6 +44,9 @@ sub init()
     m.artFacing = 1
     m.shownFacing = 1
     m.loaded = false
+    m.serial = serial
+    m.blinkAnim = invalid
+    m.nightOnly = false
     m.turnAnim.observeField("state", "onTurnState")
 end sub
 
@@ -58,7 +61,8 @@ function fishFindSet(name as string, body as string, tail as string, fin as stri
         finInterp: m.top.findNode(finInterp),
         fade: m.top.findNode(fade),
         tailLag: m.top.findNode(tailLag),
-        extras: []
+        extras: [],
+        glow: invalid
     }
 end function
 
@@ -92,6 +96,87 @@ sub onSpeciesChanged()
     m.top.turning = false
     m.loaded = true
     fishStartSwim()
+    fishBuildGlow(spec.night, rig)
+end sub
+
+' The light organ (species json "night"): one glow Poster per set at the rig's
+' glow.center, appended last so it draws over the fin, plus one repeating blink
+' Animation driving both, keys from glowBlinkPlan. The Animation sits on the Fish so
+' its interpolators find the Posters in its parent's subtree.
+sub fishBuildGlow(night as dynamic, rig as object)
+    m.nightOnly = false
+    if type(night) <> "roAssociativeArray" or rig.glow = invalid or rig.mirrored.glow = invalid then
+        for each set in m.sets
+            if set.glow <> invalid then set.glow.visible = false
+        end for
+        if m.blinkAnim <> invalid then m.blinkAnim.control = "stop"
+        fishApplyNight()
+        return
+    end if
+    size = night.size
+    centers = [rig.glow.center, rig.mirrored.glow.center]
+    for i = 0 to m.sets.count() - 1
+        set = m.sets[i]
+        if set.glow = invalid then
+            set.glow = set.group.createChild("Poster")
+            set.glow.id = "night" + m.prefix + set.name + "_organ"
+        end if
+        set.glow.uri = night.uri
+        set.glow.width = size[0]
+        set.glow.height = size[1]
+        set.glow.translation = [centers[i][0] - size[0] / 2.0, centers[i][1] - size[1] / 2.0]
+        set.glow.visible = true
+    end for
+
+    seed = m.top.blinkSeed
+    if seed = 0 then seed = m.serial * 7919 + 1
+    plan = glowBlinkPlan(night, prngNew(seed))
+    plan = glowRotatePlan(plan, plan.phase)
+    freeze = 0.0
+    if m.global.hasField("previewFreeze") then freeze = m.global.previewFreeze
+    if freeze > 0 then
+        for each set in m.sets
+            set.glow.opacity = glowBlinkAt(plan, freeze)
+        end for
+    else
+        if m.blinkAnim = invalid then
+            m.blinkAnim = m.top.createChild("Animation")
+            m.blinkAnim.id = m.prefix + "blink"
+            m.blinkAnim.repeat = true
+            m.blinkAnim.easeFunction = "linear"
+            for each set in m.sets
+                interp = m.blinkAnim.createChild("FloatFieldInterpolator")
+                interp.fieldToInterp = [set.glow.id + ".opacity"]
+            end for
+        end if
+        m.blinkAnim.control = "stop"
+        m.blinkAnim.duration = plan.duration
+        for i = 0 to m.blinkAnim.getChildCount() - 1
+            interp = m.blinkAnim.getChild(i)
+            interp.key = plan.keys
+            interp.keyValue = plan.values
+        end for
+        m.blinkAnim.control = "start"
+    end if
+
+    m.nightOnly = (night.nightOnly = true)
+    if m.nightOnly then
+        if not m.global.hasField("nightLevel") then m.global.addFields({ nightLevel: 0.0 })
+        m.global.observeField("nightLevel", "onNightLevel")
+    end if
+    fishApplyNight()
+end sub
+
+sub onNightLevel()
+    fishApplyNight()
+end sub
+
+' A nightOnly fish shows only at night (glowNightShow); other fish are untouched.
+sub fishApplyNight()
+    if not m.nightOnly then return
+    show = glowNightShow(m.global.nightLevel)
+    m.top.visible = show.visible
+    m.top.opacity = show.opacity
 end sub
 
 sub onSwimSpeedChanged()

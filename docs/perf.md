@@ -47,9 +47,9 @@ The ceiling for our own resident textures is **100 MB**. Keeping 25% margin leav
 | Mid and front coral strips (P1.7 split) | 2560x608 + 2560x512 | 11.5 | 8.9: mid tiles 4.5, front clumps 3.9, rock pillar 0.5 (P1.8 retired `coral_acropora.png`) |
 | Foreground sand lip and plants | 2560x320, plus 0.3 from the reserve | 3.6 | 3.6: sand band 1.3, algae tufts 1.8, plant cluster 0.4 |
 | Seaweed, anemone, soft coral, invertebrates | 6 MB total, each sprite at most 512x512 | 6.0 | 1.8 of P4.6 extras (seaweed not counted here; its twelve 64x64 segments are 0.2) |
-| Fish rigs: 8 species plus chromis, right and left facing | 6 MB total, each layer at most 512x320 | 6.0 | 1.3 (right only) |
+| Fish rigs: 8 species plus chromis, right and left facing | 6 MB total, each layer at most 512x320 | 6.0 | 1.3 (right only), plus the night-only flashlight fish 0.07 (both facings, 73,728 padded bytes) |
 | Day light shafts | 2 x 512x1088 | 4.5 | 2.2 (2 x 256x1088) |
-| Night: moon shafts, coral glow masks | 2 x 512x1088 + 6 MB of masks at half resolution | 10.5 | 4.0: moon shafts 2.2, glow masks 1.8 (P1.8 retired the acropora glow mask) |
+| Night: moon shafts, coral glow masks | 2 x 512x1088 + 6 MB of masks at half resolution | 10.5 | 4.0: moon shafts 2.2, glow masks 1.8 (P1.8 retired the acropora glow mask), flashlight fish organ glow 0.02 (64x64, 16,384 bytes) |
 | Caustic and ripple tiles | 2 x 512x512 + 1920x128 | 3.1 | 3.1 |
 | Bubbles, sparkles | 0.5 MB total, each at most 64x64 | 0.5 | none |
 | Settings screen panel | 1 x 1280x704 (backdrop shared) | 3.6 | none |

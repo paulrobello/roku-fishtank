@@ -34,6 +34,7 @@ sub onConfigUri()
     m.speed = schoolPreviewSpeed()
 
     seed = schoolSeed() + m.top.seedSalt * 1000003
+    m.seed = seed
     m.school = schoolNew(cfg, seed, m.lane, m.ellipses)
     if m.school = invalid then
         print "School ERROR: no free spawn for seed "; seed
@@ -71,6 +72,7 @@ function schoolBuildFish(prefix as string, i as integer, member as object) as ob
     ' Members turn up to about a third of a second apart, so a reversal ripples
     ' through the school instead of every fish flipping on the same frame.
     node.turnDelay = ((i * 7) mod 9) * 0.045
+    node.blinkSeed = m.seed + 7919 * (i + 1)
     node.species = m.cfg.species
     laneStyleFish(node, m.anchor, m.top.fishScale, m.top.fishTint)
     node.translation = schoolToTranslation(member.agent.x, member.agent.y)

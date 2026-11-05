@@ -1,0 +1,116 @@
+{
+  "_generated": "by tools/art/rig.py from config/species/flashlight_fish.json; do not edit",
+  "bounds": {
+    "height": 64,
+    "width": 96,
+    "x": -19,
+    "y": -6
+  },
+  "coordinate_space": "body Poster local pixels at display size; offset = Poster translation, pivot = scaleRotateCenter",
+  "display_length_px": 96,
+  "glow": {
+    "center": [
+      62.44,
+      28.3
+    ]
+  },
+  "layers": {
+    "body": {
+      "height": 51,
+      "offset": [
+        0,
+        0
+      ],
+      "uri": "pkg:/images/fish/flashlight_fish_body.png",
+      "width": 77
+    },
+    "fin": {
+      "height": 14,
+      "offset": [
+        37,
+        23
+      ],
+      "pivot": [
+        13.85,
+        8.43
+      ],
+      "swing_deg": 14,
+      "uri": "pkg:/images/fish/flashlight_fish_fin.png",
+      "width": 17
+    },
+    "tail": {
+      "height": 64,
+      "offset": [
+        -19,
+        -6
+      ],
+      "pivot": [
+        24.59,
+        31.4
+      ],
+      "swing_deg": 20,
+      "uri": "pkg:/images/fish/flashlight_fish_tail.png",
+      "width": 26
+    }
+  },
+  "mirror_center": [
+    29.0,
+    26.0
+  ],
+  "mirrored": {
+    "glow": {
+      "center": [
+        -4.44,
+        28.3
+      ]
+    },
+    "layers": {
+      "body": {
+        "height": 51,
+        "offset": [
+          -19,
+          0
+        ],
+        "uri": "pkg:/images/fish/flashlight_fish_body_mirrored.png",
+        "width": 77
+      },
+      "fin": {
+        "height": 14,
+        "offset": [
+          4,
+          23
+        ],
+        "pivot": [
+          3.15,
+          8.43
+        ],
+        "swing_deg": -14,
+        "uri": "pkg:/images/fish/flashlight_fish_fin_mirrored.png",
+        "width": 17
+      },
+      "tail": {
+        "height": 64,
+        "offset": [
+          51,
+          -6
+        ],
+        "pivot": [
+          1.41,
+          31.4
+        ],
+        "swing_deg": -20,
+        "uri": "pkg:/images/fish/flashlight_fish_tail_mirrored.png",
+        "width": 26
+      }
+    },
+    "texture_bytes": 23316
+  },
+  "scale": 0.156607,
+  "species": "flashlight_fish",
+  "texture_bytes": 23316,
+  "z_order": [
+    "body",
+    "tail",
+    "fin"
+  ]
+}

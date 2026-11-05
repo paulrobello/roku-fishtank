@@ -42,6 +42,11 @@ Optional species config keys (absent keys leave the output byte-identical):
     each ``{name, polygon, pivot, swing_deg, feather_px?, underlay_polygon?,
     fill_seed_min_value?, z_after?}``. Each is cut from the body the same way
     and written as ``images/fish/<species>_<name>.png``.
+  - ``night: {organ_px, darken_px, ...}`` (flashlight fish light organ): the body
+    layer is darkened inside the ellipse at organ_px with radii darken_px (source
+    px), and the rig gets ``glow.center`` and ``mirrored.glow.center``, the organ in
+    body-local display px for each facing. The other ``night`` keys are read by
+    components/Fish.
 
 Rig JSON: ``layers.{body,tail,fin}``, ``z_order`` and the other existing fields
 never change meaning. Species with ``extra_fins`` additionally get
@@ -338,6 +343,19 @@ def rig_species(cfg_path: Path) -> None:
         body_d[..., :3] = body_d[..., :3] * (1.0 - keep[..., None]) + e_fill * keep[..., None]
         body_d[..., 3] *= 1.0 - e_disp * (1.0 - under)
 
+    # Optional night light organ (flashlight fish): the painted organ is darkened in the
+    # body layer, so the fish reads as shut when components/Fish blinks its glow Poster off.
+    night_cfg: dict[str, Any] | None = cfg.get("night")
+    if night_cfg is not None:
+        ocx, ocy = ((float(night_cfg["organ_px"][0]) - bx0) * scale, (float(night_cfg["organ_px"][1]) - by0) * scale)
+        orx, ory = (float(night_cfg["darken_px"][0]) * scale, float(night_cfg["darken_px"][1]) * scale)
+        gy, gx = np.mgrid[0 : body_d.shape[0], 0 : body_d.shape[1]].astype(np.float32)
+        rr = np.hypot((gx + 0.5 - ocx) / orx, (gy + 0.5 - ocy) / ory)
+        shut = (1.0 - ramp(rr, 0.75, 1.0))[..., None]
+        lum = body_d[..., :3] @ np.array([0.299, 0.587, 0.114], dtype=np.float32)
+        lid = np.stack([lum * 0.14 + 0.03, lum * 0.16 + 0.04, lum * 0.2 + 0.06], axis=-1)
+        body_d[..., :3] = body_d[..., :3] * (1.0 - shut) + lid * shut
+
     layers: dict[str, tuple[Image.Image, tuple[int, int]]] = {
         "body": finish_sprite(body_d),
         "tail": finish_sprite(tail_d),
@@ -438,6 +456,10 @@ def rig_species(cfg_path: Path) -> None:
     rig["mirrored"] = {"layers": mirrored_layers, "texture_bytes": mirrored_total}
     if mirrored_extras:
         rig["mirrored"]["extra_layers"] = mirrored_extras
+    if night_cfg is not None:
+        gcx, gcy = ocx - body_origin[0], ocy - body_origin[1]
+        rig["glow"] = {"center": [round(gcx, 2), round(gcy, 2)]}
+        rig["mirrored"]["glow"] = {"center": [round(min_x + max_x - gcx, 2), round(gcy, 2)]}
     write_json(SPECIES_DIR / f"{name}.rig.json", rig)
 
     reference = resize_premultiplied(to_image(trim), disp_size)
