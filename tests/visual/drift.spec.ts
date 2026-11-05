@@ -19,7 +19,7 @@ interface EdgeStats {
 }
 
 async function frozenFrame(page: import("@playwright/test").Page, freeze: number): Promise<Buffer> {
-  await page.goto(`/?speed=30&freeze=${freeze}`);
+  await page.goto(`/?speed=30&seed=7&freeze=${freeze}`);
   await page.waitForFunction(
     () => ["frozen", "error"].includes((window as PreviewWindow).__preview?.status ?? ""),
     null,
