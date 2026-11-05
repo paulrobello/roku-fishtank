@@ -6,8 +6,10 @@
 
 Run from anywhere: ``uv run tools/art/bubble.py`` (``make ambient-art``). Drawn
 procedurally at 8x and downsampled, so the output is byte-reproducible (seeded noise,
-no PNG metadata). The body is a faint cool tint, the rim a soft bright ring that is
-thicker on the lower right, plus a soft upper-left highlight and a small catchlight.
+no PNG metadata). A nearly clear body, a thin edge ring brightest toward the window light
+(upper left) and its mirror (lower right), a faint dark refraction fringe inside the ring,
+a short window-reflection arc with a small specular dot on it, and a faint bounce arc on
+the opposite side.
 32x32 keeps the texture at one 32-pixel tile (docs/perf.md); Posters scale it to
 8-26 px.
 """
@@ -45,22 +47,33 @@ def main() -> None:
             d = math.hypot(dx, dy)
             if d > 1.0:
                 continue
-            # Rim: bright soft ring, heavier toward the lower right (light from upper left).
-            bias = 0.5 + 0.5 * (dx * 0.7071 + dy * 0.7071)
-            rim = smooth(0.62 - 0.12 * bias, 0.97, d) * (1 - smooth(0.97, 1.0, d))
-            body = 0.10
-            # Soft upper-left highlight lobe.
-            hx, hy = dx + 0.38, dy + 0.40
-            hl = max(0.0, 1 - math.hypot(hx * 1.3, hy * 1.6) / 0.42) ** 1.6
-            # Tiny catchlight.
-            cx, cy = dx + 0.30, dy + 0.46
-            cl = max(0.0, 1 - math.hypot(cx, cy) / 0.13) ** 1.2
-            a = min(1.0, body + rim * (0.55 + 0.35 * bias) + hl * 0.55 + cl * 0.9)
-            a *= 0.94 + 0.06 * rng.random()
-            # Cool tint in the body, whiter toward rim and highlights.
-            white = min(1.0, rim * 0.7 + hl + cl)
-            rr = int(170 + 85 * white)
-            gg = int(215 + 40 * white)
+            ang = math.atan2(dy, dx)
+            # Nearly clear body with a faint cool cast, a touch denser toward the edge.
+            body = 0.025 + 0.05 * smooth(0.5, 0.9, d)
+            # Thin edge ring (about 9% of the radius), brightest where the window light
+            # (upper left) and its mirror (lower right) hit the sphere.
+            ring = smooth(0.82, 0.93, d) * (1 - smooth(0.97, 1.0, d))
+            lobe = max(0.0, math.cos(ang - math.radians(225))) ** 3 + 0.55 * max(0.0, math.cos(ang - math.radians(45))) ** 3
+            edge = ring * (0.38 + 0.50 * min(1.0, lobe))
+            # Thin dark fringe just inside the ring: the bubble refracts what is behind it.
+            fringe = smooth(0.70, 0.86, d) * (1 - smooth(0.86, 0.92, d)) * 0.10
+            # Crisp window reflection, a short bright arc hugging the upper-left edge.
+            ra = math.radians(225)
+            da = math.atan2(math.sin(ang - ra), math.cos(ang - ra))
+            arc = max(0.0, 1 - abs(da) / 0.34) ** 1.6 * smooth(0.66, 0.74, d) * (1 - smooth(0.80, 0.88, d))
+            # Small sharp specular dot inside it.
+            sx, sy = dx + 0.53, dy + 0.53
+            spec = max(0.0, 1 - math.hypot(sx, sy) / 0.11) ** 1.3
+            # Faint secondary reflection (light passing through) on the opposite side.
+            ba = math.radians(45)
+            db = math.atan2(math.sin(ang - ba), math.cos(ang - ba))
+            bounce = max(0.0, 1 - abs(db) / 0.55) ** 2 * smooth(0.66, 0.80, d) * (1 - smooth(0.84, 0.93, d))
+            a = body + edge * 0.95 + arc * 0.6 + spec * 0.95 + bounce * 0.32 - fringe * 0.4
+            a = min(1.0, max(0.0, a))
+            a *= 0.96 + 0.04 * rng.random()
+            white = min(1.0, edge * 1.4 + arc + spec + bounce)
+            rr = int(190 + 65 * white)
+            gg = int(225 + 30 * white)
             bb = 255
             px[x, y] = (rr, gg, bb, int(round(255 * a)))
     img = img.filter(ImageFilter.GaussianBlur(SS * 0.35))
