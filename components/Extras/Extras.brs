@@ -337,7 +337,12 @@ sub extrasBuildCaustics(c as object)
     if c = invalid then return
     layer = m.scene.findNode(c.layer)
     if layer = invalid then return
-    clip = layer.createChild("Group")
+    clip = CreateObject("roSGNode", "Group")
+    if c.layerIndex <> invalid then
+        layer.insertChild(clip, c.layerIndex)
+    else
+        layer.appendChild(clip)
+    end if
     clip.id = extrasId("caustics")
     clip.clippingRect = [c.clip.x, c.clip.y, c.clip.width, c.clip.height]
     for each t in c.tiles
