@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Measures the real channel's frame rate on a device (docs/perf.md "Measuring the
-# channel"). Builds dist/perf.zip with a temporary config/perf.json (fpsLog, forceMode),
+# channel"). Builds dist/perf.zip with a temporary config/perf.json (fpsLog, forceMode; the committed file is an inert {}),
 # deploys it, waits for the screensaver to start (idle timeout or a manual Preview),
 # captures the 8087 console's PERF lines and one r2d2_bitmaps sample, then exits the
 # screensaver. Deploy the normal dist/channel.zip afterwards (make deploy).
@@ -24,6 +24,7 @@ dev() { # dev <command> [wait-seconds]: one port-8080 command, prompt line strip
     { printf '%s\n' "$1"; sleep "${2:-2}"; } | curl -s -m $(( ${2:-2} + 3 )) "telnet://$ROKU_HOST:8080" 2>/dev/null | sed '1d' || true
 }
 
+cp config/perf.json dist/perf.json.bak
 force=""
 [ "$mode" = "auto" ] || force=", \"forceMode\": \"$mode\""
 [ -z "${PERF_TOGGLE:-}" ] || force="$force, \"toggleSec\": $PERF_TOGGLE"
@@ -33,11 +34,12 @@ if [ -n "${PERF_ABLATE:-}" ]; then
 fi
 printf '{ "fpsLog": true%s }\n' "$force" > config/perf.json
 cp manifest dist/manifest.perf-bak
-trap 'rm -f config/perf.json; cp dist/manifest.perf-bak manifest' EXIT
+trap 'cp dist/perf.json.bak config/perf.json; cp dist/manifest.perf-bak manifest' EXIT
 # PERF_UI=hd builds with ui_resolutions=hd only (the scene then renders at 1280x720).
 [ -z "${PERF_UI:-}" ] || sed -i.bak "s/^ui_resolutions=.*/ui_resolutions=$PERF_UI/" manifest
 node_modules/.bin/bsc --project bsconfig.json --create-package --out-file dist/perf.zip > dist/bsc-perf.log 2>&1 || { cat dist/bsc-perf.log; exit 1; }
-rm -f config/perf.json manifest.bak
+rm -f manifest.bak
+cp dist/perf.json.bak config/perf.json
 cp dist/manifest.perf-bak manifest
 
 echo "exit any running screensaver (deploying under a live instance wedges it)"

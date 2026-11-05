@@ -360,7 +360,7 @@ sub extrasBuildCaustics(c as object)
         anim = extrasLoop(clip, "causticScroll", t.periodSec)
         extrasInterp(anim, "Vector2DFieldInterpolator", scroll, "translation", [0.0, 1.0], [[0, 0], [t.dir[0] * c.tile, t.dir[1] * c.tile]])
         anim.control = "start"
-        m.caustics.push({ node: scroll, opacity: t.opacity })
+        m.caustics.push({ node: scroll, anim: anim, opacity: t.opacity, running: true })
     end for
 end sub
 
@@ -372,6 +372,15 @@ sub onNightLevel()
         o = extrasNightOpacity(c.opacity, n, hideAt)
         c.node.opacity = o
         c.node.visible = o > 0
+        ' A hidden caustic layer would keep scrolling; pause it while it is off.
+        if c.running <> (o > 0) then
+            c.running = o > 0
+            if c.running then
+                c.anim.control = "resume"
+            else
+                c.anim.control = "pause"
+            end if
+        end if
     end for
     r = m.cfg.ripple
     if r = invalid then return

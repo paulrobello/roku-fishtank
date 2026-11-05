@@ -6,4 +6,3 @@ node_modules/
 test-results/
 playwright-report/
 .env
-config/perf.json

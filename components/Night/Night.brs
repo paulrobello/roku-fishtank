@@ -11,6 +11,7 @@ sub init()
     m.retint = m.top.findNode("nightRetint")
     m.retint.observeField("fire", "onRetint")
     m.forceTint = false
+    m.running = {}
 end sub
 
 sub onModeChange()
@@ -195,6 +196,17 @@ sub nightApply()
         g.opacity = nightLevel
     end for
     if m.sparkleMaster <> invalid then m.sparkleMaster.opacity = nightLevel
+    ' An invisible overlay keeps its Animations running unless they are paused, and each
+    ' running interpolator costs render time on the device (docs/perf.md), so the overlays
+    ' that are off (level 0) are paused. Under ?freeze nothing runs.
+    if m.freezeT <= 0 then
+        nightRunOverlay("day", m.dayMaster, dayLevel > 0)
+        nightRunOverlay("moon", m.moonMaster, nightLevel > 0)
+        nightRunOverlay("spark", m.sparkleMaster, nightLevel > 0)
+        for i = 0 to m.glowMasters.count() - 1
+            nightRunOverlay("glow" + i.toStr(), m.glowMasters[i], nightLevel > 0)
+        end for
+    end if
     ' The reef extras (caustics, ripple) are built after nightStart, so look the node up lazily.
     if m.extras = invalid then m.extras = m.top.getParent().findNode("reefExtras")
     if m.extras <> invalid then m.extras.nightLevel = nightLevel
@@ -211,6 +223,27 @@ sub nightApply()
             info.count = info.group.getChildCount()
             nightTintGroup(info.group, mult)
         end if
+    end for
+end sub
+
+' Pauses or resumes every Animation under master, only when its on/off state changes.
+sub nightRunOverlay(key as string, master as dynamic, on as boolean)
+    if master = invalid then return
+    if m.running.doesExist(key) and m.running[key] = on then return
+    m.running[key] = on
+    nightRunAnims(master, on)
+end sub
+
+sub nightRunAnims(node as object, on as boolean)
+    if node.subtype() = "Animation" then
+        if on then
+            node.control = "resume"
+        else
+            node.control = "pause"
+        end if
+    end if
+    for i = 0 to node.getChildCount() - 1
+        nightRunAnims(node.getChild(i), on)
     end for
 end sub
 

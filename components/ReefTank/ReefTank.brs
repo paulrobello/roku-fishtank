@@ -40,8 +40,8 @@ sub init()
     reefTankPerf()
 end sub
 
-' Device perf runs (docs/perf.md "Measuring the channel"): pkg:/config/perf.json exists
-' only in a perf build (gitignored, never committed). fpsLog prints the rendered frames
+' Device perf runs (docs/perf.md "Measuring the channel"): pkg:/config/perf.json is an
+' inert {} in the shipped channel and holds the run's settings only in a perf build. fpsLog prints the rendered frames
 ' of each second to the 8087 console; forceMode ("day" or "night") overrides the setting;
 ' toggleSec flips the forced mode every toggleSec seconds, to measure the crossfade;
 ' ablate (array of layer ids, "@night" for every night* overlay) with ablateSec hides one
@@ -53,8 +53,7 @@ end sub
 ' "#anim:Subtype" pauses only the Animations under nodes of that subtype ("#anim:~prefix"
 ' by id prefix).
 sub reefTankPerf()
-    ' roFileSystem cannot be created on the render thread; ReadAsciiFile returns "" for
-    ' a missing file, which ParseJson turns into invalid.
+    ' roFileSystem cannot be created on the render thread, so the file always exists.
     cfg = ParseJson(ReadAsciiFile("pkg:/config/perf.json"))
     if cfg = invalid then return
     if cfg.forceMode <> invalid then m.top.nightMode = cfg.forceMode
