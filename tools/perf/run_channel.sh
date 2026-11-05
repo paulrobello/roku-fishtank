@@ -5,6 +5,8 @@
 # captures the 8087 console's PERF lines and one r2d2_bitmaps sample, then exits the
 # screensaver. Deploy the normal dist/channel.zip afterwards (make deploy).
 # Usage: ROKU_HOST=<ip> ROKU_PASSWORD=<pw> tools/perf/run_channel.sh <day|night|auto> [out-dir]
+# PERF_DENSITY=calm|normal|busy overrides the density stored on the device (the registry
+# keeps whatever the settings screen last saved; every run before 2026-11-05 was at busy).
 # PERF_TOGGLE=<seconds> flips day/night that often (crossfade check); r2d2 is then
 # sampled every 10 s instead of once. PERF_ABLATE="id1,id2,..." with PERF_ABLATE_SEC=<s>
 # hides one layer id (or @night) per segment after a baseline segment; PERF_SECONDS must
@@ -27,6 +29,7 @@ dev() { # dev <command> [wait-seconds]: one port-8080 command, prompt line strip
 cp config/perf.json dist/perf.json.bak
 force=""
 [ "$mode" = "auto" ] || force=", \"forceMode\": \"$mode\""
+[ -z "${PERF_DENSITY:-}" ] || force="$force, \"forceDensity\": \"$PERF_DENSITY\""
 [ -z "${PERF_TOGGLE:-}" ] || force="$force, \"toggleSec\": $PERF_TOGGLE"
 if [ -n "${PERF_ABLATE:-}" ]; then
     list="$(printf '"%s", ' ${PERF_ABLATE//,/ })"

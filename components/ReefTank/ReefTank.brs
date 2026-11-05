@@ -42,7 +42,7 @@ end sub
 
 ' Device perf runs (docs/perf.md "Measuring the channel"): pkg:/config/perf.json is an
 ' inert {} in the shipped channel and holds the run's settings only in a perf build. fpsLog prints the rendered frames
-' of each second to the 8087 console; forceMode ("day" or "night") overrides the setting;
+' of each second to the 8087 console; forceMode ("day" or "night") and forceDensity ("calm", "normal" or "busy") override the stored settings;
 ' toggleSec flips the forced mode every toggleSec seconds, to measure the crossfade;
 ' ablate (array of layer ids, "@night" for every night* overlay) with ablateSec hides one
 ' target at a time, each for ablateSec seconds after a baseline segment, and tags the PERF
@@ -58,6 +58,7 @@ sub reefTankPerf()
     cfg = ParseJson(ReadAsciiFile("pkg:/config/perf.json"))
     if cfg = invalid then return
     if cfg.forceMode <> invalid then m.top.nightMode = cfg.forceMode
+    if cfg.forceDensity <> invalid then m.top.density = cfg.forceDensity
     if cfg.toggleSec <> invalid and cfg.toggleSec > 0 then
         flip = m.top.createChild("Timer")
         flip.duration = cfg.toggleSec
