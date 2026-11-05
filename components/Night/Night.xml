@@ -33,5 +33,6 @@
     <script type="text/brightscript" uri="pkg:/components/lib/scenecfg.brs" />
     <children>
         <Timer id="nightTick" repeat="false" duration="5" />
+        <Timer id="nightRetint" repeat="false" duration="0.1" />
     </children>
 </component>

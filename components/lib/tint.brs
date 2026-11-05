@@ -4,10 +4,24 @@
 ' starts with "night" (a light organ's glow) keep their own colour, as under Night.
 sub laneTintPosters(node as object, color as integer)
     if Left(node.id, 5) = "night" then return
-    if node.subtype() = "Poster" then node.blendColor = color
+    if node.subtype() = "Poster" then tintSetBase(node, color)
     for i = 0 to node.getChildCount() - 1
         laneTintPosters(node.getChild(i), color)
     end for
+end sub
+
+' Sets a Poster's day colour. Night keeps it in the Poster's nightBase field and
+' multiplies the moonlight in, so a Poster Night has seen gets its base updated
+' rather than its blendColor overwritten with a day colour.
+sub tintSetBase(poster as object, color as integer)
+    if poster.hasField("nightBase") then poster.nightBase = color
+    poster.blendColor = color
+end sub
+
+' Asks Night (components/Night) to re-tint now: a restyled or newly built fish
+' would otherwise show its day colour until Night's next evaluation.
+sub tintRequestNight()
+    if m.global.hasField("nightRetint") then m.global.nightRetint = true
 end sub
 
 ' Scale pivots on anchor (the rig mirror_center the brain steers), so the drawn fish
@@ -19,6 +33,7 @@ sub laneStyleFish(node as object, anchor as object, scale as float, tint as inte
         node.scale = [scale, scale]
     end if
     if tint <> -1 then laneTintPosters(node, tint)
+    tintRequestNight()
 end sub
 
 ' Sets both the lane scale and tint whatever their values (a fish changing lane, P2.4).
@@ -26,4 +41,5 @@ sub laneSetStyle(node as object, anchor as object, scale as float, tint as integ
     node.scaleRotateCenter = [anchor[0], anchor[1]]
     node.scale = [scale, scale]
     laneTintPosters(node, tint)
+    tintRequestNight()
 end sub

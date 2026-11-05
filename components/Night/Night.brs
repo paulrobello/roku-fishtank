@@ -8,6 +8,9 @@ sub init()
     m.freezeT = 0.0
     m.tick = m.top.findNode("nightTick")
     m.tick.observeField("fire", "onTick")
+    m.retint = m.top.findNode("nightRetint")
+    m.retint.observeField("fire", "onRetint")
+    m.forceTint = false
 end sub
 
 sub onModeChange()
@@ -45,9 +48,11 @@ sub nightStart(args as object)
     m.clock = CreateObject("roTimespan")
     m.state = nightMakeState(args.scene, speed, m.freezeT)
 
-    ' Per layer: the moonlight tint target and the cached day blendColor of every
-    ' Poster under the layer (keyed by child-index path, validated by node). Posters
-    ' created later (a density rebuild) are picked up on the next evaluation.
+    ' Per layer: the moonlight tint target. Each Poster keeps its own day colour in a
+    ' nightBase field (nightTintGroup), so nodes inserted, removed or moved between
+    ' layers never shift another Poster's base. Code that restyles a Poster sets
+    ' nightBase too and sets m.global.nightRetint (components/lib/tint.brs), which
+    ' re-tints every layer within nightRetint's duration instead of the next tick.
     m.layers = {}
     for each layer in args.scene.layers
         group = m.camera.findNode(layer.id)
@@ -56,7 +61,7 @@ sub nightStart(args as object)
             if sceneCfgIsObject(layer.lane) and layer.lane.tint <> invalid then base = sceneCfgParseColor(layer.lane.tint, base)
             tint = base
             if sceneCfgIsObject(cfg.tints) and cfg.tints[layer.id] <> invalid then tint = sceneCfgParseColor(cfg.tints[layer.id], base)
-            m.layers[layer.id] = { group: group, tint: tint, mult: &hFFFFFFFF, count: -1, bases: {} }
+            m.layers[layer.id] = { group: group, tint: tint, mult: &hFFFFFFFF, count: -1 }
         end if
     end for
 
@@ -64,6 +69,9 @@ sub nightStart(args as object)
     m.moonMaster = nightBuildShafts(cfg.moonShafts, "nightMoonShaft", m.freezeT)
     m.glowMasters = nightBuildGlow(cfg.glow, m.freezeT)
     m.sparkleMaster = nightBuildSparkles(cfg.sparkles, m.freezeT)
+
+    if not m.global.hasField("nightRetint") then m.global.addField("nightRetint", "boolean", true)
+    m.global.observeField("nightRetint", "onRetintRequest")
 
     m.shown = 0.0
     m.tick.duration = nightNum(cfg.evalSeconds, 2.0)
@@ -145,6 +153,18 @@ sub onTick()
     m.tick.control = "start"
 end sub
 
+' A restyle burst (fish spawning or changing lane) restarts the short timer, so the
+' re-tint runs once after the burst.
+sub onRetintRequest()
+    m.retint.control = "stop"
+    m.retint.control = "start"
+end sub
+
+sub onRetint()
+    m.forceTint = true
+    nightApply()
+end sub
+
 ' Reads the clock, maps it to a phase and blend, eases the shown blend toward it
 ' and applies everything. snap=true (start, or a forced jump) skips the easing.
 sub nightEvaluate(snap as boolean)
@@ -181,34 +201,36 @@ sub nightApply()
     ' Night-only fish (flashlight fish, components/Fish) observe this.
     if not m.global.hasField("nightLevel") then m.global.addFields({ nightLevel: 0.0 })
     if m.global.nightLevel <> nightLevel then m.global.nightLevel = nightLevel
+    force = m.forceTint
+    m.forceTint = false
     for each id in m.layers
         info = m.layers[id]
         mult = nightLerpColor(&hFFFFFFFF, info.tint, shown)
-        if mult <> info.mult or info.group.getChildCount() <> info.count then
+        if force or mult <> info.mult or info.group.getChildCount() <> info.count then
             info.mult = mult
             info.count = info.group.getChildCount()
-            nightTintGroup(info.group, "", mult, info)
+            nightTintGroup(info.group, mult)
         end if
     end for
 end sub
 
 ' Sets every Poster under group to base x mult. Posters whose id starts with
 ' "night" are Night's own overlays and stay untinted (the glow colour is baked in).
-' The day base is cached per child-index path and validated by node reference.
-sub nightTintGroup(group as object, prefix as string, mult as integer, info as object)
+' A Poster's base is its blendColor the first time it is seen, kept in its own
+' nightBase field; the field is only ever written here and by tintSetBase.
+sub nightTintGroup(group as object, mult as integer)
     for i = 0 to group.getChildCount() - 1
         node = group.getChild(i)
         if Left(node.id, 5) <> "night" then
-            path = prefix + i.toStr()
             if node.subtype() = "Poster" then
-                entry = info.bases[path]
-                if entry = invalid or not entry.node.isSameNode(node) then
-                    entry = { node: node, base: node.blendColor }
-                    info.bases[path] = entry
+                if not node.hasField("nightBase") then
+                    node.addField("nightBase", "integer", false)
+                    node.nightBase = node.blendColor
                 end if
-                node.blendColor = nightMultiplyColor(entry.base, mult)
+                want = nightMultiplyColor(node.nightBase, mult)
+                if node.blendColor <> want then node.blendColor = want
             end if
-            nightTintGroup(node, path + ".", mult, info)
+            nightTintGroup(node, mult)
         end if
     end for
 end sub
