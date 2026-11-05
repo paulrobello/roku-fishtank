@@ -323,14 +323,17 @@ function nightBuildGlow(block as object, freeze as float) as object
         item = items[i]
         group = m.camera.findNode(item.layer)
         if group <> invalid then
+            ' One master per glowing decor, drawn right after that decor, so plants and
+            ' decor drawn later in the layer stay in front of the glow.
             master = invalid
             for each g in masters
-                if g.id = "nightGlow" + item.layer then master = g
+                if g.id = "nightGlow" + item.over then master = g
             end for
             if master = invalid then
-                master = group.createChild("Group")
-                master.id = "nightGlow" + item.layer
+                master = CreateObject("roSGNode", "Group")
+                master.id = "nightGlow" + item.over
                 master.opacity = 0
+                group.insertChild(master, nightChildIndex(group, item.over) + 1)
                 masters.push(master)
             end if
             poster = master.createChild("Poster")
@@ -361,6 +364,16 @@ function nightBuildGlow(block as object, freeze as float) as object
     end for
     print "NIGHT glow posters="; items.count(); " of "; block.items.count()
     return masters
+end function
+
+'Index of the child of group whose id is id, or the last index when there is none (so
+' the caller inserts at the end).
+function nightChildIndex(group as object, id as string) as integer
+    n = group.getChildCount()
+    for i = 0 to n - 1
+        if group.getChild(i).id = id then return i
+    end for
+    return n - 1
 end function
 
 ' The pooled sparkles (P3.6): a fixed pool of Posters in the bubbles layer, each
