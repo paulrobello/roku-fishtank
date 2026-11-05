@@ -213,6 +213,9 @@ sub nightApply()
     ' The arch swimmer is built before nightStart, so it is found at once.
     if m.arch = invalid then m.arch = m.top.getParent().findNode("archSwimmer")
     if m.arch <> invalid then m.arch.nightLevel = nightLevel
+    ' The bubble column is built before nightStart too.
+    if m.bubbles = invalid then m.bubbles = m.top.getParent().findNode("bubbleColumn")
+    if m.bubbles <> invalid then m.bubbles.nightLevel = nightLevel
     ' Night-only fish (flashlight fish, components/Fish) observe this.
     if not m.global.hasField("nightLevel") then m.global.addFields({ nightLevel: 0.0 })
     if m.global.nightLevel <> nightLevel then m.global.nightLevel = nightLevel

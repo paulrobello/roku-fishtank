@@ -1,6 +1,8 @@
 sub init()
     m.slots = []
     m.pending = []
+    m.parked = []
+    m.halved = false
     m.restartTimer = m.top.findNode("restartTimer")
     m.restartTimer.observeField("fire", "onRestart")
 end sub
@@ -89,10 +91,29 @@ sub onRestart()
     m.pending = []
     now = m.clock.TotalMilliseconds() / 1000.0
     for each i in pending
+        if m.halved and i mod 2 = 1 then
+            ' Half the column rests at night: each running Animation costs render time.
+            m.slots[i].poster.opacity = 0
+            m.parked.push(i)
+        else
+            bubblesRecycle(m.pool, i, now)
+            bubblesStart(i)
+        end if
+    end for
+    m.top.recycles = m.pool.recycles
+end sub
+
+sub onNightLevel()
+    halved = m.top.nightLevel > 0.5
+    if halved = m.halved then return
+    m.halved = halved
+    if halved or m.parked.count() = 0 or m.clock = invalid then return
+    now = m.clock.TotalMilliseconds() / 1000.0
+    for each i in m.parked
         bubblesRecycle(m.pool, i, now)
         bubblesStart(i)
     end for
-    m.top.recycles = m.pool.recycles
+    m.parked = []
 end sub
 
 ' ?seed in the preview; a fixed seed under ?freeze without one, so the frozen frame is

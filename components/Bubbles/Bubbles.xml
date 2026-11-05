@@ -7,11 +7,14 @@
     next cycle and only key, keyValue, duration and delay are rewritten, so no node is ever
     created or removed after init. Under ?freeze=T the schedule runs to T at once and the
     Posters are posed without starting any Animation, so the frame depends only on seed and T.
+    nightLevel (0 day .. 1 night, pushed by Night): above 0.5 the odd slots finish their climb and
+    are then parked, so half the bubbles run at night; they restart when the level drops back.
 -->
 <component name="Bubbles" extends="Group">
     <interface>
         <field id="config" type="assocarray" onChange="onConfig" />
         <field id="recycles" type="integer" value="0" />
+        <field id="nightLevel" type="float" value="0.0" onChange="onNightLevel" />
     </interface>
     <script type="text/brightscript" uri="Bubbles.brs" />
     <script type="text/brightscript" uri="pkg:/components/lib/prng.brs" />
