@@ -34,6 +34,7 @@ sub init()
     reefTankBuildDrift()
     print "REEFTANK ready: "; dr.width; "x"; dr.height; " layers="; m.sceneCfg.layers.count(); " decor="; decor.count()
     reefTankInitFish()
+    reefTankAddArch()
     m.top.findNode("night").callFunc("nightStart", { camera: camera, fill: fill, scene: m.sceneCfg })
     reefTankAddExtras()
 end sub
@@ -45,6 +46,14 @@ sub reefTankAddExtras()
     extras = m.top.createChild("Extras")
     extras.id = "reefExtras"
     extras.configUri = "pkg:/config/extras.json"
+end sub
+
+' Arch swimmer (components/Arch, config/arch.json). After the tank fish, so their creation
+' serials are unchanged, and before Night, which tints the layer's Posters at start.
+sub reefTankAddArch()
+    arch = m.top.createChild("ArchSwimmer")
+    arch.id = "archSwimmer"
+    arch.configUri = "pkg:/config/arch.json"
 end sub
 
 ' ---------------------------------------------------------------------------

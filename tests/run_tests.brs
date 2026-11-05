@@ -27,6 +27,7 @@ function testSuites() as object
         extrasTestSuite()
         pitchTestSuite()
         glowTestSuite()
+        archTestSuite()
     ]
 end function
 

@@ -43,7 +43,7 @@ The ceiling for our own resident textures is **100 MB**. Keeping 25% margin leav
 
 | Asset group | Allowance (pixels) | MB | Now (2026-11-04) |
 |---|---|---|---|
-| Back reef: water, back rockwork | 1 x 2560x1088 | 11.1 | `reef_backdrop.png` 11.1 |
+| Back reef: water, back rockwork | 1 x 2560x1088, plus 0.3 from the reserve | 11.4 | 11.4: `reef_backdrop.png` 11.1, arch overlay 0.3 (`arch_overlay.png` 416x192, 319,488 bytes) |
 | Mid and front coral strips (P1.7 split) | 2560x608 + 2560x512 | 11.5 | 8.9: mid tiles 4.5, front clumps 3.9, rock pillar 0.5 (P1.8 retired `coral_acropora.png`) |
 | Foreground sand lip and plants | 2560x320, plus 0.3 from the reserve | 3.6 | 3.6: sand band 1.3, algae tufts 1.8, plant cluster 0.4 |
 | Seaweed, anemone, soft coral, invertebrates | 6 MB total, each sprite at most 512x512 | 6.0 | 1.8 of P4.6 extras (seaweed not counted here; its twelve 64x64 segments are 0.2) |
@@ -54,9 +54,9 @@ The ceiling for our own resident textures is **100 MB**. Keeping 25% margin leav
 | Bubbles, sparkles | 0.5 MB total, each at most 64x64 | 0.5 | none |
 | Settings screen panel | 1 x 1280x704 (backdrop shared) | 3.6 | none |
 | Launch splash (resident at start) | 1920x1088 | 8.4 | `splash_fhd.png` 8.4 |
-| **Total** | | **68.8** | **43.5** |
+| **Total** | | **69.1** | **43.8** |
 
-68.5 MB leaves 6.5 MB of the 75 MB unallocated. P1.7 moved 0.3 MB of that reserve to the foreground row, for the algae tufts above the sand band, which leaves 6.2 MB. The P1.7, P3.7 and P4.6 figures above are printed by `uv run tools/art/reef_review.py`. An art card that needs more takes it from that reserve or from another row, and records the move in this table.
+68.5 MB leaves 6.5 MB of the 75 MB unallocated. P1.7 moved 0.3 MB of that reserve to the foreground row, for the algae tufts above the sand band, which leaves 6.2 MB. The arch swimmer moved 0.3 MB to the back reef row, for the arch overlay that hides the swimmer behind the painted rock (its fish reuses the royal gramma rig, already resident), which leaves 5.9 MB. The P1.7, P3.7 and P4.6 figures above are printed by `uv run tools/art/reef_review.py`. An art card that needs more takes it from that reserve or from another row, and records the move in this table.
 
 The fill-rate limit is separate from the texture limit and is usually the one that binds. No point on screen may have more than two full-screen-sized translucent layers over the background (see Result). The shaft, caustic and ripple allowances are sized so they can each cover part of the screen. Caustics stay in the sand band, shafts are narrow, the ripple is a 128 px strip, and day and night shafts crossfade, so they never stack.
 

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+    Arch swimmer: now and then a small far fish swims through the rock arch painted in
+    the backdrop (config/arch.json, logic in components/lib/arch.brs). Set configUri once
+    the scene layers and the tank fish exist and before Night starts: ReefTank does it
+    right after the fish, so the two Fish here take creation serials after every tank
+    fish, and Night tints them and the overlay with the rest of the layer.
+    Nothing is drawn under this node. It builds one Group in the config layer holding a
+    clipped Group with the two Fish (facing right and left, so no turn plays), one
+    repeating Animation that moves them, and the arch overlay Poster on top. The
+    Animation starts with the scene, so ?freeze seeks it like any other loop.
+-->
+<component name="ArchSwimmer" extends="Group">
+    <interface>
+        <field id="configUri" type="string" onChange="onConfigUri" />
+    </interface>
+    <script type="text/brightscript" uri="ArchSwimmer.brs" />
+    <script type="text/brightscript" uri="pkg:/components/lib/prng.brs" />
+    <script type="text/brightscript" uri="pkg:/components/lib/scenecfg.brs" />
+    <script type="text/brightscript" uri="pkg:/components/lib/tint.brs" />
+    <script type="text/brightscript" uri="pkg:/components/lib/arch.brs" />
+</component>

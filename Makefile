@@ -124,6 +124,11 @@ ambient-art:
 	uv run tools/art/bubble.py
 	uv run tools/art/seaweed.py
 
+# Arch overlay for the arch swimmer: a backdrop crop with the arch opening cut out (byte-reproducible).
+.PHONY: arch-art
+arch-art:
+	uv run tools/art/arch_overlay.py
+
 # Browser preview (brs-engine) on 8138. The channel zip is rebuilt from source on every page load.
 PREVIEW_PORT := 8138
 

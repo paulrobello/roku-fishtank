@@ -1,0 +1,28 @@
+{
+  "_notes": "Arch swimmer (components/Arch, logic in components/lib/arch.brs): now and then a small far fish swims through the little rock arch painted in the backdrop, seen only through the opening. Everything is built in layer (the backdrop's own layer, so it drifts with the backdrop): a Group clipped to the overlay rect inset by clipInset px holding the fish, then the overlay Poster, a crop of the backdrop with the opening cut out (tools/art/arch_overlay.py; overlay x, y, width, height must match its OVERLAY_* constants). Two Fish of species, one facing right and one left, so no turn ever plays; both are scaled by scale about the rig mirror_center and tinted by tint (0xRRGGBBAA multiply, darker and bluer than the back lane for depth). One repeating linear Animation runs a seeded loop of passages: the first starts firstGapSec after the loop start, each later one gapSec after the previous ends, and the loop closes gapSec[0] after the last. A passage enters parkGap px outside one side of the clip (behind the pillar) and leaves parkGap px outside the other, at speedPx px/s, from y0 to y1 inside yBand (design px of the fish anchor) plus a sine of waveAmp px and waveCycles cycles, sampled at keysPerPassage + 1 points, pitched along the path up to pitchMaxDeg. An idle fish parks parkBelow px under the clip and hops hopSec between the park row and a passage end, always outside the clip. Durations divide by ?speed; the seed is ?seed, 1 under ?freeze without one, else the clock.",
+  "layer": "waterGradient",
+  "overlay": {
+    "uri": "pkg:/images/decor/arch_overlay.png",
+    "x": 240,
+    "y": 480,
+    "width": 416,
+    "height": 192
+  },
+  "clipInset": 2,
+  "species": "royal_gramma",
+  "scale": 0.45,
+  "tint": "0x7890B8FF",
+  "swimSpeed": 70,
+  "passages": 6,
+  "firstGapSec": [10, 30],
+  "gapSec": [20, 60],
+  "speedPx": [26, 40],
+  "yBand": [548, 584],
+  "waveAmp": [2, 6],
+  "waveCycles": [0.5, 1.5],
+  "keysPerPassage": 12,
+  "pitchMaxDeg": 8,
+  "parkGap": 40,
+  "parkBelow": 60,
+  "hopSec": 0.5
+}
