@@ -51,7 +51,8 @@ end sub
 ' under the camera, "$Subtype" hides every node of that SceneGraph subtype (Seaweed, Bubbles,
 ' FishBrain, School, ...), "~prefix" hides every node whose id starts with prefix, and
 ' "#anim:Subtype" pauses only the Animations under nodes of that subtype ("#anim:~prefix"
-' by id prefix).
+' by id prefix). "!rmstopped" detaches every Animation that is not running, "!white:$Subtype" and
+' "!flat:$Subtype" strip the tint or the scale and rotation of those nodes (all one-way).
 sub reefTankPerf()
     ' roFileSystem cannot be created on the render thread, so the file always exists.
     cfg = ParseJson(ReadAsciiFile("pkg:/config/perf.json"))
@@ -65,6 +66,7 @@ sub reefTankPerf()
         flip.control = "start"
     end if
     m.perfLabel = "none"
+    if cfg.nodeReport = true then perfNodeReport()
     if cfg.ablate <> invalid and cfg.ablateSec <> invalid and cfg.ablateSec > 0 then
         m.ablateList = cfg.ablate
         m.ablateIdx = -1
@@ -100,9 +102,54 @@ sub reefTankPerf()
     timer.control = "start"
 end sub
 
+' Prints the node count by layer and by SceneGraph subtype (NODES lines), after a short delay
+' so the fish and extras are built. Every node counts, including Animations and interpolators.
+sub perfNodeReport()
+    camera = m.top.findNode("camera")
+    total = 0
+    for i = 0 to camera.getChildCount() - 1
+        layer = camera.getChild(i)
+        counts = {}
+        n = perfCount(layer, counts)
+        total = total + n
+        line = "NODES layer=" + layer.id + " total=" + n.toStr()
+        for each k in counts
+            line = line + " " + k + "=" + counts[k].toStr()
+        end for
+        print line
+    end for
+    print "NODES all=" + total.toStr()
+end sub
+
+function perfCount(node as object, counts as object) as integer
+    t = node.subtype()
+    if counts.doesExist(t) then
+        counts[t] = counts[t] + 1
+    else
+        counts[t] = 1
+    end if
+    n = 1
+    for i = 0 to node.getChildCount() - 1
+        n = n + perfCount(node.getChild(i), counts)
+    end for
+    return n
+end function
+
 sub perfSetCut(target as string, visible as boolean)
     camera = m.top.findNode("camera")
-    if target = "#anim" then
+    if Left(target, 1) = "!" and visible then return
+    if target = "!rmstopped" then
+        ' One-way test: detach every Animation that is not running, to see what idle nodes cost.
+        victims = []
+        perfCollectIdle(camera, victims)
+        for each v in victims
+            v.getParent().removeChild(v)
+        end for
+        print "PERF removed="; victims.count()
+    else if Left(target, 7) = "!white:" or Left(target, 6) = "!flat:" then
+        ' One-way: every Fish of the subtype loses its tint (white) or its scale and rotation (flat).
+        perfFishStyle(camera, Mid(target, InStr(1, target, ":") + 1), Left(target, 6) = "!flat:")
+    else if target = "#anim" then
         perfPauseAnims(camera, visible)
     else if Left(target, 6) = "#anim:" then
         perfEach(camera, Mid(target, 7), "pause", visible)
@@ -137,6 +184,40 @@ sub perfEach(node as object, spec as string, action as string, on as boolean)
             end if
         else
             perfEach(child, spec, action, on)
+        end if
+    end for
+end sub
+
+sub perfFishStyle(node as object, spec as string, flat as boolean)
+    for i = 0 to node.getChildCount() - 1
+        child = node.getChild(i)
+        if "$" + child.subtype() = spec then
+            if flat then
+                child.scale = [1.0, 1.0]
+                child.rotation = 0.0
+            else
+                perfWhite(child)
+            end if
+        else
+            perfFishStyle(child, spec, flat)
+        end if
+    end for
+end sub
+
+sub perfWhite(node as object)
+    if node.subtype() = "Poster" then node.blendColor = &hFFFFFFFF
+    for i = 0 to node.getChildCount() - 1
+        perfWhite(node.getChild(i))
+    end for
+end sub
+
+sub perfCollectIdle(node as object, out as object)
+    for i = 0 to node.getChildCount() - 1
+        child = node.getChild(i)
+        if child.subtype() = "Animation" and child.state <> "running" then
+            out.push(child)
+        else
+            perfCollectIdle(child, out)
         end if
     end for
 end sub

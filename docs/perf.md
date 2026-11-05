@@ -82,3 +82,28 @@ Raw data: `docs/perf/raw/probe-20261104-114800-*` (run 1, combined ramp) and `pr
 
 `reefTankPerf` in `components/ReefTank/ReefTank.brs` reads `pkg:/config/perf.json`, which is an inert `{}` in the shipped channel, so the shipped channel carries no counter. Keys: `fpsLog` prints `PERF t= fps=` once a second (rendered frames, counted with an interpolator-driven field as in the probe), `forceMode` pins `day` or `night`, `toggleSec` flips between them to time the crossfade. `PERF_SECONDS` sets the capture length (default 120) and `PERF_TOGGLE` enables the toggle. The summary skips the first 10 seconds. After a run, redeploy the normal build with `make deploy`.
 
+## Reef Tank on the Primary Roku (2026-11-04)
+
+Measured with `tools/perf/run_channel.sh` on the real channel (commit a050d3b plus the perf hook), Primary Roku Ultra 4850X, OS 15.3.4, 1920x1080. Raw logs: `docs/perf/raw/channel-20261104-*` and `channel-20261105-*`.
+
+**The tank does not hold 60 fps.** Day medians 43 to 45 fps (range 37 to 49), night 39 (range 34 to 43). Pausing the invisible night overlays (committed 8246475) moved day from 43 to 44 and night not at all.
+
+What the frame time is spent on, from one-at-a-time ablations (each segment 12 to 20 s, median fps against a same-run baseline of 42 to 45 in day):
+
+| Removed | fps gained | Reading |
+|---|---|---|
+| Every Animation paused | +13 | about 400 running interpolators at roughly 17 us each |
+| All 21 fish hidden | +12 | main fish (9) +9, school (12 small) +4: about 0.5 ms of drawing per fish |
+| Main fish animations only paused | +1.5 to 2 | fish cost is mostly drawing, not animating |
+| Front coral layer hidden (night) | +6 | largest single layer, big alpha clumps |
+| Mid, back and front lane layers hidden (night) | +3 to +4 each | the fish in them |
+| Bubble animations paused | +3 | 40 bubbles, each a Poster plus an Animation with 2 interpolators |
+| Night overlay animations paused (day) | +3, then 1 once committed | fixed by pausing them while invisible |
+| Extras (sway chains, anemone) animations paused | +2.5 | |
+| Arch swimmer animations paused | +1 | |
+| Backdrop, mid coral, back rockwork layers hidden | 0 to +1 | cheap |
+
+Ruled out on the device: render resolution (declaring `ui_resolutions=hd` only changed nothing, median 40 at night against 39, so the framebuffer is native whatever the UI resolution), tint (`blendColor` stripped from every fish: no change), fish scale and rotation (stripped: no change), idle Animation nodes (97 detached: no change), zero-opacity night overlays (hidden in day: no change after the pause fix). The scene has 1,706 nodes (`cfg.nodeReport`), 228 Animations and about 700 interpolators among them.
+
+Reaching 60 fps would mean removing about 6 ms of 22.7 ms. The measured levers are all visible: halving the school (+2 fps), 9 to 6 main fish (+3), 40 to 20 bubbles (+1.5), simplified fish rigs or fewer sway segments (+1 to +4). Together they reach about 50, not 60, so 60 fps is out of reach without thinning the tank substantially.
+
