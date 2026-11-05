@@ -441,7 +441,7 @@ sub extrasTest_gaitSwingsOnlyWhileWalking(t as object)
 end sub
 
 function extrasTest_shuttleWalk() as object
-    return { x: 395, y: 860, left: 380, right: 1290, speed: 24, legPx: [40, 150], pauseSec: [1.5, 5.0], trips: 2, turnZones: [[380, 410], [1220, 1290]], turnSec: 0.7 }
+    return { x: 80, y: 882, left: 60, right: 1300, speed: 24, legPx: [40, 150], pauseSec: [1.5, 5.0], trips: 2, turnZones: [[60, 100], [1220, 1300]], turnSec: 0.7 }
 end function
 
 ' The shrimp shuttle over 40 seeds: every facing change happens at rest inside a turn

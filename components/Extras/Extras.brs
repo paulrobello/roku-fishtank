@@ -146,19 +146,35 @@ end sub
 sub extrasBuildCritters(holder as object, cr as object)
     if cr = invalid then return
     if cr.shrimp <> invalid then
-        ' A shrimp with its own layer walks there, behind that layer's front cover.
+        ' A shrimp with its own layer walks there at layerIndex (default 0), behind the
+        ' children drawn after it.
         shrimpHolder = holder
         if cr.shrimp.layer <> invalid then
             lane = m.scene.findNode(cr.shrimp.layer)
             if lane <> invalid then
                 shrimpHolder = CreateObject("roSGNode", "Group")
                 shrimpHolder.id = extrasId("shrimpLane")
-                lane.insertChild(shrimpHolder, 0)
+                idx = 0
+                if cr.shrimp.layerIndex <> invalid then idx = cr.shrimp.layerIndex
+                lane.insertChild(shrimpHolder, idx)
             end if
         end if
         extrasBuildShrimp(shrimpHolder, cr.shrimp)
     end if
-    if cr.crab <> invalid then extrasBuildCrab(holder, cr.crab)
+    if cr.crab <> invalid then
+        ' A crab with its own layer walks there at index layerIndex, on the sand lip and
+        ' behind the tufts drawn after it.
+        crabHolder = holder
+        if cr.crab.layer <> invalid then
+            lane = m.scene.findNode(cr.crab.layer)
+            if lane <> invalid then
+                crabHolder = CreateObject("roSGNode", "Group")
+                crabHolder.id = extrasId("crabLane")
+                lane.insertChild(crabHolder, cr.crab.layerIndex)
+            end if
+        end if
+        extrasBuildCrab(crabHolder, cr.crab)
+    end if
     if cr.starfish <> invalid then
         sf = cr.starfish
         root = extrasWalker(holder, sf.walk, 2)

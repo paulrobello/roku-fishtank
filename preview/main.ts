@@ -84,6 +84,8 @@ async function main(): Promise<void> {
     return;
   }
   brs.execute("channel.zip", await response.arrayBuffer(), { clearDisplayOnExit: false }, deepLink);
+  // A click sends OK, which ReefTank's preview-only key handler maps to a day/night flip.
+  document.getElementById("display")?.addEventListener("click", () => brs.sendKeyPress("select"));
 }
 
 main().catch((err: Error) => {
