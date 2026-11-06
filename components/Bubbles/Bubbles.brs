@@ -104,6 +104,10 @@ sub onRestart()
 end sub
 
 sub onNightLevel()
+    ' Group opacity multiplies every bubble's own fade, so the column dims as night eases in.
+    nightOpacity = 0.45
+    if m.top.config <> invalid and m.top.config.nightOpacity <> invalid then nightOpacity = m.top.config.nightOpacity
+    m.top.opacity = 1.0 - (1.0 - nightOpacity) * m.top.nightLevel
     halved = m.top.nightLevel > 0.5
     if halved = m.halved then return
     m.halved = halved

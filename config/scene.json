@@ -550,7 +550,7 @@
     }
   ],
   "bubbles": {
-    "_notes": "P1.3 pooled bubble column (components/Bubbles, logic in components/lib/bubbles.brs), built in the bubbles layer. pool Posters share uri and are created once; slot i rises from sources[i mod n] (x, y = start, top = end, spread = +- x jitter in px) and recycles in place. Sizes are px, rise is seconds for the full climb, wobble is the horizontal sine amplitude in px over wobbleCycles periods per climb, gapMax the longest pause before a recycled bubble starts. Optional keys fall back to defaults in bubblesDefaults().",
+    "_notes": "P1.3 pooled bubble column (components/Bubbles, logic in components/lib/bubbles.brs), built in the bubbles layer. pool Posters share uri and are created once; slot i rises from sources[i mod n] (x, y = start, top = end, spread = +- x jitter in px) and recycles in place. Sizes are px, rise is seconds for the full climb, wobble is the horizontal sine amplitude in px over wobbleCycles periods per climb, gapMax the longest pause before a recycled bubble starts, nightOpacity the share of the day opacity the column keeps at full night. Optional keys fall back to defaults in bubblesDefaults().",
     "uri": "pkg:/images/decor/bubble.png",
     "pool": 40,
     "sources": [
@@ -577,6 +577,7 @@
     "wobbleCyclesMax": 4.0,
     "gapMax": 0.5,
     "opacity": 0.85,
+    "nightOpacity": 0.45,
     "keyCount": 13
   },
   "seaweed": {

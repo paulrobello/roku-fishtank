@@ -8,7 +8,8 @@
     created or removed after init. Under ?freeze=T the schedule runs to T at once and the
     Posters are posed without starting any Animation, so the frame depends only on seed and T.
     nightLevel (0 day .. 1 night, pushed by Night): above 0.5 the odd slots finish their climb and
-    are then parked, so half the bubbles run at night; they restart when the level drops back.
+    are then parked, so half the bubbles run at night; they restart when the level drops back. The whole column also
+    dims to config.nightOpacity (default 0.45) of its day opacity at night.
 -->
 <component name="Bubbles" extends="Group">
     <interface>
