@@ -30,6 +30,23 @@ sub steerWander(agent as object, rng as object, jitter as float, accel as float,
     agent.vy = agent.vy + Sin(agent.wanderAngle) * accel * dt
 end sub
 
+' Eases agent.wanderAngle toward `target` (radians) by pull per second, taking the short way
+' round. Called before steerWander, it keeps a cruising fish swimming roughly the way it
+' faces, so it reverses only when a lane edge or an ellipse pushes it.
+sub steerWanderPull(agent as object, target as float, pull as float, dt as float)
+    pi = 3.14159265
+    d = target - agent.wanderAngle
+    while d > pi
+        d = d - 2.0 * pi
+    end while
+    while d < -pi
+        d = d + 2.0 * pi
+    end while
+    k = pull * dt
+    if k > 1.0 then k = 1.0
+    agent.wanderAngle = agent.wanderAngle + d * k
+end sub
+
 ' Accelerates the agent toward (tx, ty) by accel px/s^2 for dt seconds.
 ' No-op when the agent is already at the target.
 sub steerSeek(agent as object, tx as float, ty as float, accel as float, dt as float)

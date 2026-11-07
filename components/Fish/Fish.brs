@@ -7,8 +7,8 @@ sub init()
     m.turnLift = m.top.findNode("turnLift")
     ' Set 0 draws the rig's layers as authored, set 1 its pre-mirrored layers.
     m.sets = [
-        fishFindSet("base", "body", "tail", "fin", "tailInterp", "finInterp", "baseFade", "baseTailLag"),
-        fishFindSet("mirrored", "mBody", "mTail", "mFin", "mTailInterp", "mFinInterp", "mirroredFade", "mirroredTailLag")
+        fishFindSet("base", "body", "tail", "fin", "tailInterp", "finInterp", "baseFade", "baseTailLag", "tailWrap", "tailSway"),
+        fishFindSet("mirrored", "mBody", "mTail", "mFin", "mTailInterp", "mFinInterp", "mirroredFade", "mirroredTailLag", "mTailWrap", "mTailSway")
     ]
 
     ' Interpolators resolve their target by node id, so each instance renames its rig
@@ -23,11 +23,13 @@ sub init()
         set.group.id = prefix + set.name
         set.body.id = prefix + set.name + "_body"
         set.tail.id = prefix + set.name + "_tail"
+        set.tailWrap.id = prefix + set.name + "_tailWrap"
         set.fin.id = prefix + set.name + "_fin"
         set.tailInterp.fieldToInterp = [set.tail.id + ".rotation"]
         set.finInterp.fieldToInterp = [set.fin.id + ".rotation"]
         set.fade.fieldToInterp = [set.group.id + ".opacity"]
         set.tailLag.fieldToInterp = [set.tail.id + ".scale"]
+        set.tailSway.fieldToInterp = [set.tailWrap.id + ".scale"]
     end for
     m.turnInterp.fieldToInterp = [m.rig.id + ".scale"]
     m.turnRoll.fieldToInterp = [m.rig.id + ".rotation"]
@@ -36,6 +38,10 @@ sub init()
     ' Turn shape: narrowest width (a fish seen head-on keeps its thickness), pitch at
     ' the swap in radians, and rise as a fraction of body height. The duration varies
     ' per fish so neighbours and school members do not turn in lockstep.
+    ' Tail beat in depth: the Poster keeps tailRotKeep of the rig's swing_deg, and the tail
+    ' shortens to 1 - tailDepth at each swing extreme (pointing toward or away from the viewer).
+    m.tailRotKeep = 0.3
+    m.tailDepth = 0.5
     m.turnNarrow = 0.22
     m.turnPitch = 0.14
     m.turnRise = 0.08
@@ -50,12 +56,14 @@ sub init()
     m.turnAnim.observeField("state", "onTurnState")
 end sub
 
-function fishFindSet(name as string, body as string, tail as string, fin as string, tailInterp as string, finInterp as string, fade as string, tailLag as string) as object
+function fishFindSet(name as string, body as string, tail as string, fin as string, tailInterp as string, finInterp as string, fade as string, tailLag as string, tailWrap as string, tailSway as string) as object
     return {
         name: name,
         group: m.top.findNode(name),
         body: m.top.findNode(body),
         tail: m.top.findNode(tail),
+        tailWrap: m.top.findNode(tailWrap),
+        tailSway: m.top.findNode(tailSway),
         fin: m.top.findNode(fin),
         tailInterp: m.top.findNode(tailInterp),
         finInterp: m.top.findNode(finInterp),
@@ -329,6 +337,7 @@ end sub
 sub fishLoadSet(set as object, layers as object, extras as object, drawOrder as object)
     fishSetLayer(set.body, layers.body)
     fishSetLayer(set.tail, layers.tail)
+    if layers.tail.pivot <> invalid then set.tailWrap.scaleRotateCenter = [layers.tail.offset[0] + layers.tail.pivot[0], layers.tail.offset[1] + layers.tail.pivot[1]]
     fishSetLayer(set.fin, layers.fin)
     fishBuildSwimKeys(set, layers.tail.swing_deg, layers.fin.swing_deg)
     fishBuildExtras(set, extras, drawOrder)
@@ -344,7 +353,8 @@ sub fishSetLayer(poster as object, layer as object)
     if layer.pivot <> invalid then poster.scaleRotateCenter = layer.pivot
 end sub
 
-' One swim cycle: a sampled sine with the tail extremes at fractions 0.25 and 0.75.
+' One swim cycle: a sampled sine with the tail extremes at fractions 0.25 and 0.75; the tail's
+' foreshortening (tailSway) peaks at those same extremes, twice per cycle.
 ' The fin lags the tail by a quarter cycle. Rotation is in radians. The mirrored set's
 ' swing_deg is negated in the rig, so both sets beat the same way on screen.
 sub fishBuildSwimKeys(set as object, tailDeg as float, finDeg as float)
@@ -354,10 +364,20 @@ sub fishBuildSwimKeys(set as object, tailDeg as float, finDeg as float)
     for i = 0 to 8
         a = i * 6.2831853 / 8.0
         keys.push(i / 8.0)
-        tailValues.push(tailDeg * toRad * sin(a))
+        tailValues.push(tailDeg * m.tailRotKeep * toRad * sin(a))
     end for
     set.tailInterp.key = keys
     set.tailInterp.keyValue = tailValues
+    swayKeys = []
+    swayValues = []
+    for i = 0 to 16
+        a = i * 6.2831853 / 16.0
+        swayKeys.push(i / 16.0)
+        s = sin(a)
+        swayValues.push([1.0 - m.tailDepth * s * s, 1.0])
+    end for
+    set.tailSway.key = swayKeys
+    set.tailSway.keyValue = swayValues
     set.finInterp.key = keys
     set.finInterp.keyValue = fishFinValues(finDeg)
 end sub

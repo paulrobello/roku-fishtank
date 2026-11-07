@@ -184,6 +184,11 @@ sub schoolStep(school as object, cfg as object, lane as object, ellipses as obje
     ' Leader: wander, held on a leash to the school centroid, steering
     ' against the padded ellipses and the inset lane.
     leader = school.leader
+    if cfg.wanderPull <> invalid then
+        pullTarget = 0.0
+        if leader.vx < 0 then pullTarget = 3.14159265
+        steerWanderPull(leader, pullTarget, cfg.wanderPull, dt)
+    end if
     steerWander(leader, school.rng, cfg.leaderJitter, cfg.leaderAccel, dt)
     dx = cx - leader.x
     dy = cy - leader.y

@@ -80,6 +80,7 @@ function brainPlanCruise(fish as object, cfg as object, lane as object, ellipses
     dt = cfg.tick
     points = [[agent.x, agent.y]]
     for i = 1 to steps
+        if cfg.wanderPull <> invalid then steerWanderPull(agent, brainFacingAngle(fish.facing), cfg.wanderPull, dt)
         steerWander(agent, fish.rng, cfg.wanderJitter, cfg.wanderAccel, dt)
         steerAvoidEllipses(agent, ellipses, cfg.avoidMargin, cfg.avoidAccel, dt)
         steerLaneKeep(agent, lane, cfg.laneBand, cfg.laneAccel, dt)
@@ -111,6 +112,12 @@ function brainPlanDart(fish as object, cfg as object, lane as object, ellipses a
     end for
     steerClampSpeed(agent, cfg.minSpeed, cfg.maxSpeed)
     return points
+end function
+
+' Horizontal heading of a facing: 0 right, pi left.
+function brainFacingAngle(facing as integer) as float
+    if facing < 0 then return 3.14159265
+    return 0.0
 end function
 
 ' Heading of the agent's velocity in radians; a stopped agent heads along

@@ -8,6 +8,9 @@
     overshoot. The tail lags the body both ways, so the head leads the turn. turnDelay
     (seconds) holds a turn back, which staggers a school; turning is true while it runs. paused holds the tail and fin beat (swimAnim) while true. The Fish origin is the body Poster's
     top-left corner.
+    The tail beats side to side in depth, not up and down: tailWrap (scaled about the tail joint, on
+    swimAnim) foreshortens the tail at each swing extreme, twice per beat, while the Poster itself
+    rotates only a few degrees. The tail Poster's own scale stays with the turn.
     Night light organ (species json "night" block, flashlight fish): each set gets a glow
     Poster (id starting with "night", so Night and the lane tint leave it untinted) at the
     rig's glow.center, blinking on one repeating Animation drawn from blinkSeed (set it
@@ -32,17 +35,19 @@
         <Group id="rig">
             <Group id="base">
                 <Poster id="body" />
-                <Poster id="tail" />
+                <Group id="tailWrap"><Poster id="tail" /></Group>
                 <Poster id="fin" />
             </Group>
             <Group id="mirrored" visible="false" opacity="0.0">
                 <Poster id="mBody" />
-                <Poster id="mTail" />
+                <Group id="mTailWrap"><Poster id="mTail" /></Group>
                 <Poster id="mFin" />
             </Group>
         </Group>
         <Animation id="swimAnim" repeat="true" easeFunction="linear" duration="1.0">
             <FloatFieldInterpolator id="tailInterp" />
+            <Vector2DFieldInterpolator id="tailSway" />
+            <Vector2DFieldInterpolator id="mTailSway" />
             <FloatFieldInterpolator id="finInterp" />
             <FloatFieldInterpolator id="mTailInterp" />
             <FloatFieldInterpolator id="mFinInterp" />

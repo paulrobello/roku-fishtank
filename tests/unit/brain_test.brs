@@ -15,6 +15,7 @@ function brainTestSuite() as object
             { name: "noDartWithZeroChance", fn: brainTest_noDartWithZeroChance }
             { name: "sameSeedSameSegments", fn: brainTest_sameSeedSameSegments }
             { name: "facingDeadband", fn: brainTest_facingDeadband }
+            { name: "wanderPullCutsFlips", fn: brainTest_wanderPullCutsFlips }
             { name: "speedBucket", fn: brainTest_speedBucket }
             { name: "polylineAt", fn: brainTest_polylineAt }
             { name: "outCubic", fn: brainTest_outCubic }
@@ -225,6 +226,32 @@ sub brainTest_facingDeadband(t as object)
     assertEqual(t, brainFacing(1, -5, 6), 1, "inside deadband keeps")
     assertEqual(t, brainFacing(-1, 3, 6), -1, "inside deadband keeps left")
     assertEqual(t, brainFacing(-1, 7, 6), 1, "right past deadband flips")
+end sub
+
+' Facing flips over 20 fish x 300 s: the wander pull and the wider deadband (config/brain.json)
+' must leave a fraction of what the unpulled wander flipped.
+function brainTest_flips(cfg as object) as integer
+    flips = 0
+    for seed = 1 to 20
+        facing = 1
+        for each seg in brainTest_run(seed, 2400, cfg)
+            last = seg.points[seg.points.count() - 1]
+            nextFacing = brainFacing(facing, last[0] - seg.points[0][0], cfg.facingDeadband)
+            if nextFacing <> facing then flips = flips + 1
+            facing = nextFacing
+        end for
+    end for
+    return flips
+end function
+
+sub brainTest_wanderPullCutsFlips(t as object)
+    old = brainTest_flips(brainTest_cfg())
+    pulled = brainTest_cfg()
+    pulled.wanderPull = 2.0
+    pulled.facingDeadband = 40
+    now = brainTest_flips(pulled)
+    print "  brain flips over 20 fish x 300 s: unpulled = "; old; ", pulled = "; now
+    assertTrue(t, now * 3 < old, "pull and deadband cut flips to under a third")
 end sub
 
 sub brainTest_speedBucket(t as object)
