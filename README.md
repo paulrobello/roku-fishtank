@@ -1,30 +1,172 @@
-# roku-fishtank
+# REEF TANK
 
-**Reef Tank**, a custom Roku **screensaver** channel: a layered tropical reef tank built
-to replace Roku's "Aquatic Life" screensaver (removed December 1, 2026). See
+## Table of Contents
+
+* [About](#about)
+* [Features](#features)
+   * [Core Capabilities](#core-capabilities)
+   * [Advanced Features](#advanced-features)
+   * [Technical Excellence](#technical-excellence)
+* [Screenshots](#screenshots)
+* [Prerequisites for running](#prerequisites-for-running)
+* [Prerequisites for dev](#prerequisites-for-dev)
+* [Installing for dev mode](#installing-for-dev-mode)
+* [Project layout](#project-layout)
+* [Make targets](#make-targets)
+* [Browser preview](#browser-preview)
+   * [Visual screenshot gate](#visual-screenshot-gate)
+   * [Fidelity scene](#fidelity-scene)
+* [Deploy](#deploy)
+* [Device performance](#device-performance)
+* [FAQ](#faq)
+* [Roadmap](#roadmap)
+    * [Where we are](#where-we-are)
+    * [Where we're going](#where-were-going)
+* [License](#license)
+* [What's new](#whats-new)
+
+![Roku OS 15.3.4](https://img.shields.io/badge/Roku%20OS-15.3.4-blue)
+![BrightScript / SceneGraph](https://img.shields.io/badge/BrightScript-SceneGraph-blue)
+![Authored at 1080p](https://img.shields.io/badge/authored%20at-1080p%20(FHD)-blue)
+![License: MIT](https://img.shields.io/badge/license-MIT-green)
+
+## About
+Reef Tank is a custom Roku **screensaver** channel: a procedurally animated tropical-reef tank
+built to replace Roku's "Aquatic Life" screensaver (removed December 1, 2026).
+
+Each fish is a rigged cutout with an undulating body and tail, driven by a per-species behavior
+brain: fish cruise, dart, turn, school, graze, hide and weave in front of and behind the rock and
+coral. Around them are bubbles, swaying seaweed, anemones and invertebrates, a living water
+surface with caustics, and a slow parallax camera drift. After sunset the tank switches to a
+moonlit night mode with glowing coral and bioluminescent sparkles, computed from real sunrise and
+sunset times at Woodland, CA. There are no Roku logos anywhere.
+
+The whole channel is one BrightScript/SceneGraph codebase. On the Mac the same code runs in a
+browser through brs-engine, so iteration needs no TV; deploying sideloads the same files to the
+Roku. See `PRD.md` for scope and phases, `plans/` for the per-phase task plans, and
 `RESEARCH.md` for the full feasibility research.
 
-**Current state: Reef Tank channel shell (P1.1).** The channel scene is
-`components/ReefTank/`. It reads `config/scene.json` and builds the PRD layer stack as
-named Groups inside a `camera` Group, with the reef backdrop and one coral placed; fish,
-drift, bubbles and seaweed land in later P1/P2 tasks. The earlier test channel proved a
-sideloaded dev screensaver appears in Settings > Theme > Screensavers and runs. See
-`PRD.md` for scope and phases and `plans/` for the per-phase task plans.
+[!["Buy Me A Coffee"](https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png)](https://buymeacoffee.com/probello3)
 
-## Layout
+## Features
 
+### Core Capabilities
+- **Layered parallax tank**: the reef is a stack of named layer Groups (backdrop, rockwork, coral
+  lanes, foreground, surface ripple, bubbles) inside a drifting `camera` Group, each with its own
+  parallax factor, built from `config/scene.json`
+- **Procedural fish**: every species is a rigged sprite (body, tail, fins, crest) whose parts
+  animate by transforms — undulation, tail beats with depth foreshortening, turns, dart bursts
+- **Per-species behavior brains**: `FishBrain` state machines per species kind — grazers cruise
+  and peck rocks, the royal gramma retreats tail-first into its den, the mandarin hops the sand
+  band, the lionfish drifts, the arch swimmer passes through the backdrop arch
+- **Chromis school**: boids flocking (`components/lib/school.brs`) behind a hidden wandering
+  leader with a spacing guard
+- **Day/night cycle**: solar math drives dusk and night; moonlight tints, glowing coral,
+  bioluminescence and night-only flashlight fish; sunrise/sunset for Woodland, CA in device
+  local time
+- **Ambient life**: realistic bubble columns, swaying segmented seaweed, anemones, a crab, a
+  shrimp, scrolling caustics and a rippling water surface
+- **Settings screen**: `RunScreenSaverSettings()` on the device (Settings > Theme > Screensavers >
+  Reef Tank) for fish density, camera drift and night mode, persisted in the device registry
+
+### Advanced Features
+- **Browser preview of the real channel code**: `make dev` runs the unmodified channel in
+  brs-engine; `?seed=`, `?time=`, `?speed=`, `?freeze=` give deterministic, repeatable frames
+- **Config-driven behavior**: layers, lanes, decor and population in `config/scene.json`; species
+  kinds in `behavior.json`; steering in `brain.json`/`school.json` — changing feel usually means
+  editing JSON, not code
+- **Deterministic seeding**: a seeded PRNG drives brains and the school, so the same seed always
+  produces the same tank
+- **Density presets**: calm / normal / busy populations, selectable in settings and in device
+  perf runs
+- **Art pipeline**: AI-generated originals with prompts, seeds and provenance (`assets/source/`,
+  never shipped) are rigged into layered sprites and key art by byte-reproducible Python tools
+- **Perf probes**: fish/layer ramp probes and per-scene device checks log fps and texture use to
+  `docs/perf/`
+
+### Technical Excellence
+- **175 BrightScript unit tests** under brs-cli (`make test`, `make test FILTER=<substring>` for
+  a subset) covering the pure logic in `components/lib/`
+- **Playwright screenshot gate**: frozen deterministic frames compared against committed
+  baselines (`make test-visual`)
+- **Warning-free gate**: `make checkall` fails on any bsc/bslint warning; `api-guard` rejects
+  OS 16-only APIs the simulator would silently accept; `zip-check` keeps the device package
+  minimal
+- **Fidelity harness**: a dedicated scene exercising every SceneGraph primitive, validated per
+  build and compared simulator-vs-device (`docs/fidelity/`)
+- **Pinned toolchain**: every build tool pinned in `package.json`, installed with bun
+
+## Screenshots
+The full tank by day and night, the chromis school, species behaviors and the settings screen.
+
+![Normal density day tank](docs/preview/tank-normal.png)
+
+![Night mode](docs/preview/night-full.png)
+
+![Chromis school](docs/preview/school-00.png)
+
+![Species behaviors (seed 1)](docs/preview/behavior-seed1-t9.75.png)
+
+![Settings screen](docs/preview/settings-initial.png)
+
+## Prerequisites for running
+* A Roku on your LAN with developer mode enabled
+  * **Home x3, Up x2, Right, Left, Right, Left, Right** on the remote, enable the Development
+    Application Installer, set a `rokudev` password
+* No store listing: Reef Tank is a sideloaded personal channel (see `RESEARCH.md` §3)
+
+## Prerequisites for dev
+* [bun](https://bun.sh) (package manager; never run `node` on project scripts)
+* GNU make
+* Node.js (the `brs-cli` test binary runs under node via its shebang)
+* [uv](https://docs.astral.sh/uv/) + Python 3 for the art pipeline (`make art`, `make key-art`)
+* Playwright Chromium (auto-installed by `make test-visual`)
+
+## Installing for dev mode
+The repo is local-only (no remote yet). From the repo root:
+```bash
+make install    # bun install --frozen-lockfile
+make checkall   # full gate: api-guard, fmt, lint, typecheck, tests, build, zip-check, fidelity, visual
+```
+
+## Project layout
 ```
 manifest                 screensaver_title (no channel title — see RESEARCH.md §1)
-source/main.brs          RunScreenSaver() entry point
+source/main.brs          RunScreenSaver() / RunScreenSaverSettings() entry points
 components/ReefTank/     channel scene: camera Group + layer Groups built from config/scene.json
-components/lib/          pure logic (PRNG, steering, brain, solar, day/night, scene config)
-config/scene.json        location, layer stack (id, PRD name, parallax), lanes, decor placements
+components/Fish/         rigged fish renderer
+components/FishBrain/    per-species behavior state machines
+components/School/       boids school
+components/Bubbles/      bubble columns
+components/Seaweed/      segmented seaweed
+components/Arch/         arch swimmer
+components/Extras/       caustics, ripple, critters
+components/Night/        day/night controller
+components/lib/          pure logic (PRNG, steering, brain, school, solar, day/night, scene config)
+config/                  scene.json, behavior.json, brain.json, school.json, night.json, species rigs
 images/                  runtime art: decor/, fish/, icons and splashes (make key-art)
-bsconfig.json            RokuCommunity BrightScript VS Code extension config
-source/preview.brs       Main(args) shim for the browser preview (excluded from the device zip)
 preview/                 Vite page that runs the channel in brs-engine + brs-scenegraph
-tests/visual/            Playwright screenshot gate and its baseline
+tests/                   BrightScript unit tests + Playwright visual specs
+tools/                   art pipeline, perf and device-check tooling
 ```
+
+## Make targets
+| Target | What it does |
+|---|---|
+| `make install` | `bun install --frozen-lockfile` |
+| `make dev` | Browser preview on <http://localhost:8138/> (`dev-stop`, `dev-restart`) |
+| `make test` | BrightScript unit tests under brs-cli; `FILTER=<substring>` runs a subset |
+| `make test-visual` | Playwright screenshot gate against `tests/visual/__screenshots__/` |
+| `make checkall` | Full gate (== `checkall-ci`; there is no CI) |
+| `make build` | Package the device channel to `dist/channel.zip` |
+| `make fmt` / `fmt-check` | Rewrite / check BrightScript formatting (bsfmt) |
+| `make lint` / `typecheck` | bslint / bsc validate; any warning fails |
+| `make deploy` | Sideload `dist/channel.zip` to `ROKU_HOST` (digest auth) |
+| `make probe` | Device perf ramp probe (fish/layer counts) |
+| `make device-check` | Any scene as the screensaver with an FpsMeter (`SCENE=`, `SECONDS=`, `DENSITY=`) |
+| `make fidelity-build` / `fidelity-sim` / `fidelity-device` | Fidelity harness: build, simulator capture, device capture |
+| `make art` / `key-art` / `ambient-art` / `arch-art` | Byte-reproducible art pipeline (uv + Python) |
+| `make clean` | Remove `dist/` |
 
 ## Browser preview
 
@@ -106,6 +248,8 @@ brs-engine with the SceneGraph extension on a 1920x1080 canvas scaled to the win
   brs-engine's registry. Evidence: `docs/preview/settings-initial.png` and
   `settings-changed.png`.
 
+### Visual screenshot gate
+
 `make test-visual` (part of `make checkall`) starts an isolated server on 8139
 (`PW_PORT=<port>` moves it when another worktree's gate holds 8139), opens
 `?freeze=3` (the Reef Tank), the camera drift at four loop phases (`tests/visual/drift.spec.ts`, `?speed=30&freeze=0.75..3`, asserts the frame edges never show the background) and `?scene=BrainDemoScene&seed=7&freeze=5`, and compares the
@@ -125,21 +269,87 @@ Layout, expected values and verdicts are in `docs/fidelity/README.md`.
 
 ### Devices on this LAN (discovered 2026-11-04 via mDNS + ECP)
 
-| IP | Name | Model | OS |
-|---|---|---|---|
-| 192.168.1.10 | **Primary** (target) | Ultra 4850X | 15.3.4 |
-| 192.168.1.11 | Roku Ultra | — | — |
-| 192.168.1.12 | Roku Ultra Second | — | — |
+| IP | Name | Model | OS | Dev mode |
+|---|---|---|---|---|
+| 192.168.1.10 | **Primary** (primary target) | Ultra 4850X | 15.3.4 | on |
+| 192.168.1.11 | Second | Ultra 4800X | 15.3.4 | on (Reef Tank installed 2026-11-04) |
+| 192.168.1.12 | Third | Ultra 4800X | 15.3.4 | off until P6 |
 
-1. Enable dev mode on the Roku (once): **Home x3, Up x2, Right, Left, Right,
-   Left, Right** on the remote, enable the Development Application Installer,
-   set a `rokudev` password, note the device IP.
-2. Command line: `ROKU_HOST=<ip> ROKU_PASSWORD=<pw> make deploy`
+1. **Exit the screensaver on the TV before deploying** — deploying under a running
+   instance wedges it until a device reboot.
+2. Enable dev mode on the Roku (once): **Home x3, Up x2, Right, Left, Right, Left, Right**
+   on the remote, enable the Development Application Installer, set a `rokudev` password,
+   note the device IP.
+3. Command line: `ROKU_HOST=<ip> ROKU_PASSWORD=<pw> make deploy`
    (or VS Code: open this folder, set host+password per the extension's prompt, press the deploy/debug button).
-3. Browser fallback: upload `dist/channel.zip` at `http://<ip>/plugin_install`.
-4. On the Roku: **Settings > Theme > Screensavers** → select *Reef Tank*,
+4. Browser fallback: upload `dist/channel.zip` at `http://<ip>/plugin_install`.
+5. On the Roku: **Settings > Theme > Screensavers** → select *Reef Tank*,
    shorten the wait timer, let it idle, confirm the tank appears.
 
 Debug output (`REEFTANK ...` lines from `ReefTank.brs`, including any scene.json
 validation errors) is on telnet port **8087**:
 `telnet <ip> 8087`.
+
+## Device performance
+
+- `make probe` ramps fish/layer counts and logs fps + texture use to `docs/perf/raw/`.
+- `make device-check SCENE=ReefTank SECONDS=90 DENSITY=calm|normal|busy` runs any scene as
+  the screensaver with an FpsMeter on the console.
+- Results and the texture budget live in `docs/perf.md`.
+
+## FAQ
+* Q: Is there audio?
+  * A: No. Screensavers are silent by platform rule; audio and video are impossible.
+* Q: Can I interact with the tank?
+  * A: Any keypress exits a screensaver (platform behavior). Reef Tank is pure graphics.
+* Q: Will this be in the Roku Channel Store?
+  * A: No. It is sideloaded for personal use; sideloading is permanent for that (RESEARCH.md §3).
+* Q: Why is the art 1080p and not 4K?
+  * A: SceneGraph authors at 1080p (`ui_resolutions=hd,fhd`) and the TVs upscale. 4K art is a PRD non-goal.
+* Q: How does night mode know when to start?
+  * A: Sunrise/sunset for Woodland, CA (38.68 N, 121.77 W) is baked into config; the phase is computed in device local time, with DST handled by the OS.
+* Q: Does the channel need internet access?
+  * A: No. Everything is local to the channel package.
+
+## Roadmap
+
+### Where we are
+* **The full tank runs on the device**: layered parallax reef, rigged procedural fish,
+  per-species behavior brains, chromis school, bubbles, seaweed, caustics, extras and the
+  arch swimmer
+* **Night mode** with moonlight tints, glow, bioluminescence and night-only flashlight fish
+* **Settings screen** (`RunScreenSaverSettings`) for density, drift and night mode
+* **On-device perf tuning** underway: frame-rate breakdown and ablation runs in `docs/perf.md`
+  (normal density: day 60 fps, night 56 on the 4850X)
+* **Dev harness**: browser preview with deterministic freeze, 175 unit tests, screenshot
+  gate, fidelity harness — all in `make checkall`
+
+### Where we're going
+* Finish the in-flight polish: moonlight tint crossfade (P3.3) and scrolling caustics (P4.5)
+* Wire the settings screen values into the tank (P5.3)
+* Verify 60 fps on the weakest target, the Ultra 4800X (P6.3)
+* 8-hour soak on the Primary Roku (P6.4)
+* Install on all three Rokus and sync docs for sign-off (P6.5, G7)
+
+## License
+
+Reef Tank is released under the MIT License. See [LICENSE](LICENSE) for the full text.
+
+## What's new
+
+### Recent changes (dev version 0.2)
+
+* **Test runner**: `make test FILTER=<substring>` runs a subset of suites/tests; a filter
+  matching nothing fails the run
+* **Fish motion polish**: fish no longer swim backwards (facing deadband restored), fewer
+  flips, and the tail beats side to side in depth with foreshortening
+* **Night polish**: subtler god rays, darker moonlight tints, the bubble column dims to 45%
+  at night and half its slots rest until day
+* **New night life**: night-only flashlight fish with blinking light organs, and a small
+  far fish that swims through the backdrop's rock arch
+* **Device perf**: per-ablation frame-rate breakdown (day/night, tint, scale/rotation,
+  idle animation) recorded in `docs/perf.md`
+* **Settings screen**: density, drift and night mode rows with registry persistence
+* **Realistic bubbles** (clear glass body, thin rim, window reflection) and 20% slower darts
+
+For the full history, see `git log --oneline`.
