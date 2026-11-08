@@ -4,9 +4,10 @@ BIN := node_modules/.bin
 BRS_GLOBS := "source/**/*.brs" "components/**/*.brs" "fidelity/**/*.brs"
 SHELL := /bin/bash
 
-# Gitignored ROKU_HOST / ROKU_PASSWORD for the device targets.
+# Gitignored ROKU_HOST / ROKU_PASSWORD for the device targets (.env; the home
+# device table lives in the gitignored devices.local.md).
 -include .env
-ROKU_HOST ?= 192.168.1.10
+ROKU_HOST ?=
 export ROKU_HOST ROKU_PASSWORD
 
 .PHONY: install build fmt fmt-check lint typecheck test checkall checkall-ci deploy art clean
@@ -76,6 +77,7 @@ zip-check: build
 # instance wedges it until a device reboot.
 # ROKU_HOST=<ip> ROKU_PASSWORD=<dev password> make deploy
 deploy: build
+	@test -n "$(ROKU_HOST)" || { echo "set ROKU_HOST (repo .env; device table: devices.local.md)"; exit 1; }
 	curl -sS -f --digest --user rokudev:$(ROKU_PASSWORD) -F "mysubmit=1" -F "archive=@$(ZIP)" "http://$(ROKU_HOST)/plugin_install"
 
 # Device perf probe (P0.6): ramps fish/layer counts, logs fps + texture use.

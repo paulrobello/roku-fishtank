@@ -30,7 +30,7 @@ A Roku screensaver channel written in BrightScript/SceneGraph. Scope and phases 
 - Deploy: `ROKU_HOST=<ip> ROKU_PASSWORD=<pw> make deploy`. The installer uses digest auth.
 - Debug console: telnet port **8087**, which only listens while the screensaver runs. Read runtime errors there before guessing.
 - ECP is in Limited mode on this LAN, so launching and rebooting are physical-remote steps. Exiting is remote: `press k` on the port 8080 developer console (`tools/perf/run_probe.sh` does this before deploying). `http://<ip>:8060/query/active-app` shows whether the screensaver is running.
-- Devices (full table in `~/.claude/guides/infrastructure.md`, each Roku is named after its room): Primary 192.168.1.10 (Ultra 4850X, dev mode on, primary target). Second 192.168.1.11 (dev mode on, Reef Tank installed 2026-11-04). Third 192.168.1.12 (dev mode off). All run OS 15.3.4.
+- Devices: three Roku Ultras on the home LAN, all OS 15.3.4 — a 4850X (primary target, dev mode on) and two 4800Xs (one with dev mode on and Reef Tank installed 2026-11-04, one with dev mode off). IPs, room names and dev-mode state live in the gitignored `devices.local.md` (and `~/.claude/guides/infrastructure.md`); they stay out of the public repo.
 
 ## Platform constraints
 

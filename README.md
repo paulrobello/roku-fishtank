@@ -313,13 +313,12 @@ Layout, expected values and verdicts are in `docs/fidelity/README.md`.
 Re-deploying an updated build is the [Sideload](#sideload-to-the-roku) step of
 [Installing](#installing); the full first-time flow lives there.
 
-### Devices on this LAN (discovered 2026-11-04 via mDNS + ECP)
+### Devices
 
-| IP | Name | Model | OS | Dev mode |
-|---|---|---|---|---|
-| 192.168.1.10 | **Primary** (primary target) | Ultra 4850X | 15.3.4 | on |
-| 192.168.1.11 | Second | Ultra 4800X | 15.3.4 | on (Reef Tank installed 2026-11-04) |
-| 192.168.1.12 | Third | Ultra 4800X | 15.3.4 | off |
+The reference devices are Roku Ultra boxes on OS 15.3.4: a 4850X (primary target) and two
+4800Xs. Device IPs, room names and dev-mode state are intentionally not published — keep
+yours in a gitignored `devices.local.md` next to the Makefile (plus `ROKU_HOST` /
+`ROKU_PASSWORD` in `.env`), both covered by the committed `.gitignore`.
 
 **Exit the screensaver on the TV before every deploy** — deploying under a running instance
 wedges it until a device reboot. VS Code also works: open this folder, set host + password
@@ -366,7 +365,7 @@ validation errors) is on telnet port **8087**: `telnet <ip> 8087`.
 * Finish the in-flight polish: moonlight tint crossfade (P3.3) and scrolling caustics (P4.5)
 * Wire the settings screen values into the tank (P5.3)
 * Verify 60 fps on the weakest target, the Ultra 4800X (P6.3)
-* 8-hour soak on the Primary Roku (P6.4)
+* 8-hour soak on the primary Roku (P6.4)
 * Install on all three Rokus and sync docs for sign-off (P6.5, G7)
 
 ## License

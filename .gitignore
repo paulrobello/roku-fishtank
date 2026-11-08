@@ -8,3 +8,6 @@ playwright-report/
 .env
 .claude/launch.json
 .claude/*-uncommitted.patch
+
+# Home device table: IPs + room names stay out of the public repo
+devices.local.md

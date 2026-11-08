@@ -1,6 +1,6 @@
 # Device performance limits (P0.6)
 
-Measured 2026-11-04 on the Primary Roku Ultra 4850X (X000000000000, Roku OS 15.3.4.2402), 1920x1080 design resolution, with the `PerfProbe` screensaver (`probe/`).
+Measured 2026-11-04 on the primary Roku Ultra 4850X (Roku OS 15.3.4.2402), 1920x1080 design resolution, with the `PerfProbe` screensaver (`probe/`).
 
 ## Contents
 
@@ -10,7 +10,7 @@ Measured 2026-11-04 on the Primary Roku Ultra 4850X (X000000000000, Roku OS 15.3
 - [How to measure](#how-to-measure)
 - [Measuring the channel](#measuring-the-channel)
 - [Checking any single scene](#checking-any-single-scene)
-- [Reef Tank on the Primary Roku (2026-11-04)](#reef-tank-on-the-living-room-roku-2026-11-04)
+- [Reef Tank on the primary Roku (2026-11-04)](#reef-tank-on-the-primary-roku-2026-11-04)
 
 ## Result
 
@@ -72,7 +72,7 @@ The fill-rate limit is separate from the texture limit and is usually the one th
 
 ## How to measure
 
-1. Put `ROKU_PASSWORD=<rokudev password>` in the repo `.env`. `ROKU_HOST` defaults to 192.168.1.10.
+1. Put `ROKU_HOST=<ip>` and `ROKU_PASSWORD=<rokudev password>` in the repo `.env` (the home device table lives in the gitignored `devices.local.md`).
 2. Run `make probe`. It builds `dist/probe.zip`, exits any running screensaver with `press k` on 8080, sideloads the probe, then waits up to `SCREENSAVER_WAIT` seconds (default 600) for the screensaver.
 3. **Start the screensaver by hand:** on the TV, go to Settings > Theme > Screensavers > dev > Preview. A sideloaded screensaver does not start on install. Once ECP `query/active-app` lists `<screensaver id="dev">`, the runner captures the 8087 console for `PROBE_SECONDS` (default 140) and samples `r2d2_bitmaps` on 8080 every 2 s.
 4. Results go to `docs/perf/raw/probe-<stamp>-console.log` (`PROBE stage= fish= layers= fps=` lines) and `-samples.log` (texture rows).
@@ -100,9 +100,9 @@ Raw data: `docs/perf/raw/probe-20261104-114800-*` (run 1, combined ramp) and `pr
 
 The demo scenes (`FishDemoScene`, `BrainDemoScene`, `SchoolDemoScene`, `BehaviorDemoScene`, `ReefTankSettings`, `MirrorProbeScene` from `tools/devicecheck/components`) are reachable this way, so subsystem changes can be judged on the device without a full-channel run. After a check, `make deploy` restores the normal channel.
 
-## Reef Tank on the Primary Roku (2026-11-04)
+## Reef Tank on the primary Roku (2026-11-04)
 
-Measured with `tools/perf/run_channel.sh` on the real channel (commit a050d3b plus the perf hook), Primary Roku Ultra 4850X, OS 15.3.4, 1920x1080. Raw logs: `docs/perf/raw/channel-20261104-*` and `channel-20261105-*`.
+Measured with `tools/perf/run_channel.sh` on the real channel (commit a050d3b plus the perf hook), primary Roku Ultra 4850X, OS 15.3.4, 1920x1080. Raw logs: `docs/perf/raw/channel-20261104-*` and `channel-20261105-*`.
 
 **The tank does not hold 60 fps.** Day medians 43 to 45 fps (range 37 to 49), night 39 (range 34 to 43). Pausing the invisible night overlays (committed 8246475) moved day from 43 to 44 and night not at all.
 
@@ -130,7 +130,7 @@ Reaching 60 fps would mean removing about 6 ms of 22.7 ms. The measured levers a
 
 Every run above, including the 43 to 45 fps (day) and 39 fps (night) figures, was at **busy** density (29 fish, school of 14): the device registry kept the density last saved from the settings screen, and the perf hook did not override it. `forceDensity` (perf.json) and `PERF_DENSITY` (tools/perf/run_channel.sh) now do.
 
-At **normal** (the default: 15 fish, school of 5, night school of 3; school halved from 10 and 6 in f9f1f76, arch swimmer faded out and stopped at night), Primary 4850X, 300 s with a 75 s day/night toggle (`channel-20261105-081043-auto-*`):
+At **normal** (the default: 15 fish, school of 5, night school of 3; school halved from 10 and 6 in f9f1f76, arch swimmer faded out and stopped at night), primary 4850X, 300 s with a 75 s day/night toggle (`channel-20261105-081043-auto-*`):
 
 | Mode | Samples | Min | Median | Max | At 58 or above |
 |---|---|---|---|---|---|
