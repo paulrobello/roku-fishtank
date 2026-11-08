@@ -9,6 +9,7 @@ Measured 2026-11-04 on the Primary Roku Ultra 4850X (X000000000000, Roku OS 15.3
 - [Texture budget (P0.7)](#texture-budget-p07)
 - [How to measure](#how-to-measure)
 - [Measuring the channel](#measuring-the-channel)
+- [Checking any single scene](#checking-any-single-scene)
 - [Reef Tank on the Primary Roku (2026-11-04)](#reef-tank-on-the-living-room-roku-2026-11-04)
 
 ## Result
@@ -90,6 +91,14 @@ Raw data: `docs/perf/raw/probe-20261104-114800-*` (run 1, combined ramp) and `pr
 `tools/perf/run_channel.sh <day|night|auto>` measures the real Reef Tank, not the probe. It writes a temporary `config/perf.json` (the committed file is an inert `{}`, restored afterwards), packages `dist/perf.zip`, sideloads it, waits for the screensaver to start (idle timeout, or Settings > Theme > Screensavers > dev > Preview), then captures the 8087 console and an `r2d2_bitmaps` sample into `docs/perf/raw/channel-<stamp>-<mode>-*`.
 
 `reefTankPerf` in `components/ReefTank/ReefTank.brs` reads `pkg:/config/perf.json`, which is an inert `{}` in the shipped channel, so the shipped channel carries no counter. Keys: `fpsLog` prints `PERF t= fps=` once a second (rendered frames, counted with an interpolator-driven field as in the probe), `forceMode` pins `day` or `night`, `toggleSec` flips between them to time the crossfade. `PERF_SECONDS` sets the capture length (default 120) and `PERF_TOGGLE` enables the toggle. `PERF_DENSITY=calm|normal|busy` overrides the density stored on the device, and `PERF_ABLATE="id1,id2"` with `PERF_ABLATE_SEC=<s>` hides one target per segment after a baseline segment, tagging the lines with `cut=`; `tools/perf/ablate_summary.py <console-log>` prints the per-cut medians. The summary skips the first 10 seconds. After a run, redeploy the normal build with `make deploy`.
+
+## Checking any single scene
+
+`make device-check SCENE=<ComponentName> [SECONDS=90] [DENSITY=calm|normal|busy]` measures one chosen scene instead of the whole channel. It builds `dist/check.zip` from `bsconfig.check.json`, with `dist/devicecheck.json` (`{"scene": ..., "density": ...}`) picking the scene and, for the Reef Tank, the population preset (empty `DENSITY` keeps the scene default; the default `SCENE` is `ReefTank`).
+
+`tools/devicecheck/run.sh` then exits any running screensaver, sideloads the package, waits up to `SCREENSAVER_WAIT` (default 600) for the screensaver to be the active app (ECP `query/active-app`; start it by hand with Settings > Theme > Screensavers > dev > Preview, or let the TV idle), captures the 8087 console for `SECONDS` seconds — the build carries an FpsMeter that prints `FPS <n>` lines — tries a device screenshot from the 8080 installer page, and exits the screensaver. Results go to `docs/perf/raw/check-<SCENE>-<stamp>-console.log` and `-device.jpg|png`, and the runner ends with an `FPS samples <n> mean <x> min <m>` summary line.
+
+The demo scenes (`FishDemoScene`, `BrainDemoScene`, `SchoolDemoScene`, `BehaviorDemoScene`, `ReefTankSettings`, `MirrorProbeScene` from `tools/devicecheck/components`) are reachable this way, so subsystem changes can be judged on the device without a full-channel run. After a check, `make deploy` restores the normal channel.
 
 ## Reef Tank on the Primary Roku (2026-11-04)
 
