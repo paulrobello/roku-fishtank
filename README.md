@@ -36,7 +36,11 @@
 
 ## About
 Reef Tank is a custom Roku **screensaver** channel: a procedurally animated tropical-reef tank
-built to replace Roku's "Aquatic Life" screensaver (removed December 1, 2026).
+built to replace Roku's "Aquatic Life" screensaver (removed December 1, 2026). It is not in
+the Channel Store: installing it means enabling Roku's developer mode (a one-time,
+~5-minute sequence on the remote) and sideloading the channel from a computer — see
+[Installing](#installing). Once sideloaded you enable it like any screensaver under
+**Settings > Theme > Screensavers**.
 
 Each fish is a rigged cutout with an undulating body and tail, driven by a per-species behavior
 brain: fish cruise, dart, turn, school, graze, hide and weave in front of and behind the rock and
@@ -322,8 +326,10 @@ Re-deploying an updated build is the [Sideload](#sideload-to-the-roku) step of
 ### Devices
 
 The reference devices are Roku Ultra boxes on OS 15.3.4: a 4850X (primary target) and two
-4800Xs. Device IPs, room names and dev-mode state are intentionally not published — keep
-yours in a gitignored `devices.local.md` next to the Makefile (plus `ROKU_HOST` /
+4800Xs. **Every performance number in this repo was measured on the 4850X** — the 4800X
+models have not been tested yet (planned, P6.3), so treat unknown-device performance as
+unmeasured. Device IPs, room names and dev-mode state are intentionally not published —
+keep yours in a gitignored `devices.local.md` next to the Makefile (plus `ROKU_HOST` /
 `ROKU_PASSWORD` in `.env`), both covered by the committed `.gitignore`.
 
 **Exit the screensaver on the TV before every deploy** — deploying under a running instance
@@ -334,6 +340,11 @@ Debug output (`REEFTANK ...` lines from `ReefTank.brs`, including any scene.json
 validation errors) is on telnet port **8087**: `telnet <ip> 8087`.
 
 ## Device performance
+
+Measured on the reference Roku Ultra 4850X at normal density: **day 60 fps, night 56**
+(the full breakdown and the texture budget are in `docs/perf.md`). Other Roku models,
+including the older Ultra 4800X, are untested — numbers there are expectations, not
+measurements.
 
 - `make probe` ramps fish/layer counts and logs fps + texture use to `docs/perf/raw/`.
 - `make device-check SCENE=ReefTank SECONDS=90 DENSITY=calm|normal|busy` runs any scene as

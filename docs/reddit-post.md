@@ -26,18 +26,21 @@ sways, caustics scroll over the sand. After real sunset (computed from actual su
 sunset times for your location) the tank crossfades to a moonlit night mode with glowing
 coral and a small group of flashlight fish that blink in the dark.
 
+**The decision point:** it is not in the Channel Store. Installing means enabling Roku's
+developer mode (one-time, about 5 minutes with the remote: Home x3, Up x2, Right, Left,
+Right, Left, Right) and sideloading the channel from a computer — free, official Roku
+feature, and reversible. After that you enable it like any screensaver under Settings >
+Theme > Screensavers. A full install-to-screensaver walkthrough video is coming; the
+README's Installing section covers every step with the exact button presses.
+
 Highlights:
 
 - 9 rigged fish species with per-species behavior state machines (cruise, dart, graze, hide, school, weave behind the rockwork)
 - Boids flocking school + a night-only flashlight fish group
 - Day/night cycle driven by real solar times, with a moonlight crossfade
 - Settings screen on the Roku for fish density, camera drift and night mode
-- Runs at 60 fps on a Roku Ultra; every visual is deterministic and seeded
+- Measured 60 fps day / 56 night on a Roku Ultra 4850X at normal density (the older 4800X models are not yet tested — P6.3 on the board); every visual is deterministic and seeded
 - 175 unit tests + a screenshot regression gate, because of course
-
-**The catch:** Roku doesn't allow sideloading into the Channel Store for personal projects,
-so it's a developer-mode sideload — takes about 5 minutes with the remote (Home x3, Up x2,
-Right, Left, Right, Left, Right), and it's free. Full instructions in the README.
 
 Source + install guide: https://github.com/paulrobello/roku-fishtank
 
