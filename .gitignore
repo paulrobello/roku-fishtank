@@ -6,3 +6,5 @@ node_modules/
 test-results/
 playwright-report/
 .env
+.claude/launch.json
+.claude/*-uncommitted.patch
