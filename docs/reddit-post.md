@@ -8,7 +8,7 @@ video outperforms static images several-fold; until then the image links are pla
 ## Title options
 
 1. I replaced Roku's retiring "Aquatic Life" screensaver with my own procedurally animated reef tank — free and open source
-2. Roku is killing the Aquatic Life screensaver in December, so I spent a month building a replacement
+2. Roku is killing the Aquatic Life screensaver in December, so I built a replacement in a few days
 3. My Roku now runs a fully procedural reef tank I wrote in BrightScript (free, open source, sideload it in 5 minutes)
 
 ## Master post (adapt per sub)
@@ -50,7 +50,7 @@ codebase that also runs in a browser simulator, which is how I screenshot-tested
 | Subreddit | Fit | Angle to lead with |
 |---|---|---|
 | r/Roku | Primary audience | "Aquatic Life is being removed, here's a free replacement" — practical, for users. Check self-promo rules; a comment-heavy Q&A posture lands better than a link drop. |
-| r/sideproject | Strong | The build story: one month, replacement for a beloved screensaver, open sourced. |
+| r/sideproject | Strong | The build story: a few days, replacement for a beloved screensaver, open sourced. |
 | r/proceduralgeneration | Strong, small | Tech angle: boids + steering behaviors + rigged sprite animation under SceneGraph constraints (no shaders, no additive blending, no flipbook). |
 | r/ReefTank | Fun crosspost | "I can't keep a real reef so I built a virtual one for my TV" — hobbyists will judge the fish; keep it light, mention species by name. |
 | r/Aquariums | Optional | Same angle as r/ReefTank; lower signal, bigger reach. Read the rules — some aquarium subs restrict non-hobby content. |
