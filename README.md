@@ -100,6 +100,12 @@ Roku. See `PRD.md` for scope and phases, `plans/` for the per-phase task plans, 
   build and compared simulator-vs-device (`docs/fidelity/`)
 - **Pinned toolchain**: every build tool pinned in `package.json`, installed with bun
 
+## Video
+
+15 seconds of day, then night — the real channel running in the browser preview:
+
+[![Reef Tank day/night video](https://raw.githubusercontent.com/paulrobello/roku-fishtank/main/docs/preview/night-full.png)](https://youtu.be/KN0P7S0MsjQ)
+
 ## Screenshots
 The full tank by day and night, the chromis school, species behaviors and the settings screen.
 
