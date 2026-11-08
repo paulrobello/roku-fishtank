@@ -102,9 +102,9 @@ The demo scenes (`FishDemoScene`, `BrainDemoScene`, `SchoolDemoScene`, `Behavior
 
 ## Reef Tank on the primary Roku (2026-11-04)
 
-Measured with `tools/perf/run_channel.sh` on the real channel (commit a050d3b plus the perf hook), primary Roku Ultra 4850X, OS 15.3.4, 1920x1080. Raw logs: `docs/perf/raw/channel-20261104-*` and `channel-20261105-*`.
+Measured with `tools/perf/run_channel.sh` on the real channel (the perf-hook build), primary Roku Ultra 4850X, OS 15.3.4, 1920x1080. Raw logs: `docs/perf/raw/channel-20261104-*` and `channel-20261105-*`.
 
-**The tank does not hold 60 fps.** Day medians 43 to 45 fps (range 37 to 49), night 39 (range 34 to 43). Pausing the invisible night overlays (committed 8246475) moved day from 43 to 44 and night not at all.
+**The tank does not hold 60 fps.** Day medians 43 to 45 fps (range 37 to 49), night 39 (range 34 to 43). Pausing the invisible night overlays moved day from 43 to 44 and night not at all.
 
 What the frame time is spent on, from one-at-a-time ablations (each segment 12 to 20 s, median fps against a same-run baseline of 42 to 45 in day):
 
@@ -130,7 +130,7 @@ Reaching 60 fps would mean removing about 6 ms of 22.7 ms. The measured levers a
 
 Every run above, including the 43 to 45 fps (day) and 39 fps (night) figures, was at **busy** density (29 fish, school of 14): the device registry kept the density last saved from the settings screen, and the perf hook did not override it. `forceDensity` (perf.json) and `PERF_DENSITY` (tools/perf/run_channel.sh) now do.
 
-At **normal** (the default: 15 fish, school of 5, night school of 3; school halved from 10 and 6 in f9f1f76, arch swimmer faded out and stopped at night), primary 4850X, 300 s with a 75 s day/night toggle (`channel-20261105-081043-auto-*`):
+At **normal** (the default: 15 fish, school of 5, night school of 3; school halved from 10 and 6, arch swimmer faded out and stopped at night), primary 4850X, 300 s with a 75 s day/night toggle (`channel-20261105-081043-auto-*`):
 
 | Mode | Samples | Min | Median | Max | At 58 or above |
 |---|---|---|---|---|---|
