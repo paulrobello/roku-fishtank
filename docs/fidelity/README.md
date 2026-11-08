@@ -4,6 +4,16 @@
 
 **Pass rule (PRD P0):** positions within 2% of screen width (38.4 px), colors visually matched (`tools/fidelity/measure.py` uses every channel within 16), and every primitive renders. Any fail stops the phase for Paul's fallback decision (O1 TS twin renderer, O2 device-only iteration).
 
+## Contents
+
+- [Files](#files)
+- [Cell layout](#cell-layout)
+- [Determinism](#determinism)
+- [Expected values](#expected-values)
+- [Results](#results)
+- [Findings](#findings)
+- [Device run](#device-run)
+
 ## Files
 
 | File | What |
@@ -61,7 +71,7 @@ Rotation is CCW-positive on screen (y down): a point (x, y) relative to the cent
 
 ## Results
 
-Positions are measured centroids at nominal t = 4 s from `simulator-measure.md` and `device-measure.md`. Error is the distance to the expected value. Since 2026-11-04 the expected values for cells 4 and 7 are the device rules (F4, F5), and the simulator column is the preview with the device patches in `preview/vite.config.ts`. The unpatched simulator measured cell 3 at 34.5 px off (F1), cell 4 mirrored (red 1480, blue 1384), cell 7 at 0xFF007F / 0xFF00FE / 0x8000FF and the probe at x 1512.
+Positions are measured centroids at nominal t = 4 s from `simulator-measure.md` and `device-measure.md`. Error is the distance to the expected value. Since 2026-11-04 the expected values for cells 4 and 7 are the device rules (F4, F5), and the simulator column is the preview with the device patches in `preview/vite.config.ts`. The unpatched simulator measured cell 3 at 34.5 px off (F1), cell 4 mirrored (red 1480, blue 1384), cell 7 at 0xFF007F / 0xFF00FF / 0x8000FF and the probe at x 1512.
 
 | # | Primitive | Simulator measured (patched) | Simulator verdict | Device measured | Device verdict |
 |---|---|---|---|---|---|

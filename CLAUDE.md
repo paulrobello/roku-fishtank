@@ -9,9 +9,9 @@ A Roku screensaver channel written in BrightScript/SceneGraph. Scope and phases 
 ## Architecture
 
 - `source/main.brs` is the only device entry point file: `RunScreenSaver()` creates `ReefTank`, `RunScreenSaverSettings()` creates `ReefTankSettings`. `source/preview.brs` defines the `Main(args)` shim that mirrors this for brs-engine and is excluded from the device zip.
-- `components/ReefTank/` builds the tank from `config/scene.json`: a `camera` Group (drift loop) whose children are named layer Groups with parallax factors (waterGradient, lightShafts, backRockwork, lanes, coral layers, surfaceRipple, bubbles), plus decor placements and the fish population. Subsystem components: `Fish/` (rig renderer), `FishBrain/` (per-species behavior state machines), `School/` (boids), `Bubbles/`, `Seaweed/`, `Arch/`, `Extras/`, `Night/`, `ReefTankSettings/`.
+- `components/ReefTank/` builds the tank from `config/scene.json`: a `camera` Group (drift loop) whose children are named layer Groups with parallax factors (waterGradient, lightShafts, backRockwork, lanes, coral layers, foreground, surfaceRipple, bubbles), plus decor placements and the fish population. Subsystem components: `Fish/` (rig renderer), `FishBrain/` (per-species behavior state machines), `School/` (boids), `Bubbles/`, `Seaweed/`, `Arch/`, `Extras/`, `Night/`, `ReefTankSettings/`.
 - `components/lib/` is pure BrightScript logic with no SceneGraph dependency (prng, steer, brain, school, solar, daynight, scenecfg, settings, tint, glow, bubbles, night, extras, arch, weave, host). It runs under brs-cli in `make test`; a new suite must be registered by name in `tests/run_tests.brs` `testSuites()` (BrightScript has no reflection). `make test FILTER=<substring>` runs only suites/tests whose `suite.test` name contains the substring (case-insensitive); a filter matching nothing fails the run.
-- Behavior is config-driven end to end: `config/scene.json` (layers, lanes, decor, population), `behavior.json` (per-species kinds, `_notes` documents the schema), `brain.json`/`school.json` (steering params), `night.json`, `species/*.json` with generated `*.rig.json`. Changing feel usually means editing JSON, not code.
+- Behavior is config-driven end to end: `config/scene.json` (layers, lanes, decor, population), `behavior.json` (per-species kinds, `_notes` documents the schema), `brain.json`/`school.json` (steering params), `night.json`, `arch.json`/`extras.json`, `species/*.json` with generated `*.rig.json`. Changing feel usually means editing JSON, not code.
 - Four bsc packages: `bsconfig.json` (device channel → `dist/channel.zip`), `bsconfig.fidelity.json` (FidelityScene → `dist/fidelity.zip`), `bsconfig.probe.json` (perf ramp probe), `bsconfig.check.json` (device-check, scene/density picked via `dist/devicecheck.json`).
 - Preview demo scenes are the dev loop for each subsystem: `?scene=FishDemoScene|BrainDemoScene|SchoolDemoScene|BehaviorDemoScene|ReefTankSettings|FidelityScene`. URL params (`seed`, `time`, `speed`, `freeze`, `species`, `density`) reach the scene as `m.global` fields; `?freeze=T` produces deterministic frames, which is what the visual gate compares. Full param table: README "Browser preview".
 
@@ -30,7 +30,7 @@ A Roku screensaver channel written in BrightScript/SceneGraph. Scope and phases 
 - Deploy: `ROKU_HOST=<ip> ROKU_PASSWORD=<pw> make deploy`. The installer uses digest auth.
 - Debug console: telnet port **8087**, which only listens while the screensaver runs. Read runtime errors there before guessing.
 - ECP is in Limited mode on this LAN, so launching and rebooting are physical-remote steps. Exiting is remote: `press k` on the port 8080 developer console (`tools/perf/run_probe.sh` does this before deploying). `http://<ip>:8060/query/active-app` shows whether the screensaver is running.
-- Devices (full table in `~/.claude/guides/infrastructure.md`, each Roku is named after its room): Primary 192.168.1.10 (Ultra 4850X, dev mode on, primary target). Second 192.168.1.11 (dev mode on, Reef Tank installed 2026-11-04). Third 192.168.1.12 (dev mode off until P6). All run OS 15.3.4.
+- Devices (full table in `~/.claude/guides/infrastructure.md`, each Roku is named after its room): Primary 192.168.1.10 (Ultra 4850X, dev mode on, primary target). Second 192.168.1.11 (dev mode on, Reef Tank installed 2026-11-04). Third 192.168.1.12 (dev mode off). All run OS 15.3.4.
 
 ## Platform constraints
 
@@ -43,4 +43,4 @@ A Roku screensaver channel written in BrightScript/SceneGraph. Scope and phases 
 
 ## Art
 
-AI-generated originals, prompts, seeds and provenance live in `assets/source/` and are never shipped. Runtime PNGs go in `images/`. Icons and splashes are derived from the backdrop, `config/scene.json` and the fish rigs by `make key-art` (`tools/art/key_art.py`). Local moss-image comes first. Higgsfield (paid) runs only per batch with Paul's approval. `screensaver-ref.jpg` is a third-party photo used as reference only. Never commit it.
+AI-generated originals, prompts, seeds and provenance live in `assets/source/` and are never shipped. Runtime PNGs go in `images/`. Icons and splashes are derived from the backdrop, `config/scene.json` and the fish rigs by `make key-art` (`tools/art/key_art.py`). Local moss-image comes first. Higgsfield (paid) runs only per batch with Paul's approval.

@@ -10,7 +10,11 @@
 * [Screenshots](#screenshots)
 * [Prerequisites for running](#prerequisites-for-running)
 * [Prerequisites for dev](#prerequisites-for-dev)
-* [Installing for dev mode](#installing-for-dev-mode)
+* [Installing](#installing)
+   * [Enable developer mode on the Roku](#enable-developer-mode-on-the-roku)
+   * [Install the toolchain and build](#install-the-toolchain-and-build)
+   * [Sideload to the Roku](#sideload-to-the-roku)
+   * [Select Reef Tank as the screensaver](#select-reef-tank-as-the-screensaver)
 * [Project layout](#project-layout)
 * [Make targets](#make-targets)
 * [Browser preview](#browser-preview)
@@ -36,8 +40,8 @@ built to replace Roku's "Aquatic Life" screensaver (removed December 1, 2026).
 
 Each fish is a rigged cutout with an undulating body and tail, driven by a per-species behavior
 brain: fish cruise, dart, turn, school, graze, hide and weave in front of and behind the rock and
-coral. Around them are bubbles, swaying seaweed, anemones and invertebrates, a living water
-surface with caustics, and a slow parallax camera drift. After sunset the tank switches to a
+coral. Around them are bubbles, swaying seaweed, anemones and invertebrates, scrolling
+caustics, and a slow parallax camera drift. After sunset the tank switches to a
 moonlit night mode with glowing coral and bioluminescent sparkles, computed from real sunrise and
 sunset times at Woodland, CA. There are no Roku logos anywhere.
 
@@ -52,7 +56,7 @@ Roku. See `PRD.md` for scope and phases, `plans/` for the per-phase task plans, 
 
 ### Core Capabilities
 - **Layered parallax tank**: the reef is a stack of named layer Groups (backdrop, rockwork, coral
-  lanes, foreground, surface ripple, bubbles) inside a drifting `camera` Group, each with its own
+  lanes, foreground, bubbles) inside a drifting `camera` Group, each with its own
   parallax factor, built from `config/scene.json`
 - **Procedural fish**: every species is a rigged sprite (body, tail, fins, crest) whose parts
   animate by transforms — undulation, tail beats with depth foreshortening, turns, dart bursts
@@ -65,7 +69,7 @@ Roku. See `PRD.md` for scope and phases, `plans/` for the per-phase task plans, 
   bioluminescence and night-only flashlight fish; sunrise/sunset for Woodland, CA in device
   local time
 - **Ambient life**: realistic bubble columns, swaying segmented seaweed, anemones, a crab, a
-  shrimp, scrolling caustics and a rippling water surface
+  shrimp and scrolling caustics
 - **Settings screen**: `RunScreenSaverSettings()` on the device (Settings > Theme > Screensavers >
   Reef Tank) for fish density, camera drift and night mode, persisted in the device registry
 
@@ -110,9 +114,8 @@ The full tank by day and night, the chromis school, species behaviors and the se
 ![Settings screen](https://raw.githubusercontent.com/paulrobello/roku-fishtank/main/docs/preview/settings-initial.png)
 
 ## Prerequisites for running
-* A Roku on your LAN with developer mode enabled
-  * **Home x3, Up x2, Right, Left, Right, Left, Right** on the remote, enable the Development
-    Application Installer, set a `rokudev` password
+* A Roku streaming player on your LAN with developer mode enabled (see
+  [Installing](#installing) below — it takes about two minutes with the remote)
 * No store listing: Reef Tank is a sideloaded personal channel (see `RESEARCH.md` §3)
 
 ## Prerequisites for dev
@@ -122,12 +125,47 @@ The full tank by day and night, the chromis school, species behaviors and the se
 * [uv](https://docs.astral.sh/uv/) + Python 3 for the art pipeline (`make art`, `make key-art`)
 * Playwright Chromium (auto-installed by `make test-visual`)
 
-## Installing for dev mode
-The repo is local-only (no remote yet). From the repo root:
+## Installing
+The repo is local-only (no remote yet). Installation is three parts: enable developer mode on
+the Roku (once per device), build the channel, and sideload it. The result appears in
+**Settings > Theme > Screensavers** like any screensaver.
+
+### Enable developer mode on the Roku
+1. On the Roku remote, press: **Home x3, Up x2, Right, Left, Right, Left, Right**
+   (Home three times, Up twice, then Right-Left-Right-Left-Right). This opens the hidden
+   developer setup screens.
+2. Enable the **Developer Application Installer**. The Roku reboots once.
+3. Set the `rokudev` password when prompted — every sideload authenticates with it.
+4. Note the device IP from the developer screen (or Settings > Network > About).
+   After the reboot the installer page is at `http://<ip>/plugin_install`.
+
+The devices on this LAN are listed under [Deploy](#deploy). Developer mode stays enabled
+until you disable it or do a factory reset; a reboot does not remove it.
+
+### Install the toolchain and build
+From the repo root:
 ```bash
 make install    # bun install --frozen-lockfile
-make checkall   # full gate: api-guard, fmt, lint, typecheck, tests, build, zip-check, fidelity, visual
+make build      # package the device channel -> dist/channel.zip
+make checkall   # optional full gate: api-guard, fmt, lint, typecheck, tests, build, zip-check, fidelity, visual
 ```
+
+### Sideload to the Roku
+**Exit the screensaver on the TV first** (press any key on the remote) — deploying under a
+running instance wedges the channel until a device reboot.
+
+Command line (digest auth against the device's installer page):
+```bash
+ROKU_HOST=<ip> ROKU_PASSWORD=<rokudev-password> make deploy
+```
+Or in a browser, upload `dist/channel.zip` at `http://<ip>/plugin_install`.
+
+Only one sideloaded channel exists per device; each deploy replaces it.
+
+### Select Reef Tank as the screensaver
+On the Roku: **Settings > Theme > Screensavers** → select *Reef Tank*, shorten the wait
+timer, let the TV idle, and confirm the tank appears. A remote keypress at any time exits
+back to normal TV (platform behavior for screensavers).
 
 ## Project layout
 ```
@@ -140,10 +178,10 @@ components/School/       boids school
 components/Bubbles/      bubble columns
 components/Seaweed/      segmented seaweed
 components/Arch/         arch swimmer
-components/Extras/       caustics, ripple, critters
+components/Extras/       caustics, sway chains, critters
 components/Night/        day/night controller
 components/lib/          pure logic (PRNG, steering, brain, school, solar, day/night, scene config)
-config/                  scene.json, behavior.json, brain.json, school.json, night.json, species rigs
+config/                  scene.json, behavior.json, brain.json, school.json, night.json, extras.json, arch.json, species rigs
 images/                  runtime art: decor/, fish/, icons and splashes (make key-art)
 preview/                 Vite page that runs the channel in brs-engine + brs-scenegraph
 tests/                   BrightScript unit tests + Playwright visual specs
@@ -188,9 +226,12 @@ brs-engine with the SceneGraph extension on a 1920x1080 canvas scaled to the win
   | `scene` | `?scene=FidelityScene` | scene component to create (default `ReefTank`) | used by `Main` only |
   | `seed` | `?seed=42` | `previewSeed` (integer) | plumbed and printed |
   | `time` | `?time=18:30` | `previewTime` (string) | plumbed and printed |
-  | `speed` | `?speed=4x` | `previewSpeed` (float) | scales the FishBrain clock and its mover durations and the camera drift loop; Fish tail/turn animations run at 1x |
+  | `speed` | `?speed=4x` | `previewSpeed` (float) | scales the FishBrain clock and its mover durations, the camera drift loop and the day/night cycle clock; Fish tail/turn animations run at 1x |
   | `freeze` | `?freeze=10` | `previewFreeze` (seconds) | pauses all Animations at T and snaps them to their value at T, so reloads give the same frame |
   | `species` | `?species=lionfish` | `previewSpecies` (string) | species shown by `FishDemoScene` (default `royal_blue_tang`) |
+  | `density` | `?density=busy` | `previewDensity` (string) | overrides the stored density setting |
+  | `night` | `?night=1` | `previewNight` (string) | `1` / `0` forces night or day; the OK key toggles it under the preview |
+  | `debug` | `?debug=1` | `previewDebug` (integer) | draws the tank debug overlay |
 
 - **Settings precedence (P5.3):** at launch `ReefTank` `init()` reads the stored settings
   (registry section `ReefTank`: density, drift, nightMode) and writes them to its `density`,
@@ -235,7 +276,8 @@ brs-engine with the SceneGraph extension on a 1920x1080 canvas scaled to the win
   machine: grazers (tangs, emperor angelfish, Moorish idol) cruise, approach a rock point
   and peck; the royal gramma hovers at a cave mouth and backs tail first into its den;
   the mandarin pauses and hops inside the rock/sand band; the lionfish drifts and hangs
-  with no darts; clownfish cruise until P4. Cave mouths (yellow), dens (violet), rock
+  with no darts; the clownfish cruises (in the tank it also nestles at the anemone host,
+  P4.1). Cave mouths (yellow), dens (violet), rock
   graze points (green) and the band (sand) are drawn as markers, and every mode change
   logs `BEHAVIOR fish=<i> species=<s> <from>-><to> t=<s>`. `config/behavior.json`'s
   `_notes` documents the schema. Evidence: `docs/perf/behavior-seed1.log` and
@@ -267,28 +309,23 @@ Layout, expected values and verdicts are in `docs/fidelity/README.md`.
 
 ## Deploy
 
+Re-deploying an updated build is the [Sideload](#sideload-to-the-roku) step of
+[Installing](#installing); the full first-time flow lives there.
+
 ### Devices on this LAN (discovered 2026-11-04 via mDNS + ECP)
 
 | IP | Name | Model | OS | Dev mode |
 |---|---|---|---|---|
 | 192.168.1.10 | **Primary** (primary target) | Ultra 4850X | 15.3.4 | on |
 | 192.168.1.11 | Second | Ultra 4800X | 15.3.4 | on (Reef Tank installed 2026-11-04) |
-| 192.168.1.12 | Third | Ultra 4800X | 15.3.4 | off until P6 |
+| 192.168.1.12 | Third | Ultra 4800X | 15.3.4 | off |
 
-1. **Exit the screensaver on the TV before deploying** — deploying under a running
-   instance wedges it until a device reboot.
-2. Enable dev mode on the Roku (once): **Home x3, Up x2, Right, Left, Right, Left, Right**
-   on the remote, enable the Development Application Installer, set a `rokudev` password,
-   note the device IP.
-3. Command line: `ROKU_HOST=<ip> ROKU_PASSWORD=<pw> make deploy`
-   (or VS Code: open this folder, set host+password per the extension's prompt, press the deploy/debug button).
-4. Browser fallback: upload `dist/channel.zip` at `http://<ip>/plugin_install`.
-5. On the Roku: **Settings > Theme > Screensavers** → select *Reef Tank*,
-   shorten the wait timer, let it idle, confirm the tank appears.
+**Exit the screensaver on the TV before every deploy** — deploying under a running instance
+wedges it until a device reboot. VS Code also works: open this folder, set host + password
+per the extension's prompt, press the deploy/debug button.
 
 Debug output (`REEFTANK ...` lines from `ReefTank.brs`, including any scene.json
-validation errors) is on telnet port **8087**:
-`telnet <ip> 8087`.
+validation errors) is on telnet port **8087**: `telnet <ip> 8087`.
 
 ## Device performance
 

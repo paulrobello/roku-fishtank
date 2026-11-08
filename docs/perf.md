@@ -2,6 +2,15 @@
 
 Measured 2026-11-04 on the Primary Roku Ultra 4850X (X000000000000, Roku OS 15.3.4.2402), 1920x1080 design resolution, with the `PerfProbe` screensaver (`probe/`).
 
+## Contents
+
+- [Result](#result)
+- [Texture memory](#texture-memory)
+- [Texture budget (P0.7)](#texture-budget-p07)
+- [How to measure](#how-to-measure)
+- [Measuring the channel](#measuring-the-channel)
+- [Reef Tank on the Primary Roku (2026-11-04)](#reef-tank-on-the-living-room-roku-2026-11-04)
+
 ## Result
 
 The 4850X is **fill-rate bound, not node bound**.
@@ -23,7 +32,7 @@ The 4850X is **fill-rate bound, not node bound**.
 | 0 | 80 | 60, 60 |
 | 0 | 140 | 60, 59 |
 
-Run 1 ramped fish and layers together and agrees with this. 20 fish with 2 layers held 60 fps. 30 fish with 4 layers fell to 30 fps, and so did every heavier stage up to 140 fish with 8 layers. The one exception was 100 fish with 8 layers, which ran at 20 fps.
+Each stage runs 10 s; the median and min skip the first sample after a stage change, which catches the scene rebuild. Run 1 ramped fish and layers together and agrees with this. 20 fish with 2 layers held 60 fps. 30 fish with 4 layers fell to 30 fps, and so did every heavier stage up to 140 fish with 8 layers. The one exception was 100 fish with 8 layers, which ran at 20 fps.
 
 **Design limit for 60 fps:** at most the background plus **two more full-screen layers of overdraw** in any part of the screen. Three costs up to 10 fps. Fish, decor and particles that cover a small part of the screen are cheap. Large translucent overlays such as light shafts, caustics, surface ripple and full-width foreground cost about as much as one full-screen layer each, whatever their opacity. The P1 layer stack has to keep the full-screen ones to two.
 
@@ -80,7 +89,7 @@ Raw data: `docs/perf/raw/probe-20261104-114800-*` (run 1, combined ramp) and `pr
 
 `tools/perf/run_channel.sh <day|night|auto>` measures the real Reef Tank, not the probe. It writes a temporary `config/perf.json` (the committed file is an inert `{}`, restored afterwards), packages `dist/perf.zip`, sideloads it, waits for the screensaver to start (idle timeout, or Settings > Theme > Screensavers > dev > Preview), then captures the 8087 console and an `r2d2_bitmaps` sample into `docs/perf/raw/channel-<stamp>-<mode>-*`.
 
-`reefTankPerf` in `components/ReefTank/ReefTank.brs` reads `pkg:/config/perf.json`, which is an inert `{}` in the shipped channel, so the shipped channel carries no counter. Keys: `fpsLog` prints `PERF t= fps=` once a second (rendered frames, counted with an interpolator-driven field as in the probe), `forceMode` pins `day` or `night`, `toggleSec` flips between them to time the crossfade. `PERF_SECONDS` sets the capture length (default 120) and `PERF_TOGGLE` enables the toggle. The summary skips the first 10 seconds. After a run, redeploy the normal build with `make deploy`.
+`reefTankPerf` in `components/ReefTank/ReefTank.brs` reads `pkg:/config/perf.json`, which is an inert `{}` in the shipped channel, so the shipped channel carries no counter. Keys: `fpsLog` prints `PERF t= fps=` once a second (rendered frames, counted with an interpolator-driven field as in the probe), `forceMode` pins `day` or `night`, `toggleSec` flips between them to time the crossfade. `PERF_SECONDS` sets the capture length (default 120) and `PERF_TOGGLE` enables the toggle. `PERF_DENSITY=calm|normal|busy` overrides the density stored on the device, and `PERF_ABLATE="id1,id2"` with `PERF_ABLATE_SEC=<s>` hides one target per segment after a baseline segment, tagging the lines with `cut=`; `tools/perf/ablate_summary.py <console-log>` prints the per-cut medians. The summary skips the first 10 seconds. After a run, redeploy the normal build with `make deploy`.
 
 ## Reef Tank on the Primary Roku (2026-11-04)
 
@@ -93,7 +102,7 @@ What the frame time is spent on, from one-at-a-time ablations (each segment 12 t
 | Removed | fps gained | Reading |
 |---|---|---|
 | Every Animation paused | +13 | about 400 running interpolators at roughly 17 us each |
-| All 21 fish hidden | +12 | main fish (9) +9, school (12 small) +4: about 0.5 ms of drawing per fish |
+| All 43 fish hidden | +12 | main fish (29) +8, school (14 small) +4: about 0.1 ms of drawing per fish |
 | Main fish animations only paused | +1.5 to 2 | fish cost is mostly drawing, not animating |
 | Front coral layer hidden (night) | +6 | largest single layer, big alpha clumps |
 | Mid, back and front lane layers hidden (night) | +3 to +4 each | the fish in them |
@@ -101,11 +110,11 @@ What the frame time is spent on, from one-at-a-time ablations (each segment 12 t
 | Night overlay animations paused (day) | +3, then 1 once committed | fixed by pausing them while invisible |
 | Extras (sway chains, anemone) animations paused | +2.5 | |
 | Arch swimmer animations paused | +1 | |
-| Backdrop, mid coral, back rockwork layers hidden | 0 to +1 | cheap |
+| Backdrop, mid coral, back rockwork layers hidden | 0 to +1.5 | cheap |
 
 Ruled out on the device: render resolution (declaring `ui_resolutions=hd` only changed nothing, median 40 at night against 39, so the framebuffer is native whatever the UI resolution), tint (`blendColor` stripped from every fish: no change), fish scale and rotation (stripped: no change), idle Animation nodes (97 detached: no change), zero-opacity night overlays (hidden in day: no change after the pause fix). The scene has 1,706 nodes (`cfg.nodeReport`), 228 Animations and about 700 interpolators among them.
 
-Reaching 60 fps would mean removing about 6 ms of 22.7 ms. The measured levers are all visible: halving the school (+2 fps), 9 to 6 main fish (+3), 40 to 20 bubbles (+1.5), simplified fish rigs or fewer sway segments (+1 to +4). Together they reach about 50, not 60, so 60 fps is out of reach without thinning the tank substantially.
+Reaching 60 fps would mean removing about 6 ms of 22.7 ms. The measured levers are all visible: halving the school (+2 fps), 29 to 18 main fish (+3), 40 to 20 bubbles (+1.5), simplified fish rigs or fewer sway segments (+1 to +4). Together they reach about 50, not 60, so 60 fps is out of reach without thinning the tank substantially.
 
 
 ### Density correction and Normal-density result (2026-11-05)
