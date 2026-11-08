@@ -36,11 +36,15 @@ with a screen recorder (OBS/QuickTime) or scripted later.
 
 ## Status / division of labor
 
-- **Paul:** the two remote steps (R1, step 5) and any TV-frame shots (6, 7) — the remote
-  steps cannot be scripted (ECP is Limited mode on this LAN; no virtual keypresses).
-- **Agent-scriptable:** step 2 (build) and 3 (`make deploy` to the reference device) can
-  be terminal-recorded; step 4 is a short browser session (`agentchrome` can capture it).
-  A later session can produce these clips on request; deploying to the real TV needs the
-  screensaver not running (the runner already handles that).
+- **Reference devices are fully remote-controllable (2026-11-08):** all three Rokus run
+  dev mode with ECP Network access permissive, so every remote keypress can be sent
+  scripted (`curl -d '' http://<ip>:8060/keypress/<Key>`) and verified with a device
+  screenshot (`plugin_inspect`, as `tools/fidelity/run_device.sh` does). Steps R1, 5, 6
+  and 7 can therefore be executed and screen-captured against our devices by an agent;
+  only the physical TV-framing shot (a phone on a tripod) needs a human.
+- **For the viewer-facing video** the remote steps are still performed by hand on camera —
+  the audience's Rokus do not have permissive ECP by default, and the video teaches the
+  sequence, not a script.
+- **Agent-scriptable now:** step 2 (build) and 3 (`make deploy` to the reference device).
 - The showcase video (https://youtu.be/KN0P7S0MsjQ) stays as the "why" video; this
   walkthrough is the "how" video. Link each from the other's description once both exist.

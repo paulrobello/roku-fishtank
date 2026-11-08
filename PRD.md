@@ -50,7 +50,7 @@ Sources: RESEARCH.md, `~/.claude/guides/roku.md`, and live doc checks on 2026-11
 | The system falls back to the default screensaver if memory is short at launch | Keep the resident set under the measured budget with margin |
 | `fieldToInterp` from BrightScript must be an roArray of path strings; Posters draw at natural size unless `width`/`height` are set; `Rectangle` has no `size` | Encoded in the scene builder (see the guide) |
 | Deploying while the screensaver runs wedges the app until a reboot | **Every deploy step: exit the screensaver first** |
-| ECP runs in Limited mode on this LAN (no launch or keypress) | Starting a preview and a soak run are physical-remote steps. Exiting is remote via `press k` on the 8080 developer console. Logs come from telnet 8087 |
+| ECP keypress is available on all three devices (permissive Network access, verified 2026-11-08); `/launch` of a screensaver channel is still refused by the platform | Starting the screensaver is a TV-side step (Settings > Preview or the idle timer). Exiting is remote: ECP `keypress` or `press k` on the 8080 developer console. Logs come from telnet 8087 |
 | Only one sideloaded app per device, and dev mode is required | Reef Tank replaces the test channel. The 4800Xs need dev mode enabled in P6 |
 | No geolocation | Lat/long is baked into config. Time zone and DST come from `roDateTime` local time (device: `America/Los_Angeles`, auto) |
 
@@ -160,7 +160,7 @@ Acceptance:
 - R2: 60 fps with ~25 rigged fish × 3 Posters each, plus layers, may exceed the 4800X. Mitigated by P0 headroom measurement, density settings, and fewer rig parts on background-lane fish.
 - R3: AI art consistency across 8 species in one painterly style, and clean splitting at the tail. Mitigated by the style-board gate, per-species approval and pipeline pivot overrides.
 - R4: Schedule. Everything by Dec 1 is 27 days. Mitigated by the parallel art track, the Nov 24 checkpoint and the cut order.
-- R5: Deploy-wedge and Limited ECP slow the device loop. Mitigated by the exit-first rule and preview-first iteration.
+- R5: Deploy-wedge and the TV-side screensaver start slow the device loop. Mitigated by the exit-first rule, remote ECP keypress, and preview-first iteration.
 - R6: Long-run leaks (node and BrightScript reference cycles). Mitigated by pooling (bubbles, sparkles), no per-segment node creation, and the soak.
 - R7: The texture budget is unknown until measured. Mitigated by the P0 measurement before art sizes are fixed.
 

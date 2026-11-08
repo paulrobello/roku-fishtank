@@ -29,8 +29,8 @@ A Roku screensaver channel written in BrightScript/SceneGraph. Scope and phases 
 - **Exit the screensaver on the TV before `make deploy`.** Deploying under a running instance wedges it until a device reboot.
 - Deploy: `ROKU_HOST=<ip> ROKU_PASSWORD=<pw> make deploy`. The installer uses digest auth.
 - Debug console: telnet port **8087**, which only listens while the screensaver runs. Read runtime errors there before guessing.
-- ECP is in Limited mode on this LAN, so launching and rebooting are physical-remote steps. Exiting is remote: `press k` on the port 8080 developer console (`tools/perf/run_probe.sh` does this before deploying). `http://<ip>:8060/query/active-app` shows whether the screensaver is running.
-- Devices: three Roku Ultras on the home LAN, all OS 15.3.4 — a 4850X (primary target, dev mode on) and two 4800Xs (one with dev mode on and Reef Tank installed 2026-11-04, one with dev mode off). IPs, room names and dev-mode state live in the gitignored `devices.local.md` (and `~/.claude/guides/infrastructure.md`); they stay out of the public repo.
+- ECP keypresses work on all three devices (Network access set to permissive; verified 2026-11-08): `curl -d '' http://<ip>:8060/keypress/Home` exits a running screensaver remotely. Starting one is still TV-side (Settings > Theme > Screensavers > dev > Preview, or the idle timer) — `/launch/dev` is refused (503; screensaver channels are not foreground-launchable), and there is no reboot endpoint. The telnet `press k` path on 8080 (`tools/perf/run_probe.sh`) still works. `http://<ip>:8060/query/active-app` shows whether the screensaver is running.
+- Devices: three Roku Ultras on the home LAN, all OS 15.3.4, all with dev mode on and ECP keypress permissive — a 4850X (primary target) and two 4800Xs (Reef Tank sideloaded 2026-11-04 on one of them). Performance is measured on the 4850X only. IPs, room names and dev-mode state live in the gitignored `devices.local.md` (and `~/.claude/guides/infrastructure.md`); they stay out of the public repo.
 
 ## Platform constraints
 
