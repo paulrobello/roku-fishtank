@@ -5,7 +5,7 @@
 | Product | Reef Tank: a procedurally animated tropical-reef screensaver for Roku |
 | Repo | `~/Repos/roku-fishtank` (local only, no remote) |
 | Owner | Paul Robello |
-| Status | Planned. Feasibility proven by the test channel (2026-11-04) |
+| Status | Shipped 2026-11-08: all phases complete, Paul sign-off recorded (Decisions log). P6.4 8-hour soak verdict pending that evening |
 | Date | 2026-11-04 |
 | Ship target | v1 live on the Primary Roku before **2026-12-01** (Aquatic Life removal date). Scope checkpoint on **2026-11-24** |
 
@@ -183,3 +183,4 @@ Acceptance:
 ## Decisions log (added during execution)
 
 - 2026-11-04 (Paul, standing instruction): the whole project ships **today, 2026-11-04**. The Nov 24 scope checkpoint and the Dec 1 date are void; **no scope cuts** were taken. Work runs in parallel sub-agent waves instead of the phase schedule.
+- 2026-11-08 (Paul, P6.5 sign-off): **APPROVED.** Side-by-side judged from the sign-off sheet of on-device captures (4850X day, both 4800X day frames, night mode) — `screensaver-ref.jpg` no longer exists on disk (third-party watermarked photo, never committed), so the G1 bar was judged from memory of the retired Aquatic Life tank. G1 satisfied: Reef Tank is visibly better. G2 (all behaviors/effects present, no Roku branding) and G3–G6 verified through P0–P5 gates; G7 completes when the office TV's idle start confirms the selection (installed + previewed 2026-11-08). P6.4 soak verdict pending (~2026-11-08 22:00).
