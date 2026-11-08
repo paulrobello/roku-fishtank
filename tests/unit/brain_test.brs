@@ -228,8 +228,8 @@ sub brainTest_facingDeadband(t as object)
     assertEqual(t, brainFacing(-1, 7, 6), 1, "right past deadband flips")
 end sub
 
-' Facing flips over 20 fish x 300 s: the wander pull and the wider deadband (config/brain.json)
-' must leave a fraction of what the unpulled wander flipped.
+' Facing flips over 20 fish x 300 s: the wander pull (config/brain.json) must leave a fraction of what the
+' unpulled wander flipped. The deadband stays small: a wide one lets a fish swim backwards for a segment.
 function brainTest_flips(cfg as object) as integer
     flips = 0
     for seed = 1 to 20
@@ -248,10 +248,9 @@ sub brainTest_wanderPullCutsFlips(t as object)
     old = brainTest_flips(brainTest_cfg())
     pulled = brainTest_cfg()
     pulled.wanderPull = 2.0
-    pulled.facingDeadband = 40
     now = brainTest_flips(pulled)
     print "  brain flips over 20 fish x 300 s: unpulled = "; old; ", pulled = "; now
-    assertTrue(t, now * 3 < old, "pull and deadband cut flips to under a third")
+    assertTrue(t, now * 2 < old, "pull cuts flips to under half")
 end sub
 
 sub brainTest_speedBucket(t as object)

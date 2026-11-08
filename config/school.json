@@ -28,7 +28,7 @@
   "leaderLeashAccel": 80,
   "spawnRadius": 150,
   "spawnMargin": 0.3,
-  "facingDeadband": 25,
+  "facingDeadband": 6,
   "wanderPull": 2.0,
   "speedBucket": 15,
   "boundRadius": 260,
