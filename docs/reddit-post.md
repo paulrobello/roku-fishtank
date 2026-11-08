@@ -2,8 +2,8 @@
 
 A ready-to-adapt release post plus target subreddits. Post from Paul's account; adapt the
 intro per sub (Reddit penalizes identical crossposts) and check each sub's self-promotion
-rules first. Capture a 20–30 s video of the tank (day → dusk → night) before posting —
-video outperforms static images several-fold; until then the image links are placeholders.
+rules first. The release video is live on YouTube — link it as the media in every post:
+**https://youtu.be/KN0P7S0MsjQ** (29 s, day + night, custom thumbnail).
 
 ## Title options
 
@@ -68,6 +68,7 @@ r/cordcutters (release posts are off-topic there).
   (free, dev mode is official and reversible, only one sideloaded app per slot, source is
   open) is in the README's Installing section.
 - Night-mode video segment matters: the dusk crossfade + glowing coral is the most
-  shareable moment.
+  shareable moment. The YouTube video covers day + night already (thumbnail is a day/night
+  split with a FREE badge).
 - The Dec 1 removal date is the news hook — posting in the window before it (now through
   Dec 1) is materially better timing than after.
