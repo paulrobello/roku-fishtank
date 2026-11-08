@@ -126,9 +126,9 @@ The full tank by day and night, the chromis school, species behaviors and the se
 * Playwright Chromium (auto-installed by `make test-visual`)
 
 ## Installing
-The repo is local-only (no remote yet). Installation is three parts: enable developer mode on
-the Roku (once per device), build the channel, and sideload it. The result appears in
-**Settings > Theme > Screensavers** like any screensaver.
+Installation is three parts: enable developer mode on the Roku (once per device), build the
+channel, and sideload it. The result appears in **Settings > Theme > Screensavers** like any
+screensaver.
 
 ### Enable developer mode on the Roku
 1. On the Roku remote, press: **Home x3, Up x2, Right, Left, Right, Left, Right**
@@ -143,8 +143,9 @@ The devices on this LAN are listed under [Deploy](#deploy). Developer mode stays
 until you disable it or do a factory reset; a reboot does not remove it.
 
 ### Install the toolchain and build
-From the repo root:
 ```bash
+git clone https://github.com/paulrobello/roku-fishtank
+cd roku-fishtank
 make install    # bun install --frozen-lockfile
 make build      # package the device channel -> dist/channel.zip
 make checkall   # optional full gate: api-guard, fmt, lint, typecheck, tests, build, zip-check, fidelity, visual
@@ -389,4 +390,4 @@ Reef Tank is released under the MIT License. See [LICENSE](LICENSE) for the full
 * **Settings screen**: density, drift and night mode rows with registry persistence
 * **Realistic bubbles** (clear glass body, thin rim, window reflection) and 20% slower darts
 
-For the full history, see `git log --oneline`.
+For the full history, see the [commit list](https://github.com/paulrobello/roku-fishtank/commits/main).
