@@ -99,15 +99,15 @@ Roku. See `PRD.md` for scope and phases, `plans/` for the per-phase task plans, 
 ## Screenshots
 The full tank by day and night, the chromis school, species behaviors and the settings screen.
 
-![Normal density day tank](docs/preview/tank-normal.png)
+![Normal density day tank](https://raw.githubusercontent.com/paulrobello/roku-fishtank/main/docs/preview/tank-normal.png)
 
-![Night mode](docs/preview/night-full.png)
+![Night mode](https://raw.githubusercontent.com/paulrobello/roku-fishtank/main/docs/preview/night-full.png)
 
-![Chromis school](docs/preview/school-00.png)
+![Chromis school](https://raw.githubusercontent.com/paulrobello/roku-fishtank/main/docs/preview/school-00.png)
 
-![Species behaviors (seed 1)](docs/preview/behavior-seed1-t9.75.png)
+![Species behaviors (seed 1)](https://raw.githubusercontent.com/paulrobello/roku-fishtank/main/docs/preview/behavior-seed1-t9.75.png)
 
-![Settings screen](docs/preview/settings-initial.png)
+![Settings screen](https://raw.githubusercontent.com/paulrobello/roku-fishtank/main/docs/preview/settings-initial.png)
 
 ## Prerequisites for running
 * A Roku on your LAN with developer mode enabled
