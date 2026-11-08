@@ -138,3 +138,14 @@ At **normal** (the default: 15 fish, school of 5, night school of 3; school halv
 | Night | 150 | 52 | 56 | 60 | 19% |
 
 Busy with the same build (`channel-20261105-070533-auto-*`): day 44, night 39. Night at normal is about 4 fps short of 60.
+
+### 4800X verification (P6.3, 2026-11-08)
+
+`make device-check SCENE=ReefTank SECONDS=120 DENSITY=normal|busy` on a Roku Ultra **4800X** (OS 15.3.4, `check-ReefTank-20261108-123315-console.log` and `-124221-`):
+
+| Density | Samples | Min | P25 | Median | P75 | Max | Mean |
+|---|---|---|---|---|---|---|---|
+| Normal | 60 | 56 | 59 | 60 | 60 | 62 | 59.4 |
+| Busy (day) | 124 | 36 | 40 | 41 | 42 | 44 | 40.8 |
+
+**Normal holds 60 on the weaker model**, matching the 4850X (median 60 day / 56 night). Busy behaves like the 4850X's busy day (44): it is the opt-in max preset and does not target 60, so no additional cap is needed (the P6.3 cap criterion is met by Normal at 60).
