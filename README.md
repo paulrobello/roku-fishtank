@@ -139,6 +139,10 @@ The full tank by day and night, the chromis school, species behaviors and the se
 **Illustrated step-by-step guide: [docs/install-guide.md](docs/install-guide.md)** — the
 same steps with screenshots (terminal, key-sequence diagram, on-device results).
 
+Prefer having an AI agent do it: copy
+[docs/agent-install-prompt.md](docs/agent-install-prompt.md) into your coding agent
+(Claude Code, Cursor, …) and it walks you through the whole install.
+
 Installation is three parts: enable developer mode on the Roku (once per device), build the
 channel, and sideload it. The result appears in **Settings > Theme > Screensavers** like any
 screensaver.
