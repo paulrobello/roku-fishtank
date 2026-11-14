@@ -135,3 +135,19 @@ Done when: the person confirms the tank plays on idle and exits on a keypress.
   [docs/perf.md](perf.md); other Roku models are untested.
 - **Updates** never need an uninstall — each deploy replaces the sideloaded package.
   To remove the tank entirely, disable developer mode from the Step-1 developer screen.
+
+## Store listing and policy website
+
+The GitHub Pages site is served from `main:/docs` with Jekyll disabled. Its stable
+URLs are `https://paulrobello.github.io/roku-fishtank/` and the `privacy.html`,
+`terms.html`, and `support.html` pages beneath it. Verify they are live before using
+them in a Roku developer profile. Keep privacy statements aligned with the shipped
+BrightScript: settings stay in the device registry; day/night uses a fixed Woodland
+reference location, not a user's location. Do not add analytics or forms silently.
+The terms page reproduces the repository's MIT license.
+
+A CI `channel.zip` is for **sideloading**, not public-store submission. Roku's public
+app uploader rejects the unsigned ZIP with an invalid-header error. Distribution
+requires a signed `.pkg` from the linked development Roku's Packager. Do not generate
+or replace a signing key, expose its password, or publish the app without the owner's
+approval. Store profile contacts must be supplied by the owner, not invented.
