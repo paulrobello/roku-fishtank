@@ -27,7 +27,7 @@ masters remain under `assets/source/runtime-masters/`, outside the package.
 ## Local verification
 
 - The regular `make checkall-ci` and `make checkall` gates cover source validation,
-  all 175 existing unit tests, package checks and the browser-rendered scenes.
+  all 198 unit tests (including 23 memory-monitor mocks), package checks and the browser-rendered scenes.
 - Guard regression fixtures reject a shipped key handler, missing `rsg_version`,
   and an oversized upload.
 - Visual coverage includes drift edges, day/dusk/night, density, and the native
@@ -47,8 +47,53 @@ Local success is not a Roku certification result. Before publication:
    day/night appearance and loading of JPEG/paletted PNG textures.
 2. Sign that exact build with the existing app signing key. Check the signed
    package size as well; do not ship an older previously signed artifact.
-3. Upload the signed package and rerun Roku Static Analysis. Confirm all three
-   reported errors disappear. The five existing memory-monitoring warnings were
-   not addressed in this change and must not be represented as resolved.
+3. Upload the signed package and rerun Roku Static Analysis. The preceding build
+   cleared the three original errors; verify they remain cleared. The new memory
+   implementation must also be re-analyzed: local presence of required calls is
+   not evidence that Roku has cleared its warnings. The App/Screensaver type
+   mismatch needs console clarification; do not relabel the app as a Theme
+   solely to silence a warning.
 4. Complete any remaining listing/monetization decisions and obtain publication
    authorization separately. A local gate or a package upload is not publication.
+
+## Memory monitoring
+
+Both entry points share the same monitored screen loop. Subscription is set up
+before allocating either the tank or settings scene, with interface checks,
+independent getter guards and the documented `roDeviceInfo` fallback when
+`EnableMemoryWarningEvent(true)` is unsupported or returns false. References
+stay alive through the loop and subscriptions are disabled on exit.
+
+The monitor records `GetMemoryLimitPercent`, `GetChannelAvailableMemory` (KB),
+and `GetChannelMemoryLimit`. It only handles the event type associated with the
+selected subscription. Unknown/malformed events are ignored. Usage at or above
+90% (including above 100%) or a legacy `critical` level closes the screen and
+returns to Roku, releasing this nonessential scene before an OS termination.
+80–89% and legacy `low` warnings are logged; recovery notifications do not change
+anything. Startup pressure is checked before allocating scene assets.
+
+No density, drift, night-mode or registry values are changed. Settings already
+save each user change immediately. There is no artificial real-device memory
+stress test, and no automatic restart loop. A new platform invocation starts a
+fresh monitored context.
+
+Primary references:
+- https://developer.roku.com/dev/docs/roappmemorymonitor
+- https://developer.roku.com/dev/docs/ifappmemorymonitor
+- https://developer.roku.com/dev/docs/roappmemorynotificationevent
+- https://developer.roku.com/dev/docs/ifdeviceinfo
+
+The documented October 2026 requirement applies to all apps; no screensaver
+exemption is documented. Unsupported devices retain the legacy fallback, and
+an unavailable fallback must not crash ordinary playback or settings.
+
+### Real-device compatibility finding
+
+On the Master Bedroom Ultra 4800X running Roku OS 16.0.4, the modern monitor
+returns valid metrics but declines notifications in the screensaver context.
+The legacy subscription succeeds. That device does not advertise
+`ifSetMessagePort` on `roDeviceInfo` through `GetInterface`, despite supporting
+its documented `SetMessagePort` method. The legacy path therefore checks
+`ifDeviceInfo` and protects the port/subscription calls with `try/catch`, rather
+than rejecting a working device based on the unadvertised port interface.
+A mock regression covers this exact combination.

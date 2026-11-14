@@ -57,3 +57,9 @@ AI-generated originals, prompts, seeds and provenance live in `assets/source/` a
   into `images/`; source art never ships. Update masters only with full-quality
   regenerated assets, never compressed runtime files. Preserve dimensions and
   validate alpha edges, day/night scenes and settings when changing encoding.
+
+- Both production entry points use `reefRunScreen` and `source/memory_monitor.brs`.
+  Retain monitor/device references for the full loop, guard interfaces and partial
+  APIs, keep the legacy fallback, and never change persisted preferences in response
+  to pressure. Close at >=90% app usage or legacy critical pressure instead.
+  `make test FILTER=memory` covers the injected monitor/device/screen mocks.

@@ -1,29 +1,31 @@
 sub RunScreenSaver()
-    screen = createObject("roSGScreen")
-    port = createObject("roMessagePort")
-    screen.setMessagePort(port)
-    screen.createScene("ReefTank")
-    screen.show()
-
-    ' Any remote keypress terminates a screensaver (platform behavior);
-    ' loop until the screen closes.
-    while true
-        msg = wait(0, port)
-        if type(msg) = "roSGScreenEvent" and msg.isScreenClosed() then exit while
-    end while
+    reefRunScreen("ReefTank")
 end sub
 
-' Settings entry point (Settings > Theme > Screensavers > Reef Tank). Back closes the
-' scene, which ends the screen and this loop.
+' Settings saves changes immediately; memory-pressure exit never rewrites them.
 sub RunScreenSaverSettings()
+    reefRunScreen("ReefTankSettings")
+end sub
+
+sub reefRunScreen(sceneName as string)
     screen = createObject("roSGScreen")
     port = createObject("roMessagePort")
     screen.setMessagePort(port)
-    screen.createScene("ReefTankSettings")
+    memory = memoryMonitorCreate(port)
+    ' Avoid allocating a scene if the app is already under critical pressure.
+    if memoryMonitorStartup(memory, screen) then
+        memoryMonitorStop(memory)
+        return
+    end if
+    screen.createScene(sceneName)
     screen.show()
-
     while true
         msg = wait(0, port)
-        if type(msg) = "roSGScreenEvent" and msg.isScreenClosed() then exit while
+        if type(msg) = "roSGScreenEvent" then
+            if msg.isScreenClosed() then exit while
+        else if memoryMonitorHandle(memory, msg, screen) then
+            exit while
+        end if
     end while
+    memoryMonitorStop(memory)
 end sub

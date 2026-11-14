@@ -14,6 +14,7 @@
 
 function testSuites() as object
     return [
+        memoryTestSuite()
         prngTestSuite()
         steerTestSuite()
         solarTestSuite()

@@ -93,7 +93,7 @@ Roku. See `PRD.md` for scope and phases, `plans/` for the per-phase task plans, 
   `docs/perf/`
 
 ### Technical Excellence
-- **175 BrightScript unit tests** under brs-cli (`make test`, `make test FILTER=<substring>` for
+- **198 BrightScript unit tests** under brs-cli (`make test`, `make test FILTER=<substring>` for
   a subset) covering the pure logic in `components/lib/`
 - **Playwright screenshot gate**: frozen deterministic frames compared against committed
   baselines (`make test-visual`)
@@ -396,7 +396,7 @@ measurements.
 * **Settings screen** (`RunScreenSaverSettings`) for density, drift and night mode
 * **On-device perf tuning** underway: frame-rate breakdown and ablation runs in `docs/perf.md`
   (normal density: day 60 fps, night 56 on the 4850X)
-* **Dev harness**: browser preview with deterministic freeze, 175 unit tests, screenshot
+* **Dev harness**: browser preview with deterministic freeze, 198 unit tests, screenshot
   gate, fidelity harness — all in `make checkall`
 
 ### Where we're going
@@ -448,3 +448,7 @@ Review day, dusk, night, alpha edges, and the settings screen before accepting
 new visual snapshots. Hardware and Roku static analysis remain release gates.
 
 See [store certification repair and release checks](docs/store-certification.md).
+
+Memory monitoring is installed for both the tank and settings entry points, with
+an older-device fallback. Critical pressure exits cleanly to Roku without changing
+your saved settings. See the certification checklist for the precise policy.
