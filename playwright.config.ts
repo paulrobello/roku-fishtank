@@ -1,6 +1,6 @@
 import { defineConfig } from "@playwright/test";
 
-// Local gate only (there is no CI). Renders on the real GPU; PW_GPU=swiftshader opts into
+// Local gate only (browser tests do not run in CI). Renders on the real GPU; PW_GPU=swiftshader opts into
 // software GL. Port 8139 is reserved for this isolated server, separate from `make dev` on 8138.
 const gpu: string = process.env.PW_GPU ?? "metal";
 const gpuArgs: string[] =

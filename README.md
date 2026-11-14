@@ -143,7 +143,7 @@ Prefer having an AI agent do it: copy
 [docs/agent-install-prompt.md](docs/agent-install-prompt.md) into your coding agent
 (Claude Code, Cursor, …) and it walks you through the whole install.
 
-Installation is three parts: enable developer mode on the Roku (once per device), build the
+Installation is three parts: enable developer mode on the Roku (once per device), download or build the
 channel, and sideload it. The result appears in **Settings > Theme > Screensavers** like any
 screensaver.
 
@@ -159,7 +159,20 @@ screensaver.
 The devices on this LAN are listed under [Deploy](#deploy). Developer mode stays enabled
 until you disable it or do a factory reset; a reboot does not remove it.
 
-### Install the toolchain and build
+### Download a built channel (recommended, including Windows)
+
+1. Sign in to GitHub and open [Build channel](https://github.com/paulrobello/roku-fishtank/actions/workflows/ci.yml).
+2. Choose the latest **successful** run on **main** (all four jobs must pass).
+3. Under **Artifacts**, download **reef-tank-channel**. Artifacts are retained for 30 days;
+   if none remain, a maintainer can run the workflow manually.
+4. Extract the downloaded artifact ZIP once. Inside is **channel.zip**: keep this inner
+   file zipped and upload it to the Roku installer. No Bun, Node.js or make is needed.
+
+Do **not** upload GitHub's **Code → Download ZIP** (`roku-fishtank-main.zip`), the outer
+artifact ZIP, or `fidelity.zip`. Only the built `channel.zip` has the device package layout
+with `manifest` at its root and excludes the preview-only entry point.
+
+### Build from source (developers)
 ```bash
 git clone https://github.com/paulrobello/roku-fishtank
 cd roku-fishtank
@@ -176,7 +189,7 @@ Command line (digest auth against the device's installer page):
 ```bash
 ROKU_HOST=<ip> ROKU_PASSWORD=<rokudev-password> make deploy
 ```
-Or in a browser, upload `dist/channel.zip` at `http://<ip>/plugin_install`.
+Or in a browser, upload the downloaded `channel.zip` (or locally built `dist/channel.zip`) at `http://<ip>/plugin_install`.
 
 Only one sideloaded channel exists per device; each deploy replaces it.
 
@@ -213,7 +226,8 @@ tools/                   art pipeline, perf and device-check tooling
 | `make dev` | Browser preview on <http://localhost:8138/> (`dev-stop`, `dev-restart`) |
 | `make test` | BrightScript unit tests under brs-cli; `FILTER=<substring>` runs a subset |
 | `make test-visual` | Playwright screenshot gate against `tests/visual/__screenshots__/` |
-| `make checkall` | Full gate (== `checkall-ci`; there is no CI) |
+| `make checkall` | Full local gate, including GPU screenshot tests |
+| `make checkall-ci` | Non-browser CI-parity gate (static checks, tests, channel + fidelity packages) |
 | `make build` | Package the device channel to `dist/channel.zip` |
 | `make fmt` / `fmt-check` | Rewrite / check BrightScript formatting (bsfmt) |
 | `make lint` / `typecheck` | bslint / bsc validate; any warning fails |

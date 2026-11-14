@@ -1,6 +1,6 @@
 # Reef Tank — install guide
 
-Step-by-step installation with screenshots: enable developer mode on the Roku, build the
+Step-by-step installation with screenshots: enable developer mode on the Roku, download or build the
 channel on a computer, sideload it, and set it as the screensaver. Time: about ten minutes
 plus one reboot. The tank runs on any recent Roku (reference devices: Roku Ultra 4850X and
 4800X on OS 15.3.4 — measured 60 fps at the default density on both).
@@ -23,7 +23,22 @@ Developer mode survives reboots; it only turns off if you disable it or factory-
 The screensaver picker lists sideloaded screensavers under the entry **dev** — that label
 is the platform's placeholder for sideloaded apps, not an error.
 
-## Step 2 — Build the channel on a computer
+## Step 2 — Get the installable channel
+
+### Download a built channel (recommended, including Windows)
+
+1. Sign in to GitHub and open [Build channel](https://github.com/paulrobello/roku-fishtank/actions/workflows/ci.yml).
+2. Choose the latest **successful** run on **main** (all four jobs must pass).
+3. Under **Artifacts**, download **reef-tank-channel**. Artifacts are retained for 30 days;
+   if none remain, a maintainer can run the workflow manually.
+4. Extract the downloaded artifact ZIP once. Inside is **channel.zip**: keep this inner
+   file zipped and upload it to the Roku installer. No Bun, Node.js or make is needed.
+
+Do **not** upload GitHub's **Code → Download ZIP** (`roku-fishtank-main.zip`), the outer
+artifact ZIP, or `fidelity.zip`. Only the built `channel.zip` has the device package layout
+with `manifest` at its root and excludes the preview-only entry point.
+
+### Build locally instead
 
 Clone, install the pinned toolchain (bun), and package the device channel:
 

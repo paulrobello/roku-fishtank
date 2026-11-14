@@ -57,11 +57,12 @@ typecheck: node_modules
 test: node_modules
 	$(BIN)/brs-cli $(if $(FILTER),-k filter=$(FILTER),) tests/run_tests.brs tests/lib/*.brs tests/unit/*.brs components/lib/*.brs source/preview_color.brs
 
-# Fast gate, ordered cheapest first. No CI exists, so checkall-ci is the same gate.
+# Local done gate includes the GPU screenshot tests; CI runs the non-browser legs.
 checkall: api-guard fmt-check lint typecheck test build zip-check fidelity-build test-visual
 	@echo "checkall OK"
 
-checkall-ci: checkall
+checkall-ci: api-guard fmt-check lint typecheck test build zip-check fidelity-build
+	@echo "checkall-ci OK"
 
 .PHONY: api-guard zip-check
 

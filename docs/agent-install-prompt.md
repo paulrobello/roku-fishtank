@@ -23,10 +23,17 @@ Ask the person for (or check yourself):
    verified on Roku Ultra 4850X and 4800X running OS 15.3.4 at 60 fps; other models are
    untested but recent Roku players and TVs generally work.
 2. The device's IP address from that same screen.
-3. A computer with `git` and `bun` installed (`bun --version` must print a version).
-   The toolchain is pinned in `package.json`; `bun install` installs it.
+3. Prefer the prebuilt channel from [Build channel](https://github.com/paulrobello/roku-fishtank/actions/workflows/ci.yml).
+   Sign in to GitHub, choose the latest successful **main** run (all four jobs must pass),
+   and download **reef-tank-channel** from **Artifacts**. Extract the outer ZIP once;
+   keep the inner **channel.zip** zipped. Never upload the source `*-main.zip`, the
+   outer artifact ZIP, or `fidelity.zip`. Artifacts expire after 30 days; if none remain,
+   a maintainer can run the workflow manually, or use the local build below.
+   No build tools are needed for this download route. If building locally instead,
+   check for Git, Bash, GNU make, Bun and Node.js. The pinned toolchain in `package.json`
+   is installed by `make install`.
 
-Done when: you have the device model/OS, the IP, and a working bun.
+Done when: you have the device model/OS, the IP, and either the built channel ZIP or a working build toolchain.
 
 ## Step 1 — Enable developer mode (person does this; you instruct)
 
@@ -46,7 +53,10 @@ after a factory reset.
 Done when: the person confirms the installer is enabled and gives you the IP and the
 `rokudev` password.
 
-## Step 2 — Build the channel (you do this)
+## Step 2 — Build the channel only if not downloaded
+
+Skip this step when using the CI-built `channel.zip`. On Windows the download avoids
+setting up Bash, GNU make, Bun and Node.js.
 
 ```bash
 git clone https://github.com/paulrobello/roku-fishtank
@@ -58,11 +68,15 @@ make build      # packages the device channel -> dist/channel.zip
 `make build` failing with `command not found` or a missing module usually means bun
 did not install the pinned toolchain — re-run `make install` before diagnosing further.
 
-Done when: `dist/channel.zip` exists. Optionally run `make checkall` (the full gate:
-lint, typecheck, tests, build, packaging checks) if you want maximum assurance before
-touching the device.
+Done when: the downloaded `channel.zip` or locally built `dist/channel.zip` exists.
+For a local build, `make checkall-ci` runs the same non-browser checks as CI (static
+checks, unit tests and package validation). `make checkall` additionally runs the
+local GPU screenshot tests.
 
 ## Step 3 — Sideload to the Roku (you do this)
+
+For a downloaded channel, use the browser installer and upload the inner `channel.zip`.
+The command below is for a local source checkout.
 
 **Before deploying, the person must exit any running screensaver** (press any key on the
 remote). Deploying while the screensaver is running wedges the channel until a device
@@ -75,12 +89,13 @@ ROKU_HOST=<device-ip> ROKU_PASSWORD=<rokudev-password> make deploy
 `Install Success.` in the output is the confirmation. If deploy fails: a wrong
 `rokudev` password and a running screensaver are the two causes — fix the cause, not the
 symptom, and retry. Browser fallback: open `http://<device-ip>/plugin_install`,
-authenticate with the `rokudev` password, and upload `dist/channel.zip`.
+authenticate as `rokudev` with the developer password, and upload the downloaded
+`channel.zip` (or locally built `dist/channel.zip`).
 
 Never put the password in a committed file; inline env vars or a gitignored `.env` are
 both fine.
 
-Done when: output contains `Install Success.`
+Done when: the command output or browser installer confirms `Install Success.`
 
 ## Step 4 — Set Reef Tank as the screensaver (person does this; you instruct)
 
@@ -105,6 +120,10 @@ screensaver runs (`telnet <device-ip> 8087`).
 Done when: the person confirms the tank plays on idle and exits on a keypress.
 
 ## Troubleshooting reference
+
+- **Downloaded ZIP does not install** — GitHub’s source ZIP is not a Roku package.
+  Download the CI artifact, extract its outer ZIP once, and upload the inner
+  `channel.zip` unchanged. The device ZIP has `manifest` at its root.
 
 - **`Install failed` on deploy** — wrong `rokudev` password, or the screensaver was
   running (exit it and retry; a wedged device needs a reboot).
