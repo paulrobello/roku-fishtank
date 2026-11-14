@@ -39,7 +39,7 @@ set -eu
 cd "$(dirname "$0")/.."
 
 files=$(find source components -type f \( -name '*.brs' -o -name '*.bs' -o -name '*.xml' \) \
-    ! -path 'source/preview.brs' 2>/dev/null | LC_ALL=C sort)
+    ! -path 'source/preview.brs' ! -path 'source/preview_keys.brs' 2>/dev/null | LC_ALL=C sort)
 
 # shellcheck disable=SC2086
 awk '
@@ -58,6 +58,7 @@ function report(why) {
     if (FILENAME == "manifest") {
         if (line ~ /^[[:space:]]*#/) next
         if (line ~ /^[[:space:]]*title[[:space:]]*=/) report("manifest title= (screensavers use screensaver_title only)")
+        if (line ~ /^[[:space:]]*rsg_version[[:space:]]*=[[:space:]]*1[.]3[[:space:]]*$/) has_rsg = 1
         if (line ~ /^[[:space:]]*screensaver_title[[:space:]]*=/) has_ss_title = 1
     } else if (FILENAME ~ /\.xml$/) {
         gsub(/<!--.*-->/, "", line)
@@ -67,9 +68,10 @@ function report(why) {
     for (i = 1; i <= nb; i++) {
         if (line ~ ("(^|[^a-z0-9_])" banned[i] "([^a-z0-9_]|$)")) report("OS 16.0+ API \"" banned[i] "\" (device runs 15.3.4)")
     }
-    if (line ~ /^[[:space:]]*(sub|function)[[:space:]]+(main|runuserinterface)[[:space:]]*\(/) report("Main/RunUserInterface defined in device sources (screensaver entry is RunScreenSaver)")
+    if (line ~ /^[[:space:]]*(sub|function)[[:space:]]+(main|runuserinterface|onkeyevent)[[:space:]]*\(/) report("Main/RunUserInterface/OnKeyEvent defined in device sources (screensaver entry is RunScreenSaver)")
 }
 END {
+    if (!has_rsg) { print "manifest: missing rsg_version=1.3"; hits++ }
     if (!has_ss_title) { print "manifest: missing screensaver_title="; hits++ }
     if (hits > 0) { printf "api-guard FAILED: %d problem(s)\n", hits; exit 1 }
     print "api-guard ok"

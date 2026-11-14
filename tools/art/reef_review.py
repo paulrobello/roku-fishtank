@@ -114,7 +114,7 @@ def mockup(night: bool) -> Image.Image:
     tint = NIGHT_TINT if night else None
     kw = {"tint": tint} if tint else {}
     frame = Image.new("RGBA", (W, H), (11, 47, 85, 255))
-    put(frame, rgba("decor/reef_backdrop.png"), -313, 0, **kw)
+    put(frame, rgba("decor/reef_backdrop.jpg"), -313, 0, **kw)
     if night:
         for key, v in P.items():
             if key.startswith("glow_backdrop_"):
@@ -181,7 +181,7 @@ def contact(items: list[tuple[str, Image.Image]], out: Path, title: str, night: 
     sheet = Image.new("RGB", (per_row * (2 * cw + 30) + 20, rows * (ch + 30) + 50), (24, 24, 30))
     d = ImageDraw.Draw(sheet)
     d.text((20, 14), title, fill=(240, 240, 240))
-    back = rgba("decor/reef_backdrop.png").crop((700, 300, 700 + 2 * cw, 300 + 2 * ch)).resize((cw, ch))
+    back = rgba("decor/reef_backdrop.jpg").crop((700, 300, 700 + 2 * cw, 300 + 2 * ch)).resize((cw, ch))
     if night:
         back = tinted(back, tint=NIGHT_TINT)
     for i, (label, img) in enumerate(items):

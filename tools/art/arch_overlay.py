@@ -28,7 +28,7 @@ from pathlib import Path
 from PIL import Image, ImageDraw, ImageFilter
 
 ROOT = Path(__file__).resolve().parents[2]
-BACKDROP = ROOT / "images" / "decor" / "reef_backdrop.png"
+BACKDROP = ROOT / "assets/source/runtime-masters/decor/reef_backdrop.png"
 OUT = ROOT / "images" / "decor" / "arch_overlay.png"
 
 BACKDROP_X = -313

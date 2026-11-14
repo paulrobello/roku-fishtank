@@ -4,6 +4,7 @@
   "files": [
     "manifest",
     "images/*.png",
+    "images/*.jpg",
     "images/fidelity/**/*",
     "components/Fidelity/**/*",
     { "src": "fidelity/source/main.brs", "dest": "source/main.brs" }

@@ -34,7 +34,14 @@ IMAGES = ROOT / "images"
 
 def pkg_path(uri: str) -> Path:
     assert uri.startswith("pkg:/"), uri
-    return ROOT / uri[len("pkg:/") :]
+    path = ROOT / uri[len("pkg:/") :]
+    if uri.startswith("pkg:/images/"):
+        master = ROOT / "assets/source/runtime-masters" / uri[len("pkg:/images/") :]
+        if master.suffix == ".jpg":
+            master = master.with_suffix(".png")
+        if master.exists():
+            return master
+    return path
 
 
 def load_rgba(path: Path) -> Image.Image:
@@ -96,7 +103,7 @@ def main() -> int:
     save(splash.resize((1280, 720), Image.Resampling.LANCZOS), "splash_hd.png")
 
     # 4:3 crop around the rock arch (backdrop pixels 470..1190 x 160..700), then 540x405.
-    backdrop = load_rgba(IMAGES / "decor" / "reef_backdrop.png")
+    backdrop = load_rgba(ROOT / "assets/source/runtime-masters/decor/reef_backdrop.png")
     icon = backdrop.crop((470, 160, 1190, 700)).resize((540, 405), Image.Resampling.LANCZOS)
     place(icon, tang, 150, 110, 1.15)
     save(icon, "icon_fhd.png")

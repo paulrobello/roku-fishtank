@@ -9,6 +9,7 @@
     "config/**/*",
     "!source/preview.brs",
     "!source/preview_color.brs",
+    "!source/preview_keys.brs",
     "!components/Fidelity/**/*",
     "!images/fidelity/**/*"
   ],

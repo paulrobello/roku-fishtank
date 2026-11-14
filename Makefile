@@ -69,6 +69,7 @@ checkall-ci: api-guard fmt-check lint typecheck test build zip-check fidelity-bu
 # OS 16.0-only APIs, Main/RunUserInterface and manifest title= in device sources.
 api-guard:
 	@bash tools/api_guard.sh
+	@bash tools/test_store_guards.sh
 
 # Device zip holds only manifest, source/, components/, images/, config/.
 zip-check: build

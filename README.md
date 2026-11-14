@@ -317,7 +317,7 @@ brs-engine with the SceneGraph extension on a 1920x1080 canvas scaled to the win
 
 - **Settings screen (P5.2):** `?scene=ReefTankSettings` shows the screen that
   `RunScreenSaverSettings()` opens on the device (Settings > Theme > Screensavers > Reef Tank).
-  Arrow keys and Enter drive it in the browser (up/down/Enter move rows, left/right change
+  Arrow keys and Enter drive it in the browser (up/down move rows, Enter cycles
   the value). Values persist through `components/lib/settings.brs`; the preview saves to
   brs-engine's registry. Evidence: `docs/preview/settings-initial.png` and
   `settings-changed.png`.
@@ -428,3 +428,23 @@ Reef Tank is released under the MIT License. See [LICENSE](LICENSE) for the full
 * **Realistic bubbles** (clear glass body, thin rim, window reflection) and 20% slower darts
 
 For the full history, see the [commit list](https://github.com/paulrobello/roku-fishtank/commits/main).
+
+### Store certification packaging
+
+The device manifest declares `rsg_version=1.3`. `make zip-check` enforces a
+conservative 4,000,000-byte upload limit and excludes browser-only key handling.
+Settings use a native LabelList: Up/Down selects an option, OK cycles its value,
+and Back exits. All three preferences still save immediately to the registry.
+The screensaver itself never consumes remote input.
+
+Runtime artwork retains its original dimensions. Opaque backdrop/splash plates
+use JPEG (quality 80, no chroma subsampling); other textures use 128-color PNG
+palettes with alpha. This is lossy color compression, not a resolution reduction.
+Lossless runtime masters are preserved in `assets/source/runtime-masters/` and
+never shipped. `uv run tools/art/store_art.py` reproduces the encoded runtime
+files. After regenerating art, copy only the new full-quality outputs into the
+matching master paths before encoding; never re-quantize the encoded output.
+Review day, dusk, night, alpha edges, and the settings screen before accepting
+new visual snapshots. Hardware and Roku static analysis remain release gates.
+
+See [store certification repair and release checks](docs/store-certification.md).

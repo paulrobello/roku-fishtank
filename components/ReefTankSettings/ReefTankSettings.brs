@@ -32,11 +32,6 @@ sub init()
     settingsUiPlace(m.top.findNode("subtitle"), smallFont, 60, 122, PANEL_W - 120, 40)
     settingsUiPlace(m.top.findNode("hint"), smallFont, 60, PANEL_H - 70, PANEL_W - 120, 40)
 
-    highlight = m.top.findNode("highlight")
-    highlight.width = PANEL_W - 60
-    highlight.height = m.rowH - 16
-    m.highlight = highlight
-
     m.keys = settingsKeys()
     m.titles = { nightMode: "Night mode", density: "Fish density", drift: "Camera drift" }
     m.shown = {
@@ -46,24 +41,24 @@ sub init()
     }
     m.store = settingsRegistryStore()
     m.values = settingsLoad(m.store)
-    m.row = 0
 
-    rows = m.top.findNode("rows")
-    m.nameLabels = []
-    m.valueLabels = []
-    for i = 0 to m.keys.count() - 1
-        y = m.rowsY + i * m.rowH
-        name = rows.createChild("Label")
-        settingsUiPlace(name, bodyFont, 90, y + 18, 440, 70)
-        name.text = m.titles[m.keys[i]]
-        value = rows.createChild("Label")
-        settingsUiPlace(value, bodyFont, 540, y + 18, PANEL_W - 540 - 90, 70)
-        value.horizAlign = "right"
-        m.nameLabels.push(name)
-        m.valueLabels.push(value)
+    ' Native list navigation handles Up/Down and OK in the separate settings context.
+    ' No custom key handler is included in the screensaver package.
+    m.options = m.top.findNode("options")
+    m.options.translation = [60, m.rowsY]
+    m.options.itemSize = [PANEL_W - 120, m.rowH]
+    m.options.itemSpacing = [0, 0]
+    m.options.numRows = m.keys.count()
+    m.options.font = bodyFont
+    m.options.focusedFont = bodyFont
+    content = createObject("roSGNode", "ContentNode")
+    for each key in m.keys
+        content.createChild("ContentNode")
     end for
+    m.options.content = content
     settingsUiRefresh()
-    m.top.setFocus(true)
+    m.options.observeField("itemSelected", "settingsUiSelected")
+    m.options.setFocus(true)
 end sub
 
 sub settingsUiPlace(label as object, font as string, x as integer, y as integer, w as integer, h as integer)
@@ -74,41 +69,19 @@ sub settingsUiPlace(label as object, font as string, x as integer, y as integer,
     label.vertAlign = "center"
 end sub
 
-' Redraws the values (with arrows on the focused row) and moves the highlight.
+' Update native list labels without replacing its content or moving focus.
 sub settingsUiRefresh()
     for i = 0 to m.keys.count() - 1
         key = m.keys[i]
-        text = m.shown[key][m.values[key]]
-        if i = m.row
-            text = "<   " + text + "   >"
-            m.nameLabels[i].color = "0xFFFFFFFF"
-            m.valueLabels[i].color = "0xFFE9A8FF"
-        else
-            m.nameLabels[i].color = "0xBFDDEBFF"
-            m.valueLabels[i].color = "0x9FD0E6FF"
-        end if
-        m.valueLabels[i].text = text
+        m.options.content.getChild(i).title = m.titles[key] + ": " + m.shown[key][m.values[key]]
     end for
-    m.highlight.translation = [30, m.rowsY + m.row * m.rowH + 8]
 end sub
 
-function onKeyEvent(key as string, press as boolean) as boolean
-    if not press then return false
-    count = m.keys.count()
-    if key = "up"
-        m.row = (m.row + count - 1) mod count
-    else if key = "down" or key = "OK"
-        m.row = (m.row + 1) mod count
-    else if key = "left" or key = "right"
-        dir = 1
-        if key = "left" then dir = -1
-        k = m.keys[m.row]
-        m.values[k] = settingsStep(k, m.values[k], dir)
-        settingsSave(m.store, m.values)
-    else
-        ' Back (and anything else) is left to the platform, which closes the screen.
-        return false
-    end if
+sub settingsUiSelected()
+    row = m.options.itemSelected
+    if row < 0 or row >= m.keys.count() then return
+    key = m.keys[row]
+    m.values[key] = settingsStep(key, m.values[key], 1)
+    settingsSave(m.store, m.values)
     settingsUiRefresh()
-    return true
-end function
+end sub

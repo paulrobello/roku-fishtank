@@ -160,6 +160,12 @@ export function buildChannelZip(): Uint8Array {
     walk(abs, paths);
     for (const p of paths) files[relative(repoRoot, p)] = readFileSync(p);
   }
+  // Browser-only remote handler is injected into the scene, never the device package.
+  const scenePath = "components/ReefTank/ReefTank.brs";
+  files[scenePath] = new TextEncoder().encode(
+    new TextDecoder().decode(files[scenePath]) + "\n" + readFileSync(join(repoRoot, "source/preview_keys.brs"), "utf8"),
+  );
+  delete files["source/preview_keys.brs"];
   for (const [src, dest] of Object.entries(previewOnlyFiles)) files[dest] = readFileSync(join(repoRoot, src));
   return zipSync(files, { level: 1 });
 }

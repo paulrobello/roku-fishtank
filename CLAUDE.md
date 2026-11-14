@@ -44,3 +44,16 @@ A Roku screensaver channel written in BrightScript/SceneGraph. Scope and phases 
 ## Art
 
 AI-generated originals, prompts, seeds and provenance live in `assets/source/` and are never shipped. Runtime PNGs go in `images/`. Icons and splashes are derived from the backdrop, `config/scene.json` and the fish rigs by `make key-art` (`tools/art/key_art.py`). Local moss-image comes first. Higgsfield (paid) runs only per batch with Paul's approval.
+
+## Store certification constraints
+
+- Device manifest must declare `rsg_version=1.3`; `zip-check` caps the upload at
+  4,000,000 bytes. Both are certification requirements, not optional optimizations.
+- No `onKeyEvent` definitions in shipped code. The browser's day/night handler
+  lives in `source/preview_keys.brs`, excluded by bsconfig and injected by Vite.
+  Settings use native LabelList Up/Down + OK cycling, not a custom key handler.
+- Full-resolution lossless runtime masters live in `assets/source/runtime-masters`.
+  `uv run tools/art/store_art.py` writes JPEG opaque plates and alpha-paletted PNGs
+  into `images/`; source art never ships. Update masters only with full-quality
+  regenerated assets, never compressed runtime files. Preserve dimensions and
+  validate alpha edges, day/night scenes and settings when changing encoding.
