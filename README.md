@@ -45,7 +45,10 @@ the Channel Store: installing it means enabling Roku's developer mode (a one-tim
 Each fish is a rigged cutout with an undulating body and tail, driven by a per-species behavior
 brain: fish cruise, dart, turn, school, graze, hide and weave in front of and behind the rock and
 coral. Around them are bubbles, swaying seaweed, anemones and invertebrates, scrolling
-caustics, and a slow parallax camera drift. After sunset the tank switches to a
+caustics, and a slow parallax camera drift. Screen drift completes one full
+side-to-side-and-back cycle every 90 seconds. It is intentionally subtle: the
+foreground moves ±80 design pixels, while the painted backdrop moves only ±16.
+A watchdog recovers stopped/stalled drift without changing the saved On/Off setting. After sunset the tank switches to a
 moonlit night mode with glowing coral and bioluminescent sparkles, computed from real sunrise and
 sunset times at Woodland, CA. There are no Roku logos anywhere.
 

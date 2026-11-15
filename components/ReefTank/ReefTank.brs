@@ -400,6 +400,13 @@ sub reefTankBuildDrift()
         end if
     end for
     m.driftAnim = anim
+    m.driftGuardPrevious = invalid
+    m.driftGuardX = invalid
+    m.driftGuardUnchanged = 0
+    m.driftGuard = m.top.createChild("Timer")
+    m.driftGuard.duration = 5
+    m.driftGuard.repeat = true
+    m.driftGuard.observeField("fire", "reefTankCheckDrift")
     reefTankApplyDrift()
 end sub
 
@@ -415,8 +422,15 @@ end sub
 
 sub reefTankApplyDrift()
     if m.driftAnim = invalid then return
+    m.driftGuardPrevious = invalid
+    m.driftGuardX = invalid
+    m.driftGuardUnchanged = 0
+    if m.driftGuard <> invalid then m.driftGuard.control = "stop"
     if m.top.drift and sceneCfgDriftEnabled(m.sceneCfg) then
         m.driftAnim.control = "start"
+        frozen = false
+        if m.global.hasField("previewFreeze") then frozen = m.global.previewFreeze > 0
+        if not frozen and reefTankDriftSpeed() = 1 and m.driftGuard <> invalid then m.driftGuard.control = "start"
     else
         m.driftAnim.control = "stop"
         for each layer in m.sceneCfg.layers
@@ -493,4 +507,27 @@ sub reefTankDebugRect(parent as object, x as float, y as float, w as float, h as
     r.width = w
     r.height = h
     r.color = color
+end sub
+
+' Recover only genuinely stopped/stalled enabled drift; never change saved settings.
+sub reefTankCheckDrift()
+    if m.driftAnim = invalid then return
+    if m.driftAnim.getChildCount() = 0 then return
+    ' Some runtimes may expose stale fraction readback; actual motion also proves health.
+    layer = m.top.findNode("foreground")
+    if layer <> invalid then
+        x = layer.translation[0]
+        if m.driftGuardX <> invalid then
+            if Abs(x - m.driftGuardX) > 0.001 then m.driftGuardPrevious = invalid
+        end if
+        m.driftGuardX = x
+    end if
+    sample = driftGuardStep(m.driftGuardPrevious, m.driftAnim.getChild(0).fraction, m.driftGuardUnchanged, m.top.drift and sceneCfgDriftEnabled(m.sceneCfg), m.driftAnim.state)
+    m.driftGuardPrevious = sample.fraction
+    m.driftGuardUnchanged = sample.unchanged
+    if sample.restart then
+        print "DRIFT recovering stalled animation"
+        m.driftAnim.control = "stop"
+        m.driftAnim.control = "start"
+    end if
 end sub

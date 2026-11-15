@@ -24,6 +24,7 @@
     </interface>
     <script type="text/brightscript" uri="pkg:/components/lib/scenecfg.brs" />
     <script type="text/brightscript" uri="pkg:/components/lib/settings.brs" />
+    <script type="text/brightscript" uri="pkg:/components/lib/driftguard.brs" />
     <script type="text/brightscript" uri="ReefTank.brs" />
     <children>
         <Rectangle id="fill" color="0x0B2F55FF" />

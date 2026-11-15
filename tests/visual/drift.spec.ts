@@ -127,3 +127,25 @@ test("camera drift never reveals the backdrop edge at four loop phases", async (
   expect(await bandMaxDiff(page, frames[2], frames[1]), "centre and +x extreme should differ").toBeGreaterThan(8);
   expect(await bandMaxDiff(page, frames[0], frames[2]), "phase 0 (wrap) and the centre should both be zero offset").toBeLessThanOrEqual(2);
 });
+
+// Unlike frozen frames, this exercises live animation bindings. Speed18 also
+// aliases a five-second watchdog interval, so recovery must be disabled here.
+test("live drift moves without false recovery in accelerated preview", async ({ page }) => {
+  test.setTimeout(120_000);
+  await page.goto("/?speed=18&seed=7&night=day");
+  await page.waitForFunction(
+    () => (window as PreviewWindow).__preview?.log.some((line) => line.includes("REEFTANK ready")),
+    null,
+    { timeout: 90_000 },
+  );
+  const frames: Buffer[] = [];
+  for (let i = 0; i < 4; i++) {
+    await page.waitForTimeout(1300);
+    frames.push(await page.locator("#display").screenshot());
+  }
+  const diffs = await Promise.all(frames.slice(1).map((f) => bandMaxDiff(page, frames[0], f)));
+  expect(Math.max(...diffs), "live backdrop motion, without freeze shim").toBeGreaterThan(2);
+  await page.waitForTimeout(16000);
+  const log = await page.evaluate(() => (window as PreviewWindow).__preview?.log ?? []);
+  expect(log.some((line) => line.includes("DRIFT recovering"))).toBe(false);
+});

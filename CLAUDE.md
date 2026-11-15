@@ -39,7 +39,7 @@ A Roku screensaver channel written in BrightScript/SceneGraph. Scope and phases 
 - Screensaver entry points `RunScreenSaver()` / `RunScreenSaverSettings()` only. Never `Main`/`RunUserInterface` in device sources. The preview's `Main` shim (`source/preview.brs`) is excluded from the device build.
 - Target Roku OS 15.3.4: no `Effect` node and no `shaderCompatible`, which are OS 16.0+. brs-engine simulates OS 16, so the preview will accept them while the device does not.
 - No additive blending. `Poster.blendColor` multiplies. Glow, light shafts and caustics are alpha PNGs animated by opacity, translation and tint.
-- `fieldToInterp` from BrightScript takes an roArray of path strings. The target id is looked up in the subtree of the Animation's first non-Animation parent (brs-sg; device behaviour assumed the same), so an Animation in a sibling Group cannot reach a node outside that Group. Posters draw at natural size unless `width`/`height` are set. `Rectangle` has no `size`.
+- Official Roku docs specify a string for `fieldToInterp`; the emulator expects an roArray of path strings. The current array assignment was verified to read back as a string and drive drift on a physical Ultra 4800X OS16.0.4; do not infer failure solely from the representation. The target id is looked up in the subtree of the Animation's first non-Animation parent (brs-sg; verify target binding on device when changing scope), so an Animation in a sibling Group cannot reach a node outside that Group. Posters draw at natural size unless `width`/`height` are set. `Rectangle` has no `size`.
 - Texture memory is width x height x 4 bytes per bitmap, and the same URI is shared for free. Stay within the budget in `docs/perf.md` (from P0.7).
 - Preview dev server port: **8138** (8139 for the isolated screenshot-gate server) (reserved in `~/.claude/used_ports.md`).
 
@@ -65,3 +65,5 @@ AI-generated originals, prompts, seeds and provenance live in `assets/source/` a
   APIs, keep the legacy fallback, and never change persisted preferences in response
   to pressure. Close at >=90% app usage or legacy critical pressure instead.
   `make test FILTER=memory` covers the injected monitor/device/screen mocks.
+
+- Camera drift remains the subtle 90-second ±80 design-pixel loop (backdrop parallax 0.2 means ±16px). Its 5-second watchdog samples animation fraction, not pixel displacement; three unchanged samples trigger recovery. Actual foreground movement also proves health if fraction readback is stale. Off, paused, accelerated-preview, and frozen-preview states must not be restarted. Never override stored preferences.
