@@ -83,7 +83,7 @@
       },
       "width": 201,
       "height": 130,
-      "walk": { "x": 80, "y": 856, "left": 60, "right": 1300, "speed": 24, "legPx": [40, 150], "pauseSec": [1.5, 5.0], "trips": 2, "turnZones": [[60, 100], [1220, 1300]], "turnSec": 0.7 },
+      "walk": { "x": 80, "y": 896, "left": 60, "right": 1300, "speed": 24, "legPx": [40, 150], "pauseSec": [1.5, 5.0], "trips": 2, "turnZones": [[60, 100], [1220, 1300]], "turnSec": 0.7 },
       "turnNarrow": 0.25,
       "legDeg": 6,
       "stridePx": 12,
@@ -113,7 +113,7 @@
       "layerIndex": 0,
       "width": 150,
       "height": 82,
-      "walk": { "x": 940, "y": 904, "left": 880, "right": 1560, "speed": 60, "legPx": [20, 90], "pauseSec": [1.0, 4.0], "legs": 8 }
+      "walk": { "x": 940, "y": 944, "left": 880, "right": 1560, "speed": 60, "legPx": [20, 90], "pauseSec": [1.0, 4.0], "legs": 8 }
     },
     "starfish": {
       "uri": "pkg:/images/extras/starfish.png",

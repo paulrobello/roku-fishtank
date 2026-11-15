@@ -1,3 +1,4 @@
+import { readFileSync } from "node:fs";
 import { expect, test } from "@playwright/test";
 
 type PreviewWindow = Window & { __preview?: { status: string; log: string[] } };
@@ -43,4 +44,16 @@ test("frozen brain demo at seed 7 matches the baseline", async ({ page }) => {
   const preview = await page.evaluate(() => (window as PreviewWindow).__preview);
   expect(preview?.status, preview?.log.join("\n")).toBe("frozen");
   await expect(page.locator("#display")).toHaveScreenshot("brain-seed7-t5.png");
+});
+
+// Keep the critters behind the existing foreground, with their feet visibly embedded
+// in the sand rather than hovering above it. No layer/order changes are needed.
+test("crab and shrimp overlap the sand without changing depth", () => {
+  const extras = JSON.parse(readFileSync("config/extras.json", "utf8"));
+  for (const name of ["crab", "shrimp"]) {
+    const critter = extras.critters[name];
+    expect(critter.layer).toBe("frontLane");
+    expect(critter.layerIndex).toBe(0);
+    expect(critter.walk.y + critter.height).toBe(extras.caustics.clip.y + 10);
+  }
 });
