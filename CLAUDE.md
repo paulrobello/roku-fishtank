@@ -34,6 +34,8 @@ A Roku screensaver channel written in BrightScript/SceneGraph. Scope and phases 
 
 ## Platform constraints
 
+- Fish tail rotation/foreshortening uses its own `tailAnim` at 0.75x the original speed-dependent beat frequency. `swimAnim` retains original pectoral/extra-fin timing; swimming paths, turns and speed are unchanged. `components/lib/fishbeat.brs` owns the period calculation, and pause/resume must cover both clocks.
+
 - Screensaver entry points `RunScreenSaver()` / `RunScreenSaverSettings()` only. Never `Main`/`RunUserInterface` in device sources. The preview's `Main` shim (`source/preview.brs`) is excluded from the device build.
 - Target Roku OS 15.3.4: no `Effect` node and no `shaderCompatible`, which are OS 16.0+. brs-engine simulates OS 16, so the preview will accept them while the device does not.
 - No additive blending. `Poster.blendColor` multiplies. Glow, light shafts and caustics are alpha PNGs animated by opacity, translation and tint.

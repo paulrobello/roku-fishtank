@@ -57,3 +57,17 @@ test("crab and shrimp overlap the sand without changing depth", () => {
     expect(critter.walk.y + critter.height).toBe(extras.caustics.clip.y + 10);
   }
 });
+
+test("tail has an independent clock while fins keep the original animation", () => {
+  const xml = readFileSync("components/Fish/Fish.xml", "utf8");
+  const tail = xml.match(/<Animation id="tailAnim"[\s\S]*?<\/Animation>/)?.[0] ?? "";
+  const fin = xml.match(/<Animation id="swimAnim"[\s\S]*?<\/Animation>/)?.[0] ?? "";
+  for (const id of ["tailInterp", "tailSway", "mTailSway", "mTailInterp"]) {
+    expect(tail).toContain(`id="${id}"`);
+    expect(fin).not.toContain(`id="${id}"`);
+  }
+  for (const id of ["finInterp", "mFinInterp"]) {
+    expect(fin).toContain(`id="${id}"`);
+    expect(tail).not.toContain(`id="${id}"`);
+  }
+});

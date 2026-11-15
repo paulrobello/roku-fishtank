@@ -1,6 +1,7 @@
 sub init()
     m.rig = m.top.findNode("rig")
     m.swimAnim = m.top.findNode("swimAnim")
+    m.tailAnim = m.top.findNode("tailAnim")
     m.turnAnim = m.top.findNode("turnAnim")
     m.turnInterp = m.top.findNode("turnInterp")
     m.turnRoll = m.top.findNode("turnRoll")
@@ -191,8 +192,10 @@ sub onPausedChanged()
     if not m.loaded then return
     if m.top.paused then
         m.swimAnim.control = "pause"
+        m.tailAnim.control = "pause"
     else
         m.swimAnim.control = "resume"
+        m.tailAnim.control = "resume"
     end if
 end sub
 
@@ -355,7 +358,8 @@ end sub
 
 ' One swim cycle: a sampled sine with the tail extremes at fractions 0.25 and 0.75; the tail's
 ' foreshortening (tailSway) peaks at those same extremes, twice per cycle.
-' The fin lags the tail by a quarter cycle. Rotation is in radians. The mirrored set's
+' Fin keys retain their original quarter-cycle offset on the independent fin clock.
+' Rotation is in radians. The mirrored set's
 ' swing_deg is negated in the rig, so both sets beat the same way on screen.
 sub fishBuildSwimKeys(set as object, tailDeg as float, finDeg as float)
     toRad = 3.14159265 / 180.0
@@ -423,17 +427,17 @@ sub fishBuildExtras(set as object, extras as object, drawOrder as object)
     end for
 end sub
 
-' Beat period is 1 s at 60 px/s and scales inversely with speed, clamped to 0.35-3 s.
+' Fins retain their original speed-dependent clock; only tail frequency is 0.75x.
 ' A running Animation's duration is only changed across a stop/start.
 sub fishStartSwim()
-    speed = m.top.swimSpeed
-    if speed < 1 then speed = 1
-    period = 60.0 / speed
-    if period < 0.35 then period = 0.35
-    if period > 3.0 then period = 3.0
+    periods = fishBeatPeriods(m.top.swimSpeed)
     m.swimAnim.control = "stop"
-    m.swimAnim.duration = period
+    m.tailAnim.control = "stop"
+    m.swimAnim.duration = periods.fin
+    m.tailAnim.duration = periods.tail
     m.swimAnim.control = "start"
+    m.tailAnim.control = "start"
+    onPausedChanged()
 end sub
 
 function fishSign(value as integer) as integer

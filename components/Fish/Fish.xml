@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <!--
     Rigged fish. Set species to load config/species/<species>.json and its generated
-    .rig.json. swimSpeed (px/s) sets the tail/fin beat rate. Setting facing to 1 (right)
+    .rig.json. swimSpeed (px/s) sets the base fin beat rate; tails beat at 0.75x that frequency. Setting facing to 1 (right)
     or -1 (left) turns the fish: the rig narrows to its head-on thickness about
     mirror_center while it pitches nose-up and rises a little, crossfades to the rig's
     pre-mirrored art at the narrowest point, then widens nose-down with a slight
     overshoot. The tail lags the body both ways, so the head leads the turn. turnDelay
-    (seconds) holds a turn back, which staggers a school; turning is true while it runs. paused holds the tail and fin beat (swimAnim) while true. The Fish origin is the body Poster's
+    (seconds) holds a turn back, which staggers a school; turning is true while it runs. paused holds the tail and fin beat (tailAnim/swimAnim) while true. The Fish origin is the body Poster's
     top-left corner.
     The tail beats side to side in depth, not up and down: tailWrap (scaled about the tail joint, on
-    swimAnim) foreshortens the tail at each swing extreme, twice per beat, while the Poster itself
+    tailAnim) foreshortens the tail at each swing extreme, twice per beat, while the Poster itself
     rotates only a few degrees. The tail Poster's own scale stays with the turn.
     Night light organ (species json "night" block, flashlight fish): each set gets a glow
     Poster (id starting with "night", so Night and the lane tint leave it untinted) at the
@@ -29,6 +29,7 @@
         <field id="paused" type="boolean" value="false" onChange="onPausedChanged" />
     </interface>
     <script type="text/brightscript" uri="Fish.brs" />
+    <script type="text/brightscript" uri="pkg:/components/lib/fishbeat.brs" />
     <script type="text/brightscript" uri="pkg:/components/lib/prng.brs" />
     <script type="text/brightscript" uri="pkg:/components/lib/glow.brs" />
     <children>
@@ -44,12 +45,14 @@
                 <Poster id="mFin" />
             </Group>
         </Group>
-        <Animation id="swimAnim" repeat="true" easeFunction="linear" duration="1.0">
+        <Animation id="tailAnim" repeat="true" easeFunction="linear" duration="1.3333333">
             <FloatFieldInterpolator id="tailInterp" />
             <Vector2DFieldInterpolator id="tailSway" />
             <Vector2DFieldInterpolator id="mTailSway" />
-            <FloatFieldInterpolator id="finInterp" />
             <FloatFieldInterpolator id="mTailInterp" />
+        </Animation>
+        <Animation id="swimAnim" repeat="true" easeFunction="linear" duration="1.0">
+            <FloatFieldInterpolator id="finInterp" />
             <FloatFieldInterpolator id="mFinInterp" />
         </Animation>
         <Animation id="turnAnim" repeat="false" easeFunction="linear" duration="0.85">
