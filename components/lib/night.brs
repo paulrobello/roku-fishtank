@@ -251,3 +251,12 @@ function nightSparklePose(slot as object, t as float) as object
         opacity: nightKeyAt(twinkle.keys, twinkle.values, f)
     }
 end function
+
+' Only recalculate astronomy when the local date or UTC offset changes.
+sub nightRefreshSolar(state as object, clock as object)
+    key = clock.year.toStr() + "-" + clock.month.toStr() + "-" + clock.day.toStr() + "/" + clock.offset.toStr()
+    if state.solarKey = key then return
+    loc = state.location
+    state.solar = solarTimes(loc.latitude, loc.longitude, clock.year, clock.month, clock.day, clock.offset)
+    state.solarKey = key
+end sub

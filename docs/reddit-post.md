@@ -23,7 +23,7 @@ procedurally animated — each species has its own behavior brain, so tangs graz
 a royal gramma backs tail-first into its den, a mandarin hops along the sand line, a
 lionfish just hangs, and a school of chromis moves as a boids flock. Bubbles rise, seaweed
 sways, caustics scroll over the sand. After real sunset (computed from actual sunrise/
-sunset times for your location) the tank crossfades to a moonlit night mode with glowing
+sunset times for the location you select in settings) the tank crossfades to a moonlit night mode with glowing
 coral and a small group of flashlight fish that blink in the dark.
 
 **The decision point:** it is not in the Channel Store. Installing means enabling Roku's

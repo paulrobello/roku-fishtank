@@ -26,6 +26,7 @@
         <function name="nightStart" />
     </interface>
     <script type="text/brightscript" uri="Night.brs" />
+    <script type="text/brightscript" uri="pkg:/components/lib/settings.brs" />
     <script type="text/brightscript" uri="pkg:/components/lib/night.brs" />
     <script type="text/brightscript" uri="pkg:/components/lib/daynight.brs" />
     <script type="text/brightscript" uri="pkg:/components/lib/solar.brs" />

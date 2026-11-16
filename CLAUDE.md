@@ -30,7 +30,7 @@ A Roku screensaver channel written in BrightScript/SceneGraph. Scope and phases 
 - Deploy: `ROKU_HOST=<ip> ROKU_PASSWORD=<pw> make deploy`. The installer uses digest auth.
 - Debug console: telnet port **8087**, which only listens while the screensaver runs. Read runtime errors there before guessing.
 - ECP keypresses work on all three devices (Network access set to permissive; verified 2026-11-08): `curl -d '' http://<ip>:8060/keypress/Home` exits a running screensaver remotely. Starting one is still TV-side (Settings > Theme > Screensavers > dev > Preview, or the idle timer) — `/launch/dev` is refused (503; screensaver channels are not foreground-launchable), and there is no reboot endpoint. The telnet `press k` path on 8080 (`tools/perf/run_probe.sh`) still works. `http://<ip>:8060/query/active-app` shows whether the screensaver is running.
-- Devices: three Roku Ultras on the home LAN, all OS 15.3.4, all with dev mode on and ECP keypress permissive — a 4850X (primary target) and two 4800Xs (Reef Tank sideloaded 2026-11-04 on one of them). Performance is measured on the 4850X only. IPs, room names and dev-mode state live in the gitignored `devices.local.md` (and `~/.claude/guides/infrastructure.md`); they stay out of the public repo.
+- Devices: three Roku Ultras on the home LAN, all OS 16.0.4 (verified 2026-11-16), all with dev mode on and ECP keypress permissive — a 4850X (primary target) and two 4800Xs (Reef Tank sideloaded 2026-11-04 on one of them). Performance is measured on the 4850X only. IPs, room names and dev-mode state live in the gitignored `devices.local.md` (and `~/.claude/guides/infrastructure.md`); they stay out of the public repo.
 
 ## Platform constraints
 

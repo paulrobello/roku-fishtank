@@ -1,8 +1,8 @@
 ' Layout is authored at 1920x1080 and the panel Group is scaled to the UI resolution.
 sub init()
     PANEL_W = 1100
-    PANEL_H = 660
-    m.rowH = 120
+    PANEL_H = 760
+    m.rowH = 110
     m.rowsY = 200
     dr = m.top.currentDesignResolution
     s = dr.width / 1920.0
@@ -33,6 +33,7 @@ sub init()
     settingsUiPlace(m.top.findNode("hint"), smallFont, 60, PANEL_H - 70, PANEL_W - 120, 40)
 
     m.keys = settingsKeys()
+    m.keys.push("solarLocation")
     m.titles = { nightMode: "Night mode", density: "Fish density", drift: "Camera drift" }
     m.shown = {
         nightMode: { auto: "Auto", day: "Always day", night: "Always night" }
@@ -41,6 +42,7 @@ sub init()
     }
     m.store = settingsRegistryStore()
     m.values = settingsLoad(m.store)
+    m.location = settingsLocationLoad(m.store)
 
     ' Native list navigation handles Up/Down and OK in the separate settings context.
     ' No custom key handler is included in the screensaver package.
@@ -73,7 +75,11 @@ end sub
 sub settingsUiRefresh()
     for i = 0 to m.keys.count() - 1
         key = m.keys[i]
-        m.options.content.getChild(i).title = m.titles[key] + ": " + m.shown[key][m.values[key]]
+        if key = "solarLocation" then
+            m.options.content.getChild(i).title = "Solar location: " + settingsLocationLabel(m.location)
+        else
+            m.options.content.getChild(i).title = m.titles[key] + ": " + m.shown[key][m.values[key]]
+        end if
     end for
 end sub
 
@@ -81,7 +87,65 @@ sub settingsUiSelected()
     row = m.options.itemSelected
     if row < 0 or row >= m.keys.count() then return
     key = m.keys[row]
+    if key = "solarLocation" then
+        settingsUiLocation()
+        return
+    end if
     m.values[key] = settingsStep(key, m.values[key], 1)
     settingsSave(m.store, m.values)
     settingsUiRefresh()
+end sub
+
+sub settingsUiLocation()
+    dialog = CreateObject("roSGNode", "Dialog")
+    dialog.title = "Solar location"
+    dialog.message = "Choose a city or enter coordinates. Keep your Roku time zone correct. Location stays on this device."
+    dialog.buttons = ["Woodland, CA", "Charlotte, NC", "Custom coordinates", "Cancel"]
+    dialog.observeField("buttonSelected", "settingsUiLocationSelected")
+    dialog.observeField("wasClosed", "settingsUiDialogClosed")
+    m.top.dialog = dialog
+end sub
+
+sub settingsUiLocationSelected(event as object)
+    choice = event.getData()
+    dialog = m.top.dialog
+    if choice = 2 then
+        dialog.close = true
+        keyboard = CreateObject("roSGNode", "KeyboardDialog")
+        keyboard.title = "Latitude, longitude"
+        keyboard.message = "Example: 35.2271,-80.8431. North/east positive, south/west negative."
+        keyboard.text = m.location.text
+        keyboard.buttons = ["Save", "Cancel"]
+        keyboard.observeField("buttonSelected", "settingsUiCoordinatesSelected")
+        keyboard.observeField("wasClosed", "settingsUiDialogClosed")
+        m.top.dialog = keyboard
+        return
+    end if
+    if choice = 0 then settingsLocationSave(m.store, "38.68,-121.77")
+    if choice = 1 then settingsLocationSave(m.store, "35.2271,-80.8431")
+    m.location = settingsLocationLoad(m.store)
+    settingsUiRefresh()
+    dialog.close = true
+end sub
+
+sub settingsUiCoordinatesSelected(event as object)
+    dialog = m.top.dialog
+    if event.getData() = 0 then
+        if not settingsLocationSave(m.store, dialog.text) then
+            dialog.title = "Invalid coordinates"
+            dialog.message = "Enter latitude (-90 to 90), longitude (-180 to 180), separated by a comma."
+            return
+        end if
+        m.location = settingsLocationLoad(m.store)
+        settingsUiRefresh()
+    end if
+    dialog.close = true
+end sub
+
+sub settingsUiDialogClosed()
+    if m.top.dialog = invalid then
+        m.options.setFocus(true)
+    else if m.top.dialog.wasClosed then
+        m.options.setFocus(true)
+    end if
 end sub

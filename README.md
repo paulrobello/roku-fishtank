@@ -455,3 +455,19 @@ See [store certification repair and release checks](docs/store-certification.md)
 Memory monitoring is installed for both the tank and settings entry points, with
 an older-device fallback. Critical pressure exits cleanly to Roku without changing
 your saved settings. See the certification checklist for the precise policy.
+
+### Local sunrise and sunset
+
+In **Settings > Theme > Screensavers > Reef Tank (or dev) > Settings**, select
+**Solar location**. Choose Woodland, CA or Charlotte, NC, or **Custom coordinates**
+to enter `latitude,longitude` (north/east positive, south/west negative). Press
+Save to apply, or Cancel/Back to keep the previous location. A nearby city center
+is sufficient; no address is required. Keep the Roku's time zone correct.
+
+The default remains Woodland until changed. Coordinates stay on the Roku and no
+network lookup is performed. Auto lighting uses the selected location; Always day
+and Always night still override it. The clock refreshes while running, including
+local midnight, daylight-saving changes and Roku clock/time-zone changes. In polar
+regions where a sunrise or civil-twilight event is absent, Auto falls back to day;
+use Always night when preferred. Deterministic browser previews retain the scene's
+reference location for fixed-time/frozen/accelerated test runs.

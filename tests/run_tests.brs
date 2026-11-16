@@ -27,6 +27,7 @@ function testSuites() as object
         schoolTestSuite()
         behaviorTestSuite()
         settingsTestSuite()
+        locationTestSuite()
         bubblesTestSuite()
         nightTestSuite()
         weaveTestSuite()

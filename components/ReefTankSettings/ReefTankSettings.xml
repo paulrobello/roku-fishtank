@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <!--
-    Reef Tank settings screen (P5.2), shown by RunScreenSaverSettings. Three rows
-    (Night mode, Fish density, Camera drift): OK cycles the focused row's value,
+    Reef Tank settings screen (P5.2), shown by RunScreenSaverSettings. Four rows
+    (Night mode, Fish density, Camera drift, Solar location): OK cycles the focused row's value,
     up/down moves between rows, Back exits. Every change is saved to the registry at once.
     Overdraw: the backdrop and one dim layer are the only full-screen layers (no
     background Rectangle under the backdrop); the panel covers about a third of the screen.

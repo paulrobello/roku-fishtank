@@ -49,3 +49,48 @@ test("native settings list cycles values with OK", async ({ page }) => {
   await page.keyboard.press("Enter");
   await expect.poll(async () => (await page.locator("#display").screenshot()).equals(before)).toBe(true);
 });
+
+// Location is opt-in, local-only, and modal dismissal must return to the list.
+test("solar location presets persist and dialogs cancel without changing them", async ({ page }) => {
+  await page.goto("/?scene=ReefTankSettings&seed=7&freeze=1");
+  await page.waitForFunction(
+    () => ["frozen", "error"].includes((window as PreviewWindow).__preview?.status ?? ""),
+    null,
+    { timeout: 30_000 },
+  );
+  const display = page.locator("#display");
+  const press = async (key: string): Promise<void> => {
+    const before = await display.screenshot();
+    await page.keyboard.press(key);
+    await expect.poll(async () => (await display.screenshot()).equals(before)).toBe(false);
+  };
+  for (let i = 0; i < 3; i++) await press("ArrowDown");
+  await press("Enter");
+  await expect(display).toHaveScreenshot("settings-location-picker.png");
+  await press("ArrowDown");
+  await press("Enter");
+  await expect(display).toHaveScreenshot("settings-location-charlotte.png");
+  const charlotte = await display.screenshot();
+
+  await press("Enter");
+  await press("Escape");
+  await expect.poll(async () => (await display.screenshot()).equals(charlotte)).toBe(true);
+  await press("Enter");
+  await press("ArrowDown");
+  await press("ArrowDown");
+  await press("Enter");
+  await expect(display).toHaveScreenshot("settings-location-custom.png");
+  await press("Escape");
+  await expect.poll(async () => (await display.screenshot()).equals(charlotte)).toBe(true);
+
+  await page.reload();
+  await page.waitForFunction(
+    () => ["frozen", "error"].includes((window as PreviewWindow).__preview?.status ?? ""),
+    null,
+    { timeout: 30_000 },
+  );
+  for (let i = 0; i < 3; i++) await press("ArrowDown");
+  await expect.poll(async () => (await display.screenshot()).equals(charlotte)).toBe(true);
+  const log = await page.evaluate(() => (window as PreviewWindow).__preview?.log ?? []);
+  expect(log.filter((line) => line.includes("error,") || line.includes("Runtime Error"))).toEqual([]);
+});

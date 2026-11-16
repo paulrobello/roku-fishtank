@@ -117,3 +117,39 @@ sub settingsApplyToScene(scene as object, store as object)
     if scene.hasField("nightMode") then scene.nightMode = plan.nightMode
     print "SETTINGS applied density="; plan.density; " drift="; plan.drift; " nightMode="; plan.nightMode
 end sub
+
+' Location stays on-device and is deliberately separate from the cycling preferences.
+function settingsLocationParse(value as dynamic) as dynamic
+    if type(value) <> "String" and type(value) <> "roString" then return invalid
+    if value.len() > 40 then return invalid
+    parts = value.split(",")
+    if parts.count() <> 2 then return invalid
+    number = CreateObject("roRegex", "^[+-]?[0-9]+([.][0-9]+)?$", "")
+    latText = parts[0].trim()
+    lonText = parts[1].trim()
+    if not number.isMatch(latText) or not number.isMatch(lonText) then return invalid
+    lat = latText.toFloat()
+    lon = lonText.toFloat()
+    if lat < -90 or lat > 90 or lon < -180 or lon > 180 then return invalid
+    return { latitude: lat, longitude: lon, text: latText + "," + lonText }
+end function
+
+function settingsLocationLoad(store as object) as object
+    loc = settingsLocationParse(store.read("solarLocation"))
+    if loc = invalid then loc = settingsLocationParse("38.68,-121.77")
+    return loc
+end function
+
+function settingsLocationSave(store as object, value as dynamic) as boolean
+    loc = settingsLocationParse(value)
+    if loc = invalid then return false
+    store.write("solarLocation", loc.text)
+    store.flush()
+    return true
+end function
+
+function settingsLocationLabel(loc as object) as string
+    if Abs(loc.latitude - 38.68) < 0.0001 and Abs(loc.longitude + 121.77) < 0.0001 then return "Woodland, CA"
+    if Abs(loc.latitude - 35.2271) < 0.0001 and Abs(loc.longitude + 80.8431) < 0.0001 then return "Charlotte, NC"
+    return loc.text
+end function

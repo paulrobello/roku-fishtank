@@ -113,7 +113,9 @@ function nightMakeState(scene as object, speed as float, freeze as float) as obj
         month = dt.GetMonth()
         day = dt.GetDayOfMonth()
     end if
-    loc = scene.location
+    loc = settingsLocationLoad(settingsRegistryStore())
+    live = parsed = invalid and freeze <= 0 and speed = 1
+    if not live then loc = scene.location
     ' ?seed in the preview; a fixed seed under ?freeze without one, so the frozen
     ' frame is stable; otherwise derived from the wall clock (the Bubbles rule).
     seed = 0
@@ -126,9 +128,10 @@ function nightMakeState(scene as object, speed as float, freeze as float) as obj
             seed = now.AsSeconds() + now.GetMilliseconds() * 7919
         end if
     end if
-    ' The solar times stay those of the start date: over a run that crosses local
-    ' midnight they go stale by one day of sunset drift (about a minute).
     return {
+        live: live
+        location: loc
+        solarKey: ""
         start: minutes
         speed: speed
         rng: prngNew(seed)
@@ -136,17 +139,20 @@ function nightMakeState(scene as object, speed as float, freeze as float) as obj
     }
 end function
 
-' Local minus UTC in minutes right now, so the OS handles DST. Read from one
-' roDateTime before and after ToLocalTime(), wrapped to (-720, 720].
 function nightUtcOffsetMinutes() as integer
+    return nightLocalClock().offset
+end function
+
+' Subtract epoch seconds rather than wrapping clock hours: UTC+13/+14 are valid.
+function nightLocalClock() as object
     dt = CreateObject("roDateTime")
-    utc = dt.GetHours() * 60 + dt.GetMinutes()
+    utc = dt.AsSeconds()
     dt.ToLocalTime()
-    local = dt.GetHours() * 60 + dt.GetMinutes()
-    d = local - utc
-    if d > 720 then d = d - 1440
-    if d <= -720 then d = d + 1440
-    return d
+    return {
+        year: dt.GetYear(), month: dt.GetMonth(), day: dt.GetDayOfMonth()
+        offset: Int((dt.AsSeconds() - utc) / 60)
+        minutes: dt.GetHours() * 60.0 + dt.GetMinutes() + dt.GetSeconds() / 60.0
+    }
 end function
 
 sub onTick()
@@ -173,6 +179,11 @@ sub nightEvaluate(snap as boolean)
     elapsed = m.clock.TotalMilliseconds() / 1000.0
     if m.freezeT > 0 then elapsed = m.freezeT
     minutes = nightClockMinutes(m.state.start, elapsed, m.state.speed)
+    if m.state.live then
+        clock = nightLocalClock()
+        nightRefreshSolar(m.state, clock)
+        minutes = clock.minutes
+    end if
     st = daynightPhase(minutes, m.state.solar, m.top.mode)
     if snap then
         m.shown = st.blend
