@@ -28,13 +28,30 @@ sub Main(args as object)
     })
     scene = screen.createScene(params.scene)
     screen.show()
+    if args.locale <> invalid and params.scene = "ReefTankSettings" then
+        print "PREVIEW_LOCALE "; CreateObject("roDeviceInfo").GetCurrentLocale()
+        print "PREVIEW_SUBTITLE "; scene.findNode("subtitle").text
+        print "PREVIEW_HINT "; scene.findNode("hint").text
+        for each row in scene.findNode("options").content.getChildren(-1, 0)
+            print "PREVIEW_OPTION "; row.title
+        end for
+    end if
 
     timeout = 0
     if params.freeze > 0 then timeout = 50
     clock = createObject("roTimespan")
     frozen = false
+    previousDialogTitle = ""
     while true
         msg = wait(timeout, port)
+        if args.locale <> invalid and params.scene = "ReefTankSettings" then
+            currentDialogTitle = ""
+            if scene.dialog <> invalid then currentDialogTitle = scene.dialog.title
+            if currentDialogTitle <> previousDialogTitle then
+                print "PREVIEW_DIALOG "; currentDialogTitle
+                previousDialogTitle = currentDialogTitle
+            end if
+        end if
         if type(msg) = "roSGScreenEvent" and msg.isScreenClosed() then exit while
         if params.freeze > 0 then
             if frozen

@@ -21,7 +21,7 @@ const engineFiles: Record<string, string> = {
 
 // Channel content shipped to the engine. source/ includes preview.brs (the Main shim),
 // which bsconfig.json keeps out of the device zip.
-const channelDirs: string[] = ["source", "components", "images", "config"];
+const channelDirs: string[] = ["source", "components", "images", "config", "locale"];
 
 // Device-check scenes the preview also serves (?scene=MirrorProbeScene), so a device
 // screenshot can be compared with the same scene in the preview. Never in the device build.

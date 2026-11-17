@@ -58,6 +58,7 @@ typecheck: node_modules
 test: node_modules
 	python3 tools/package/test_repack.py
 	python3 tools/changelog/test_history.py
+	python3 tools/localization/test_catalogs.py
 	python3 tools/location/test_data.py
 	$(BIN)/brs-cli --root . $(if $(FILTER),-k filter=$(FILTER),) tests/run_tests.brs tests/lib/*.brs tests/unit/*.brs components/lib/*.brs source/preview_color.brs source/memory_monitor.brs
 
@@ -75,7 +76,7 @@ api-guard:
 	@bash tools/api_guard.sh
 	@bash tools/test_store_guards.sh
 
-# Device zip holds only manifest, source/, components/, images/, config/.
+# Device zip holds only manifest, source/, components/, images/, config/, locale/.
 zip-check: build
 	@bash tools/zip_check.sh $(ZIP)
 

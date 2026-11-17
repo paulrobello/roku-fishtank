@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # zip-check: the device zip may only hold manifest and the source/,
-# components/, images/ and config/ trees. Preview, test, tooling and art
+# components/, images/, config/ and locale/ trees. Preview, test, tooling and art
 # source files must never ship.
 # Usage: tools/zip_check.sh [path/to/channel.zip]   (default dist/channel.zip)
 set -eu
@@ -15,7 +15,7 @@ while IFS= read -r e; do
     case "$e" in
         source/preview*.brs) echo "zip-check: $e is preview-only"; bad=$((bad + 1)) ;;
         preview/* | tests/* | tools/* | assets/*) echo "zip-check: $e must not ship"; bad=$((bad + 1)) ;;
-        manifest | source/* | components/* | images/* | config/*) ;;
+        manifest | source/* | components/* | images/* | config/* | locale/*) ;;
         *) echo "zip-check: unexpected top-level entry $e"; bad=$((bad + 1)) ;;
     esac
 done <<EOF

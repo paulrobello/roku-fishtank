@@ -6,6 +6,7 @@
     "components/**/*",
     "images/**/*",
     "config/**/*",
+    "locale/**/*",
     "!components/Fidelity/**/*",
     "!images/fidelity/**/*",
     { "src": "tools/devicecheck/source/main.brs", "dest": "source/main.brs" },

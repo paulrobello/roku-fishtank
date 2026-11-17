@@ -71,7 +71,10 @@ sub clockRefresh()
     if m.freeze > 0 then format = "12h"
     parts = clockParts(minutes, format)
     if m.label.text <> parts.time then m.label.text = parts.time
-    if m.period.text <> parts.period then m.period.text = parts.period
+    periodText = ""
+    if parts.period = "AM" then periodText = tr("AM")
+    if parts.period = "PM" then periodText = tr("PM")
+    if m.period.text <> periodText then m.period.text = periodText
     m.period.visible = parts.period <> ""
     ' Right alignment keeps a consistent 12px gap for both 1:05 and 11:05.
     if parts.period = "" then

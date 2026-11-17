@@ -28,18 +28,20 @@ sub init()
     titleFont = "font:LargeBoldSystemFont"
     bodyFont = "font:MediumBoldSystemFont"
     smallFont = "font:SmallestSystemFont"
+    m.top.findNode("subtitle").text = tr("Screensaver settings")
+    m.top.findNode("hint").text = tr("OK changes a value. Up / down moves. Back saves and exits.")
     settingsUiPlace(m.top.findNode("title"), titleFont, 60, 36, PANEL_W - 120, 90)
-    settingsUiPlace(m.top.findNode("subtitle"), smallFont, 60, 122, PANEL_W - 120, 40)
-    settingsUiPlace(m.top.findNode("hint"), smallFont, 60, PANEL_H - 70, PANEL_W - 120, 40)
+    settingsUiPlace(m.top.findNode("subtitle"), smallFont, 60, 110, PANEL_W - 120, 64)
+    settingsUiPlace(m.top.findNode("hint"), smallFont, 60, PANEL_H - 82, PANEL_W - 120, 64)
 
     ' Keep Solar location at index 3 even when new persisted preferences are added.
     m.keys = ["nightMode", "density", "drift", "solarLocation", "digitalClock", "changelog"]
-    m.titles = { nightMode: "Night mode", density: "Fish density", drift: "Camera drift", digitalClock: "Background clock" }
+    m.titles = { nightMode: tr("Night mode"), density: tr("Fish density"), drift: tr("Camera drift"), digitalClock: tr("Background clock") }
     m.shown = {
-        nightMode: { auto: "Auto", day: "Always day", night: "Always night" }
-        density: { calm: "Calm", normal: "Normal", busy: "Busy" }
-        drift: { on: "On", off: "Off" }
-        digitalClock: { on: "On", off: "Off" }
+        nightMode: { auto: tr("Auto"), day: tr("Always day"), night: tr("Always night") }
+        density: { calm: tr("Calm"), normal: tr("Normal"), busy: tr("Busy") }
+        drift: { on: tr("On"), off: tr("Off") }
+        digitalClock: { on: tr("On"), off: tr("Off") }
     }
     m.store = settingsRegistryStore()
     m.values = settingsLoad(m.store)
@@ -79,11 +81,11 @@ sub settingsUiRefresh()
     for i = 0 to m.keys.count() - 1
         key = m.keys[i]
         if key = "solarLocation" then
-            m.options.content.getChild(i).title = "Solar location: " + settingsLocationLabel(m.location)
+            m.options.content.getChild(i).title = tr("Solar location: %1").replace("%1", settingsLocationLabel(m.location))
         else if key = "changelog" then
-            m.options.content.getChild(i).title = "Changelog"
+            m.options.content.getChild(i).title = tr("Changelog")
         else
-            m.options.content.getChild(i).title = m.titles[key] + ": " + m.shown[key][m.values[key]]
+            m.options.content.getChild(i).title = tr("%1: %2").replace("%1", m.titles[key]).replace("%2", m.shown[key][m.values[key]])
         end if
     end for
 end sub
@@ -111,9 +113,9 @@ end sub
 
 sub settingsUiLocation()
     dialog = CreateObject("roSGNode", "Dialog")
-    dialog.title = "Solar location"
-    dialog.message = "Choose a ZIP, nearby city, or coordinates. Keep your Roku time zone correct. Location stays on this device."
-    dialog.buttons = ["US ZIP code", "Country / city", "Custom coordinates", "Cancel"]
+    dialog.title = tr("Solar location")
+    dialog.message = tr("Choose a ZIP, nearby city, or coordinates. Keep your Roku time zone correct. Location stays on this device.")
+    dialog.buttons = [tr("US ZIP code"), tr("Country / city"), tr("Custom coordinates"), tr("Cancel")]
     dialog.observeField("buttonSelected", "settingsUiLocationSelected")
     dialog.observeField("wasClosed", "settingsUiDialogClosed")
     m.top.dialog = dialog
@@ -125,10 +127,10 @@ sub settingsUiLocationSelected(event as object)
     dialog.close = true
     if choice = 0 then
         keyboard = CreateObject("roSGNode", "StandardKeyboardDialog")
-        keyboard.title = "US ZIP code"
-        keyboard.message = ["Enter five digits, then select Save ZIP below the keyboard."]
+        keyboard.title = tr("US ZIP code")
+        keyboard.message = [tr("Enter five digits, then select Save ZIP below the keyboard.")]
         keyboard.keyboardDomain = "numeric"
-        keyboard.buttons = ["Save ZIP", "Use remote digits", "Cancel"]
+        keyboard.buttons = [tr("Save ZIP"), tr("Use remote digits"), tr("Cancel")]
         keyboard.observeField("buttonSelected", "settingsUiZipKeyboardSelected")
         keyboard.observeField("wasClosed", "settingsUiDialogClosed")
         m.top.dialog = keyboard
@@ -136,10 +138,10 @@ sub settingsUiLocationSelected(event as object)
         settingsUiCountries()
     else if choice = 2 then
         keyboard = CreateObject("roSGNode", "StandardKeyboardDialog")
-        keyboard.title = "Latitude, longitude"
-        keyboard.message = ["Example: 35.2271,-80.8431. Select Save below the keyboard."]
+        keyboard.title = tr("Latitude, longitude")
+        keyboard.message = [tr("Example: 35.2271,-80.8431. Select Save below the keyboard.")]
         keyboard.text = m.location.text
-        keyboard.buttons = ["Save", "Cancel"]
+        keyboard.buttons = [tr("Save"), tr("Cancel")]
         keyboard.observeField("buttonSelected", "settingsUiCoordinatesSelected")
         keyboard.observeField("wasClosed", "settingsUiDialogClosed")
         m.top.dialog = keyboard
@@ -152,8 +154,8 @@ sub settingsUiZipKeyboardSelected(event as object)
     if choice = 0 then
         loc = locationZipRead(dialog.text.trim())
         if loc = invalid then
-            dialog.title = "ZIP not found"
-            dialog.message = ["Use five digits including leading zeros. Some ZIPs need city / coordinates instead."]
+            dialog.title = tr("ZIP not found")
+            dialog.message = [tr("Use five digits including leading zeros. Some ZIPs need city / coordinates instead.")]
             return
         end if
         settingsLocationSave(m.store, loc.text)
@@ -171,13 +173,13 @@ sub settingsUiZipDigits(focus as integer)
     m.placeMode = "zip"
     names = []
     for i = 0 to 4
-        names.push("Digit " + (i + 1).toStr() + ": " + m.zipDigits[i].toStr())
+        names.push(tr("Digit %1: %2").replace("%1", (i + 1).toStr()).replace("%2", m.zipDigits[i].toStr()))
     end for
-    names.push("Save ZIP: " + locationZipDigits(m.zipDigits))
-    names.push("Cancel")
-    settingsUiShowPlaces(names, "ZIP " + locationZipDigits(m.zipDigits) + " - OK cycles each digit 0-9")
+    names.push(tr("Save ZIP: %1").replace("%1", locationZipDigits(m.zipDigits)))
+    names.push(tr("Cancel"))
+    settingsUiShowPlaces(names, tr("ZIP %1 - OK cycles each digit 0-9").replace("%1", locationZipDigits(m.zipDigits)))
     m.places.jumpToItem = focus
-    m.top.findNode("hint").text = "Up / down selects a digit. OK changes it. Then choose Save ZIP."
+    m.top.findNode("hint").text = tr("Up / down selects a digit. OK changes it. Then choose Save ZIP.")
 end sub
 
 sub settingsUiZipSelected(selected as integer)
@@ -187,7 +189,7 @@ sub settingsUiZipSelected(selected as integer)
     else if selected = 5 then
         loc = locationZipRead(locationZipDigits(m.zipDigits))
         if loc = invalid then
-            m.top.findNode("subtitle").text = "ZIP not found. Change digits, or Cancel and use city / coordinates."
+            m.top.findNode("subtitle").text = tr("ZIP not found. Change digits, or Cancel and use city / coordinates.")
             return
         end if
         settingsLocationSave(m.store, loc.text)
@@ -201,11 +203,11 @@ sub settingsUiCountries()
     m.countryRows = ParseJson(ReadAsciiFile("pkg:/config/location/countries.json"))
     if m.countryRows = invalid then return
     m.placeMode = "country"
-    names = ["Cancel"]
+    names = [tr("Cancel")]
     for each row in m.countryRows
-        names.push(row[0])
+        names.push(tr(row[0]))
     end for
-    settingsUiShowPlaces(names, "Choose country / territory")
+    settingsUiShowPlaces(names, tr("Choose country / territory"))
 end sub
 
 sub settingsUiShowPlaces(names as object, title as string)
@@ -238,11 +240,11 @@ sub settingsUiPlaceSelected()
         m.cityRows = ParseJson(ReadAsciiFile("pkg:/config/location/cities-" + country[1] + ".json"))
         if m.cityRows = invalid then return
         m.placeMode = "city"
-        names = ["Back to countries"]
+        names = [tr("Back to countries")]
         for each city in m.cityRows
             names.push(city[0])
         end for
-        settingsUiShowPlaces(names, country[0] + " - choose a nearby city")
+        settingsUiShowPlaces(names, tr("%1 - choose a nearby city").replace("%1", tr(country[0])))
     else
         if selected = 0 then
             settingsUiCountries()
@@ -257,13 +259,13 @@ end sub
 
 sub settingsUiEndPlaces()
     m.zipDigits = invalid
-    m.top.findNode("hint").text = "OK changes a value. Up / down moves. Back saves and exits."
+    m.top.findNode("hint").text = tr("OK changes a value. Up / down moves. Back saves and exits.")
     m.countryRows = invalid
     m.cityRows = invalid
     m.places.content = invalid
     m.places.visible = false
     m.options.visible = true
-    m.top.findNode("subtitle").text = "Screensaver settings"
+    m.top.findNode("subtitle").text = tr("Screensaver settings")
     m.location = settingsLocationLoad(m.store)
     settingsUiRefresh()
     m.options.setFocus(true)
@@ -273,8 +275,8 @@ sub settingsUiCoordinatesSelected(event as object)
     dialog = m.top.dialog
     if event.getData() = 0 then
         if not settingsLocationSave(m.store, dialog.text) then
-            dialog.title = "Invalid coordinates"
-            dialog.message = ["Enter latitude (-90 to 90), longitude (-180 to 180), separated by a comma."]
+            dialog.title = tr("Invalid coordinates")
+            dialog.message = [tr("Enter latitude (-90 to 90), longitude (-180 to 180), separated by a comma.")]
             return
         end if
         m.location = settingsLocationLoad(m.store)
@@ -297,12 +299,16 @@ end sub
 sub settingsUiChangelog()
     entry = m.changelogEntries[m.changelogIndex]
     dialog = CreateObject("roSGNode", "StandardMessageDialog")
-    dialog.title = "Changelog: " + entry.title
-    dialog.message = entry.message
-    dialog.bottomMessage = ["Development build history, not Roku Store publication dates."]
-    nextLabel = "Next entry"
-    if m.changelogIndex = m.changelogEntries.count() - 1 then nextLabel = "Back to newest"
-    dialog.buttons = [nextLabel, "Close"]
+    dialog.title = tr("Changelog: %1").replace("%1", tr(entry.title))
+    messages = []
+    for each message in entry.message
+        messages.push(tr(message))
+    end for
+    dialog.message = messages
+    dialog.bottomMessage = [tr("Development build history, not Roku Store publication dates.")]
+    nextLabel = tr("Next entry")
+    if m.changelogIndex = m.changelogEntries.count() - 1 then nextLabel = tr("Back to newest")
+    dialog.buttons = [nextLabel, tr("Close")]
     dialog.observeField("buttonSelected", "settingsUiChangelogSelected")
     dialog.observeField("wasClosed", "settingsUiDialogClosed")
     m.top.dialog = dialog

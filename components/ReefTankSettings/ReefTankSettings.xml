@@ -18,10 +18,10 @@
             <Rectangle id="panelBg" color="0x0A2A4AD8" />
             <Rectangle id="panelEdge" color="0x7FD6E8FF" />
             <Label id="title" text="Reef Tank" color="0xEAF6FFFF" />
-            <Label id="subtitle" text="Screensaver settings" color="0x9FD0E6FF" />
+            <Label id="subtitle" wrap="true" maxLines="2" color="0x9FD0E6FF" />
             <LabelList id="options" color="0xBFDDEBFF" focusedColor="0xE9A8FFFF" focusBitmapBlendColor="0x1F6F8FFF" />
             <LabelList id="places" visible="false" translation="[60,200]" itemSize="[980,80]" numRows="5" color="0xBFDDEBFF" focusedColor="0xE9A8FFFF" focusBitmapBlendColor="0x1F6F8FFF" />
-            <Label id="hint" text="OK changes a value. Up / down moves. Back saves and exits." color="0x8FB8D0FF" />
+            <Label id="hint" wrap="true" maxLines="2" color="0x8FB8D0FF" />
         </Group>
     </children>
 </component>

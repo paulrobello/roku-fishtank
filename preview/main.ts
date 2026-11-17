@@ -19,6 +19,9 @@ const WIDTH = 1920;
 const HEIGHT = 1080;
 const PARAM_KEYS = ["scene", "seed", "time", "speed", "freeze", "species", "density", "night", "debug", "clock"] as const;
 
+const LOCALES = ["en_US", "en_GB", "en_CA", "en_AU", "fr_CA", "es_ES", "es_MX", "de_DE", "it_IT", "pt_BR"] as const;
+type PreviewLocale = (typeof LOCALES)[number];
+
 const state: PreviewState = { status: "loading", params: {}, log: [] };
 window.__preview = state;
 
@@ -53,7 +56,12 @@ async function main(): Promise<void> {
 
   // URL params reach Main(args) through the engine's deep-link map (PRD Q2).
   const query = new URLSearchParams(window.location.search);
+  const requestedLocale = query.get("locale") ?? "en_US";
+  const locale: PreviewLocale = LOCALES.includes(requestedLocale as PreviewLocale)
+    ? requestedLocale as PreviewLocale : "en_US";
+  state.params.locale = locale;
   const deepLink = new Map<string, string>();
+  if (query.has("locale")) deepLink.set("locale", locale);
   for (const key of PARAM_KEYS) {
     const value = query.get(key);
     if (value !== null) {
@@ -71,6 +79,7 @@ async function main(): Promise<void> {
   await brs.initialize(
     {
       assets,
+      locale,
       displayMode: "1080p",
       extensions: new Map([[brs.SupportedExtension.SceneGraph, "./brs-sg.js"]]),
     },

@@ -7,6 +7,7 @@
     "components/**/*",
     "images/**/*",
     "config/**/*",
+    "locale/**/*",
     "!source/preview.brs",
     "!source/preview_color.brs",
     "!source/preview_keys.brs",
