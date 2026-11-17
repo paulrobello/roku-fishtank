@@ -41,6 +41,7 @@ trap 'cp dist/perf.json.bak config/perf.json; cp dist/manifest.perf-bak manifest
 # PERF_UI=hd builds with ui_resolutions=hd only (the scene then renders at 1280x720).
 [ -z "${PERF_UI:-}" ] || sed -i.bak "s/^ui_resolutions=.*/ui_resolutions=$PERF_UI/" manifest
 node_modules/.bin/bsc --project bsconfig.json --create-package --out-file dist/perf.zip > dist/bsc-perf.log 2>&1 || { cat dist/bsc-perf.log; exit 1; }
+python3 tools/package/repack.py dist/perf.zip
 rm -f manifest.bak
 cp dist/perf.json.bak config/perf.json
 cp dist/manifest.perf-bak manifest

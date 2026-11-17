@@ -2,6 +2,8 @@ function locationTestSuite() as object
     return {
         name: "location"
         tests: [
+            { name: "offlineLookup", fn: locationTest_lookup }
+            { name: "bundledDatabase", fn: locationTest_database }
             { name: "parseAndValidate", fn: locationTest_parse }
             { name: "persistAndPreserve", fn: locationTest_persist }
             { name: "charlotteMorning", fn: locationTest_charlotte }
@@ -74,4 +76,49 @@ sub locationTest_hemisphere(t as object)
     polar = solarTimes(80, 0, 2026, 12, 21, 0)
     assertEqual(t, daynightPhase(720, polar, "auto").phase, "day", "documented polar fallback")
     assertEqual(t, daynightPhase(720, polar, "night").phase, "night", "polar night override available")
+end sub
+
+sub locationTest_lookup(t as object)
+    assertEqual(t, locationZipDigits([0, 0, 6, 0, 1]), "00601", "remote digit picker preserves zeros")
+    data = CreateObject("roByteArray")
+    data.fromHexString("5a50303100000002008000025900000000d904f6a80190b101c7e70592209156")
+    first = locationZipLookup("00601", data)
+    assertNear(t, first.latitude, 18.11, 0.001, "leading zero ZIP")
+    assertNear(t, first.longitude, -66.64, 0.001, "ZIP longitude")
+    last = locationZipLookup("95776", data)
+    assertNear(t, last.latitude, 38.68, 0.001, "last ZIP")
+    for each value in ["601", "00000", "99999", "95776-1234", " 95776", "abcde", ""]
+        assertEqual(t, locationZipLookup(value, data), invalid, "reject unknown or malformed ZIP")
+    end for
+    assertEqual(t, locationZipLookup("00601", ""), invalid, "empty database")
+    assertEqual(t, locationZipLookup("00601", "00601"), invalid, "truncated database")
+    broken = CreateObject("roByteArray")
+    broken.fromHexString("5a50303100000002008000025900000000d904f6a801")
+    assertEqual(t, locationZipLookup("00601", broken), invalid, "truncated varint record")
+    broken.fromHexString("5a503031000000020080000259ffffffffd904f6a80190b101")
+    assertEqual(t, locationZipLookup("00601", broken), invalid, "out of range index")
+    broken.fromHexString("5a50303100000002008000025900000000808080")
+    assertEqual(t, locationZipLookup("00601", broken), invalid, "overlong varint")
+    city = locationCityCoordinates(["Sydney", -3387, 15121])
+    assertNear(t, city.latitude, -33.87, 0.001, "southern city")
+    assertEqual(t, locationCityCoordinates(invalid), invalid, "invalid city")
+    assertEqual(t, locationCityCoordinates(["bad", 9100, 0]), invalid, "invalid latitude")
+end sub
+
+sub locationTest_database(t as object)
+    data = CreateObject("roByteArray")
+    assertTrue(t, data.ReadFile("pkg:/config/location/us-zips.bin"), "load bundled binary database")
+    samples = ParseJson(ReadAsciiFile("pkg:/tests/fixtures/location-samples.json"))
+    assertEqual(t, samples.count(), 528, "first and last record of every block")
+    for each row in samples
+        loc = locationZipLookup(row[0], data)
+        assertTrue(t, loc <> invalid, "find block boundary ZIP " + row[0])
+        if loc <> invalid then
+            assertNear(t, loc.latitude, row[1] / 100.0 - 90, 0.001, "exact latitude " + row[0])
+            assertNear(t, loc.longitude, row[2] / 100.0 - 180, 0.001, "exact longitude " + row[0])
+        end if
+    end for
+    assertEqual(t, locationZipLookup("00000", data), invalid, "missing ZIP stays missing")
+    assertEqual(t, locationZipLookup("99999", data), invalid, "upper missing ZIP")
+    assertTrue(t, locationZipRead("00601") <> invalid, "production binary reader preserves leading zero")
 end sub

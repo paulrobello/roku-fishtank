@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <!--
-    Reef Tank settings screen (P5.2), shown by RunScreenSaverSettings. Four rows
-    (Night mode, Fish density, Camera drift, Solar location): OK cycles the focused row's value,
+    Reef Tank settings screen (P5.2), shown by RunScreenSaverSettings. Six rows
+    (Night mode, Fish density, Camera drift, Solar location, Background clock, Changelog): OK changes
+    a preference or opens its dialog; changelog is read-only.
     up/down moves between rows, Back exits. Every change is saved to the registry at once.
     Overdraw: the backdrop and one dim layer are the only full-screen layers (no
     background Rectangle under the backdrop); the panel covers about a third of the screen.
 -->
 <component name="ReefTankSettings" extends="Scene">
     <script type="text/brightscript" uri="pkg:/components/lib/settings.brs" />
+    <script type="text/brightscript" uri="pkg:/components/lib/locationdb.brs" />
     <script type="text/brightscript" uri="ReefTankSettings.brs" />
     <children>
         <Poster id="backdrop" uri="pkg:/images/decor/reef_backdrop.jpg" />
@@ -18,6 +20,7 @@
             <Label id="title" text="Reef Tank" color="0xEAF6FFFF" />
             <Label id="subtitle" text="Screensaver settings" color="0x9FD0E6FF" />
             <LabelList id="options" color="0xBFDDEBFF" focusedColor="0xE9A8FFFF" focusBitmapBlendColor="0x1F6F8FFF" />
+            <LabelList id="places" visible="false" translation="[60,200]" itemSize="[980,80]" numRows="5" color="0xBFDDEBFF" focusedColor="0xE9A8FFFF" focusBitmapBlendColor="0x1F6F8FFF" />
             <Label id="hint" text="OK changes a value. Up / down moves. Back saves and exits." color="0x8FB8D0FF" />
         </Group>
     </children>

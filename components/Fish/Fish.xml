@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <!--
     Rigged fish. Set species to load config/species/<species>.json and its generated
-    .rig.json. swimSpeed (px/s) sets the base fin beat rate; tails beat at 0.75x that frequency. Setting facing to 1 (right)
+    .rig.json. swimSpeed (px/s) sets the original fin beat rate. tailSpeed sets the
+    independent tail cadence from actual travel speed; -1 falls back to swimSpeed.
+    Tail retiming preserves its phase and respects paused. Setting facing to 1 (right)
     or -1 (left) turns the fish: the rig narrows to its head-on thickness about
     mirror_center while it pitches nose-up and rises a little, crossfades to the rig's
     pre-mirrored art at the narrowest point, then widens nose-down with a slight
@@ -22,6 +24,7 @@
     <interface>
         <field id="species" type="string" onChange="onSpeciesChanged" />
         <field id="swimSpeed" type="float" value="60.0" onChange="onSwimSpeedChanged" />
+        <field id="tailSpeed" type="float" value="-1.0" onChange="onTailSpeedChanged" />
         <field id="facing" type="integer" value="1" onChange="onFacingChanged" />
         <field id="turning" type="boolean" value="false" />
         <field id="turnDelay" type="float" value="0.0" />

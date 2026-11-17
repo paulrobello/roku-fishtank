@@ -1,0 +1,39 @@
+[
+  {
+    "version": null,
+    "status": "unreleased",
+    "title": "Unreleased - current development",
+    "message": [
+      "Offline US ZIP and country/city location pickers, with custom coordinates retained.",
+      "Smoother fish travel and speed-matched tail beats.",
+      "Optional background clock and this changelog. These changes are still under development and testing."
+    ]
+  },
+  {
+    "version": "0.2.2",
+    "status": "development-build",
+    "title": "0.2.2 - November 16, 2026",
+    "message": [
+      "Choose a local solar location for automatic day/night lighting, using presets or custom coordinates.",
+      "Sunrise and sunset refresh when the date or time-zone offset changes."
+    ]
+  },
+  {
+    "version": "0.2.1",
+    "status": "development-build",
+    "title": "0.2.1 - November 4-15, 2026",
+    "message": [
+      "Full reef with multiple fish species, schooling, coral, bubbles, and day/night lighting.",
+      "Fish-density, camera-drift, and night-mode settings; gentler tails and better critter placement.",
+      "Smaller packages, memory safeguards, and privacy/support pages."
+    ]
+  },
+  {
+    "version": "0.1.1",
+    "status": "prototype",
+    "title": "0.1.1 - November 4, 2026",
+    "message": [
+      "Initial developer screensaver prototype and Roku device feasibility checks."
+    ]
+  }
+]

@@ -16,6 +16,7 @@ function testSuites() as object
     return [
         driftguardTestSuite()
         fishbeatTestSuite()
+        motionTestSuite()
         memoryTestSuite()
         prngTestSuite()
         steerTestSuite()
@@ -27,6 +28,7 @@ function testSuites() as object
         schoolTestSuite()
         behaviorTestSuite()
         settingsTestSuite()
+        clockTestSuite()
         locationTestSuite()
         bubblesTestSuite()
         nightTestSuite()

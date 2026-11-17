@@ -11,3 +11,7 @@ playwright-report/
 
 # Home device table: IPs + room names stay out of the public repo
 devices.local.md
+
+# Python tooling caches
+__pycache__/
+*.py[cod]

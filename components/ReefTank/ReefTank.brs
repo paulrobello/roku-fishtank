@@ -37,6 +37,7 @@ sub init()
     reefTankAddArch()
     m.top.findNode("night").callFunc("nightStart", { camera: camera, fill: fill, scene: m.sceneCfg })
     reefTankAddExtras()
+    reefTankAddClock()
     reefTankPerf()
 end sub
 
@@ -530,4 +531,23 @@ sub reefTankCheckDrift()
         m.driftAnim.control = "stop"
         m.driftAnim.control = "start"
     end if
+end sub
+
+' Appended above the backdrop inside the deepest water layer, below shafts/rocks/fish.
+sub reefTankAddClock()
+    water = m.top.findNode("camera").findNode("waterGradient")
+    if water = invalid then return
+    m.backgroundClock = water.createChild("BackgroundClock")
+    m.backgroundClock.id = "backgroundClock"
+    m.backgroundClock.callFunc("clockStart", m.top)
+    if m.global.hasField("previewClock") then
+        if m.global.previewClock = "1" then m.top.digitalClockEnabled = true
+        if m.global.previewClock = "0" then m.top.digitalClockEnabled = false
+    end if
+    onDigitalClockChanged()
+end sub
+
+sub onDigitalClockChanged()
+    ' Stored settings are applied before the layer stack is created.
+    if m.backgroundClock <> invalid then m.backgroundClock.enabled = m.top.digitalClockEnabled
 end sub

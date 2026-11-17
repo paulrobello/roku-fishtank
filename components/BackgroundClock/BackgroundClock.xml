@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Deep-water clock: no seconds/blinking, outline, box, glow, or bundled assets. -->
+<component name="BackgroundClock" extends="Group">
+    <interface>
+        <function name="clockStart" />
+        <field id="enabled" type="boolean" value="false" onChange="onClockEnabled" />
+    </interface>
+    <script type="text/brightscript" uri="pkg:/components/lib/clock.brs" />
+    <script type="text/brightscript" uri="BackgroundClock.brs" />
+    <children>
+        <Group id="clockFace" translation="[639,240]">
+            <Label id="backgroundClockText" width="500" height="200" horizAlign="right" vertAlign="center" color="0x70B7D0FF" font="font:LargeSystemFont" />
+            <Label id="backgroundClockPeriod" translation="[512,92]" width="130" height="80" horizAlign="left" vertAlign="center" color="0x70B7D0FF" font="font:SmallSystemFont" />
+        </Group>
+        <Animation id="clockDrift" repeat="true" easeFunction="linear" duration="840">
+            <Vector2DFieldInterpolator id="clockDriftInterp" fieldToInterp="clockFace.translation" />
+        </Animation>
+        <Timer id="clockTick" repeat="true" duration="3" />
+    </children>
+</component>

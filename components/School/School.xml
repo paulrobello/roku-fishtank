@@ -26,6 +26,7 @@
     <script type="text/brightscript" uri="pkg:/components/lib/steer.brs" />
     <script type="text/brightscript" uri="pkg:/components/lib/school.brs" />
     <script type="text/brightscript" uri="pkg:/components/lib/tint.brs" />
+    <script type="text/brightscript" uri="pkg:/components/lib/motion.brs" />
     <children>
         <Group id="fishLayer" />
         <Timer id="schoolTimer" duration="0.125" repeat="true" />

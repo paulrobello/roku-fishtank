@@ -24,6 +24,7 @@ sub Main(args as object)
         previewDensity: params.density,
         previewNight: params.night
         previewDebug: params.debug
+        previewClock: params.clock
     })
     scene = screen.createScene(params.scene)
     screen.show()
@@ -50,7 +51,7 @@ sub Main(args as object)
 end sub
 
 function previewParseArgs(args as object) as object
-    params = { scene: "ReefTank", seed: 0, time: "", speed: 1.0, freeze: 0.0, species: "", density: "", night: "", debug: 0 }
+    params = { scene: "ReefTank", seed: 0, time: "", speed: 1.0, freeze: 0.0, species: "", density: "", night: "", debug: 0, clock: "" }
     if args = invalid then return params
     if args.scene <> invalid and args.scene <> "" then params.scene = args.scene
     if args.seed <> invalid then params.seed = args.seed.toInt()
@@ -61,6 +62,7 @@ function previewParseArgs(args as object) as object
     if args.density <> invalid then params.density = args.density
     if args.night <> invalid then params.night = args.night
     if args.debug <> invalid then params.debug = args.debug.toInt()
+    if args.clock <> invalid then params.clock = args.clock
     return params
 end function
 

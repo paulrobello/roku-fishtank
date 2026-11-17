@@ -20,11 +20,12 @@ node_modules: package.json bun.lock
 	bun install --frozen-lockfile
 	@touch node_modules
 
-# Device package: bsc validates, transpiles to dist/staging and zips it.
+# Device package: bsc validates/transpiles, then lossless deterministic DEFLATE-6.
 build: node_modules
 	@mkdir -p dist
 	@rm -f $(ZIP)
 	$(BIN)/bsc --project bsconfig.json --create-package --out-file $(ZIP) > dist/bsc-build.log 2>&1 || { cat dist/bsc-build.log; exit 1; }
+	python3 tools/package/repack.py $(ZIP)
 	@unzip -l $(ZIP) | grep -qE " manifest$$" || { echo "zip missing manifest"; exit 1; }
 	@unzip -l $(ZIP) | grep -qE " source/main\.brs$$" || { echo "zip missing source/main.brs"; exit 1; }
 	@echo "built $(ZIP)"
@@ -55,7 +56,10 @@ typecheck: node_modules
 # which makes brs-cli exit 1. FILTER=<substring> runs only the matching suites
 # and tests (case-insensitive, matched against `suite.test`): make test FILTER=brain
 test: node_modules
-	$(BIN)/brs-cli $(if $(FILTER),-k filter=$(FILTER),) tests/run_tests.brs tests/lib/*.brs tests/unit/*.brs components/lib/*.brs source/preview_color.brs source/memory_monitor.brs
+	python3 tools/package/test_repack.py
+	python3 tools/changelog/test_history.py
+	python3 tools/location/test_data.py
+	$(BIN)/brs-cli --root . $(if $(FILTER),-k filter=$(FILTER),) tests/run_tests.brs tests/lib/*.brs tests/unit/*.brs components/lib/*.brs source/preview_color.brs source/memory_monitor.brs
 
 # Local done gate includes the GPU screenshot tests; CI runs the non-browser legs.
 checkall: api-guard fmt-check lint typecheck test build zip-check fidelity-build test-visual
@@ -87,6 +91,7 @@ probe-build: node_modules
 	@mkdir -p dist
 	@rm -f dist/probe.zip
 	$(BIN)/bsc --project bsconfig.probe.json --create-package --out-file dist/probe.zip > dist/bsc-probe.log 2>&1 || { cat dist/bsc-probe.log; exit 1; }
+	python3 tools/package/repack.py dist/probe.zip
 
 probe: probe-build
 	tools/perf/run_probe.sh docs/perf/raw
@@ -103,6 +108,7 @@ check-build: node_modules
 	@printf '{"scene": "%s", "density": "%s"}\n' "$(SCENE)" "$(DENSITY)" > dist/devicecheck.json
 	@$(BIN)/bsc --project bsconfig.check.json --create-package --out-file dist/check.zip > dist/bsc-check.log 2>&1; ec=$$?; \
 	  if [ $$ec -ne 0 ] || grep -qE " - (error|warning) " dist/bsc-check.log; then cat dist/bsc-check.log; echo "check-build FAILED"; exit 1; fi
+	python3 tools/package/repack.py dist/check.zip
 	@echo "built dist/check.zip ($(SCENE))"
 
 device-check: check-build
@@ -167,6 +173,7 @@ fidelity-build: node_modules
 	@$(BIN)/bsc --project bsconfig.fidelity.json --create-package --out-file $(FIDELITY_ZIP) > dist/bsc-fidelity.log 2>&1; ec=$$?; \
 	  grep -E " - (error|warning) " dist/bsc-fidelity.log; \
 	  if [ $$ec -ne 0 ] || grep -qE " - (error|warning) " dist/bsc-fidelity.log; then cat dist/bsc-fidelity.log; echo "fidelity-build FAILED"; exit 1; fi
+	python3 tools/package/repack.py $(FIDELITY_ZIP)
 	@bash tools/zip_check.sh $(FIDELITY_ZIP)
 	@echo "built $(FIDELITY_ZIP)"
 

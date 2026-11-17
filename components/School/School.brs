@@ -56,6 +56,7 @@ sub onConfigUri()
         return
     end if
     m.clock = CreateObject("roTimespan")
+    m.tailSampleTime = 0.0
     m.tick = -1
     schoolAdvance(0)
     m.timer.control = "start"
@@ -69,6 +70,7 @@ function schoolBuildFish(prefix as string, i as integer, member as object) as ob
     node.id = prefix + "fish" + i.toStr()
     node.facing = member.facing
     node.swimSpeed = member.speed
+    node.tailSpeed = member.speed
     ' Members turn up to about a third of a second apart, so a reversal ripples
     ' through the school instead of every fish flipping on the same frame.
     node.turnDelay = ((i * 7) mod 9) * 0.045
@@ -90,6 +92,12 @@ sub onTick()
     target = Int(m.clock.TotalMilliseconds() * m.speed / 1000.0 / m.cfg.tick)
     if target - m.tick > m.cfg.maxCatchUpTicks then target = m.tick + m.cfg.maxCatchUpTicks
     if target > m.tick then schoolAdvance(target)
+    seconds = m.clock.TotalMilliseconds() / 1000.0
+    dt = seconds - m.tailSampleTime
+    for each item in m.items
+        motionDriveTail(item, seconds, dt)
+    end for
+    m.tailSampleTime = seconds
 end sub
 
 ' Runs every school tick up to `target` in order (one sub-step each), then, when a
@@ -101,6 +109,7 @@ sub schoolAdvance(target as integer)
     end for
     m.tick = target
     if cut then
+        schoolRenderPaths(target)
         for each item in m.items
             schoolIssue(item, target)
         end for
@@ -109,23 +118,48 @@ sub schoolAdvance(target as integer)
     m.top.sceneTime = target * m.cfg.tick
 end sub
 
+sub schoolRenderPaths(now as integer)
+    offset = now - m.school.segStart
+    remain = m.school.segSteps - offset
+    originals = []
+    rounded = []
+    for each item in m.items
+        points = []
+        for k = 0 to remain
+            points.push(item.member.seg[offset + k])
+        end for
+        originals.push(points)
+        smooth = motionSmoothPath(points, m.ellipses)
+        drawn = item.node.translation
+        smooth = motionBridge(smooth, [drawn[0] + m.anchor[0], drawn[1] + m.anchor[1]], m.ellipses, remain * m.cfg.tick / m.speed)
+        rounded.push(smooth)
+    end for
+    if not motionSchoolClear(rounded, m.cfg.minDist) then rounded = originals
+    for i = 0 to m.items.count() - 1
+        m.items[i].renderPath = rounded[i]
+    end for
+end sub
+
 sub schoolIssue(item as object, now as integer)
-    seg = item.member.seg
     offset = now - m.school.segStart
     remain = m.school.segSteps - offset
     if remain < 1 then return
+    points = item.renderPath
     keys = []
     values = []
-    for k = 0 to remain
-        keys.push(k / remain)
-        p = seg[offset + k]
-        values.push(schoolToTranslation(p[0], p[1]))
+    for k = 0 to points.count() - 1
+        keys.push(k / (points.count() - 1))
+        values.push(schoolToTranslation(points[k][0], points[k][1]))
     end for
     anim = item.anim
     anim.control = "stop"
     item.interp.key = keys
     item.interp.keyValue = values
     anim.duration = remain * m.cfg.tick / m.speed
+    item.motionPoints = values
+    item.motionDuration = anim.duration
+    item.motionDart = false
+    item.motionStart = m.clock.TotalMilliseconds() / 1000.0
     anim.control = "start"
     facing = item.member.facing
     if item.node.facing <> facing then item.node.facing = facing
@@ -144,10 +178,12 @@ sub schoolPose(last as integer)
     end for
     f = (last - m.school.segStart) / m.school.segSteps
     for each item in m.items
-        p = schoolPolylineAt(item.member.seg, f)
+        points = motionSmoothPath(item.member.seg, m.ellipses)
+        p = schoolPolylineAt(points, f)
         item.node.translation = schoolToTranslation(p[0], p[1])
         item.node.facing = item.member.facing
         item.node.swimSpeed = item.member.speed
+        item.node.tailSpeed = motionPathSpeed(points, (last - m.school.segStart) * m.cfg.tick, m.school.segSteps * m.cfg.tick, false) * m.speed
     end for
     m.top.sceneTime = last * m.cfg.tick
     print "SCHOOL posed t="; m.top.sceneTime

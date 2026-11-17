@@ -51,7 +51,7 @@ test("native settings list cycles values with OK", async ({ page }) => {
 });
 
 // Location is opt-in, local-only, and modal dismissal must return to the list.
-test("solar location presets persist and dialogs cancel without changing them", async ({ page }) => {
+test("solar city picker persists and dialogs cancel without changing it", async ({ page }) => {
   await page.goto("/?scene=ReefTankSettings&seed=7&freeze=1");
   await page.waitForFunction(
     () => ["frozen", "error"].includes((window as PreviewWindow).__preview?.status ?? ""),
@@ -69,19 +69,30 @@ test("solar location presets persist and dialogs cancel without changing them", 
   await expect(display).toHaveScreenshot("settings-location-picker.png");
   await press("ArrowDown");
   await press("Enter");
-  await expect(display).toHaveScreenshot("settings-location-charlotte.png");
-  const charlotte = await display.screenshot();
+  await expect(display).toHaveScreenshot("settings-location-countries.png");
+  await press("ArrowDown");
+  await press("Enter");
+  await expect(display).toHaveScreenshot("settings-location-cities.png");
+  await press("ArrowDown");
+  await press("Enter");
+  await expect(display).toHaveScreenshot("settings-location-selected.png");
+  const selected = await display.screenshot();
 
   await press("Enter");
   await press("Escape");
-  await expect.poll(async () => (await display.screenshot()).equals(charlotte)).toBe(true);
+  await expect.poll(async () => (await display.screenshot()).equals(selected)).toBe(true);
+  await press("Enter");
+  await press("Enter");
+  await expect(display).toHaveScreenshot("settings-location-zip.png");
+  await press("Escape");
+  await expect.poll(async () => (await display.screenshot()).equals(selected)).toBe(true);
   await press("Enter");
   await press("ArrowDown");
   await press("ArrowDown");
   await press("Enter");
   await expect(display).toHaveScreenshot("settings-location-custom.png");
   await press("Escape");
-  await expect.poll(async () => (await display.screenshot()).equals(charlotte)).toBe(true);
+  await expect.poll(async () => (await display.screenshot()).equals(selected)).toBe(true);
 
   await page.reload();
   await page.waitForFunction(
@@ -90,7 +101,48 @@ test("solar location presets persist and dialogs cancel without changing them", 
     { timeout: 30_000 },
   );
   for (let i = 0; i < 3; i++) await press("ArrowDown");
-  await expect.poll(async () => (await display.screenshot()).equals(charlotte)).toBe(true);
+  await expect.poll(async () => (await display.screenshot()).equals(selected)).toBe(true);
   const log = await page.evaluate(() => (window as PreviewWindow).__preview?.log ?? []);
   expect(log.filter((line) => line.includes("error,") || line.includes("Runtime Error"))).toEqual([]);
+});
+
+// Exercises binary data loading through the packaged preview, not just pure decoding.
+test("ZIP binary lookup saves leading zeros and rejects missing ZIPs", async ({ page }) => {
+  await page.goto("/?scene=ReefTankSettings&seed=7&freeze=1");
+  await page.waitForFunction(
+    () => ["frozen", "error"].includes((window as PreviewWindow).__preview?.status ?? ""),
+    null, { timeout: 30_000 },
+  );
+  const display = page.locator("#display");
+  const press = async (key: string): Promise<void> => {
+    const before = await display.screenshot();
+    await page.keyboard.press(key);
+    await expect.poll(async () => (await display.screenshot()).equals(before)).toBe(false);
+  };
+  for (let i = 0; i < 3; i++) await press("ArrowDown");
+  await press("Enter");
+  await press("Enter");
+  await page.keyboard.type("00601", { delay: 100 });
+  for (let i = 0; i < 4; i++) await press("ArrowDown");
+  await press("Enter");
+  await expect(display).toHaveScreenshot("settings-zip-leading-zero.png");
+  const saved = await display.screenshot();
+  await press("Enter");
+  await press("Enter");
+  await page.keyboard.type("00000", { delay: 100 });
+  for (let i = 0; i < 4; i++) await press("ArrowDown");
+  await press("Enter");
+  await expect(display).toHaveScreenshot("settings-zip-not-found.png");
+  await press("Escape");
+  await expect.poll(async () => (await display.screenshot()).equals(saved)).toBe(true);
+  await page.reload();
+  await page.waitForFunction(
+    () => ["frozen", "error"].includes((window as PreviewWindow).__preview?.status ?? ""),
+    null, { timeout: 30_000 },
+  );
+  for (let i = 0; i < 3; i++) await press("ArrowDown");
+  await expect.poll(async () => (await display.screenshot()).equals(saved)).toBe(true);
+  const preview = await page.evaluate(() => (window as PreviewWindow).__preview);
+  expect(preview?.status, preview?.log.join("\n")).toBe("frozen");
+  expect(preview?.log.filter((line) => /error,|Runtime Error|Type Mismatch/i.test(line))).toEqual([]);
 });

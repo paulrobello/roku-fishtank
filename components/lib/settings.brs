@@ -1,9 +1,10 @@
 ' Reef Tank settings storage (P5.1).
 '
-' Three string settings persisted in the "ReefTank" registry section:
+' Four string settings persisted in the "ReefTank" registry section:
 '   nightMode  auto | day | night   (default auto)
 '   density    calm | normal | busy (default normal)
 '   drift      on | off             (default on)
+'   digitalClock on | off           (default off)
 ' A missing or unrecognised stored value reads as the default.
 '
 ' A store is any object with read(key) as string, write(key, value) and flush().
@@ -11,7 +12,7 @@
 ' is an assocarray-backed store for tests.
 
 function settingsDefaults() as object
-    return { nightMode: "auto", density: "normal", drift: "on" }
+    return { nightMode: "auto", density: "normal", drift: "on", digitalClock: "off" }
 end function
 
 ' Allowed values per key, in the order the settings screen cycles through them.
@@ -20,11 +21,12 @@ function settingsOptions() as object
         nightMode: ["auto", "day", "night"]
         density: ["calm", "normal", "busy"]
         drift: ["on", "off"]
+        digitalClock: ["off", "on"]
     }
 end function
 
 function settingsKeys() as object
-    return ["nightMode", "density", "drift"]
+    return ["nightMode", "density", "drift", "digitalClock"]
 end function
 
 ' The device store: the ReefTank registry section.
@@ -50,7 +52,7 @@ function settingsMemoryStore() as object
     }
 end function
 
-' Returns { nightMode, density, drift } with defaults for anything missing or invalid.
+' Returns all four setting values, defaulting anything missing or invalid.
 function settingsLoad(store as object) as object
     values = settingsDefaults()
     opts = settingsOptions()
@@ -105,7 +107,7 @@ function settingsApplyPlan(values as dynamic) as object
         if type(values) = "roAssociativeArray" then v = values[key]
         if settingsIndexOf(opts[key], v) >= 0 then clean[key] = v else clean[key] = defaults[key]
     end for
-    return { density: clean.density, drift: clean.drift = "on", nightMode: clean.nightMode }
+    return { density: clean.density, drift: clean.drift = "on", nightMode: clean.nightMode, digitalClockEnabled: clean.digitalClock = "on" }
 end function
 
 ' Applies the stored settings to a ReefTank scene node (call before the fish are built).
@@ -115,6 +117,7 @@ sub settingsApplyToScene(scene as object, store as object)
     scene.density = plan.density
     scene.drift = plan.drift
     if scene.hasField("nightMode") then scene.nightMode = plan.nightMode
+    if scene.hasField("digitalClockEnabled") then scene.digitalClockEnabled = plan.digitalClockEnabled
     print "SETTINGS applied density="; plan.density; " drift="; plan.drift; " nightMode="; plan.nightMode
 end sub
 

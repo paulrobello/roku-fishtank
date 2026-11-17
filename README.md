@@ -459,10 +459,19 @@ your saved settings. See the certification checklist for the precise policy.
 ### Local sunrise and sunset
 
 In **Settings > Theme > Screensavers > Reef Tank (or dev) > Settings**, select
-**Solar location**. Choose Woodland, CA or Charlotte, NC, or **Custom coordinates**
-to enter `latitude,longitude` (north/east positive, south/west negative). Press
-Save to apply, or Cancel/Back to keep the previous location. A nearby city center
+**Solar location**. Choose **US ZIP code** (five digits, including leading zeros), **Country / city**,
+or **Custom coordinates**
+to enter `latitude,longitude` (north/east positive, south/west negative). The ZIP
+option uses Roku’s on-screen keyboard: enter five digits, move down to **Save ZIP**,
+and press OK. **Use remote digits** is a no-keyboard fallback: OK cycles each digit
+0–9; select **Save ZIP** afterward. City selection applies immediately. For keyboard
+entry, select Save to apply, or Cancel/Back to keep the previous location. A nearby city center
 is sufficient; no address is required. Keep the Roku's time zone correct.
+
+ZIP lookup covers Census geographic ZIP areas, not every USPS code. Some PO-box,
+unique, or new ZIPs may be absent. The city list is selective; use a
+nearby city or custom coordinates if yours is missing. Neither lookup needs a network.
+Data sources and rebuild instructions: [offline data](assets/source/location/README.md).
 
 The default remains Woodland until changed. Coordinates stay on the Roku and no
 network lookup is performed. Auto lighting uses the selected location; Always day

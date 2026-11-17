@@ -84,6 +84,6 @@ jobs:
           name: reef-tank-channel
           path: dist/channel.zip
           if-no-files-found: error
-          retention-days: 30
+          retention-days: 2
           compression-level: 0
 

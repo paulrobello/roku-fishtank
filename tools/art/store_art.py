@@ -42,7 +42,10 @@ def main() -> None:
                     )
                 destination = destination.with_suffix(".jpg")
                 rgba.convert("RGB").save(
-                    destination, quality=80, optimize=True, subsampling=0
+                    destination,
+                    quality=53 if source.name.startswith("splash_") else 80,
+                    optimize=True,
+                    subsampling=2 if source.name.startswith("splash_") else 0,
                 )
                 # The byte-identical master remains safely preserved outside the package.
                 raw_runtime.unlink(missing_ok=True)

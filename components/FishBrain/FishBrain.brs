@@ -61,6 +61,7 @@ sub onConfigUri()
         return
     end if
     m.clock = CreateObject("roTimespan")
+    m.tailSampleTime = 0.0
     m.tick = -1
     brainAdvance(0)
     m.timer.control = "start"
@@ -91,6 +92,7 @@ function brainBuildFish(prefix as string, i as integer, species as string, ancho
     node.id = prefix + "fish" + i.toStr()
     node.facing = state.facing
     node.swimSpeed = state.speed
+    node.tailSpeed = state.speed
     node.blinkSeed = m.seed + 7919 * (i + 1)
     node.species = species
     laneStyleFish(node, anchor, m.top.fishScale, m.top.fishTint)
@@ -119,6 +121,12 @@ sub onTick()
     target = Int(m.clock.TotalMilliseconds() * m.speed / 1000.0 / m.cfg.tick)
     if target - m.tick > m.cfg.maxCatchUpTicks then target = m.tick + m.cfg.maxCatchUpTicks
     if target > m.tick then brainAdvance(target)
+    seconds = m.clock.TotalMilliseconds() / 1000.0
+    dt = seconds - m.tailSampleTime
+    for each item in m.items
+        motionDriveTail(item, seconds, dt)
+    end for
+    m.tailSampleTime = seconds
 end sub
 
 ' Runs every brain tick up to `target` in order, then writes each changed fish's mover
@@ -180,20 +188,30 @@ sub brainIssue(item as object, now as integer)
     st = item.state
     offset = now - st.startTick
     remain = st.steps - offset
+    if remain < 1 then return
     ease = "linear"
     if st.dart and offset = 0 then ease = m.cfg.dartEase
+    points = []
+    for k = 0 to remain
+        points.push(st.points[offset + k])
+    end for
+    if not st.dart then points = motionSmoothPath(points, m.world.ellipses)
+    drawn = item.node.translation
+    points = motionBridge(points, [drawn[0] + item.anchor[0], drawn[1] + item.anchor[1]], m.world.ellipses, remain * m.cfg.tick / m.speed, ease <> "linear")
     keys = []
     values = []
+    for k = 0 to points.count() - 1
+        keys.push(k / (points.count() - 1))
+        values.push(brainToTranslation(item.anchor, points[k][0], points[k][1]))
+    end for
     pitchKeys = []
     pitches = []
     for k = 0 to remain
         f = k / remain
-        keys.push(f)
-        p = st.points[offset + k]
-        values.push(brainToTranslation(item.anchor, p[0], p[1]))
         if ease = "linear" then pitchKeys.push(f) else pitchKeys.push(brainOutCubic(f))
         pitches.push(brainPitchAtTick(st, now + k))
     end for
+    pitches[0] = item.node.rotation
     anim = item.anim
     anim.control = "stop"
     item.interp.key = keys
@@ -202,6 +220,10 @@ sub brainIssue(item as object, now as integer)
     item.pitchInterp.keyValue = pitches
     anim.duration = remain * m.cfg.tick / m.speed
     anim.easeFunction = ease
+    item.motionPoints = values
+    item.motionDuration = anim.duration
+    item.motionDart = ease <> "linear"
+    item.motionStart = m.clock.TotalMilliseconds() / 1000.0
     anim.control = "start"
     if item.node.facing <> st.facing then item.node.facing = st.facing
     if item.speed <> st.speed then
@@ -235,10 +257,13 @@ sub brainPose(last as integer)
         f = (last - st.startTick) / st.steps
         item.node.rotation = brainPitchAtTick(st, last)
         if st.dart then f = brainOutCubic(f)
-        p = brainPolylineAt(st.points, f)
+        points = st.points
+        if not st.dart then points = motionSmoothPath(points, m.world.ellipses)
+        p = brainPolylineAt(points, f)
         item.node.translation = brainToTranslation(item.anchor, p[0], p[1])
         item.node.facing = st.facing
         item.node.swimSpeed = st.speed
+        item.node.tailSpeed = motionPathSpeed(points, (last - st.startTick) * m.cfg.tick, st.steps * m.cfg.tick, st.dart) * m.speed
     end for
     m.top.sceneTime = last * m.cfg.tick
     print "BRAIN posed t="; m.top.sceneTime

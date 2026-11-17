@@ -2,6 +2,11 @@ sub init()
     m.rig = m.top.findNode("rig")
     m.swimAnim = m.top.findNode("swimAnim")
     m.tailAnim = m.top.findNode("tailAnim")
+    m.tailClock = CreateObject("roTimespan")
+    m.tailPhase = 0.0
+    m.tailPeriod = 0.0
+    m.tailPaused = true
+    m.finPaused = true
     m.turnAnim = m.top.findNode("turnAnim")
     m.turnInterp = m.top.findNode("turnInterp")
     m.turnRoll = m.top.findNode("turnRoll")
@@ -93,6 +98,10 @@ sub onSpeciesChanged()
     if spec.facing = "left" then m.artFacing = -1
 
     m.turnAnim.control = "stop"
+    m.tailAnim.control = "stop"
+    m.tailPhase = 0.0
+    m.tailPeriod = 0.0
+    m.tailPaused = true
     fishLoadSet(m.sets[0], rig.layers, rig.extra_layers, rig.draw_order)
     fishLoadSet(m.sets[1], rig.mirrored.layers, rig.mirrored.extra_layers, rig.draw_order)
     m.rig.scaleRotateCenter = rig.mirror_center
@@ -190,17 +199,29 @@ end sub
 
 sub onPausedChanged()
     if not m.loaded then return
-    if m.top.paused then
-        m.swimAnim.control = "pause"
+    finAction = fishBeatPauseAction(m.finPaused, m.top.paused)
+    if finAction <> "" then
+        m.swimAnim.control = finAction
+        m.finPaused = m.top.paused
+    end if
+    tailAction = fishBeatPauseAction(m.tailPaused, m.top.paused)
+    if tailAction = "pause" then
+        m.tailPhase = fishCurrentTailPhase()
+        m.tailPaused = true
         m.tailAnim.control = "pause"
-    else
-        m.swimAnim.control = "resume"
+    else if tailAction = "resume" then
+        m.tailClock.mark()
+        m.tailPaused = false
         m.tailAnim.control = "resume"
     end if
 end sub
 
 sub onSwimSpeedChanged()
     if m.loaded then fishStartSwim()
+end sub
+
+sub onTailSpeedChanged()
+    if m.loaded then fishRetimeTail()
 end sub
 
 ' The set index that shows `facing` (1 right, -1 left).
@@ -362,28 +383,22 @@ end sub
 ' Rotation is in radians. The mirrored set's
 ' swing_deg is negated in the rig, so both sets beat the same way on screen.
 sub fishBuildSwimKeys(set as object, tailDeg as float, finDeg as float)
-    toRad = 3.14159265 / 180.0
+    set.tailAmplitude = tailDeg * m.tailRotKeep * 3.14159265 / 180.0
+    fishApplyTailCurve(set, 0.0)
     keys = []
-    tailValues = []
     for i = 0 to 8
-        a = i * 6.2831853 / 8.0
         keys.push(i / 8.0)
-        tailValues.push(tailDeg * m.tailRotKeep * toRad * sin(a))
     end for
-    set.tailInterp.key = keys
-    set.tailInterp.keyValue = tailValues
-    swayKeys = []
-    swayValues = []
-    for i = 0 to 16
-        a = i * 6.2831853 / 16.0
-        swayKeys.push(i / 16.0)
-        s = sin(a)
-        swayValues.push([1.0 - m.tailDepth * s * s, 1.0])
-    end for
-    set.tailSway.key = swayKeys
-    set.tailSway.keyValue = swayValues
     set.finInterp.key = keys
     set.finInterp.keyValue = fishFinValues(finDeg)
+end sub
+
+sub fishApplyTailCurve(set as object, phase as float)
+    curve = fishBeatTailCurve(phase, set.tailAmplitude, m.tailDepth)
+    set.tailInterp.key = curve.keys
+    set.tailInterp.keyValue = curve.rotations
+    set.tailSway.key = curve.keys
+    set.tailSway.keyValue = curve.scales
 end sub
 
 function fishFinValues(swingDeg as float) as object
@@ -427,17 +442,47 @@ sub fishBuildExtras(set as object, extras as object, drawOrder as object)
     end for
 end sub
 
-' Fins retain their original speed-dependent clock; only tail frequency is 0.75x.
-' A running Animation's duration is only changed across a stop/start.
+' Fins retain their original speed-dependent clock. Explicit tailSpeed updates never
+' restart the fin animation; changing swimSpeed does not restart an explicit tail clock.
 sub fishStartSwim()
     periods = fishBeatPeriods(m.top.swimSpeed)
     m.swimAnim.control = "stop"
-    m.tailAnim.control = "stop"
     m.swimAnim.duration = periods.fin
-    m.tailAnim.duration = periods.tail
     m.swimAnim.control = "start"
-    m.tailAnim.control = "start"
+    m.finPaused = false
+    if m.top.tailSpeed < 0 or m.tailPeriod <= 0 then fishRetimeTail()
     onPausedChanged()
+end sub
+
+function fishCurrentTailPhase() as float
+    elapsed = 0.0
+    if not m.tailPaused then elapsed = m.tailClock.TotalMilliseconds() / 1000.0
+    return fishBeatPhase(m.tailPhase, elapsed, m.tailPeriod)
+end function
+
+sub fishRetimeTail()
+    speed = m.top.tailSpeed
+    if speed < 0 then speed = m.top.swimSpeed
+    period = fishBeatTailPeriod(speed)
+    if not fishBeatShouldRetime(m.tailPeriod, period) then return
+    phase = fishCurrentTailPhase()
+    ' Frozen previews pose the brain during initialization, before the emulator
+    ' advances animations to its fixed capture time. Never seed that pose with
+    ' machine-dependent elapsed startup time. Live playback retains its phase.
+    if m.global.hasField("previewFreeze") then
+        if m.global.previewFreeze > 0 then phase = 0.0
+    end if
+    m.tailAnim.control = "stop"
+    for each set in m.sets
+        fishApplyTailCurve(set, phase)
+    end for
+    m.tailAnim.duration = period
+    m.tailPeriod = period
+    m.tailPhase = phase
+    m.tailClock.mark()
+    m.tailPaused = m.top.paused
+    m.tailAnim.control = "start"
+    if m.tailPaused then m.tailAnim.control = "pause"
 end sub
 
 function fishSign(value as integer) as integer

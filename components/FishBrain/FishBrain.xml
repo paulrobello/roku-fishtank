@@ -37,6 +37,7 @@
     <script type="text/brightscript" uri="pkg:/components/lib/host.brs" />
     <script type="text/brightscript" uri="pkg:/components/lib/tint.brs" />
     <script type="text/brightscript" uri="pkg:/components/lib/weave.brs" />
+    <script type="text/brightscript" uri="pkg:/components/lib/motion.brs" />
     <children>
         <Group id="fishLayer" />
         <Timer id="brainTimer" duration="0.125" repeat="true" />
