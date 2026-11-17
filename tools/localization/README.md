@@ -13,7 +13,9 @@ The generator uses only checked-in UTF-8 data and Python's standard library.
   Chatham Islands, Kermadec Islands, Northern Cyprus and Somaliland have explicit
   translations because they do not have matching ISO region identifiers here.
   Source aliases were matched without changing their dataset IDs or city coverage.
-- English regional catalogs use the existing English wording. Spanish ES and MX
+- Canadian English (`en_CA`) uses native English-source fallback because Roku's
+  package analyzer rejects an `en_CA` catalog despite listing the device locale.
+  Other English regional catalogs use the existing English wording. Spanish ES and MX
   share broadly understandable Spanish; localized UI does not promise country-
   specific postal, date, or number parsing conventions.
 - The source dataset typo `Necw Zealand` is displayed as `New Zealand` in English

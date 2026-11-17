@@ -5,7 +5,7 @@ not change the device language or send strings/location data to a translation
 service. Missing translations fall back to the source English through Roku's
 native `tr()` function.
 
-Supported locale catalogs: `en_US`, `en_GB`, `en_CA`, `en_AU`, `fr_CA`, `es_ES`,
+Supported locale catalogs: `en_US`, `en_GB`, `en_AU`, `fr_CA`, `es_ES`,
 `es_MX`, `de_DE`, `it_IT`, and `pt_BR`.
 
 ## Scope
@@ -39,7 +39,7 @@ Locale list: https://developer.roku.com/dev/docs/ifdeviceinfo
 
 ## Verification scope
 
-The integrity gate verifies 290 source strings in each of ten catalogs, matching
+The integrity gate verifies 290 source strings in each of nine catalogs, matching
 placeholders, valid XLIFF, bundled notices and unchanged location-data hashes.
 The browser preview uses the emulator's native device locale, not a replacement
 translation function. Its localized visual cases cover all ten locales, six
@@ -60,3 +60,16 @@ snapshots; the unchanged tank baseline also passed. Renderer readback confirmed
 ANGLE Metal on Apple M4 Max. Localized screenshots were reviewed for fitting,
 including shorter translated history headings. These were correctness checks
 under a busy host, not timing/performance measurements or certification.
+
+## Canadian English validator compatibility
+
+Roku documents `en_CA` as a device locale, but its 2026-11-17 package analyzer
+rejects a bundled `en_CA` catalog. Canadian English therefore uses native `tr()`
+English-source fallback instead. All ten device locales remain covered, with
+nine accepted translation catalogs. This removes the catalog flagged by the analyzer
+without changing the Canadian English UI wording. The country-name source typo
+is normalized before lookup so fallback also displays "New Zealand" correctly.
+
+The compatibility correction passed the existing US-English and Canadian-English
+settings snapshots plus French dialog/country/history and invalid-location flows
+without changing any screenshot baseline (four focused cases).

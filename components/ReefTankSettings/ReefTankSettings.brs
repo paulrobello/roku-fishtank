@@ -205,7 +205,7 @@ sub settingsUiCountries()
     m.placeMode = "country"
     names = [tr("Cancel")]
     for each row in m.countryRows
-        names.push(tr(row[0]))
+        names.push(settingsUiCountryName(row[0]))
     end for
     settingsUiShowPlaces(names, tr("Choose country / territory"))
 end sub
@@ -244,7 +244,7 @@ sub settingsUiPlaceSelected()
         for each city in m.cityRows
             names.push(city[0])
         end for
-        settingsUiShowPlaces(names, tr("%1 - choose a nearby city").replace("%1", tr(country[0])))
+        settingsUiShowPlaces(names, tr("%1 - choose a nearby city").replace("%1", settingsUiCountryName(country[0])))
     else
         if selected = 0 then
             settingsUiCountries()
@@ -323,3 +323,9 @@ sub settingsUiChangelogSelected(event as object)
         m.changelogEntries = invalid
     end if
 end sub
+
+' Preserve the corrected display name even when English uses source fallback.
+function settingsUiCountryName(name as string) as string
+    if name = "Necw Zealand" then name = "New Zealand"
+    return tr(name)
+end function

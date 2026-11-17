@@ -9,7 +9,7 @@ import json
 import xml.etree.ElementTree as ET
 ROOT = Path(__file__).resolve().parents[2]
 HERE = Path(__file__).resolve().parent
-LOCALES = {'en_US': None, 'en_GB': None, 'en_CA': None, 'en_AU': None,
+LOCALES = {'en_US': None, 'en_GB': None, 'en_AU': None,
            'fr_CA': 0, 'es_ES': 1, 'es_MX': 1, 'de_DE': 2, 'it_IT': 3, 'pt_BR': 4}
 
 def build():

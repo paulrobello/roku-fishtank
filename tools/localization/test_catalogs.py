@@ -9,7 +9,7 @@ import unittest
 import xml.etree.ElementTree as ET
 
 ROOT = Path(__file__).resolve().parents[2]
-LOCALES = {'en_US', 'en_GB', 'en_CA', 'en_AU', 'fr_CA', 'es_ES', 'es_MX', 'de_DE', 'it_IT', 'pt_BR'}
+LOCALES = {'en_US', 'en_GB', 'en_AU', 'fr_CA', 'es_ES', 'es_MX', 'de_DE', 'it_IT', 'pt_BR'}
 NS = {'x': 'urn:oasis:names:tc:xliff:document:1.2'}
 
 def required_sources():
@@ -54,6 +54,11 @@ class CatalogTests(unittest.TestCase):
                 self.assertEqual(len(sources), len(set(sources)), locale)
                 self.assertEqual(len(ids), len(set(ids)), locale)
                 self.assertFalse(required - set(sources), (locale, sorted(required-set(sources))))
+
+    def test_canadian_english_uses_source_fallback(self):
+        self.assertFalse((ROOT / "locale/en_CA").exists())
+        self.assertIn("en_CA", (ROOT / "preview/main.ts").read_text())
+        self.assertIn('if (locale === "en_CA") return source;', (ROOT / "tests/visual/localization.spec.ts").read_text())
 
     def test_location_data_unchanged(self):
         # Translation changes displayed country names, never dataset order/IDs/coordinates.

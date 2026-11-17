@@ -5,6 +5,8 @@ type PreviewWindow = Window & { __preview?: { status: string; params: Record<str
 const locales = ["en_US", "en_GB", "en_CA", "en_AU", "fr_CA", "es_ES", "es_MX", "de_DE", "it_IT", "pt_BR"];
 
 function translated(locale: string, source: string): string {
+  // Roku validator rejects an en_CA catalog; native tr() returns English source.
+  if (locale === "en_CA") return source;
   const xml = readFileSync(`locale/${locale}/translations.xml`, "utf8");
   const decode = (text: string): string => text.replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&quot;/g, '\"').replace(/&apos;/g, "'").replace(/&amp;/g, "&");
   for (const unit of xml.matchAll(/<trans-unit\b[^>]*>([\s\S]*?)<\/trans-unit>/g)) {
