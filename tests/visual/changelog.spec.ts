@@ -15,7 +15,7 @@ test("changelog cycles build history and closes without changing settings", asyn
     await page.keyboard.press(key);
     await expect.poll(async () => (await display.screenshot()).equals(before)).toBe(false);
   };
-  for (let i = 0; i < 5; i++) await press("ArrowDown");
+  for (let i = 0; i < 6; i++) await press("ArrowDown");
   const settings = await display.screenshot();
   await press("Enter");
   await expect(display).toHaveScreenshot("settings-changelog-unreleased.png");

@@ -40,6 +40,8 @@ test("clock is behind fish and keeps independent drift with camera off", () => {
   expect(layers.indexOf("waterGradient")).toBeLessThan(layers.indexOf("backLane"));
   const clock = readFileSync("components/BackgroundClock/BackgroundClock.brs", "utf8");
   expect(clock).not.toContain("m.top.drift");
+  const layout = readFileSync("components/BackgroundClock/BackgroundClock.xml", "utf8");
+  expect(layout).toContain('translation="[606.9,140]" scale="[1.1,1.1]"');
   expect(clock).toContain('m.tick.control = "stop"');
   expect(clock).toContain('m.drift.control = "stop"');
 });
@@ -51,3 +53,10 @@ test("clock fits a 720p-sized viewport", async ({ page }) => {
   await frozen(page, "clock=1&time=2026-11-04T23:05");
   await expect(page.locator("#display")).toHaveScreenshot("clock-night-720-viewport.png");
 });
+
+for (const [name, time] of [["midnight", "00:00"], ["noon", "12:00"], ["late-night", "23:59"]]) {
+  test(`explicit 24-hour clock ${name}`, async ({ page }) => {
+    await frozen(page, `clock=1&clockFormat=24h&time=2026-11-04T${time}`);
+    await expect(page.locator("#display")).toHaveScreenshot(`clock-24h-${name}.png`);
+  });
+}

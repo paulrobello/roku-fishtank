@@ -17,6 +17,7 @@ function settingsTestSuite() as object
             { name: "applyPlanMapsValues", fn: settingsTest_applyPlanMapsValues }
             { name: "applyPlanRejectsInvalid", fn: settingsTest_applyPlanRejectsInvalid }
             { name: "applyToScene", fn: settingsTest_applyToScene }
+            { name: "clockFormat", fn: settingsTest_clockFormat }
         ]
     }
 end function
@@ -103,9 +104,11 @@ end sub
 
 sub settingsTest_applyToScene(t as object)
     ' A stand-in for the ReefTank node: with and without the nightMode field.
-    scene = { density: "normal", drift: true, hasField: function(name as string) as boolean
+    scene = {
+        density: "normal", drift: true, hasField: function(name as string) as boolean
             return m[name] <> invalid
-        end function }
+        end function
+    }
     store = settingsMemoryStore()
     settingsSave(store, { nightMode: "night", density: "calm", drift: "off" })
     settingsApplyToScene(scene, store)
@@ -139,4 +142,30 @@ sub settingsTest_registryRoundTrip(t as object)
     end for
     section.flush()
     settingsSave(settingsRegistryStore(), saved)
+end sub
+
+sub settingsTest_clockFormat(t as object)
+    store = settingsMemoryStore()
+    assertEqual(t, settingsLoad(store).clockFormat, "device", "missing format uses device")
+    for each value in ["device", "12h", "24h"]
+        settingsSave(store, { clockFormat: value })
+        assertEqual(t, settingsLoad(store).clockFormat, value, "format persists")
+        assertEqual(t, settingsApplyPlan(settingsLoad(store)).clockFormat, value, "format maps to scene")
+    end for
+    store.write("clockFormat", "12-hour")
+    assertEqual(t, settingsLoad(store).clockFormat, "device", "invalid stored format")
+    assertEqual(t, settingsSave(store, { clockFormat: 24 }).clockFormat, "device", "non-string sanitized")
+    assertEqual(t, settingsApplyPlan({ clockFormat: "bogus" }).clockFormat, "device", "invalid plan sanitized")
+    assertEqual(t, settingsStep("clockFormat", "device", 1), "12h", "device to 12h")
+    assertEqual(t, settingsStep("clockFormat", "12h", 1), "24h", "12h to 24h")
+    assertEqual(t, settingsStep("clockFormat", "24h", 1), "device", "24h wraps to device")
+    assertEqual(t, settingsStep("clockFormat", "device", -1), "24h", "reverse wraps")
+    scene = {
+        density: "normal", drift: true, clockFormat: "device", hasField: function(name as string) as boolean
+            return m[name] <> invalid
+        end function
+    }
+    settingsSave(store, { clockFormat: "24h" })
+    settingsApplyToScene(scene, store)
+    assertEqual(t, scene.clockFormat, "24h", "format applied when field exists")
 end sub

@@ -2,7 +2,7 @@
 sub init()
     PANEL_W = 1100
     PANEL_H = 760
-    m.rowH = 80
+    m.rowH = 66
     m.rowsY = 200
     dr = m.top.currentDesignResolution
     s = dr.width / 1920.0
@@ -35,13 +35,14 @@ sub init()
     settingsUiPlace(m.top.findNode("hint"), smallFont, 60, PANEL_H - 82, PANEL_W - 120, 64)
 
     ' Keep Solar location at index 3 even when new persisted preferences are added.
-    m.keys = ["nightMode", "density", "drift", "solarLocation", "digitalClock", "changelog"]
-    m.titles = { nightMode: tr("Night mode"), density: tr("Fish density"), drift: tr("Camera drift"), digitalClock: tr("Background clock") }
+    m.keys = ["nightMode", "density", "drift", "solarLocation", "digitalClock", "clockFormat", "changelog"]
+    m.titles = { nightMode: tr("Night mode"), density: tr("Fish density"), drift: tr("Camera drift"), digitalClock: tr("Background clock"), clockFormat: tr("Clock format") }
     m.shown = {
         nightMode: { auto: tr("Auto"), day: tr("Always day"), night: tr("Always night") }
         density: { calm: tr("Calm"), normal: tr("Normal"), busy: tr("Busy") }
         drift: { on: tr("On"), off: tr("Off") }
         digitalClock: { on: tr("On"), off: tr("Off") }
+        clockFormat: { device: tr("Device setting"), "12h": tr("12-hour"), "24h": tr("24-hour") }
     }
     m.store = settingsRegistryStore()
     m.values = settingsLoad(m.store)

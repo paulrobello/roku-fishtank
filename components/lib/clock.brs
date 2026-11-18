@@ -27,7 +27,7 @@ end function
 ' This reduces static placement; it is not a guarantee against display burn-in.
 function clockDriftAt(seconds as float) as object
     angle = seconds * 6.2831853 / 840.0
-    return [639.0 + 42.0 * Sin(angle), 240.0 + 18.0 * Sin(angle * 2.0)]
+    return [606.9 + 42.0 * Sin(angle), 140.0 + 18.0 * Sin(angle * 2.0)]
 end function
 
 function clockDriftPlan() as object
@@ -69,4 +69,10 @@ function clockColor(nightBlend as float) as integer
     g = Int(183 - 38 * nightBlend)
     b = Int(208 - 25 * nightBlend)
     return r * 16777216 + g * 65536 + b * 256 + 255
+end function
+
+function clockResolveFormat(preference as string, deviceFormat as string) as string
+    if preference = "12h" or preference = "24h" then return preference
+    if deviceFormat = "24h" then return "24h"
+    return "12h"
 end function

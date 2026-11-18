@@ -146,3 +146,44 @@ test("ZIP binary lookup saves leading zeros and rejects missing ZIPs", async ({ 
   expect(preview?.status, preview?.log.join("\n")).toBe("frozen");
   expect(preview?.log.filter((line) => /error,|Runtime Error|Type Mismatch/i.test(line))).toEqual([]);
 });
+
+// Clock format is independent of enabled/off, and only display labels are localized.
+// Persisting the underlying device/12h/24h keys must survive settings re-entry.
+test("clock format cycles device to 12-hour to 24-hour and persists", async ({ page }) => {
+  test.setTimeout(120_000);
+  const display = page.locator("#display");
+  const press = async (key: string): Promise<void> => {
+    const before = await display.screenshot();
+    await page.keyboard.press(key);
+    await expect.poll(async () => (await display.screenshot()).equals(before)).toBe(false);
+  };
+  const openFormat = async (expected: string): Promise<void> => {
+    await page.goto("/?scene=ReefTankSettings&seed=7&freeze=1&locale=en_US");
+    await page.waitForFunction(
+      () => ["frozen", "error"].includes((window as PreviewWindow).__preview?.status ?? ""),
+      null, { timeout: 30_000 },
+    );
+    const preview = await page.evaluate(() => (window as PreviewWindow).__preview);
+    expect(preview?.status, preview?.log.join("\n")).toBe("frozen");
+    expect(preview?.log.some((line) => line.includes(`PREVIEW_OPTION Clock format: ${expected}`))).toBe(true);
+    expect(preview?.log.filter((line) => /error,|Runtime Error|Type Mismatch/i.test(line))).toEqual([]);
+    for (let i = 0; i < 5; i++) await press("ArrowDown");
+  };
+  await openFormat("Device setting");
+  await expect(display).toHaveScreenshot("settings-clock-format-device.png");
+  const device = await display.screenshot();
+  await press("Enter");
+  await expect(display).toHaveScreenshot("settings-clock-format-12h.png");
+  const twelve = await display.screenshot();
+  await openFormat("12-hour");
+  await expect.poll(async () => (await display.screenshot()).equals(twelve)).toBe(true);
+  await press("Enter");
+  await expect(display).toHaveScreenshot("settings-clock-format-24h.png");
+  const twentyFour = await display.screenshot();
+  await openFormat("24-hour");
+  await expect.poll(async () => (await display.screenshot()).equals(twentyFour)).toBe(true);
+  await press("Enter");
+  await expect.poll(async () => (await display.screenshot()).equals(device)).toBe(true);
+  await openFormat("Device setting");
+  await expect.poll(async () => (await display.screenshot()).equals(device)).toBe(true);
+});

@@ -2,15 +2,18 @@
 
 Settings → Background clock is Off by default and stored locally. On shows a large,
 muted clock in the deep-water layer, behind shafts, rocks and fish. It uses the
-Roku's local time and 12/24-hour preference, not the selected sunrise/sunset city.
+Roku's local time, not the selected sunrise/sunset city. Clock format defaults to
+Device setting (the Roku's preference); choose 12-hour or 24-hour to override it
+for Reef Tank only. The selection is stored locally and survives restarts.
 No time server, location request, image asset, or bundled font is added.
 
 The text changes only when its displayed minute changes; a three-second timer
 checks actual local time, including clock changes and daylight-saving transitions.
 No blinking colon or seconds. The time uses 156px native type with a smaller
 54px AM/PM suffix, right-aligned to keep a consistent gap. In 24-hour mode the
-time is centered without a suffix gap. The group sits lower in the distant water
-(base y240 at 1080p), below its original y170 placement. Water-blue tint changes
+time is centered without a suffix gap. The entire face is scaled uniformly to
+110% (effective type sizes 171.6px and 59.4px) and horizontally centered. Its
+base y140 at 1080p is 40 pixels above the last installed placement. Water-blue tint changes
 with day/night lighting independently of the backdrop; opacity remains 0.16 → 0.10.
 Independent 14-minute drift works even with camera drift disabled. This reduces
 static placement but does not guarantee protection against display burn-in.
@@ -18,7 +21,9 @@ The timer and drift animation stop while the clock is off.
 
 Preview: `?clock=1` or `?clock=0` explicitly overrides the stored toggle. Omit it
 to exercise Settings persistence. `time=2026-11-04T13:05` fixes the clock display;
-`freeze=3` without a time uses noon. Frozen screenshots always use 12-hour format.
+`freeze=3` without a time uses noon. Device-default frozen screenshots use
+12-hour format for determinism; `clockFormat=12h` or `clockFormat=24h` overrides
+the saved selection in the preview without changing it.
 
 Focused pure tests: `make test FILTER=clock`, `FILTER=settings`, `FILTER=memory`.
 GPU visual tests: `tests/visual/clock.spec.ts`, within a booked test window. Review
@@ -62,3 +67,32 @@ before upload. All three installers reported the exact size and Install Success,
 then all three returned Home. SHA-256:
 `f91e945c663d7c17ca9380faa84244d8ac330fc748a44b5630233bcb4d531356`.
 No push or publication. On-TV artistic/readability assessment remains for Paul.
+
+## Raised / enlarged face verification (2026-11-17)
+
+The face is uniformly 10% larger and its base is 60 design pixels higher. The
+full non-browser gate passed (228 unit tests). Eight focused visual checks
+passed after reviewing the intended snapshots, followed by a clean 8/8 rerun:
+day/night, clock off/default off, layer/drift assertions, scaled 720px viewport,
+and Spanish noon, late night, and after midnight. These are functional checks
+on a busy host, not performance certification or native 720p-device coverage.
+The 3,911,147-byte package was installed and installer-digest verified on all
+three authorized development TVs after idle and screensaver-exit checks.
+No push or store upload was performed for this adjustment.
+
+## Clock-format option verification (2026-11-18)
+
+The clock is another 40 design pixels higher (base y140), retaining the 110% face
+scale and existing water tint, opacity, depth order, and slow independent drift.
+The new native Clock format row offers Device setting, 12-hour, and 24-hour.
+It defaults to the Roku preference, persists locally, and has offline translations
+in every packaged locale. It does not change the device's system preference.
+
+The full non-browser gate passed with 229 unit tests. The combined functional
+visual suite passed 32/32, including all supported UI locales, clock-format
+persistence across settings reloads, 24-hour midnight/noon/23:59, 12-hour day/night,
+location validation, and unchanged clock-off tank behavior. Updated snapshots
+were reviewed for intentional size/position and seven-row settings changes.
+
+A subsequent clean comparison run passed 11/11 focused clock and long-label locale
+checks without updating snapshots.

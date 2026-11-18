@@ -34,7 +34,7 @@ class HistoryTest(unittest.TestCase):
         handler = re.search(r"sub settingsUiChangelogSelected\(.*?end sub", source, re.S).group()
         self.assertNotIn("settingsSave", handler)
         self.assertNotIn("settingsLocationSave", handler)
-        self.assertIn('"solarLocation", "digitalClock", "changelog"', source)
+        self.assertIn('"solarLocation", "digitalClock", "clockFormat", "changelog"', source)
         self.assertNotRegex(source, r"(?i)sub\s+onKeyEvent|function\s+onKeyEvent")
 
 

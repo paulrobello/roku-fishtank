@@ -11,6 +11,7 @@
 -->
 <component name="ReefTank" extends="Scene">
     <interface>
+        <field id="clockFormat" type="string" value="device" />
         <field id="digitalClockEnabled" type="boolean" value="false" onChange="onDigitalClockChanged" />
         <field id="density" type="string" value="normal" onChange="onDensityChanged" />
         <!-- Camera drift on/off (P5.3 settings). scene.json drift.enabled must also be true. -->

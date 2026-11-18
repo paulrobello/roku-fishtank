@@ -544,6 +544,9 @@ sub reefTankAddClock()
         if m.global.previewClock = "1" then m.top.digitalClockEnabled = true
         if m.global.previewClock = "0" then m.top.digitalClockEnabled = false
     end if
+    if m.global.hasField("previewClockFormat") then
+        if m.global.previewClockFormat = "12h" or m.global.previewClockFormat = "24h" then m.top.clockFormat = m.global.previewClockFormat
+    end if
     onDigitalClockChanged()
 end sub
 

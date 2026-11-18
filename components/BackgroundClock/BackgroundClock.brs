@@ -28,6 +28,7 @@ end sub
 sub clockStart(scene as object)
     m.scene = scene
     m.scene.observeField("nightBlend", "onClockLight")
+    m.scene.observeField("clockFormat", "onClockFormat")
     clockRefreshLight()
 end sub
 
@@ -44,6 +45,10 @@ sub onClockEnabled()
         m.drift.control = "start"
         m.tick.control = "start"
     end if
+end sub
+
+sub onClockFormat()
+    if m.ready = true then clockRefresh()
 end sub
 
 sub onClockLight()
@@ -69,6 +74,9 @@ sub clockRefresh()
         minutes = now.GetHours() * 60 + now.GetMinutes()
     end if
     if m.freeze > 0 then format = "12h"
+    preference = "device"
+    if m.scene <> invalid then preference = m.scene.clockFormat
+    format = clockResolveFormat(preference, format)
     parts = clockParts(minutes, format)
     if m.label.text <> parts.time then m.label.text = parts.time
     periodText = ""

@@ -10,6 +10,10 @@ function clockTestSuite() as object
 end function
 
 sub clockTest_format(t as object)
+    assertEqual(t, clockResolveFormat("device", "24h"), "24h", "device format default")
+    assertEqual(t, clockResolveFormat("12h", "24h"), "12h", "explicit twelve hour")
+    assertEqual(t, clockResolveFormat("24h", "12h"), "24h", "explicit twenty four hour")
+    assertEqual(t, clockResolveFormat("bad", "bad"), "12h", "safe format fallback")
     assertEqual(t, clockDisplay(0, "12h"), "12:00 AM", "midnight")
     assertEqual(t, clockDisplay(720, "12h"), "12:00 PM", "noon")
     assertEqual(t, clockDisplay(785, "12h"), "1:05 PM", "minute padding")
@@ -48,12 +52,14 @@ sub clockTest_style(t as object)
     assertNear(t, clockOpacity(0), 0.16, 0.00001, "subtle day text")
     assertNear(t, clockOpacity(1), 0.10, 0.00001, "dim at night")
     assertNear(t, clockOpacity(3), 0.10, 0.00001, "night clamp")
+    assertNear(t, clockDriftAt(0)[0] + 642 * 1.1 / 2, 960, 0.001, "scaled face remains centered")
+    assertNear(t, clockDriftAt(0)[1], 140, 0.001, "face raised another forty pixels")
     plan = clockDriftPlan()
     assertEqual(t, plan.keys.count(), 49, "smooth native drift knots")
     assertEqual(t, plan.values.count(), plan.keys.count(), "matched key arrays")
     for each p in plan.values
-        assertTrue(t, p[0] >= 597 and p[0] <= 681, "x stays in safe water region")
-        assertTrue(t, p[1] >= 222 and p[1] <= 258, "y stays in safe water region")
+        assertTrue(t, p[0] >= 564.8 and p[0] <= 649.0, "x stays in safe water region")
+        assertTrue(t, p[1] >= 122 and p[1] <= 158, "y stays in safe water region")
     end for
     assertTrue(t, Abs(clockDriftAt(210)[0] - clockDriftAt(0)[0]) > 40, "independent drift changes pixels")
     assertNear(t, plan.values[0][0], plan.values[48][0], 0.001, "x loop closes")

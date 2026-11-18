@@ -53,9 +53,8 @@ for (const locale of locales) {
       await press("ArrowDown");
       await press("Enter");
       await expect(display).toHaveScreenshot(`locale-${locale}-countries.png`);
-      await press("Enter"); // Cancel
-      await press("ArrowDown");
-      await press("ArrowDown");
+      await press("Enter"); // Cancel; focus returns to Solar location (row 3).
+      for (let i = 0; i < 3; i++) await press("ArrowDown"); // Changelog is now row 6.
       await press("Enter");
       await expect(display).toHaveScreenshot(`locale-${locale}-changelog.png`);
     }
