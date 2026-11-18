@@ -3,6 +3,7 @@
   "stagingDir": "dist/fidelity-staging",
   "files": [
     "manifest",
+    "config/THIRD_PARTY_NOTICES.txt",
     "images/*.png",
     "images/*.jpg",
     "images/fidelity/**/*",

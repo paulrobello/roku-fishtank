@@ -3,6 +3,7 @@
   "stagingDir": "dist/probe-staging",
   "files": [
     "manifest",
+    "config/THIRD_PARTY_NOTICES.txt",
     "images/**/*",
     { "src": "probe/source/main.brs", "dest": "source/main.brs" },
     { "src": "probe/components/**/*", "dest": "components" },

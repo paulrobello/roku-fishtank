@@ -28,4 +28,14 @@ if bash "$root/tools/zip_check.sh" "$tmp/oversize.zip" > "$tmp/result"; then
     echo 'store-guard test: oversized archive incorrectly accepted'; exit 1
 fi
 grep -q 'exceeds the 4,000,000-byte store limit' "$tmp/result"
+printf "' bslib fixture\n" > "$tmp/source/bslib.brs"
+(cd "$tmp" && zip -q missing-notice.zip manifest source/bslib.brs)
+if bash "$root/tools/zip_check.sh" "$tmp/missing-notice.zip" > "$tmp/result"; then
+    echo 'store-guard test: bslib without license incorrectly accepted'; exit 1
+fi
+grep -q 'bslib requires its MIT' "$tmp/result"
+mkdir -p "$tmp/config"
+cp "$root/config/THIRD_PARTY_NOTICES.txt" "$tmp/config/"
+(cd "$tmp" && zip -q licensed.zip manifest source/bslib.brs config/THIRD_PARTY_NOTICES.txt)
+bash "$root/tools/zip_check.sh" "$tmp/licensed.zip" >/dev/null
 echo 'store guard regression tests ok'

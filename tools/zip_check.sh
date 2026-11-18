@@ -41,4 +41,14 @@ if unzip -p "$zip" 'source/*.brs' 'components/*.brs' 2>/dev/null | grep -Ei '^[[
     echo 'zip-check FAILED: custom key handler found in device package'
     exit 1
 fi
+# BrighterScript injects bslib into production packages, despite being a build tool.
+if printf '%s\n' "$entries" | grep -qx 'source/bslib.brs'; then
+    notice=$(unzip -p "$zip" config/THIRD_PARTY_NOTICES.txt 2>/dev/null || true)
+    if ! printf '%s\n' "$notice" | grep -q 'Copyright (c) 2021 RokuCommunity' ||
+       ! printf '%s\n' "$notice" | grep -q 'Permission is hereby granted, free of charge' ||
+       ! printf '%s\n' "$notice" | grep -q 'THE SOFTWARE IS PROVIDED "AS IS"'; then
+        echo 'zip-check FAILED: bundled bslib requires its MIT copyright and permission notice'
+        exit 1
+    fi
+fi
 echo "zip-check/store checks ok ($bytes bytes)"
