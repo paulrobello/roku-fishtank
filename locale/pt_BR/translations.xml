@@ -79,1102 +79,1158 @@
     <target>Antígua e Barbuda</target>
    </trans-unit>
    <trans-unit id="19">
+    <source>App-entry to render-ready: %1 ms</source>
+    <target>Entrada no app até pronto para exibir: %1 ms</target>
+   </trans-unit>
+   <trans-unit id="20">
+    <source>App-entry to stop: %1 ms</source>
+    <target>Entrada no app até parar: %1 ms</target>
+   </trans-unit>
+   <trans-unit id="21">
     <source>Argentina</source>
     <target>Argentina</target>
    </trans-unit>
-   <trans-unit id="20">
+   <trans-unit id="22">
     <source>Armenia</source>
     <target>Armênia</target>
    </trans-unit>
-   <trans-unit id="21">
+   <trans-unit id="23">
     <source>Aruba</source>
     <target>Aruba</target>
    </trans-unit>
-   <trans-unit id="22">
+   <trans-unit id="24">
+    <source>Asset error</source>
+    <target>Erro de recurso</target>
+   </trans-unit>
+   <trans-unit id="25">
     <source>Australia</source>
     <target>Austrália</target>
    </trans-unit>
-   <trans-unit id="23">
+   <trans-unit id="26">
     <source>Austria</source>
     <target>Áustria</target>
    </trans-unit>
-   <trans-unit id="24">
+   <trans-unit id="27">
     <source>Auto</source>
     <target>Automático</target>
    </trans-unit>
-   <trans-unit id="25">
+   <trans-unit id="28">
     <source>Azerbaijan</source>
     <target>Azerbaijão</target>
    </trans-unit>
-   <trans-unit id="26">
+   <trans-unit id="29">
     <source>Back to countries</source>
     <target>Voltar aos países</target>
    </trans-unit>
-   <trans-unit id="27">
+   <trans-unit id="30">
     <source>Back to newest</source>
     <target>Voltar à mais recente</target>
    </trans-unit>
-   <trans-unit id="28">
+   <trans-unit id="31">
     <source>Background clock</source>
     <target>Relógio de fundo</target>
    </trans-unit>
-   <trans-unit id="29">
+   <trans-unit id="32">
     <source>Bahrain</source>
     <target>Barein</target>
    </trans-unit>
-   <trans-unit id="30">
+   <trans-unit id="33">
     <source>Bangladesh</source>
     <target>Bangladesh</target>
    </trans-unit>
-   <trans-unit id="31">
+   <trans-unit id="34">
     <source>Barbados</source>
     <target>Barbados</target>
    </trans-unit>
-   <trans-unit id="32">
+   <trans-unit id="35">
     <source>Belarus</source>
     <target>Bielorrússia</target>
    </trans-unit>
-   <trans-unit id="33">
+   <trans-unit id="36">
     <source>Belgium</source>
     <target>Bélgica</target>
    </trans-unit>
-   <trans-unit id="34">
+   <trans-unit id="37">
     <source>Belize</source>
     <target>Belize</target>
    </trans-unit>
-   <trans-unit id="35">
+   <trans-unit id="38">
     <source>Benin</source>
     <target>Benin</target>
    </trans-unit>
-   <trans-unit id="36">
+   <trans-unit id="39">
     <source>Bermuda</source>
     <target>Bermudas</target>
    </trans-unit>
-   <trans-unit id="37">
+   <trans-unit id="40">
     <source>Bhutan</source>
     <target>Butão</target>
    </trans-unit>
-   <trans-unit id="38">
+   <trans-unit id="41">
     <source>Bolivia</source>
     <target>Bolívia</target>
    </trans-unit>
-   <trans-unit id="39">
+   <trans-unit id="42">
     <source>Bosnia and Herzegovina</source>
     <target>Bósnia e Herzegovina</target>
    </trans-unit>
-   <trans-unit id="40">
+   <trans-unit id="43">
     <source>Botswana</source>
     <target>Botsuana</target>
    </trans-unit>
-   <trans-unit id="41">
+   <trans-unit id="44">
     <source>Brazil</source>
     <target>Brasil</target>
    </trans-unit>
-   <trans-unit id="42">
+   <trans-unit id="45">
     <source>Brunei</source>
     <target>Brunei</target>
    </trans-unit>
-   <trans-unit id="43">
+   <trans-unit id="46">
+    <source>Build: %1</source>
+    <target>Versão: %1</target>
+   </trans-unit>
+   <trans-unit id="47">
     <source>Bulgaria</source>
     <target>Bulgária</target>
    </trans-unit>
-   <trans-unit id="44">
+   <trans-unit id="48">
     <source>Burkina Faso</source>
     <target>Burquina Faso</target>
    </trans-unit>
-   <trans-unit id="45">
+   <trans-unit id="49">
     <source>Burundi</source>
     <target>Burundi</target>
    </trans-unit>
-   <trans-unit id="46">
+   <trans-unit id="50">
     <source>Busy</source>
     <target>Alta</target>
    </trans-unit>
-   <trans-unit id="47">
+   <trans-unit id="51">
     <source>Calm</source>
     <target>Baixa</target>
    </trans-unit>
-   <trans-unit id="48">
+   <trans-unit id="52">
     <source>Cambodia</source>
     <target>Camboja</target>
    </trans-unit>
-   <trans-unit id="49">
+   <trans-unit id="53">
     <source>Camera drift</source>
     <target>Movimento da câmera</target>
    </trans-unit>
-   <trans-unit id="50">
+   <trans-unit id="54">
     <source>Cameroon</source>
     <target>Camarões</target>
    </trans-unit>
-   <trans-unit id="51">
+   <trans-unit id="55">
     <source>Canada</source>
     <target>Canadá</target>
    </trans-unit>
-   <trans-unit id="52">
+   <trans-unit id="56">
     <source>Cancel</source>
     <target>Cancelar</target>
    </trans-unit>
-   <trans-unit id="53">
+   <trans-unit id="57">
     <source>Cape Verde</source>
     <target>Cabo Verde</target>
    </trans-unit>
-   <trans-unit id="54">
+   <trans-unit id="58">
     <source>Cayman Islands</source>
     <target>Ilhas Cayman</target>
    </trans-unit>
-   <trans-unit id="55">
+   <trans-unit id="59">
     <source>Central African Republic</source>
     <target>República Centro-Africana</target>
    </trans-unit>
-   <trans-unit id="56">
+   <trans-unit id="60">
     <source>Chad</source>
     <target>Chade</target>
    </trans-unit>
-   <trans-unit id="57">
+   <trans-unit id="61">
     <source>Changelog</source>
     <target>Histórico de alterações</target>
    </trans-unit>
-   <trans-unit id="58">
+   <trans-unit id="62">
     <source>Changelog: %1</source>
     <target>Histórico: %1</target>
    </trans-unit>
-   <trans-unit id="59">
+   <trans-unit id="63">
     <source>Chatham Islands</source>
     <target>Ilhas Chatham</target>
    </trans-unit>
-   <trans-unit id="60">
+   <trans-unit id="64">
     <source>Chile</source>
     <target>Chile</target>
    </trans-unit>
-   <trans-unit id="61">
+   <trans-unit id="65">
     <source>China</source>
     <target>China continental</target>
    </trans-unit>
-   <trans-unit id="62">
+   <trans-unit id="66">
     <source>Choose a ZIP, nearby city, or coordinates. Keep your Roku time zone correct. Location stays on this device.</source>
     <target>Escolha um código ZIP, uma cidade próxima ou coordenadas. Confira o fuso horário do Roku. A localização fica apenas neste dispositivo.</target>
    </trans-unit>
-   <trans-unit id="63">
+   <trans-unit id="67">
     <source>Choose a local solar location for automatic day/night lighting, using presets or custom coordinates.</source>
     <target>Escolha uma localização para iluminação automática de dia/noite, usando locais predefinidos ou coordenadas personalizadas.</target>
    </trans-unit>
-   <trans-unit id="64">
+   <trans-unit id="68">
     <source>Choose country / territory</source>
     <target>Escolha país / território</target>
    </trans-unit>
-   <trans-unit id="65">
+   <trans-unit id="69">
     <source>Clock format</source>
     <target>Formato da hora</target>
    </trans-unit>
-   <trans-unit id="66">
+   <trans-unit id="70">
     <source>Close</source>
     <target>Fechar</target>
    </trans-unit>
-   <trans-unit id="67">
+   <trans-unit id="71">
     <source>Colombia</source>
     <target>Colômbia</target>
    </trans-unit>
-   <trans-unit id="68">
+   <trans-unit id="72">
     <source>Comoros</source>
     <target>Comores</target>
    </trans-unit>
-   <trans-unit id="69">
+   <trans-unit id="73">
     <source>Congo (Brazzaville)</source>
     <target>República do Congo</target>
    </trans-unit>
-   <trans-unit id="70">
+   <trans-unit id="74">
     <source>Congo (Kinshasa)</source>
     <target>Congo - Kinshasa</target>
    </trans-unit>
-   <trans-unit id="71">
+   <trans-unit id="75">
     <source>Cook Islands</source>
     <target>Ilhas Cook</target>
    </trans-unit>
-   <trans-unit id="72">
+   <trans-unit id="76">
     <source>Costa Rica</source>
     <target>Costa Rica</target>
    </trans-unit>
-   <trans-unit id="73">
+   <trans-unit id="77">
     <source>Country / city</source>
     <target>País / cidade</target>
    </trans-unit>
-   <trans-unit id="74">
+   <trans-unit id="78">
     <source>Croatia</source>
     <target>Croácia</target>
    </trans-unit>
-   <trans-unit id="75">
+   <trans-unit id="79">
     <source>Cuba</source>
     <target>Cuba</target>
    </trans-unit>
-   <trans-unit id="76">
+   <trans-unit id="80">
     <source>Curacao</source>
     <target>Curaçau</target>
    </trans-unit>
-   <trans-unit id="77">
+   <trans-unit id="81">
     <source>Custom coordinates</source>
     <target>Coordenadas personalizadas</target>
    </trans-unit>
-   <trans-unit id="78">
+   <trans-unit id="82">
     <source>Cyprus</source>
     <target>Chipre</target>
    </trans-unit>
-   <trans-unit id="79">
+   <trans-unit id="83">
     <source>Czechia</source>
     <target>Tchéquia</target>
    </trans-unit>
-   <trans-unit id="80">
+   <trans-unit id="84">
     <source>Denmark</source>
     <target>Dinamarca</target>
    </trans-unit>
-   <trans-unit id="81">
+   <trans-unit id="85">
     <source>Development build history, not Roku Store publication dates.</source>
     <target>Histórico de versões de desenvolvimento, não datas de publicação na loja Roku.</target>
    </trans-unit>
-   <trans-unit id="82">
+   <trans-unit id="86">
     <source>Device setting</source>
     <target>Configuração do dispositivo</target>
    </trans-unit>
-   <trans-unit id="83">
+   <trans-unit id="87">
     <source>Digit %1: %2</source>
     <target>Dígito %1: %2</target>
    </trans-unit>
-   <trans-unit id="84">
+   <trans-unit id="88">
     <source>Djibouti</source>
     <target>Djibuti</target>
    </trans-unit>
-   <trans-unit id="85">
+   <trans-unit id="89">
     <source>Dominica</source>
     <target>Dominica</target>
    </trans-unit>
-   <trans-unit id="86">
+   <trans-unit id="90">
     <source>Dominican Republic</source>
     <target>República Dominicana</target>
    </trans-unit>
-   <trans-unit id="87">
+   <trans-unit id="91">
     <source>East Timor</source>
     <target>Timor-Leste</target>
    </trans-unit>
-   <trans-unit id="88">
+   <trans-unit id="92">
     <source>Ecuador</source>
     <target>Equador</target>
    </trans-unit>
-   <trans-unit id="89">
+   <trans-unit id="93">
     <source>Egypt</source>
     <target>Egito</target>
    </trans-unit>
-   <trans-unit id="90">
+   <trans-unit id="94">
     <source>El Salvador</source>
     <target>El Salvador</target>
    </trans-unit>
-   <trans-unit id="91">
+   <trans-unit id="95">
     <source>Enter five digits, then select Save ZIP below the keyboard.</source>
     <target>Digite cinco números e selecione Salvar ZIP abaixo do teclado.</target>
    </trans-unit>
-   <trans-unit id="92">
+   <trans-unit id="96">
     <source>Enter latitude (-90 to 90), longitude (-180 to 180), separated by a comma.</source>
     <target>Digite latitude (-90 a 90), longitude (-180 a 180), separadas por vírgula. Use ponto decimal.</target>
    </trans-unit>
-   <trans-unit id="93">
+   <trans-unit id="97">
     <source>Equatorial Guinea</source>
     <target>Guiné Equatorial</target>
    </trans-unit>
-   <trans-unit id="94">
+   <trans-unit id="98">
     <source>Eritrea</source>
     <target>Eritreia</target>
    </trans-unit>
-   <trans-unit id="95">
+   <trans-unit id="99">
     <source>Estonia</source>
     <target>Estônia</target>
    </trans-unit>
-   <trans-unit id="96">
+   <trans-unit id="100">
     <source>Ethiopia</source>
     <target>Etiópia</target>
    </trans-unit>
-   <trans-unit id="97">
+   <trans-unit id="101">
     <source>Example: 35.2271,-80.8431. Select Save below the keyboard.</source>
     <target>Exemplo: 35.2271,-80.8431. Selecione Salvar abaixo do teclado.</target>
    </trans-unit>
-   <trans-unit id="98">
+   <trans-unit id="102">
     <source>Falkland Islands</source>
     <target>Ilhas Malvinas</target>
    </trans-unit>
-   <trans-unit id="99">
+   <trans-unit id="103">
     <source>Faroe Islands</source>
     <target>Ilhas Faroé</target>
    </trans-unit>
-   <trans-unit id="100">
+   <trans-unit id="104">
     <source>Federated States of Micronesia</source>
     <target>Micronésia</target>
    </trans-unit>
-   <trans-unit id="101">
+   <trans-unit id="105">
     <source>Fiji</source>
     <target>Fiji</target>
    </trans-unit>
-   <trans-unit id="102">
+   <trans-unit id="106">
     <source>Finland</source>
     <target>Finlândia</target>
    </trans-unit>
-   <trans-unit id="103">
+   <trans-unit id="107">
     <source>Fish density</source>
     <target>Densidade de peixes</target>
    </trans-unit>
-   <trans-unit id="104">
+   <trans-unit id="108">
     <source>Fish-density, camera-drift, and night-mode settings; gentler tails and better critter placement.</source>
     <target>Configurações de densidade de peixes, movimento da câmera e modo noturno; caudas mais suaves e melhor posicionamento dos animais.</target>
    </trans-unit>
-   <trans-unit id="105">
+   <trans-unit id="109">
     <source>France</source>
     <target>França</target>
    </trans-unit>
-   <trans-unit id="106">
+   <trans-unit id="110">
     <source>French Polynesia</source>
     <target>Polinésia Francesa</target>
    </trans-unit>
-   <trans-unit id="107">
+   <trans-unit id="111">
     <source>Full reef with multiple fish species, schooling, coral, bubbles, and day/night lighting.</source>
     <target>Recife completo com várias espécies de peixes, cardumes, corais, bolhas e iluminação de dia/noite.</target>
    </trans-unit>
-   <trans-unit id="108">
+   <trans-unit id="112">
     <source>Gabon</source>
     <target>Gabão</target>
    </trans-unit>
-   <trans-unit id="109">
+   <trans-unit id="113">
     <source>Georgia</source>
     <target>Geórgia</target>
    </trans-unit>
-   <trans-unit id="110">
+   <trans-unit id="114">
     <source>Germany</source>
     <target>Alemanha</target>
    </trans-unit>
-   <trans-unit id="111">
+   <trans-unit id="115">
     <source>Ghana</source>
     <target>Gana</target>
    </trans-unit>
-   <trans-unit id="112">
+   <trans-unit id="116">
     <source>Gibraltar</source>
     <target>Gibraltar</target>
    </trans-unit>
-   <trans-unit id="113">
+   <trans-unit id="117">
     <source>Greece</source>
     <target>Grécia</target>
    </trans-unit>
-   <trans-unit id="114">
+   <trans-unit id="118">
     <source>Greenland</source>
     <target>Groenlândia</target>
    </trans-unit>
-   <trans-unit id="115">
+   <trans-unit id="119">
     <source>Grenada</source>
     <target>Granada</target>
    </trans-unit>
-   <trans-unit id="116">
+   <trans-unit id="120">
     <source>Guam</source>
     <target>Guam</target>
    </trans-unit>
-   <trans-unit id="117">
+   <trans-unit id="121">
     <source>Guatemala</source>
     <target>Guatemala</target>
    </trans-unit>
-   <trans-unit id="118">
+   <trans-unit id="122">
     <source>Guinea</source>
     <target>Guiné</target>
    </trans-unit>
-   <trans-unit id="119">
+   <trans-unit id="123">
     <source>Guinea Bissau</source>
     <target>Guiné-Bissau</target>
    </trans-unit>
-   <trans-unit id="120">
+   <trans-unit id="124">
     <source>Guyana</source>
     <target>Guiana</target>
    </trans-unit>
-   <trans-unit id="121">
+   <trans-unit id="125">
     <source>Haiti</source>
     <target>Haiti</target>
    </trans-unit>
-   <trans-unit id="122">
+   <trans-unit id="126">
     <source>Honduras</source>
     <target>Honduras</target>
    </trans-unit>
-   <trans-unit id="123">
+   <trans-unit id="127">
     <source>Hong Kong S.A.R.</source>
     <target>Hong Kong</target>
    </trans-unit>
-   <trans-unit id="124">
+   <trans-unit id="128">
     <source>Hungary</source>
     <target>Hungria</target>
    </trans-unit>
-   <trans-unit id="125">
+   <trans-unit id="129">
     <source>Iceland</source>
     <target>Islândia</target>
    </trans-unit>
-   <trans-unit id="126">
+   <trans-unit id="130">
     <source>India</source>
     <target>Índia</target>
    </trans-unit>
-   <trans-unit id="127">
+   <trans-unit id="131">
     <source>Indonesia</source>
     <target>Indonésia</target>
    </trans-unit>
-   <trans-unit id="128">
+   <trans-unit id="132">
     <source>Initial developer screensaver prototype and Roku device feasibility checks.</source>
     <target>Protótipo inicial do protetor de tela e verificações de viabilidade nos dispositivos Roku.</target>
    </trans-unit>
-   <trans-unit id="129">
+   <trans-unit id="133">
     <source>Invalid coordinates</source>
     <target>Coordenadas inválidas</target>
    </trans-unit>
-   <trans-unit id="130">
+   <trans-unit id="134">
     <source>Iran</source>
     <target>Irã</target>
    </trans-unit>
-   <trans-unit id="131">
+   <trans-unit id="135">
     <source>Iraq</source>
     <target>Iraque</target>
    </trans-unit>
-   <trans-unit id="132">
+   <trans-unit id="136">
     <source>Ireland</source>
     <target>Irlanda</target>
    </trans-unit>
-   <trans-unit id="133">
+   <trans-unit id="137">
     <source>Isle of Man</source>
     <target>Ilha de Man</target>
    </trans-unit>
-   <trans-unit id="134">
+   <trans-unit id="138">
     <source>Israel</source>
     <target>Israel</target>
    </trans-unit>
-   <trans-unit id="135">
+   <trans-unit id="139">
     <source>Italy</source>
     <target>Itália</target>
    </trans-unit>
-   <trans-unit id="136">
+   <trans-unit id="140">
     <source>Ivory Coast</source>
     <target>Côte d’Ivoire</target>
    </trans-unit>
-   <trans-unit id="137">
+   <trans-unit id="141">
     <source>Jamaica</source>
     <target>Jamaica</target>
    </trans-unit>
-   <trans-unit id="138">
+   <trans-unit id="142">
     <source>Japan</source>
     <target>Japão</target>
    </trans-unit>
-   <trans-unit id="139">
+   <trans-unit id="143">
     <source>Jordan</source>
     <target>Jordânia</target>
    </trans-unit>
-   <trans-unit id="140">
+   <trans-unit id="144">
     <source>Kazakhstan</source>
     <target>Cazaquistão</target>
    </trans-unit>
-   <trans-unit id="141">
+   <trans-unit id="145">
     <source>Kenya</source>
     <target>Quênia</target>
    </trans-unit>
-   <trans-unit id="142">
+   <trans-unit id="146">
     <source>Kermadec Islands</source>
     <target>Ilhas Kermadec</target>
    </trans-unit>
-   <trans-unit id="143">
+   <trans-unit id="147">
     <source>Kiribati</source>
     <target>Quiribati</target>
    </trans-unit>
-   <trans-unit id="144">
+   <trans-unit id="148">
     <source>Kosovo</source>
     <target>Kosovo</target>
    </trans-unit>
-   <trans-unit id="145">
+   <trans-unit id="149">
     <source>Kuwait</source>
     <target>Kuwait</target>
    </trans-unit>
-   <trans-unit id="146">
+   <trans-unit id="150">
     <source>Kyrgyzstan</source>
     <target>Quirguistão</target>
    </trans-unit>
-   <trans-unit id="147">
+   <trans-unit id="151">
     <source>Laos</source>
     <target>Laos</target>
    </trans-unit>
-   <trans-unit id="148">
+   <trans-unit id="152">
+    <source>Latest successful launch</source>
+    <target>Último início bem-sucedido</target>
+   </trans-unit>
+   <trans-unit id="153">
     <source>Latitude, longitude</source>
     <target>Latitude, longitude</target>
    </trans-unit>
-   <trans-unit id="149">
+   <trans-unit id="154">
     <source>Latvia</source>
     <target>Letônia</target>
    </trans-unit>
-   <trans-unit id="150">
+   <trans-unit id="155">
+    <source>Launch report</source>
+    <target>Relatório de início</target>
+   </trans-unit>
+   <trans-unit id="156">
     <source>Lebanon</source>
     <target>Líbano</target>
    </trans-unit>
-   <trans-unit id="151">
+   <trans-unit id="157">
     <source>Lesotho</source>
     <target>Lesoto</target>
    </trans-unit>
-   <trans-unit id="152">
+   <trans-unit id="158">
     <source>Liberia</source>
     <target>Libéria</target>
    </trans-unit>
-   <trans-unit id="153">
+   <trans-unit id="159">
     <source>Libya</source>
     <target>Líbia</target>
    </trans-unit>
-   <trans-unit id="154">
+   <trans-unit id="160">
     <source>Liechtenstein</source>
     <target>Liechtenstein</target>
    </trans-unit>
-   <trans-unit id="155">
+   <trans-unit id="161">
     <source>Lithuania</source>
     <target>Lituânia</target>
    </trans-unit>
-   <trans-unit id="156">
+   <trans-unit id="162">
+    <source>Local only; never shared automatically. Not a certified launch time or independent proof of the first displayed frame.</source>
+    <target>Somente local; nunca compartilhado automaticamente. Não é um tempo de início certificado nem prova independente do primeiro quadro exibido.</target>
+   </trans-unit>
+   <trans-unit id="163">
     <source>Luxembourg</source>
     <target>Luxemburgo</target>
    </trans-unit>
-   <trans-unit id="157">
+   <trans-unit id="164">
     <source>Macau S.A.R</source>
     <target>Macau</target>
    </trans-unit>
-   <trans-unit id="158">
+   <trans-unit id="165">
     <source>Madagascar</source>
     <target>Madagascar</target>
    </trans-unit>
-   <trans-unit id="159">
+   <trans-unit id="166">
     <source>Malawi</source>
     <target>Malaui</target>
    </trans-unit>
-   <trans-unit id="160">
+   <trans-unit id="167">
     <source>Malaysia</source>
     <target>Malásia</target>
    </trans-unit>
-   <trans-unit id="161">
+   <trans-unit id="168">
     <source>Maldives</source>
     <target>Maldivas</target>
    </trans-unit>
-   <trans-unit id="162">
+   <trans-unit id="169">
     <source>Mali</source>
     <target>Mali</target>
    </trans-unit>
-   <trans-unit id="163">
+   <trans-unit id="170">
     <source>Malta</source>
     <target>Malta</target>
    </trans-unit>
-   <trans-unit id="164">
+   <trans-unit id="171">
     <source>Marshall Islands</source>
     <target>Ilhas Marshall</target>
    </trans-unit>
-   <trans-unit id="165">
+   <trans-unit id="172">
     <source>Mauritania</source>
     <target>Mauritânia</target>
    </trans-unit>
-   <trans-unit id="166">
+   <trans-unit id="173">
     <source>Mauritius</source>
     <target>Maurício</target>
    </trans-unit>
-   <trans-unit id="167">
+   <trans-unit id="174">
     <source>Menus and settings follow your Roku language, with offline translations.</source>
     <target>Menus e configurações seguem o idioma do Roku, com traduções offline.</target>
    </trans-unit>
-   <trans-unit id="168">
+   <trans-unit id="175">
     <source>Mexico</source>
     <target>México</target>
    </trans-unit>
-   <trans-unit id="169">
+   <trans-unit id="176">
+    <source>Model: %1</source>
+    <target>Modelo: %1</target>
+   </trans-unit>
+   <trans-unit id="177">
     <source>Moldova</source>
     <target>Moldávia</target>
    </trans-unit>
-   <trans-unit id="170">
+   <trans-unit id="178">
     <source>Monaco</source>
     <target>Mônaco</target>
    </trans-unit>
-   <trans-unit id="171">
+   <trans-unit id="179">
     <source>Mongolia</source>
     <target>Mongólia</target>
    </trans-unit>
-   <trans-unit id="172">
+   <trans-unit id="180">
     <source>Montenegro</source>
     <target>Montenegro</target>
    </trans-unit>
-   <trans-unit id="173">
+   <trans-unit id="181">
     <source>Morocco</source>
     <target>Marrocos</target>
    </trans-unit>
-   <trans-unit id="174">
+   <trans-unit id="182">
     <source>Mozambique</source>
     <target>Moçambique</target>
    </trans-unit>
-   <trans-unit id="175">
+   <trans-unit id="183">
     <source>Myanmar</source>
     <target>Mianmar (Birmânia)</target>
    </trans-unit>
-   <trans-unit id="176">
+   <trans-unit id="184">
     <source>Namibia</source>
     <target>Namíbia</target>
    </trans-unit>
-   <trans-unit id="177">
+   <trans-unit id="185">
     <source>Necw Zealand</source>
     <target>Nova Zelândia</target>
    </trans-unit>
-   <trans-unit id="178">
+   <trans-unit id="186">
     <source>Nepal</source>
     <target>Nepal</target>
    </trans-unit>
-   <trans-unit id="179">
+   <trans-unit id="187">
     <source>Netherlands</source>
     <target>Países Baixos</target>
    </trans-unit>
-   <trans-unit id="180">
+   <trans-unit id="188">
     <source>New Caledonia</source>
     <target>Nova Caledônia</target>
    </trans-unit>
-   <trans-unit id="181">
+   <trans-unit id="189">
     <source>New Zealand</source>
     <target>Nova Zelândia</target>
    </trans-unit>
-   <trans-unit id="182">
+   <trans-unit id="190">
     <source>Next entry</source>
     <target>Próxima entrada</target>
    </trans-unit>
-   <trans-unit id="183">
+   <trans-unit id="191">
     <source>Nicaragua</source>
     <target>Nicarágua</target>
    </trans-unit>
-   <trans-unit id="184">
+   <trans-unit id="192">
     <source>Niger</source>
     <target>Níger</target>
    </trans-unit>
-   <trans-unit id="185">
+   <trans-unit id="193">
     <source>Nigeria</source>
     <target>Nigéria</target>
    </trans-unit>
-   <trans-unit id="186">
+   <trans-unit id="194">
     <source>Night mode</source>
     <target>Modo noturno</target>
    </trans-unit>
-   <trans-unit id="187">
+   <trans-unit id="195">
     <source>Niue</source>
     <target>Niue</target>
    </trans-unit>
-   <trans-unit id="188">
+   <trans-unit id="196">
+    <source>No launch report yet. Run the screensaver, then return here.</source>
+    <target>Ainda não há relatório. Execute o protetor de tela e volte aqui.</target>
+   </trans-unit>
+   <trans-unit id="197">
     <source>Normal</source>
     <target>Normal</target>
    </trans-unit>
-   <trans-unit id="189">
+   <trans-unit id="198">
     <source>North Korea</source>
     <target>Coreia do Norte</target>
    </trans-unit>
-   <trans-unit id="190">
+   <trans-unit id="199">
     <source>North Macedonia</source>
     <target>Macedônia do Norte</target>
    </trans-unit>
-   <trans-unit id="191">
+   <trans-unit id="200">
     <source>Northern Cyprus</source>
     <target>Chipre do Norte</target>
    </trans-unit>
-   <trans-unit id="192">
+   <trans-unit id="201">
     <source>Northern Mariana Islands</source>
     <target>Ilhas Marianas do Norte</target>
    </trans-unit>
-   <trans-unit id="193">
+   <trans-unit id="202">
     <source>Norway</source>
     <target>Noruega</target>
    </trans-unit>
-   <trans-unit id="194">
+   <trans-unit id="203">
     <source>OK changes a value. Up / down moves. Back saves and exits.</source>
     <target>OK altera o valor. Cima/baixo move. Voltar salva e sai.</target>
    </trans-unit>
-   <trans-unit id="195">
+   <trans-unit id="204">
     <source>Off</source>
     <target>Desativado</target>
    </trans-unit>
-   <trans-unit id="196">
+   <trans-unit id="205">
     <source>Offline US ZIP and country/city location pickers, with custom coordinates retained.</source>
     <target>Seleção de localização offline por ZIP dos EUA ou país/cidade, mantendo as coordenadas personalizadas.</target>
    </trans-unit>
-   <trans-unit id="197">
+   <trans-unit id="206">
     <source>Oman</source>
     <target>Omã</target>
    </trans-unit>
-   <trans-unit id="198">
+   <trans-unit id="207">
     <source>On</source>
     <target>Ativado</target>
    </trans-unit>
-   <trans-unit id="199">
+   <trans-unit id="208">
     <source>Optional background clock and this changelog. These changes are still under development and testing.</source>
     <target>Relógio de fundo opcional e este histórico. Estas alterações ainda estão em desenvolvimento e testes.</target>
    </trans-unit>
-   <trans-unit id="200">
+   <trans-unit id="209">
     <source>PM</source>
     <target>PM</target>
    </trans-unit>
-   <trans-unit id="201">
+   <trans-unit id="210">
     <source>Pakistan</source>
     <target>Paquistão</target>
    </trans-unit>
-   <trans-unit id="202">
+   <trans-unit id="211">
     <source>Palau</source>
     <target>Palau</target>
    </trans-unit>
-   <trans-unit id="203">
+   <trans-unit id="212">
     <source>Palestine</source>
     <target>Territórios palestinos</target>
    </trans-unit>
-   <trans-unit id="204">
+   <trans-unit id="213">
     <source>Panama</source>
     <target>Panamá</target>
    </trans-unit>
-   <trans-unit id="205">
+   <trans-unit id="214">
     <source>Papua New Guinea</source>
     <target>Papua-Nova Guiné</target>
    </trans-unit>
-   <trans-unit id="206">
+   <trans-unit id="215">
     <source>Paraguay</source>
     <target>Paraguai</target>
    </trans-unit>
-   <trans-unit id="207">
+   <trans-unit id="216">
     <source>Peru</source>
     <target>Peru</target>
    </trans-unit>
-   <trans-unit id="208">
+   <trans-unit id="217">
     <source>Philippines</source>
     <target>Filipinas</target>
    </trans-unit>
-   <trans-unit id="209">
+   <trans-unit id="218">
     <source>Poland</source>
     <target>Polônia</target>
    </trans-unit>
-   <trans-unit id="210">
+   <trans-unit id="219">
     <source>Portugal</source>
     <target>Portugal</target>
    </trans-unit>
-   <trans-unit id="211">
+   <trans-unit id="220">
     <source>Puerto Rico</source>
     <target>Porto Rico</target>
    </trans-unit>
-   <trans-unit id="212">
+   <trans-unit id="221">
     <source>Qatar</source>
     <target>Catar</target>
    </trans-unit>
-   <trans-unit id="213">
+   <trans-unit id="222">
+    <source>Render-ready</source>
+    <target>Pronto para exibir</target>
+   </trans-unit>
+   <trans-unit id="223">
+    <source>Roku OS: %1</source>
+    <target>Roku OS: %1</target>
+   </trans-unit>
+   <trans-unit id="224">
     <source>Romania</source>
     <target>Romênia</target>
    </trans-unit>
-   <trans-unit id="214">
+   <trans-unit id="225">
     <source>Russia</source>
     <target>Rússia</target>
    </trans-unit>
-   <trans-unit id="215">
+   <trans-unit id="226">
     <source>Rwanda</source>
     <target>Ruanda</target>
    </trans-unit>
-   <trans-unit id="216">
+   <trans-unit id="227">
     <source>Saint Kitts and Nevis</source>
     <target>São Cristóvão e Névis</target>
    </trans-unit>
-   <trans-unit id="217">
+   <trans-unit id="228">
     <source>Saint Lucia</source>
     <target>Santa Lúcia</target>
    </trans-unit>
-   <trans-unit id="218">
+   <trans-unit id="229">
     <source>Saint Vincent and the Grenadines</source>
     <target>São Vicente e Granadinas</target>
    </trans-unit>
-   <trans-unit id="219">
+   <trans-unit id="230">
     <source>Samoa</source>
     <target>Samoa</target>
    </trans-unit>
-   <trans-unit id="220">
+   <trans-unit id="231">
     <source>San Marino</source>
     <target>San Marino</target>
    </trans-unit>
-   <trans-unit id="221">
+   <trans-unit id="232">
     <source>Sao Tome and Principe</source>
     <target>São Tomé e Príncipe</target>
    </trans-unit>
-   <trans-unit id="222">
+   <trans-unit id="233">
     <source>Saudi Arabia</source>
     <target>Arábia Saudita</target>
    </trans-unit>
-   <trans-unit id="223">
+   <trans-unit id="234">
     <source>Save</source>
     <target>Salvar</target>
    </trans-unit>
-   <trans-unit id="224">
+   <trans-unit id="235">
     <source>Save ZIP</source>
     <target>Salvar ZIP</target>
    </trans-unit>
-   <trans-unit id="225">
+   <trans-unit id="236">
     <source>Save ZIP: %1</source>
     <target>Salvar ZIP: %1</target>
    </trans-unit>
-   <trans-unit id="226">
+   <trans-unit id="237">
     <source>Screensaver settings</source>
     <target>Configurações do protetor de tela</target>
    </trans-unit>
-   <trans-unit id="227">
+   <trans-unit id="238">
     <source>Senegal</source>
     <target>Senegal</target>
    </trans-unit>
-   <trans-unit id="228">
+   <trans-unit id="239">
     <source>Serbia</source>
     <target>Sérvia</target>
    </trans-unit>
-   <trans-unit id="229">
+   <trans-unit id="240">
     <source>Seychelles</source>
     <target>Seicheles</target>
    </trans-unit>
-   <trans-unit id="230">
+   <trans-unit id="241">
     <source>Sierra Leone</source>
     <target>Serra Leoa</target>
    </trans-unit>
-   <trans-unit id="231">
+   <trans-unit id="242">
     <source>Singapore</source>
     <target>Singapura</target>
    </trans-unit>
-   <trans-unit id="232">
+   <trans-unit id="243">
     <source>Slovakia</source>
     <target>Eslováquia</target>
    </trans-unit>
-   <trans-unit id="233">
+   <trans-unit id="244">
     <source>Slovenia</source>
     <target>Eslovênia</target>
    </trans-unit>
-   <trans-unit id="234">
+   <trans-unit id="245">
     <source>Smaller packages, memory safeguards, and privacy/support pages.</source>
     <target>Pacotes menores, proteções de memória e páginas de privacidade e suporte.</target>
    </trans-unit>
-   <trans-unit id="235">
+   <trans-unit id="246">
     <source>Smoother fish travel and speed-matched tail beats.</source>
     <target>Movimento dos peixes mais suave e batidas da cauda ajustadas à velocidade.</target>
    </trans-unit>
-   <trans-unit id="236">
+   <trans-unit id="247">
     <source>Solar location</source>
     <target>Localização solar</target>
    </trans-unit>
-   <trans-unit id="237">
+   <trans-unit id="248">
     <source>Solar location: %1</source>
     <target>Localização solar: %1</target>
    </trans-unit>
-   <trans-unit id="238">
+   <trans-unit id="249">
     <source>Solomon Islands</source>
     <target>Ilhas Salomão</target>
    </trans-unit>
-   <trans-unit id="239">
+   <trans-unit id="250">
     <source>Somalia</source>
     <target>Somália</target>
    </trans-unit>
-   <trans-unit id="240">
+   <trans-unit id="251">
     <source>Somaliland</source>
     <target>Somalilândia</target>
    </trans-unit>
-   <trans-unit id="241">
+   <trans-unit id="252">
     <source>South Africa</source>
     <target>África do Sul</target>
    </trans-unit>
-   <trans-unit id="242">
+   <trans-unit id="253">
     <source>South Georgia and the Islands</source>
     <target>Ilhas Geórgia do Sul e Sandwich do Sul</target>
    </trans-unit>
-   <trans-unit id="243">
+   <trans-unit id="254">
     <source>South Korea</source>
     <target>Coreia do Sul</target>
    </trans-unit>
-   <trans-unit id="244">
+   <trans-unit id="255">
     <source>South Sudan</source>
     <target>Sudão do Sul</target>
    </trans-unit>
-   <trans-unit id="245">
+   <trans-unit id="256">
     <source>Spain</source>
     <target>Espanha</target>
    </trans-unit>
-   <trans-unit id="246">
+   <trans-unit id="257">
     <source>Sri Lanka</source>
     <target>Sri Lanka</target>
    </trans-unit>
-   <trans-unit id="247">
+   <trans-unit id="258">
+    <source>Status: %1</source>
+    <target>Estado: %1</target>
+   </trans-unit>
+   <trans-unit id="259">
     <source>Sudan</source>
     <target>Sudão</target>
    </trans-unit>
-   <trans-unit id="248">
+   <trans-unit id="260">
     <source>Sunrise and sunset refresh when the date or time-zone offset changes.</source>
     <target>O nascer e o pôr do sol são atualizados quando a data ou a diferença de fuso horário muda.</target>
    </trans-unit>
-   <trans-unit id="249">
+   <trans-unit id="261">
     <source>Suriname</source>
     <target>Suriname</target>
    </trans-unit>
-   <trans-unit id="250">
+   <trans-unit id="262">
     <source>Svalbard and Jan Mayen Islands</source>
     <target>Svalbard e Jan Mayen</target>
    </trans-unit>
-   <trans-unit id="251">
+   <trans-unit id="263">
     <source>Sweden</source>
     <target>Suécia</target>
    </trans-unit>
-   <trans-unit id="252">
+   <trans-unit id="264">
     <source>Switzerland</source>
     <target>Suíça</target>
    </trans-unit>
-   <trans-unit id="253">
+   <trans-unit id="265">
     <source>Syria</source>
     <target>Síria</target>
    </trans-unit>
-   <trans-unit id="254">
+   <trans-unit id="266">
     <source>Taiwan</source>
     <target>Taiwan</target>
    </trans-unit>
-   <trans-unit id="255">
+   <trans-unit id="267">
     <source>Tajikistan</source>
     <target>Tadjiquistão</target>
    </trans-unit>
-   <trans-unit id="256">
+   <trans-unit id="268">
     <source>Tanzania</source>
     <target>Tanzânia</target>
    </trans-unit>
-   <trans-unit id="257">
+   <trans-unit id="269">
     <source>Thailand</source>
     <target>Tailândia</target>
    </trans-unit>
-   <trans-unit id="258">
+   <trans-unit id="270">
     <source>The Bahamas</source>
     <target>Bahamas</target>
    </trans-unit>
-   <trans-unit id="259">
+   <trans-unit id="271">
     <source>The Gambia</source>
     <target>Gâmbia</target>
    </trans-unit>
-   <trans-unit id="260">
+   <trans-unit id="272">
+    <source>Timed out</source>
+    <target>Tempo esgotado</target>
+   </trans-unit>
+   <trans-unit id="273">
     <source>Togo</source>
     <target>Togo</target>
    </trans-unit>
-   <trans-unit id="261">
+   <trans-unit id="274">
     <source>Tokelau</source>
     <target>Tokelau</target>
    </trans-unit>
-   <trans-unit id="262">
+   <trans-unit id="275">
     <source>Tonga</source>
     <target>Tonga</target>
    </trans-unit>
-   <trans-unit id="263">
+   <trans-unit id="276">
     <source>Trinidad and Tobago</source>
     <target>Trinidad e Tobago</target>
    </trans-unit>
-   <trans-unit id="264">
+   <trans-unit id="277">
     <source>Tunisia</source>
     <target>Tunísia</target>
    </trans-unit>
-   <trans-unit id="265">
+   <trans-unit id="278">
     <source>Turkey</source>
     <target>Turquia</target>
    </trans-unit>
-   <trans-unit id="266">
+   <trans-unit id="279">
     <source>Turkmenistan</source>
     <target>Turcomenistão</target>
    </trans-unit>
-   <trans-unit id="267">
+   <trans-unit id="280">
     <source>Turks and Caicos Islands</source>
     <target>Ilhas Turcas e Caicos</target>
    </trans-unit>
-   <trans-unit id="268">
+   <trans-unit id="281">
     <source>Tuvalu</source>
     <target>Tuvalu</target>
    </trans-unit>
-   <trans-unit id="269">
+   <trans-unit id="282">
     <source>US ZIP code</source>
     <target>Código ZIP dos EUA</target>
    </trans-unit>
-   <trans-unit id="270">
+   <trans-unit id="283">
     <source>Uganda</source>
     <target>Uganda</target>
    </trans-unit>
-   <trans-unit id="271">
+   <trans-unit id="284">
     <source>Ukraine</source>
     <target>Ucrânia</target>
    </trans-unit>
-   <trans-unit id="272">
+   <trans-unit id="285">
+    <source>Unavailable</source>
+    <target>Indisponível</target>
+   </trans-unit>
+   <trans-unit id="286">
     <source>United Arab Emirates</source>
     <target>Emirados Árabes Unidos</target>
    </trans-unit>
-   <trans-unit id="273">
+   <trans-unit id="287">
     <source>United Kingdom</source>
     <target>Reino Unido</target>
    </trans-unit>
-   <trans-unit id="274">
+   <trans-unit id="288">
     <source>United States Virgin Islands</source>
     <target>Ilhas Virgens Americanas</target>
    </trans-unit>
-   <trans-unit id="275">
+   <trans-unit id="289">
     <source>United States of America</source>
     <target>Estados Unidos</target>
    </trans-unit>
-   <trans-unit id="276">
+   <trans-unit id="290">
     <source>Unreleased - current development</source>
     <target>Em desenvolvimento</target>
    </trans-unit>
-   <trans-unit id="277">
+   <trans-unit id="291">
     <source>Up / down selects a digit. OK changes it. Then choose Save ZIP.</source>
     <target>Cima/baixo seleciona um dígito. OK o altera. Depois escolha Salvar ZIP.</target>
    </trans-unit>
-   <trans-unit id="278">
+   <trans-unit id="292">
     <source>Uruguay</source>
     <target>Uruguai</target>
    </trans-unit>
-   <trans-unit id="279">
+   <trans-unit id="293">
     <source>Use five digits including leading zeros. Some ZIPs need city / coordinates instead.</source>
     <target>Use cinco dígitos, incluindo os zeros iniciais. Alguns ZIPs exigem cidade ou coordenadas.</target>
    </trans-unit>
-   <trans-unit id="280">
+   <trans-unit id="294">
     <source>Use remote digits</source>
     <target>Dígitos pelo controle</target>
    </trans-unit>
-   <trans-unit id="281">
+   <trans-unit id="295">
     <source>Uzbekistan</source>
     <target>Uzbequistão</target>
    </trans-unit>
-   <trans-unit id="282">
+   <trans-unit id="296">
     <source>Vanuatu</source>
     <target>Vanuatu</target>
    </trans-unit>
-   <trans-unit id="283">
+   <trans-unit id="297">
     <source>Vatican</source>
     <target>Cidade do Vaticano</target>
    </trans-unit>
-   <trans-unit id="284">
+   <trans-unit id="298">
     <source>Venezuela</source>
     <target>Venezuela</target>
    </trans-unit>
-   <trans-unit id="285">
+   <trans-unit id="299">
     <source>Vietnam</source>
     <target>Vietnã</target>
    </trans-unit>
-   <trans-unit id="286">
+   <trans-unit id="300">
     <source>Western Sahara</source>
     <target>Saara Ocidental</target>
    </trans-unit>
-   <trans-unit id="287">
+   <trans-unit id="301">
     <source>Yemen</source>
     <target>Iêmen</target>
    </trans-unit>
-   <trans-unit id="288">
+   <trans-unit id="302">
     <source>ZIP %1 - OK cycles each digit 0-9</source>
     <target>ZIP %1 - OK alterna cada dígito de 0 a 9</target>
    </trans-unit>
-   <trans-unit id="289">
+   <trans-unit id="303">
     <source>ZIP not found</source>
     <target>Código ZIP não encontrado</target>
    </trans-unit>
-   <trans-unit id="290">
+   <trans-unit id="304">
     <source>ZIP not found. Change digits, or Cancel and use city / coordinates.</source>
     <target>ZIP não encontrado. Altere os dígitos ou cancele e use cidade / coordenadas.</target>
    </trans-unit>
-   <trans-unit id="291">
+   <trans-unit id="305">
     <source>Zambia</source>
     <target>Zâmbia</target>
    </trans-unit>
-   <trans-unit id="292">
+   <trans-unit id="306">
     <source>Zimbabwe</source>
     <target>Zimbábue</target>
    </trans-unit>
-   <trans-unit id="293">
+   <trans-unit id="307">
     <source>eSwatini</source>
     <target>Essuatíni</target>
    </trans-unit>

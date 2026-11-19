@@ -29,6 +29,7 @@ function testSuites() as object
         behaviorTestSuite()
         settingsTestSuite()
         clockTestSuite()
+        launchdiagTestSuite()
         locationTestSuite()
         bubblesTestSuite()
         nightTestSuite()

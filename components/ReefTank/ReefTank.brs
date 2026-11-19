@@ -39,6 +39,7 @@ sub init()
     reefTankAddExtras()
     reefTankAddClock()
     reefTankPerf()
+    m.launchSceneBuilt = true
 end sub
 
 ' Device perf runs (docs/perf.md "Measuring the channel"): pkg:/config/perf.json is an

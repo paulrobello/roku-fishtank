@@ -17,7 +17,7 @@ declare global {
 
 const WIDTH = 1920;
 const HEIGHT = 1080;
-const PARAM_KEYS = ["scene", "seed", "time", "speed", "freeze", "species", "density", "night", "debug", "clock", "clockFormat"] as const;
+const PARAM_KEYS = ["scene", "seed", "time", "speed", "freeze", "species", "density", "night", "debug", "clock", "clockFormat", "launchReportFixture"] as const;
 
 const LOCALES = ["en_US", "en_GB", "en_CA", "en_AU", "fr_CA", "es_ES", "es_MX", "de_DE", "it_IT", "pt_BR"] as const;
 type PreviewLocale = (typeof LOCALES)[number];

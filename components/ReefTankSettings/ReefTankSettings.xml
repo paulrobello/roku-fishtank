@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <!--
-    Reef Tank settings screen (P5.2), shown by RunScreenSaverSettings. Seven rows
-    (Night mode, Fish density, Camera drift, Solar location, Background clock, Clock format, Changelog): OK changes
+    Reef Tank settings screen (P5.2), shown by RunScreenSaverSettings. Eight rows
+    (Night mode, Fish density, Camera drift, Solar location, Background clock, Clock format, Changelog, Launch report): OK changes
     a preference or opens its dialog; changelog is read-only.
     up/down moves between rows, Back exits. Every change is saved to the registry at once.
     Overdraw: the backdrop and one dim layer are the only full-screen layers (no
@@ -10,6 +10,8 @@
 <component name="ReefTankSettings" extends="Scene">
     <script type="text/brightscript" uri="pkg:/components/lib/settings.brs" />
     <script type="text/brightscript" uri="pkg:/components/lib/locationdb.brs" />
+    <script type="text/brightscript" uri="pkg:/components/lib/launchdiag.brs" />
+    <script type="text/brightscript" uri="pkg:/source/launch_report.brs" />
     <script type="text/brightscript" uri="ReefTankSettings.brs" />
     <children>
         <Poster id="backdrop" uri="pkg:/images/decor/reef_backdrop.jpg" />

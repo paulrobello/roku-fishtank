@@ -11,6 +11,8 @@
 -->
 <component name="ReefTank" extends="Scene">
     <interface>
+        <field id="launchWatch" type="boolean" value="false" onChange="launchReportStart" />
+        <field id="launchOutcome" type="string" value="" />
         <field id="clockFormat" type="string" value="device" />
         <field id="digitalClockEnabled" type="boolean" value="false" onChange="onDigitalClockChanged" />
         <field id="density" type="string" value="normal" onChange="onDensityChanged" />
@@ -27,6 +29,8 @@
     <script type="text/brightscript" uri="pkg:/components/lib/scenecfg.brs" />
     <script type="text/brightscript" uri="pkg:/components/lib/settings.brs" />
     <script type="text/brightscript" uri="pkg:/components/lib/driftguard.brs" />
+    <script type="text/brightscript" uri="pkg:/components/lib/launchdiag.brs" />
+    <script type="text/brightscript" uri="LaunchReport.brs" />
     <script type="text/brightscript" uri="ReefTank.brs" />
     <children>
         <Rectangle id="fill" color="0x0B2F55FF" />

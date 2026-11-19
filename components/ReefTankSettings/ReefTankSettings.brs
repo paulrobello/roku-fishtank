@@ -2,7 +2,7 @@
 sub init()
     PANEL_W = 1100
     PANEL_H = 760
-    m.rowH = 66
+    m.rowH = 58
     m.rowsY = 200
     dr = m.top.currentDesignResolution
     s = dr.width / 1920.0
@@ -35,7 +35,7 @@ sub init()
     settingsUiPlace(m.top.findNode("hint"), smallFont, 60, PANEL_H - 82, PANEL_W - 120, 64)
 
     ' Keep Solar location at index 3 even when new persisted preferences are added.
-    m.keys = ["nightMode", "density", "drift", "solarLocation", "digitalClock", "clockFormat", "changelog"]
+    m.keys = ["nightMode", "density", "drift", "solarLocation", "digitalClock", "clockFormat", "changelog", "launchReport"]
     m.titles = { nightMode: tr("Night mode"), density: tr("Fish density"), drift: tr("Camera drift"), digitalClock: tr("Background clock"), clockFormat: tr("Clock format") }
     m.shown = {
         nightMode: { auto: tr("Auto"), day: tr("Always day"), night: tr("Always night") }
@@ -85,6 +85,8 @@ sub settingsUiRefresh()
             m.options.content.getChild(i).title = tr("Solar location: %1").replace("%1", settingsLocationLabel(m.location))
         else if key = "changelog" then
             m.options.content.getChild(i).title = tr("Changelog")
+        else if key = "launchReport" then
+            m.options.content.getChild(i).title = tr("Launch report")
         else
             m.options.content.getChild(i).title = tr("%1: %2").replace("%1", m.titles[key]).replace("%2", m.shown[key][m.values[key]])
         end if
@@ -97,6 +99,10 @@ sub settingsUiSelected()
     key = m.keys[row]
     if key = "solarLocation" then
         settingsUiLocation()
+        return
+    end if
+    if key = "launchReport" then
+        settingsUiLaunchReport()
         return
     end if
     if key = "changelog" then
@@ -330,3 +336,37 @@ function settingsUiCountryName(name as string) as string
     if name = "Necw Zealand" then name = "New Zealand"
     return tr(name)
 end function
+
+' Read-only local diagnostics. Opening or closing this dialog never shares a report.
+sub settingsUiLaunchReport()
+    section = CreateObject("roRegistrySection", "ReefTankDiagnostics")
+    report = ParseJson(section.read("lastLaunch"))
+    validReport = launchReportValid(report)
+    dialog = CreateObject("roSGNode", "StandardMessageDialog")
+    dialog.title = tr("Launch report")
+    if validReport then
+        dialog.title = tr("Latest successful launch")
+        statusText = tr("Render-ready")
+        if report.status = "asset-error" then statusText = tr("Asset error")
+        if report.status = "timeout" then statusText = tr("Timed out")
+        deviceText = tr("Model: %1").replace("%1", report.model) + chr(10)
+        osText = launchOsVersionText(report.osVersion)
+        if osText = "" then osText = tr("Unavailable")
+        deviceText += tr("Roku OS: %1").replace("%1", osText) + chr(10)
+        deviceText += tr("Build: %1").replace("%1", report.build)
+        elapsedText = tr("App-entry to render-ready: %1 ms")
+        if report.status <> "render-ready" then elapsedText = tr("App-entry to stop: %1 ms")
+        dialog.message = [deviceText, elapsedText.replace("%1", report.elapsedMs.toStr()), tr("Status: %1").replace("%1", statusText)]
+    else
+        dialog.message = [tr("No launch report yet. Run the screensaver, then return here.")]
+    end if
+    dialog.bottomMessage = [tr("Local only; never shared automatically. Not a certified launch time or independent proof of the first displayed frame.")]
+    dialog.buttons = [tr("Close")]
+    dialog.observeField("buttonSelected", "settingsUiLaunchReportClosed")
+    dialog.observeField("wasClosed", "settingsUiDialogClosed")
+    m.top.dialog = dialog
+end sub
+
+sub settingsUiLaunchReportClosed()
+    if m.top.dialog <> invalid then m.top.dialog.close = true
+end sub

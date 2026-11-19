@@ -27,6 +27,15 @@ sub Main(args as object)
         previewClock: params.clock
         previewClockFormat: params.clockFormat
     })
+    ' Browser-only fixtures, excluded from every device package.
+    if params.scene = "ReefTankSettings" and args.launchReportFixture <> invalid then
+        fixtureStore = createObject("roRegistrySection", "ReefTankDiagnostics")
+        fixtureText = ""
+        if args.launchReportFixture = "ready" then fixtureText = formatJson({ model: "3810X", os: "16.0.4 / 853", osVersion: { major: "16", minor: "0", revision: "4", build: "853" }, build: "0.2.0003 / diag3", elapsedMs: 1234, status: "render-ready" })
+        if args.launchReportFixture = "malformed" then fixtureText = "{}"
+        fixtureStore.write("lastLaunch", fixtureText)
+        fixtureStore.flush()
+    end if
     scene = screen.createScene(params.scene)
     screen.show()
     if args.locale <> invalid and params.scene = "ReefTankSettings" then

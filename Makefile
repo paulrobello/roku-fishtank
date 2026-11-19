@@ -60,7 +60,7 @@ test: node_modules
 	python3 tools/changelog/test_history.py
 	python3 tools/localization/test_catalogs.py
 	python3 tools/location/test_data.py
-	$(BIN)/brs-cli --root . $(if $(FILTER),-k filter=$(FILTER),) tests/run_tests.brs tests/lib/*.brs tests/unit/*.brs components/lib/*.brs source/preview_color.brs source/memory_monitor.brs
+	$(BIN)/brs-cli --root . $(if $(FILTER),-k filter=$(FILTER),) tests/run_tests.brs tests/lib/*.brs tests/unit/*.brs components/lib/*.brs source/preview_color.brs source/memory_monitor.brs source/launch_report.brs
 
 # Local done gate includes the GPU screenshot tests; CI runs the non-browser legs.
 checkall: api-guard fmt-check lint typecheck test build zip-check fidelity-build test-visual

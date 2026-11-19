@@ -64,3 +64,17 @@ Clock format	Format de l’heure	Formato de hora	Zeitformat	Formato dell’ora	F
 Device setting	Réglage de l’appareil	Ajuste del dispositivo	Geräteeinstellung	Impostazione del dispositivo	Configuração do dispositivo
 12-hour	12 heures	12 horas	12 Stunden	12 ore	12 horas
 24-hour	24 heures	24 horas	24 Stunden	24 ore	24 horas
+Launch report	Rapport de lancement	Informe de inicio	Startbericht	Rapporto di avvio	Relatório de início
+Render-ready	Prêt à afficher	Listo para mostrar	Renderbereit	Pronto per la visualizzazione	Pronto para exibir
+Asset error	Erreur de ressource	Error de recurso	Ressourcenfehler	Errore risorsa	Erro de recurso
+Timed out	Délai dépassé	Tiempo agotado	Zeitüberschreitung	Tempo scaduto	Tempo esgotado
+Model: %1	Modèle : %1	Modelo: %1	Modell: %1	Modello: %1	Modelo: %1
+Roku OS: %1	Roku OS : %1	Roku OS: %1	Roku OS: %1	Roku OS: %1	Roku OS: %1
+Build: %1	Version : %1	Versión: %1	Build: %1	Versione: %1	Versão: %1
+App-entry to render-ready: %1 ms	Entrée dans l’app à prêt à afficher : %1 ms	Entrada en la app hasta listo para mostrar: %1 ms	App-Eintritt bis renderbereit: %1 ms	Ingresso nell’app fino a pronto per visualizzare: %1 ms	Entrada no app até pronto para exibir: %1 ms
+Status: %1	État : %1	Estado: %1	Status: %1	Stato: %1	Estado: %1
+No launch report yet. Run the screensaver, then return here.	Aucun rapport de lancement. Lancez l’économiseur d’écran, puis revenez ici.	Aún no hay informe. Ejecuta el salvapantallas y vuelve aquí.	Noch kein Startbericht. Bildschirmschoner starten, dann hierher zurückkehren.	Nessun rapporto di avvio. Avvia il salvaschermo, poi torna qui.	Ainda não há relatório. Execute o protetor de tela e volte aqui.
+Local only; never shared automatically. Not a certified launch time or independent proof of the first displayed frame.	Local seulement; jamais partagé automatiquement. Ni un temps de lancement certifié ni une preuve indépendante de la première image affichée.	Solo local; nunca se comparte automáticamente. No es un tiempo de inicio certificado ni una prueba independiente del primer fotograma mostrado.	Nur lokal; keine automatische Weitergabe. Keine zertifizierte Startzeit oder unabhängiger Nachweis des ersten angezeigten Bildes.	Solo locale; mai condiviso automaticamente. Non è un tempo di avvio certificato né una prova indipendente del primo fotogramma visualizzato.	Somente local; nunca compartilhado automaticamente. Não é um tempo de início certificado nem prova independente do primeiro quadro exibido.
+App-entry to stop: %1 ms	Entrée dans l’app à l’arrêt : %1 ms	Entrada en la app hasta detenerse: %1 ms	App-Eintritt bis zum Stopp: %1 ms	Ingresso nell’app fino all’arresto: %1 ms	Entrada no app até parar: %1 ms
+Latest successful launch	Dernier lancement réussi	Último inicio correcto	Letzter erfolgreicher Start	Ultimo avvio riuscito	Último início bem-sucedido
+Unavailable	Indisponible	No disponible	Nicht verfügbar	Non disponibile	Indisponível
